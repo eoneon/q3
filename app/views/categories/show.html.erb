@@ -1,0 +1,20 @@
+<h1>Category#Show: <%= @category.name %></h1>
+
+<p><%= link_to "Edit: #{@category.name}", edit_category_path(@category) %> | <%= link_to "Return to Category List", categories_path %></p><br>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <th>Field name</th>
+    <th>Field type</th>
+  </thead>
+
+  <!-- <p><%#= link_to "New Field", new_category_item_field_path(@category) %></p> -->
+  <!-- <tbody>
+    <%# @category.field_groups.each do |field_group| %>
+      <tr>
+        <td><%#= link_to field_group.item_field.field_name, category_field_group_path(@category, field_group) %></td>
+        <td><%#= field_group.item_field.field_type %></td>
+      </tr>
+    <%# end %>
+  </tbody> -->
+</table>

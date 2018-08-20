@@ -1,0 +1,17 @@
+<h1>Category#index</h1>
+
+<% if @categories.empty? %>
+  <p><strong>No Category</strong></p>
+<% end %>
+
+<%= link_to "New Category", new_category_path %>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+  </thead>
+  <tbody>
+    <%= render @categories %>
+  </tbody>
+</table>
