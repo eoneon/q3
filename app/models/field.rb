@@ -1,4 +1,6 @@
 class Field < ApplicationRecord
-  has_many :field_groups, dependent: true
+  include Importable
+  
+  has_many :field_groups, dependent: :destroy
   has_many :categories, through: :field_groups
 end

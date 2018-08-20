@@ -5,7 +5,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :fields
+  resources :fields do
+    collection do
+      post :import
+    end
+  end
 
   root to: 'categories#index'
 end

@@ -8,10 +8,10 @@
 </p>
 
 <h4>Import Fields</h4>
-<%#= form_tag import_fields_path, multipart: true do %>
-  <%#= file_field_tag :file %>
-  <%#= submit_tag "Import" %>
-<%# end %>
+<%= form_tag import_fields_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
 <br>
 
 <%= link_to 'New Field', new_field_path %>
@@ -28,7 +28,7 @@
     <% @fields.each do |field| %>
       <tr>
         <td><%= field.id %></td>
-        <td><%= field.field_name %></td>
+        <td><%= field.name %></td>
         <td><%= field.field_type %></td>
         <td><%= link_to 'show', field_path(field) %> | <%= link_to 'Edit', edit_field_path(field) %> | <%= link_to 'Delete', field, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>

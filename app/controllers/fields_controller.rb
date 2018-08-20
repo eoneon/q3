@@ -50,7 +50,7 @@ class FieldsController < ApplicationController
     @field = Field.find(params[:id])
 
     if @field.destroy
-      flash[:notice] = "\"#{@field.field_name}\" was deleted successfully."
+      flash[:notice] = "\"#{@field.name}\" was deleted successfully."
       redirect_to action: :index
     else
       flash.now[:alert] = "There was an error deleting the field."
@@ -58,10 +58,10 @@ class FieldsController < ApplicationController
     end
   end
 
-  # def import
-  #   Field.import(params[:file])
-  #   redirect_to fields_path, notice: 'Item fields imported.'
-  # end
+  def import
+    Field.import(params[:file])
+    redirect_to fields_path, notice: 'Fields imported.'
+  end
 
   private
 
