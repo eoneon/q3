@@ -1,0 +1,7 @@
+<h1>Edit Field Names</h1>
+
+<%= render 'fields/form', field: @field %>
+
+<%#= link_to 'Show', category_item_field_path %> |
+<%= link_to "Back", request.referer.present? ? request.referer : fields_path %>
+<%#= link_to 'Back', category_path %>
