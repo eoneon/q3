@@ -1,6 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.all.order(name: 'asc')
+    @categories = Category.all.order(sort: 'asc')
   end
 
   def show
@@ -49,6 +49,11 @@ class CategoriesController < ApplicationController
       flash.now[:alert] = "There was an error deleting the category."
       render :show
     end
+  end
+
+  def import
+    Category.import(params[:file])
+    redirect_to categories_path, notice: 'Categories imported.'
   end
 
   private
