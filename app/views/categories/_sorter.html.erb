@@ -1,5 +1,5 @@
-<div class="vote-arrows pull-left">
-  <div><%= link_to "^", sort_up_category_field_group_path(category, field_group.field), class: 'glyphicon glyphicon-chevron-up', method: :post %></div>
+<div class="align-center">
+  <div><%= link_to "▲", sort_up_category_field_group_path(category, field_group.field), class: 'button', method: :post %></div>
   <div><strong><%= field_group.sort %></strong></div>
-  <div><%= link_to "v", sort_down_category_field_group_path(category, field_group.field), class: 'glyphicon glyphicon-chevron-down', method: :post %></div>
+  <div><%= link_to "▼", sort_down_category_field_group_path(category, field_group.field), class: 'button', method: :post %></div>
 </div>

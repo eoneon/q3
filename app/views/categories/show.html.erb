@@ -9,6 +9,7 @@
 
   <table class="table table-striped table-hover">
     <thead>
+      <th>Sort</th>
       <th>ID</th>
       <th>field name</th>
       <th>field type</th>
@@ -16,21 +17,12 @@
     <tbody>
       <% @category.field_groups.order(:sort).each do |field_group| %>
         <tr>
-          <td><%= render 'categories/sorter', category: @category, field_group: field_group %></td>
-          <td><%= field_group.field.id %></td>
-          <td><%= field_group.field.name %></td>
-          <td><%= field_group.field.field_type %></td>
-          <td><%= link_to 'Remove', category_field_group_path(@category, field_group.field), method: :delete %></td>
+          <td class="align-middle"><%= render 'categories/sorter', category: @category, field_group: field_group %></td>
+          <td class="align-middle"><%= field_group.field.id %></td>
+          <td class="align-middle"><%= field_group.field.name %></td>
+          <td class="align-middle"><%= field_group.field.field_type %></td>
+          <td class="align-middle"><%= link_to 'Remove', category_field_group_path(@category, field_group.field), method: :delete %></td>
         </tr>
       <% end %>
-      <!-- <%# @category.fields.each do |field| %>
-        <tr>
-          <td><%#= render 'categories/sorter', category: @category, field: field %></td>
-          <td><%#= field.id %></td>
-          <td><%#= field.name %></td>
-          <td><%#= field.field_type %></td>
-          <td><%#= link_to 'Remove', category_field_group_path(@category, field), method: :delete %></td>
-        </tr>
-      <%# end %> -->
     </tbody>
   </table>
