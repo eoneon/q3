@@ -13,7 +13,35 @@ class FieldGroupsController < ApplicationController
     end
   end
 
-  def update
+  def sort_up
+    @category = Category.find(params[:category_id])
+    field_group = @category.field_groups.find_by(field_id: params[:id])
+    sort = field_group.sort
+
+    if swap_sort(@category, sort, sort - 1)
+      field_group.update(sort: sort - 1)
+      flash[:notice] = "Field sort was successfully sorted up."
+      redirect_to @category
+    else
+      flash.now[:alert] = "Error sorting Field up. Please try again."
+      redirect_to @category
+    end
+  end
+
+  def sort_down
+    @category = Category.find(params[:category_id])
+    field_group = @category.field_groups.find_by(field_id: params[:id])
+    sort = field_group.sort
+    field_group.sort = sort + 1
+
+    if swap_sort(@category, sort, sort + 1)
+      field_group.update(sort: sort + 1)
+      flash[:notice] = "Field sort was successfully sorted up."
+      redirect_to @category
+    else
+      flash.now[:alert] = "Error sorting Field up. Please try again."
+      redirect_to @category
+    end
   end
 
   def destroy
@@ -53,5 +81,11 @@ class FieldGroupsController < ApplicationController
     category.field_groups.where("sort > ?", sort).each do |field|
       field.update(sort: field.sort - 1)
     end
+  end
+
+  #this is grabbing the fg we just saved
+  def swap_sort(category, sort, sib_sort)
+    field = category.field_groups.where(sort: sib_sort)
+    field.update(sort: sort)
   end
 end

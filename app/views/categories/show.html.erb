@@ -14,13 +14,23 @@
       <th>field type</th>
     </thead>
     <tbody>
-      <% @category.fields.each do |field| %>
+      <% @category.field_groups.order(:sort).each do |field_group| %>
         <tr>
-          <td><%= field.id %></td>
-          <td><%= field.name %></td>
-          <td><%= field.field_type %></td>
-          <td><%= link_to 'Remove', category_field_group_path(@category, field), method: :delete %></td>
+          <td><%= render 'categories/sorter', category: @category, field_group: field_group %></td>
+          <td><%= field_group.field.id %></td>
+          <td><%= field_group.field.name %></td>
+          <td><%= field_group.field.field_type %></td>
+          <td><%= link_to 'Remove', category_field_group_path(@category, field_group.field), method: :delete %></td>
         </tr>
       <% end %>
+      <!-- <%# @category.fields.each do |field| %>
+        <tr>
+          <td><%#= render 'categories/sorter', category: @category, field: field %></td>
+          <td><%#= field.id %></td>
+          <td><%#= field.name %></td>
+          <td><%#= field.field_type %></td>
+          <td><%#= link_to 'Remove', category_field_group_path(@category, field), method: :delete %></td>
+        </tr>
+      <%# end %> -->
     </tbody>
   </table>
