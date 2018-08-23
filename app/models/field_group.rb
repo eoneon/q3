@@ -2,8 +2,6 @@ class FieldGroup < ApplicationRecord
   belongs_to :category
   belongs_to :field, optional: true
 
-  # before_save :set_sort
-
   # def set_sort
   # end
   #scope :siblings, -> {where(category_id: self.category_id)}

@@ -15,33 +15,14 @@ class FieldGroupsController < ApplicationController
 
   def sort_up
     @category = Category.find(params[:category_id])
-    field_group = @category.field_groups.find_by(field_id: params[:id])
-    sort = field_group.sort
-
-    if swap_sort(@category, sort, sort - 1)
-      field_group.update(sort: sort - 1)
-      flash[:notice] = "Field sort was successfully sorted up."
-      redirect_to @category
-    else
-      flash.now[:alert] = "Error sorting Field up. Please try again."
-      redirect_to @category
-    end
+    swap_sort(@category, -1)
+    redirect_to @category
   end
 
   def sort_down
     @category = Category.find(params[:category_id])
-    field_group = @category.field_groups.find_by(field_id: params[:id])
-    sort = field_group.sort
-    field_group.sort = sort + 1
-
-    if swap_sort(@category, sort, sort + 1)
-      field_group.update(sort: sort + 1)
-      flash[:notice] = "Field sort was successfully sorted up."
-      redirect_to @category
-    else
-      flash.now[:alert] = "Error sorting Field up. Please try again."
-      redirect_to @category
-    end
+    swap_sort(@category, 1)
+    redirect_to @category
   end
 
   def destroy
@@ -65,16 +46,8 @@ class FieldGroupsController < ApplicationController
     params.require(:field_group).permit!
   end
 
-  def siblings(category)
-    category.fields
-  end
-
-  def max_sort(category)
-    siblings(category).count
-  end
-
   def set_sort(category, field_group)
-    field_group.sort = max_sort(category) == 0 ? 1 : max_sort(category) + 1
+    field_group.sort = category.sorted_field_groups.count == 0 ? 1 : category.sorted_field_groups.count + 1
   end
 
   def reset_sort(category, sort)
@@ -83,9 +56,18 @@ class FieldGroupsController < ApplicationController
     end
   end
 
-  #this is grabbing the fg we just saved
   def swap_sort(category, sort, sib_sort)
     field = category.field_groups.where(sort: sib_sort)
     field.update(sort: sort)
+  end
+
+  def swap_sort(category, pos)
+    field_group = @category.field_groups.find_by(field_id: params[:id])
+    sort = field_group.sort
+    sort2 = pos == -1 ? sort - 1 : sort + 1
+
+    field_group2 = @category.field_groups.where(sort: sort2)
+    field_group2.update(sort: sort)
+    field_group.update(sort: sort2)
   end
 end

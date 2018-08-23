@@ -1,5 +1,5 @@
 <div class="align-center">
-  <div><%= link_to "▲", sort_up_category_field_group_path(category, field_group.field), class: 'button', method: :post %></div>
+  <div><%= link_to_if field_group.sort > 1, "▲", sort_up_category_field_group_path(category, field_group.field), class: 'button', method: :post %></div>
   <div><strong><%= field_group.sort %></strong></div>
-  <div><%= link_to "▼", sort_down_category_field_group_path(category, field_group.field), class: 'button', method: :post %></div>
+  <div><%= link_to_unless category.sorted_field_groups.last == field_group, "▼", sort_down_category_field_group_path(category, field_group.field), class: 'button', method: :post %></div>
 </div>
