@@ -56,10 +56,10 @@ class FieldGroupsController < ApplicationController
     end
   end
 
-  def swap_sort(category, sort, sib_sort)
-    field = category.field_groups.where(sort: sib_sort)
-    field.update(sort: sort)
-  end
+  # def swap_sort(category, sort, sib_sort)
+  #   field = category.field_groups.where(sort: sib_sort)
+  #   field.update(sort: sort)
+  # end
 
   def swap_sort(category, pos)
     field_group = @category.field_groups.find_by(field_id: params[:id])
