@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180823030521) do
+ActiveRecord::Schema.define(version: 20180824011044) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,12 +32,13 @@ ActiveRecord::Schema.define(version: 20180823030521) do
 
   create_table "field_groups", force: :cascade do |t|
     t.bigint "field_id"
-    t.bigint "category_id"
+    t.bigint "fieldable_id"
     t.integer "sort"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["category_id"], name: "index_field_groups_on_category_id"
+    t.string "fieldable_type"
     t.index ["field_id"], name: "index_field_groups_on_field_id"
+    t.index ["fieldable_id"], name: "index_field_groups_on_fieldable_id"
   end
 
   create_table "fields", force: :cascade do |t|
@@ -47,6 +48,6 @@ ActiveRecord::Schema.define(version: 20180823030521) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "field_groups", "categories"
+  add_foreign_key "field_groups", "categories", column: "fieldable_id"
   add_foreign_key "field_groups", "fields"
 end
