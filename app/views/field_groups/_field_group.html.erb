@@ -1,0 +1,9 @@
+<% fieldable.field_groups.order(:sort).each do |field_group| %>
+  <tr>
+    <td class="align-middle"><%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %></td>
+    <td class="align-middle"><%= field_group.field.id %></td>
+    <td class="align-middle"><%= field_group.field.name %></td>
+    <td class="align-middle"><%= field_group.field.field_type %></td>
+    <td class="align-middle"><%= link_to 'Remove', category_field_group_path(fieldable, field_group.field), method: :delete %></td>
+  </tr>
+<% end %>

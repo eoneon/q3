@@ -3,7 +3,7 @@
 
   <h4>Add category field</h4>
   <div>
-    <%= render 'categories/field_form', category: @category %>
+    <%= render 'field_groups/field_form', fieldable: @category %>
   </div>
 
   <table class="table table-striped table-hover">
@@ -14,14 +14,15 @@
       <th>field type</th>
     </thead>
     <tbody>
-      <% @category.field_groups.order(:sort).each do |field_group| %>
+      <%= render 'field_groups/field_group', fieldable: @category %>
+      <!-- <%# @category.field_groups.order(:sort).each do |field_group| %>
         <tr>
-          <td class="align-middle"><%= render 'categories/sorter', category: @category, field_group: field_group %></td>
-          <td class="align-middle"><%= request.path.split("/")[-2].singularize %></td>
-          <td class="align-middle"><%= field_group.field.name %></td>
-          <td class="align-middle"><%= field_group.field.field_type %></td>
-          <td class="align-middle"><%= link_to 'Remove', category_field_group_path(@category, field_group.field), method: :delete %></td>
-        </tr>
-      <% end %>
+          <td class="align-middle"><%#= render 'categories/sorter', category: @category, field_group: field_group %></td>
+          <td class="align-middle"><%#= field_group.field.id %></td>
+          <td class="align-middle"><%#= field_group.field.name %></td>
+          <td class="align-middle"><%#= field_group.field.field_type %></td>
+          <td class="align-middle"><%#= link_to 'Remove', category_field_group_path(@category, field_group.field), method: :delete %></td>
+        </tr> -->
+      <%# end %>
     </tbody>
   </table>

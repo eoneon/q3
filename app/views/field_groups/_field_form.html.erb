@@ -1,4 +1,4 @@
-<%= form_for [category, FieldGroup.new] do |f| %>
+<%= form_for [fieldable, FieldGroup.new] do |f| %>
   <%= f.collection_select :field_id, Field.all, :id, :name, {class: 'form-control', include_blank: true} %>
-  <%= f.submit "Add category field" %>
+  <%= f.submit "Add field" %>
 <% end %>

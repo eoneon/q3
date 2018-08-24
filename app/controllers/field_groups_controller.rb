@@ -59,12 +59,12 @@ class FieldGroupsController < ApplicationController
   def set_fieldable
     parent_klasses = %w[category dimension]
     if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
-      @parent = klass.camelize.constantize.find params[:"#{klass}_id"]
+      klass.camelize.constantize.find params[:"#{klass}_id"]
     end
   end
 
   def swap_sort(fieldable, pos)
-    field_group = @fieldable.field_groups.find_by(field_id: params[:id])
+    field_group = FieldGroup.find(params[:id])
     sort = field_group.sort
     sort2 = pos == -1 ? sort - 1 : sort + 1
 
