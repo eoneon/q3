@@ -1,6 +1,12 @@
-class DimensionController < ApplicationController
+class DimensionsController < ApplicationController
   def index
     @dimensions = Dimension.all.order(sort: 'asc')
+
+    respond_to do |format|
+      format.html
+      format.csv { send_data @dimensions.to_csv(['sort', 'name']), filename: "Dimensions.csv" }
+      format.xls { send_data @dimensions.to_csv(['sort', 'name'], col_sep: "\t") }
+    end
   end
 
   def show

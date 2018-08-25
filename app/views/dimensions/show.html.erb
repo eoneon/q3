@@ -1,0 +1,19 @@
+<h1>Dimension#Show: <%= @dimension.name %></h1>
+<p><%= link_to "Edit: #{@dimension.name}", edit_dimension_path(@dimension) %> | <%= link_to "Return to Dimension List", dimensions_path %></p><br>
+
+  <h4>Add dimension field</h4>
+  <div>
+    <%= render 'field_groups/field_form', fieldable: @dimension %>
+  </div>
+
+  <table class="table table-striped table-hover">
+    <thead>
+      <th>Sort</th>
+      <th>ID</th>
+      <th>field name</th>
+      <th>field type</th>
+    </thead>
+    <tbody>
+      <%= render 'field_groups/field_group', fieldable: @dimension %>
+    </tbody>
+  </table>

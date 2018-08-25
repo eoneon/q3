@@ -1,10 +1,11 @@
 class FieldsController < ApplicationController
   def index
     @fields = Field.all
+
     respond_to do |format|
       format.html
-      format.csv { send_data @fields.to_csv }
-      #format.xls { send_data @fields.to_csv(col_sep: "\t") }
+      format.csv { send_data @fields.to_csv, filename: "Fields.csv"}
+      format.xls { send_data @fields.to_csv(col_sep: "\t") }
     end
   end
 

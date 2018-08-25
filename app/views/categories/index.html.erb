@@ -4,6 +4,12 @@
   <p><strong>No Category</strong></p>
 <% end %>
 
+<p>
+  Download:
+  <%= link_to "Export categories to CSV", categories_path(format: "csv") %> |
+  <%= link_to "Export categories to Excel", categories_path(format: "xls") %>
+</p>
+
 <h4>Import Fields</h4>
 <%= form_tag import_categories_path, multipart: true do %>
   <%= file_field_tag :file %>

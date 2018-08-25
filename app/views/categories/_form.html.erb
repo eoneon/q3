@@ -1,12 +1,7 @@
-<%= form_for @category do |f| %>
+<%= form_for fieldable do |f| %>
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name, class: "form-control"   %>
   </div>
-
-  <!-- <div class="field">
-    <%#= f.label :fields %><br>
-    <%#= f.text_field :fields, class: "form-control"   %>
-  </div> -->
   <%= f.submit "Save" %>
 <% end %>

@@ -1,5 +1,6 @@
 <h1>Category#Show: <%= @category.name %></h1>
 <p><%= link_to "Edit: #{@category.name}", edit_category_path(@category) %> | <%= link_to "Return to Category List", categories_path %></p><br>
+<h4>Export Invoice</h4>
 
   <h4>Add category field</h4>
   <div>
@@ -15,14 +16,5 @@
     </thead>
     <tbody>
       <%= render 'field_groups/field_group', fieldable: @category %>
-      <!-- <%# @category.field_groups.order(:sort).each do |field_group| %>
-        <tr>
-          <td class="align-middle"><%#= render 'categories/sorter', category: @category, field_group: field_group %></td>
-          <td class="align-middle"><%#= field_group.field.id %></td>
-          <td class="align-middle"><%#= field_group.field.name %></td>
-          <td class="align-middle"><%#= field_group.field.field_type %></td>
-          <td class="align-middle"><%#= link_to 'Remove', category_field_group_path(@category, field_group.field), method: :delete %></td>
-        </tr> -->
-      <%# end %>
     </tbody>
   </table>
