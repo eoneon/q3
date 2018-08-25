@@ -4,6 +4,9 @@ class Dimension < ApplicationRecord
   has_many :field_groups, as: :fieldable, dependent: :destroy
   has_many :fields, through: :field_groups
 
+  has_many :sub_categories, as: :categorizable, dependent: :destroy
+  has_many :categories, through: :sub_categories
+
   def sorted_field_groups
     self.field_groups.order(:sort)
   end

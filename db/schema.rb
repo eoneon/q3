@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180824011044) do
+ActiveRecord::Schema.define(version: 20180825170625) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,17 @@ ActiveRecord::Schema.define(version: 20180824011044) do
     t.string "field_type"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "sub_categories", force: :cascade do |t|
+    t.bigint "category_id"
+    t.string "categorizable_type"
+    t.bigint "categorizable_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "sort"
+    t.index ["categorizable_type", "categorizable_id"], name: "index_sub_categories_on_categorizable_type_and_categorizable_id"
+    t.index ["category_id"], name: "index_sub_categories_on_category_id"
   end
 
   add_foreign_key "field_groups", "categories", column: "fieldable_id"
