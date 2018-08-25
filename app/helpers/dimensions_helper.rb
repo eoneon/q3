@@ -1,2 +1,2 @@
-module DimensionHelper
+module DimensionsHelper
 end

@@ -4,6 +4,6 @@
     <td class="align-middle"><%= field_group.field.id %></td>
     <td class="align-middle"><%= field_group.field.name %></td>
     <td class="align-middle"><%= field_group.field.field_type %></td>
-    <td class="align-middle"><%= link_to 'Remove', category_field_group_path(fieldable, field_group.field), method: :delete %></td>
+    <td class="align-middle"><%= link_to 'Remove', polymorphic_path([fieldable, field_group]), method: :delete %></td>
   </tr>
 <% end %>

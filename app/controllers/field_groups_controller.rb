@@ -27,7 +27,7 @@ class FieldGroupsController < ApplicationController
 
   def destroy
     @fieldable = set_fieldable
-    field_group = @fieldable.field_groups.find_by(field_id: params[:id])
+    field_group = FieldGroup.find(params[:id])
     sort = field_group.sort
 
     if field_group.destroy
