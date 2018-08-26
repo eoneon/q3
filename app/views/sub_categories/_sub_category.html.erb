@@ -1,0 +1,9 @@
+<% category.sub_categories.order(:sort).each do |sub_category| %>
+  <tr>
+    <td class="align-middle"><%= render 'sub_categories/sorter', category: category, sub_category: sub_category %></td>
+    <td class="align-middle"><%= sub_category.categorizable.id %></td>
+    <td class="align-middle"><%= sub_category.id %></td>
+    <td class="align-middle"><%= sub_category.categorizable.name %></td>
+    <td class="align-middle"><%= link_to 'Remove', [category, sub_category], method: :delete %></td>
+  </tr>
+<% end %>

@@ -6,10 +6,16 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :sub_categories, only: [:create, :update, :sort_up, :sort_down, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+
     collection do
       post :import
     end
-    
+
     member do
       get :export
     end

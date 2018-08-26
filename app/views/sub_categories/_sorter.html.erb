@@ -1,0 +1,5 @@
+<div class="align-center">
+  <div><%= link_to_if sub_category.sort > 1, "▲", sort_up_category_sub_category_path(category, sub_category), class: 'button', method: :post %></div>
+  <div><strong><%= sub_category.sort %></strong></div>
+  <div><%= link_to_unless category.sorted_sub_categories.last == sub_category, "▼", sort_down_category_sub_category_path(category, sub_category), class: 'button', method: :post %></div>
+</div>
