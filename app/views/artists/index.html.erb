@@ -1,0 +1,29 @@
+<h1>Artist#index</h1>
+Artist artists artist
+<% if @artists.empty? %>
+  <p><strong>No Artist</strong></p>
+<% end %>
+
+<p>
+  Download:
+  <%= link_to "Export artists to CSV", artists_path(format: "csv") %> |
+  <%= link_to "Export artists to Excel", artists_path(format: "xls") %>
+</p>
+
+<h4>Import Fields</h4>
+<%= form_tag import_artists_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+
+<%= link_to "New Artist", new_artist_path %>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <th>ID</th>
+    <th>Name</th>
+  </thead>
+  <tbody>
+    <%= render @artists %>
+  </tbody>
+</table>

@@ -38,5 +38,15 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :artists do
+    collection do
+      post :import
+    end
+
+    member do
+      get :export
+    end
+  end
+
   root to: 'categories#index'
 end

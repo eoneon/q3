@@ -1,0 +1,19 @@
+<%= form_for artist do |f| %>
+  <div class="field">
+    <%= f.label :artist_Id %><br>
+    <%= f.number_field :artist_id %>
+  </div>
+
+  <div class="col-md-12">
+    <h4>Properties:</h4>
+    <% %w[first_name last_name years tag].each do |field| %>
+      <%= f.fields_for :properties, OpenStruct.new(artist.properties) do |ff| %>
+        <div class="field">
+          <%= ff.label field %><br>
+          <%= ff.text_field field, class: "form-control"   %>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+  <%= f.submit "Save" %>
+<% end %>
