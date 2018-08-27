@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180826235618) do
+ActiveRecord::Schema.define(version: 20180827161246) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,19 @@ ActiveRecord::Schema.define(version: 20180826235618) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "items", force: :cascade do |t|
+    t.integer "sku"
+    t.integer "retail"
+    t.bigint "artist_id"
+    t.hstore "properties"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "category_id"
+    t.index ["artist_id"], name: "index_items_on_artist_id"
+    t.index ["category_id"], name: "index_items_on_category_id"
+    t.index ["properties"], name: "index_items_on_properties", using: :gist
+  end
+
   create_table "sub_categories", force: :cascade do |t|
     t.bigint "category_id"
     t.string "categorizable_type"
@@ -68,6 +81,30 @@ ActiveRecord::Schema.define(version: 20180826235618) do
     t.index ["category_id"], name: "index_sub_categories_on_category_id"
   end
 
+  create_table "value_groups", force: :cascade do |t|
+    t.bigint "item_id"
+    t.bigint "value_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["item_id"], name: "index_value_groups_on_item_id"
+    t.index ["value_id"], name: "index_value_groups_on_value_id"
+  end
+
+  create_table "values", force: :cascade do |t|
+    t.string "name"
+    t.hstore "properties"
+    t.bigint "field_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["field_id"], name: "index_values_on_field_id"
+    t.index ["properties"], name: "index_values_on_properties", using: :gist
+  end
+
   add_foreign_key "field_groups", "categories", column: "fieldable_id"
   add_foreign_key "field_groups", "fields"
+  add_foreign_key "items", "artists"
+  add_foreign_key "items", "categories"
+  add_foreign_key "value_groups", "\"values\"", column: "value_id"
+  add_foreign_key "value_groups", "items"
+  add_foreign_key "values", "fields"
 end
