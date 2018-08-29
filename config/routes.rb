@@ -19,6 +19,8 @@ Rails.application.routes.draw do
     member do
       get :export
     end
+
+    resources :fields
   end
 
   resources :dimensions do
@@ -33,6 +35,13 @@ Rails.application.routes.draw do
   end
 
   resources :fields do
+    resources :values, except: [:index]
+    collection do
+      post :import
+    end
+  end
+
+  resources :values do
     collection do
       post :import
     end
@@ -46,6 +55,10 @@ Rails.application.routes.draw do
     member do
       get :export
     end
+  end
+
+  resources :items do
+    resources :values, except: [:index]
   end
 
   root to: 'categories#index'

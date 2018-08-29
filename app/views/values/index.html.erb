@@ -1,0 +1,35 @@
+<h1>Value Names</h1>
+
+<h4>Export Values</h4>
+<p>
+  Download:
+  <%= link_to "CSV", values_path(format: "csv") %>
+  <%#= link_to "Excel", values_path(format: "xls") %>
+</p>
+
+<h4>Import Values</h4>
+<%= form_tag import_values_path, multipart: true do %>
+  <%= file_field_tag :file %>
+  <%= submit_tag "Import" %>
+<% end %>
+<br>
+
+<%#= link_to 'New Value', new_value_path %>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @values.each do |value| %>
+      <tr>
+        <td><%= value.id %></td>
+        <td><%= value.name %></td>
+        <td><%= link_to 'Edit', edit_value_path(value) %> | <%= link_to 'Delete', value, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

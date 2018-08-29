@@ -1,0 +1,18 @@
+<%= form_for [field, value] do |f| %>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <% Value.field_keys.each do |field| %>
+    <div class="form-row">
+      <%= f.fields_for :properties, OpenStruct.new(value.properties) do |ff| %>
+        <div class="col-auto">
+          <%= ff.label field %><br>
+          <%= ff.text_field field  %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+  <%= f.submit "Save" %>
+<% end %>

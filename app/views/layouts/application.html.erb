@@ -17,7 +17,15 @@
         <!-- <li class="nav-link"><%#= link_to "Items", items_path %></li> -->
         <li class="nav-link"><%= link_to "Fields", fields_path %></li>
         <!-- <li class="nav-link"><%#= link_to "Values", field_values_path %></li> -->
+        <li class="nav-link"><%#= link_to "#{URI::parse(request.referer).path.strip.partition(request.path)}", URI::parse(request.referer).path.strip %></li>
+        <li class="nav-link">parse.r.r.path: <%= URI::parse(request.referer.strip).path if request.referer %></li>
+        <li class="nav-link">request.path: <%= request.path %></li>
+        <li class="nav-link">my_meth <%= @field.req_meth(request.path, params) %></li>
+        <li class="nav-link">"Recognize controller:<%#=  [:controller, :action].map {|k| Rails.application.routes.recognize_path(request.referrer)[k]} %></li>
+        <li class="nav-link"><%= "params #{params}" %></li>
+        <li class="nav-link"><%= "session #{session}" %></li>
       </ul>
+
       <div class="flash">
         <% if flash[:notice] %>
            <div class="alert alert-success">

@@ -1,22 +1,22 @@
 <h1>Field: <%= @field.name %></h1>
-field
+
 <%= link_to 'Edit field name', edit_field_path(@field) %> |
 <%= link_to 'Return to field list', fields_path %>
 
-<!-- <h4>New Field Value</h4>
-<p><%#= link_to "New Value", new_field_field_value_path(@field) %></p> -->
-<!-- <table class="table table-striped table-hover">
+<h4>New Value</h4>
+<p><%= link_to "New Value", new_field_value_path(@field) %></p>
+<table class="table table-striped table-hover">
   <thead>
     <th>ID</th>
     <th>Item field value</th>
   </thead>
   <tbody>
-    <%# @field.field_values.each do |field_value| %>
+    <% @field.values.each do |value| %>
       <tr>
-        <td><%#= field_value.id %></td>
-        <td><%#= link_to field_value.name, field_field_value_path(@field, field_value) %></td>
-        <td><%#= link_to 'edit', edit_field_field_value_path(@field, field_value) %> | <%= link_to 'Delete', [@field, field_value], method: :delete %></td>
+        <td><%= value.id %></td>
+        <td><%= value.name %></td>
+        <td><%= link_to 'edit', edit_field_value_path(@field, value) %> | <%= link_to 'Delete', [@field, value], method: :delete %></td>
       </tr>
-    <%# end %>
-  </tbody> -->
-<!-- </table> -->
+    <% end %>
+  </tbody>
+</table>

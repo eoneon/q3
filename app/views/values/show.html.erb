@@ -1,0 +1,7 @@
+<p>
+  <strong>Values:</strong>
+  <%= @value.name %>
+</p>
+
+<%= link_to 'Edit', edit_field_value_path([@value.field, @value]) %> |
+<%= link_to 'Back', category_field_path(@value.field) %>
