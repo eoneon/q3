@@ -3,5 +3,5 @@
 <%= render 'fields/form', field: @field %>
 <br>
 <p><%= @field.categories.count %></p>
-<%#= link_to 'Show', polymorphic_path([request.referer, @field]) %> |
-<%= link_to "Back", request.referer.present? ? request.referer : fields_path %>
+<%= link_to 'Show', @field.dynamic_show(request.path, params) %> | <%= link_to 'field index', @field.dynamic_index(request.path, params) %>
+<%#= link_to "Back", request.referer.present? ? request.referer : fields_path %>

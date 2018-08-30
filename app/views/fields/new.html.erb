@@ -2,4 +2,4 @@
 
 <%= render 'fields/form', field: @field %>
 
-<%= link_to 'Back', fields_path %>
+<%= link_to 'Back', @field.dynamic_index(request.path, params) %>
