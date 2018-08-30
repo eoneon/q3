@@ -3,5 +3,5 @@
   <%= @value.name %>
 </p>
 
-<%= link_to 'Edit', edit_field_value_path([@value.field, @value]) %> |
-<%= link_to 'Back', category_field_path(@value.field) %>
+<%= link_to 'Edit', @value.dynamic_edit(request.path, params) %> |
+<%= link_to 'Back', @value.dynamic_index(request.path, params) %>

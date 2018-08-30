@@ -1,0 +1,10 @@
+<div class="form-group col-auto">
+  <%= ff.label field_group[0] %><br>
+  <!-- 2nd: to avoid no method error: check if properties.present?; this avoids error on parent.properties[field.name].present? -->
+  <!-- because we want to display the fields regardless of whether a property[value] is selected or not -->
+  <% if parent.properties.present? && parent.properties[field_group[0]].present? %>
+    <%= ff.select field_group[0], options_for_select(field_group[2], parent.properties[field_group[0]]), {class: 'form-control', :include_blank => true}  %>
+  <% else %>
+    <%= ff.select field_group[0], options_for_select(field_group[2]), {class: 'form-control', :include_blank => true}  %>
+  <% end %>
+</div>

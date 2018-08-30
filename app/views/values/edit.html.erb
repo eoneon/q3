@@ -1,6 +1,6 @@
 <h1>Edit Values</h1>
-<%= @value.properties %>
+<%#= @value.properties %>
 <%= render 'values/form', field: @value.field, value: @value %>
 
-<%#= link_to 'Show', field_value_path(@value.field, @value) %> |
-<%= link_to 'Back', field_path(@value.field) %>
+<%= link_to 'value index', @value.dynamic_index(request.path, params) %> |
+<%= link_to 'Show', @value.dynamic_show(request.path, params) %>
