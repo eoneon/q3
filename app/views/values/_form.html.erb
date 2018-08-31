@@ -4,29 +4,29 @@
     <div class="form-row">
       <div class="input-group mb-3">
         <div class="input-group-prepend" id="button-addon3">
-          <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          <%= f.text_field :name,  placeholder: "name", aria_describedby: "button-addon3" %>
+          <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseValueForm" aria-expanded="false" aria-controls="collapseValueForm">
             form
           </button>
-          <button class="btn btn-outline-secondary" type="button" aria-describedby="button-addon3">
-            <%= f.submit "Save" %>
+          <button class="btn btn-outline-primary" type="submit" aria-describedby="button-addon3">
+            Submit
           </button>
-          <%= f.text_field :name,  placeholder: "name", aria_describedby: "button-addon3" %>
         </div>
       </div>
     </div>
-      <div class="collapse" id="collapseExample">
-        <div class="card-header">
-          <div class="form-row">
-            <%= render "values/properties", parent: value, f: f, field_builder: [["type", "select_field", ["Category", "Dimension"]],["parent", "select_field", Field.all.pluck(:name)]] %>
-          </div>
-          <div class="form-row">
-            <%= render "values/properties", parent: value, f: f, field_builder: [["title", "text_field"], ["body", "text_field"], ["attribute", "text_field"]] %>
-          </div>
-          <div class="form-row">
-            <%= render "values/properties", parent: value, f: f, field_builder: [["selected", "check_box"], ["display_hidden", "check_box"], ["display_none", "check_box"]] %>
-          </div>
+    <div class="collapse" id="collapseValueForm">
+      <div class="card-header">
+        <div class="form-row">
+          <%= render "values/properties", parent: value, f: f, field_builder: [["type", "select_field", ["Category", "Dimension"]],["parent", "select_field", Field.all.pluck(:name)]] %>
         </div>
-      <% end %>
+        <div class="form-row">
+          <%= render "values/properties", parent: value, f: f, field_builder: [["title", "text_field"], ["body", "text_field"], ["attribute", "text_field"]] %>
+        </div>
+        <div class="form-row">
+          <%= render "values/properties", parent: value, f: f, field_builder: [["selected", "check_box"], ["display_hidden", "check_box"], ["display_none", "check_box"]] %>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+<% end %>

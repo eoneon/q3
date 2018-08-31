@@ -1,0 +1,14 @@
+<h1>Supplier#index</h1><br>
+
+<div>
+  <%= render 'suppliers/form', supplier: Supplier.new %>
+</div>
+
+<table class="table table-striped table-hover">
+  <thead>
+    <th>Supplier Name</th>
+  </thead>
+  <tbody>
+    <%= render @suppliers %>
+  </tbody>
+</table>

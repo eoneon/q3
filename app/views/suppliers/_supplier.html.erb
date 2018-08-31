@@ -1,0 +1,16 @@
+<div class="media">
+  <div class="media-body">
+    <tr>
+    <td>
+      <%= supplier.name %>
+      <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseSupplierForm" aria-expanded="false" aria-controls="collapseSupplierForm">
+        supplier form
+      </button>
+      <div class="collapse" id="collapseSupplierForm">
+        <%= render 'suppliers/form', supplier: supplier %>
+      </div>
+    </td>
+    <td><%= link_to 'Edit', edit_supplier_path(supplier) %> | <%= link_to 'Delete', supplier,  method: :delete, remote: true, data: {confirm: "Are you sure?"} %></td>
+    </tr>
+ </div>
+</div>

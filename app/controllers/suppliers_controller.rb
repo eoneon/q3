@@ -20,7 +20,7 @@ class SuppliersController < ApplicationController
 
     if @supplier.save
       flash[:notice] = "Supplier was saved successfully."
-      redirect_to @supplier
+      redirect_to action: :index
     else
       flash.now[:alert] = "Error creating Supplier. Please try again."
       render :edit
@@ -33,7 +33,7 @@ class SuppliersController < ApplicationController
 
     if @supplier.save
       flash[:notice] = "supplier was updated successfully."
-      render :edit
+      redirect_to action: :index
     else
       flash.now[:alert] = "Error updated supplier. Please try again."
       render :edit
