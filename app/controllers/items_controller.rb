@@ -8,14 +8,14 @@ class ItemsController < ApplicationController
   end
 
   def new
-    #@invoice = Invoice.find(params[:invoice_id])
+    @invoice = Invoice.find(params[:invoice_id])
     @item = Item.new(category_id: params[:category_id], artist_id: params[:artist_id])
   end
 
   def create
-    #@invoice = Invoice.find(params[:invoice_id])
-    #@item = @invoice.items.build(item_params)
-    @item = Item.new(item_params)
+    @invoice = Invoice.find(params[:invoice_id])
+    @item = @invoice.items.build(item_params)
+    #@item = Item.new(item_params)
 
     if @item.save
       flash[:notice] = "Item was saved successfully."
@@ -35,7 +35,7 @@ class ItemsController < ApplicationController
     @item.assign_attributes(item_params)
 
     if @item.save
-      #flash[:notice] = "Item was updated successfully."
+      flash[:notice] = "Item was updated successfully."
     else
       flash.now[:alert] = "Error updated item. Please try again."
     end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180827161246) do
+ActiveRecord::Schema.define(version: 20180831175313) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,15 @@ ActiveRecord::Schema.define(version: 20180827161246) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "invoices", force: :cascade do |t|
+    t.string "name"
+    t.integer "invoice_number"
+    t.bigint "supplier_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["supplier_id"], name: "index_invoices_on_supplier_id"
+  end
+
   create_table "items", force: :cascade do |t|
     t.integer "sku"
     t.integer "retail"
@@ -65,8 +74,10 @@ ActiveRecord::Schema.define(version: 20180827161246) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "category_id"
+    t.bigint "invoice_id"
     t.index ["artist_id"], name: "index_items_on_artist_id"
     t.index ["category_id"], name: "index_items_on_category_id"
+    t.index ["invoice_id"], name: "index_items_on_invoice_id"
     t.index ["properties"], name: "index_items_on_properties", using: :gist
   end
 
@@ -79,6 +90,12 @@ ActiveRecord::Schema.define(version: 20180827161246) do
     t.integer "sort"
     t.index ["categorizable_type", "categorizable_id"], name: "index_sub_categories_on_categorizable_type_and_categorizable_id"
     t.index ["category_id"], name: "index_sub_categories_on_category_id"
+  end
+
+  create_table "suppliers", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "value_groups", force: :cascade do |t|
@@ -102,6 +119,7 @@ ActiveRecord::Schema.define(version: 20180827161246) do
 
   add_foreign_key "field_groups", "categories", column: "fieldable_id"
   add_foreign_key "field_groups", "fields"
+  add_foreign_key "invoices", "suppliers"
   add_foreign_key "items", "artists"
   add_foreign_key "items", "categories"
   add_foreign_key "value_groups", "\"values\"", column: "value_id"
