@@ -1,35 +1,32 @@
 <%= form_for [field, value] do |f| %>
-<div class="form">
-
-  <div class="form-row">
-    <div class="form-group col-sm-2">
-      <%= f.label :name %>
-      <%= f.text_field :name, class: "form-control" %>
+<div class="form card">
+  <div class="card-body">
+    <div class="form-row">
+      <div class="input-group mb-3">
+        <div class="input-group-prepend" id="button-addon3">
+          <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+            form
+          </button>
+          <button class="btn btn-outline-secondary" type="button" aria-describedby="button-addon3">
+            <%= f.submit "Save" %>
+          </button>
+          <%= f.text_field :name,  placeholder: "name", aria_describedby: "button-addon3" %>
+        </div>
+      </div>
+    </div>
+      <div class="collapse" id="collapseExample">
+        <div class="card-header">
+          <div class="form-row">
+            <%= render "values/properties", parent: value, f: f, field_builder: [["type", "select_field", ["Category", "Dimension"]],["parent", "select_field", Field.all.pluck(:name)]] %>
+          </div>
+          <div class="form-row">
+            <%= render "values/properties", parent: value, f: f, field_builder: [["title", "text_field"], ["body", "text_field"], ["attribute", "text_field"]] %>
+          </div>
+          <div class="form-row">
+            <%= render "values/properties", parent: value, f: f, field_builder: [["selected", "check_box"], ["display_hidden", "check_box"], ["display_none", "check_box"]] %>
+          </div>
+        </div>
+      <% end %>
     </div>
   </div>
-
-  <div class="form-row">
-    <% [["type", "select_field", ["Category", "Dimension"]],["parent", "select_field", Field.all.pluck(:name)]].each do |field_group| %>
-      <%= f.fields_for :properties, OpenStruct.new(value.properties) do |ff| %>
-        <%= render "values/fields/#{field_group[1]}", parent: value, field_group: field_group, ff: ff   %>
-      <% end %>
-    <% end %>
-  </div>
-
-  <div class="form-row">
-    <% [["title", "text_field"], ["body", "text_field"], ["attribute", "text_field"]].each do |field_group| %>
-      <%= f.fields_for :properties, OpenStruct.new(value.properties) do |ff| %>
-        <%= render "values/fields/#{field_group[1]}", parent: value, field_group: field_group, ff: ff   %>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="form-row">
-    <% [["selected", "check_box"], ["display_hidden", "check_box"], ["display_none", "check_box"]].each do |field_group| %>
-      <%= f.fields_for :properties, OpenStruct.new(value.properties) do |ff| %>
-        <%= render "values/fields/#{field_group[1]}", parent: value, field_group: field_group, ff: ff   %>
-      <% end %>
-    <% end %>
-  </div>
-  <%= f.submit "Save" %>
 </div>
-<% end %>
