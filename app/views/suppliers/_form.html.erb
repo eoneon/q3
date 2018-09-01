@@ -1,15 +1,14 @@
 <%= form_for supplier do |f| %>
   <div class="form">
-    <div class="card">
-      <div class="card-body">
-        <div class="input-group mb-3">
-          <div class="input-group-prepend" id="button-addon3">
-            <%= f.text_field :name, placeholder: "enter supplier's name", aria_describedby: "button-addon3" %>
-            <button class="btn btn-outline-primary" type="submit" aria-describedby="button-addon3">
-              Submit
-            </button>
-          </div>
-        </div>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend" id="button-addon3">
+        <%= f.text_field :name, placeholder: "enter supplier's name", aria_describedby: "button-addon3" %>
+        <button class="btn btn-outline-primary" type="submit" aria-describedby="button-addon3">
+          Submit
+        </button>
+        <% if supplier.id %>
+          <%= link_to 'Delete', supplier,  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "float-right btn btn-outline-danger", aria_describedby: "button-addon3" %>
+        <% end %>
       </div>
     </div>
   </div>

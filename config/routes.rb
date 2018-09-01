@@ -57,7 +57,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :suppliers do
+  resources :suppliers, except: [:new, :edit] do
     resources :invoices, except: [:index]
   end
 

@@ -1,16 +1,16 @@
 <div class="media">
   <div class="media-body">
     <tr>
-    <td>
-      <button class="btn btn-sm btn-outline-secondary btn_width" type="button" data-toggle="collapse" data-target="#collapseSupplierForm#{<%= supplier.id %>}" aria-expanded="false" aria-controls="collapseSupplierForm#{<%= supplier.id %>}">
-        <%= supplier.name %>
-      </button>
-      <div class="collapse" id="collapseSupplierForm#{<%= supplier.id %>}">
-        <%= render 'suppliers/form', supplier: supplier %>
-      </div>
-      <%= link_to 'Delete', supplier,  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "float-right btn btn-sm btn-outline-danger" %>
-    </td>
-    <!-- <td><%#= link_to 'Delete', supplier,  method: :delete, remote: true, data: {confirm: "Are you sure?"} %></td> -->
+      <td>
+        <button class="btn btn-sm btn-link btn_width" type="button" data-toggle="collapse" data-target="#collapseSupplierForm#{<%= supplier.id %>}" aria-expanded="false" aria-controls="collapseSupplierForm#{<%= supplier.id %>}">
+          <%= supplier.name %>
+        </button>
+
+        <div class="collapse" id="collapseSupplierForm#{<%= supplier.id %>}">
+          <%= render 'suppliers/form', supplier: supplier %>
+        </div>
+        <%#= link_to 'Delete', supplier,  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "float-right btn btn-sm btn-outline-danger" %>
+      </td>
     </tr>
  </div>
 </div>
