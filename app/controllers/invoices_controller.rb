@@ -18,7 +18,7 @@ class InvoicesController < ApplicationController
 
     if @invoice.save
       flash[:notice] = "Invoice was saved successfully."
-      redirect_to [@invoice.supplier, @invoice]
+      redirect_to [@supplier, @invoice]
     else
       flash.now[:alert] = "Error creating invoice. Please try again."
       render :new

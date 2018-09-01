@@ -1,0 +1,17 @@
+<%= form_for [supplier, invoice] do |f| %>
+  <div class="form">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend" id="button-addon3">
+        <span class="input-group-text">Invoice name & number</span>
+        <%= f.text_field :name, placeholder: "enter name", aria_describedby: "button-addon3" %>
+        <%= f.number_field :invoice_number, placeholder: "enter number", aria_describedby: "button-addon3" %>
+        <button class="btn btn-outline-primary" type="submit" aria-describedby="button-addon3">
+          Submit
+        </button>
+        <% if invoice.id %>
+          <%= link_to 'Delete', invoice,  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "float-right btn btn-outline-danger", aria_describedby: "button-addon3" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>
