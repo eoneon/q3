@@ -18,7 +18,7 @@ class InvoicesController < ApplicationController
 
     if @invoice.save
       flash[:notice] = "Invoice was saved successfully."
-      redirect_to [@supplier, @invoice]
+      redirect_to request.referer
     else
       flash.now[:alert] = "Error creating invoice. Please try again."
       render :new
@@ -35,7 +35,7 @@ class InvoicesController < ApplicationController
 
     if @invoice.save
       flash[:notice] = "Invoice was updated successfully."
-      redirect_to [@invoice.supplier, @invoice]
+      redirect_to request.referer
     else
       flash.now[:alert] = "Error updated invoice. Please try again."
       render :edit
@@ -46,7 +46,7 @@ class InvoicesController < ApplicationController
     @invoice = Invoice.find(params[:id])
 
     if @invoice.destroy
-      flash[:notice] = "\"#{@invoice.invoice}\" was deleted successfully."
+      flash[:notice] = "\"#{@invoice.name}\" was deleted successfully."
       redirect_to @invoice.supplier
     else
       flash.now[:alert] = "There was an error deleting the invoice."

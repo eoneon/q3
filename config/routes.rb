@@ -61,15 +61,15 @@ Rails.application.routes.draw do
     resources :invoices, except: [:index]
   end
 
-  resources :invoices do
-    resources :items, except: [:index] do
+  resources :invoices, only: [] do
+    resources :items, except: [:index]
       # member do
-      #   get :create_skus, :export
+      #   get :create_skus, :export , except: [:index]
       # end
       # collection do
       #   post :import
       # end
-    end
+    # end
   end
 
   resources :items do

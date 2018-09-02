@@ -19,7 +19,7 @@ class ItemsController < ApplicationController
 
     if @item.save
       flash[:notice] = "Item was saved successfully."
-      render :edit
+      redirect_to request.referer
     else
       flash.now[:alert] = "Error creating item. Please try again."
       render :new
@@ -39,7 +39,7 @@ class ItemsController < ApplicationController
     else
       flash.now[:alert] = "Error updated item. Please try again."
     end
-    render :edit
+    redirect_to request.referer
   end
 
   def destroy
@@ -47,7 +47,8 @@ class ItemsController < ApplicationController
 
     if @item.destroy
       flash[:notice] = "Item was deleted successfully."
-      redirect_to action: :index
+      #redirect_to action: :index
+      redirect_to request.referer
     else
       flash.now[:alert] = "There was an error deleting the item."
       render :show

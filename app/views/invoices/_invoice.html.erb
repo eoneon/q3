@@ -3,7 +3,7 @@
     <tr>
       <td>
         <a href="<%= supplier_invoice_path(invoice) %>" class="btn btn-link" type="button"  aria-describedby: "button-addon3">
-          <%= invoice.name %>
+          <%= invoice.display %>
         </a>
         <button class="btn btn-sm btn-outline-info float-right" type="button" data-toggle="collapse" data-target="#collapseInvoiceForm#{<%= invoice.id %>}" aria-expanded="false" aria-controls="collapseInvoiceForm#{<%= invoice.id %>}">
           Edit
