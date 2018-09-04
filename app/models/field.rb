@@ -7,4 +7,8 @@ class Field < ApplicationRecord
   has_many :dimensions, through: :field_groups, source: :fieldable, source_type: "Dimension"
 
   has_many :values
+
+  def display
+    "(#{id}) #{name}"
+  end
 end

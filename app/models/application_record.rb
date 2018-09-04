@@ -24,4 +24,8 @@ class ApplicationRecord < ActiveRecord::Base
   def dynamic_edit(req_path, params)
     dynamic_show(req_path, params) + "/edit"
   end
+
+  def display
+    "(#{id}) #{name}"
+  end
 end

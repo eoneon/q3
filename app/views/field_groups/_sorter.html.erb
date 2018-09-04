@@ -1,5 +1,3 @@
-<div class="align-center">
-  <div><%= link_to_if field_group.sort > 1, "▲", polymorphic_path([fieldable, field_group], action: 'sort_up'), class: 'button', method: :post %></div>
-  <div><strong><%= field_group.sort %></strong></div>
-  <div><%= link_to_unless fieldable.sorted_field_groups.last == field_group, "▼", polymorphic_path([fieldable, field_group], action: 'sort_down'), class: 'button', method: :post %></div>
-</div>
+<div><%= link_to_if field_group.sort.present? && field_group.sort > 1, "▲", polymorphic_path([fieldable, field_group], action: 'sort_up'), class: 'btn-sm', method: :post %></div>
+<div><span><%= field_group.sort %></span></div>
+<div><%= link_to_unless field_group.sort.nil? || fieldable.sorted_field_groups.last == field_group, "▼", polymorphic_path([fieldable, field_group], action: 'sort_down'), class: 'btn-sm', method: :post %></div>

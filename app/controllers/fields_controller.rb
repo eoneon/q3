@@ -13,10 +13,10 @@ class FieldsController < ApplicationController
     @field = Field.find(params[:id])
   end
 
-  def new
-    #@category = Category.find(params[:category_id]) if params[:category_id]
-    @field = Field.new
-  end
+  # def new
+  #   #@category = Category.find(params[:category_id]) if params[:category_id]
+  #   @field = Field.new
+  # end
 
   def edit
     @field = Field.find(params[:id])
@@ -24,10 +24,11 @@ class FieldsController < ApplicationController
 
   def create
     @field = Field.new(field_params)
+    @field.public_send(fieldables) << fieldable
 
     if @field.save
       flash[:notice] = "Field was saved successfully."
-      render :edit
+      redirect_to request.referer
     else
       flash.now[:alert] = "Error creating Field. Please try again."
       render :new
@@ -68,5 +69,21 @@ class FieldsController < ApplicationController
 
   def field_params
     params.require(:field).permit!
+  end
+
+  def get_klass
+    parent_klasses = %w[category dimension]
+    if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
+      #klass.camelize.constantize.find params[:"#{klass}_id"]
+      klass
+    end
+  end
+
+  def fieldables
+    get_klass.pluralize
+  end
+
+  def fieldable
+    get_klass.camelize.constantize.find params[:"#{get_klass}_id"]
   end
 end

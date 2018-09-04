@@ -1,9 +1,29 @@
 <% fieldable.field_groups.order(:sort).each do |field_group| %>
-  <tr>
-    <td class="align-middle"><%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %></td>
-    <td class="align-middle"><%= field_group.field.id %></td>
-    <td class="align-middle"><%= field_group.field.name %></td>
-    <td class="align-middle"><%= field_group.field.field_type %></td>
-    <td class="align-middle"><%= link_to 'Remove', polymorphic_path([fieldable, field_group]), method: :delete %> | <%= link_to "Edit", edit_polymorphic_path([fieldable, field_group.field]) %></td>
-  </tr>
+  <div class="media">
+    <div class="media-body">
+      <tr>
+        <td>
+          <div class="btn-group-vertical">
+            <div class="btn" role="group">
+              <%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %>
+            </div>
+          </div>
+
+          <a href="<%= polymorphic_path([fieldable, field_group.field]) %>" class="btn btn-link" type="button" aria-describedby: "button-addon1">
+            <%= field_group.field.display %>
+          </a>
+
+          <div class="collapse" id="collapseFieldForm#{<%= field_group.field.id %>}">
+            <%= render 'fields/form', fieldable: fieldable, field: field_group.field %>
+          </div>
+        </td>
+
+        <td>
+          <button class="btn btn-sm btn-outline-info float-right" type="button" data-toggle="collapse" data-target="#collapseFieldForm#{<%= field_group.field.id %>}" aria-expanded="false" aria-controls="collapseFieldForm#{<%= field_group.field.id %>}" aria-describedby="button-addon1">
+            Edit
+          </button>
+        </td>
+      </tr>
+   </div>
+  </div>
 <% end %>

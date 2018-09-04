@@ -1,12 +1,17 @@
-<%= form_for field do |f| %>
-  <div class="field">
-    <%= f.label :field_type %><br>
-    <%= f.select :field_type, %w[text_field check_box number_field text_area], include_blank: true %>
+<%= form_for [fieldable, field] do |f| %>
+  <div class="form">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend" id="button-addon3">
+        <span class="input-group-text">Field type & name</span>
+        <%= f.select :field_type, %w[text_field check_box number_field text_area], placeholder: "enter name", aria_describedby: "button-addon3", include_blank: true %>
+        <%= f.text_field :name %>
+        <button class="btn btn-outline-primary" type="submit" aria-describedby="button-addon3">
+          Submit
+        </button>
+        <% if field.id %>
+          <%= link_to 'Delete', [fieldable, field.field_groups.first], method: :delete, data: {confirm: "Are you sure?"}, class: "float-right btn btn-outline-danger", aria_describedby: "button-addon3" %>
+        <% end %>
+      </div>
+    </div>
   </div>
-
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name %>
-  </div>
-  <%= f.submit "Save" %>
 <% end %>

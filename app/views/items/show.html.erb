@@ -1,15 +1,1 @@
-<h1>Invoice: <%= @invoice.display %></h1>
-
-<div>
-  <%= render 'items/form', invoice: @invoice, item: Item.new %>
-</div>
-
-<table class="table table-striped table-hover">
-  <thead>
-    <th>Items</th>
-  </thead>
-
-  <tbody>
-    <%= render @invoice.items.order(:sku) %>
-  </tbody>
-</table>
+<h1>Item: <%= @item.sku %></h1>

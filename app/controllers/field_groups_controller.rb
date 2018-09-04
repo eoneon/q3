@@ -2,7 +2,6 @@ class FieldGroupsController < ApplicationController
   def create
     @fieldable = set_fieldable
     field_group = @fieldable.field_groups.build(field_group_params)
-    set_sort(@fieldable, field_group)
 
     if field_group.save
       flash[:notice] = "Field chain was saved successfully."
@@ -46,9 +45,9 @@ class FieldGroupsController < ApplicationController
     params.require(:field_group).permit!
   end
 
-  def set_sort(fieldable, field_group)
-    field_group.sort = fieldable.sorted_field_groups.count == 0 ? 1 : fieldable.sorted_field_groups.count + 1
-  end
+  # def set_sort(fieldable, field_group)
+  #   field_group.sort = fieldable.sorted_field_groups.count == 0 ? 1 : fieldable.sorted_field_groups.count + 1
+  # end
 
   def reset_sort(fieldable, sort)
     fieldable.field_groups.where("sort > ?", sort).each do |field|
