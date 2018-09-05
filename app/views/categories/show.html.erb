@@ -1,40 +1,34 @@
 <h1>Category: <%= @category.name %></h1>
-
 <p><%= link_to "Edit: #{@category.name}", edit_category_path(@category) %> | <%= link_to "Return to Category List", categories_path %></p><br>
 
 <div>
   <%= render 'fields/form', fieldable: @category, field: Field.new %>
 </div>
 
-<h4>Add category field</h4>
+<h4>Add fields to: <%= @category.name %></h4>
 <div>
   <%= render 'field_groups/form', fieldable: @category %>
 </div>
 
-<h4>Add Dimensions</h4>
-<div>
-  <%= render 'sub_categories/sub_category_form', category: @category  %>
-</div>
-
 <table class="table table-striped table-hover">
   <thead>
-    <th>Sort</th>
-    <th>ID & Field Name</th>
-    <!-- <th>field name</th>
-    <th>field type</th> -->
+    <th>Field Name</th>
   </thead>
   <tbody>
     <%= render 'field_groups/field_group', fieldable: @category %>
   </tbody>
 </table>
 
+<h4>Add Dimension Types for: <%= @category.name %></h4>
+<div>
+  <%= render 'sub_categories/sub_category_form', category: @category  %>
+</div>
+
 <table class="table table-striped table-hover">
   <thead>
-    <th>Sort</th>
-    <th>ID</th>
-    <th>Dimension name</th>
+    <th>Dimension type name</th>
   </thead>
   <tbody>
-    <%= render 'sub_categories/sub_category', category: @category %>
+    <%= render 'sub_categories/sub_category', fieldable: @category %>
   </tbody>
 </table>

@@ -1,9 +1,23 @@
-<% category.sub_categories.order(:sort).each do |sub_category| %>
-  <tr>
-    <td class="align-middle"><%= render 'sub_categories/sorter', category: category, sub_category: sub_category %></td>
-    <td class="align-middle"><%= sub_category.categorizable.id %></td>
-    <td class="align-middle"><%= sub_category.id %></td>
-    <td class="align-middle"><%= sub_category.categorizable.name %></td>
-    <td class="align-middle"><%= link_to 'Remove', [category, sub_category], method: :delete %></td>
-  </tr>
+<% fieldable.sub_categories.order(:sort).each do |sub_category| %>
+  <div class="media">
+    <div class="media-body">
+      <tr>
+        <td>
+          <div class="btn-group-vertical">
+            <div class="btn" role="group">
+              <%= render 'sub_categories/sorter', fieldable: fieldable, sub_category: sub_category %>
+            </div>
+          </div>
+
+          <a href="<%= polymorphic_path([fieldable, sub_category.categorizable]) %>" class="btn btn-link" type="button" aria-describedby: "button-addon1">
+            <%= sub_category.categorizable.display %>
+          </a>
+        <td>
+          <% if sub_category.categorizable.id %>
+            <%= link_to 'Delete', [fieldable, sub_category], method: :delete, data: {confirm: "Are you sure?"}, class: "float-right btn btn-sm btn-outline-danger", aria_describedby: "button-addon3" %>
+          <% end %>
+        </td>
+      </tr>
+   </div>
+  </div>
 <% end %>

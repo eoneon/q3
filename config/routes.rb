@@ -21,6 +21,7 @@ Rails.application.routes.draw do
     end
 
     resources :fields
+    resources :dimensions
   end
 
   resources :dimensions do
@@ -32,6 +33,7 @@ Rails.application.routes.draw do
     collection do
       post :import
     end
+    resources :fields
   end
 
   resources :fields do

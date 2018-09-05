@@ -1,21 +1,20 @@
 <%= form_for [field, value] do |f| %>
-<div class="form card">
-  <div class="card-body">
-    <div class="form-row">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend" id="button-addon3">
-          <%= f.text_field :name,  placeholder: "name", aria_describedby: "button-addon3" %>
-          <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseValueForm" aria-expanded="false" aria-controls="collapseValueForm">
-            form
-          </button>
-          <button class="btn btn-outline-primary" type="submit" aria-describedby="button-addon3">
-            Submit
-          </button>
+  <div class="form card">
+    <div class="card-body">
+      <div class="form-row">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend" id="button-addon3">
+            <%= f.text_field :name,  placeholder: "name", aria_describedby: "button-addon3" %>
+            <button class="btn btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapseValueForm#{<%= value.id %>}" aria-expanded="false" aria-controls="collapseValueForm#{<%= value.id %>}">
+              form
+            </button>
+            <button class="btn btn-outline-primary" type="submit" aria-describedby="button-addon3">
+              Submit
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="collapse" id="collapseValueForm">
-      <div class="card-header">
+      <div class="collapse" id="collapseValueForm#{<%= value.id %>}">
         <div class="form-row">
           <%= render "values/properties", parent: value, f: f, field_builder: [["type", "select_field", ["Category", "Dimension"]],["parent", "select_field", Field.all.pluck(:name)]] %>
         </div>
@@ -28,5 +27,4 @@
       </div>
     </div>
   </div>
-</div>
 <% end %>

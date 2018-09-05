@@ -1,17 +1,20 @@
 <%= form_for [fieldable, field] do |f| %>
   <div class="form">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend" id="button-addon3">
-        <span class="input-group-text">Field type & name</span>
-        <%= f.select :field_type, %w[text_field check_box number_field text_area], placeholder: "enter name", aria_describedby: "button-addon3", include_blank: true %>
-        <%= f.text_field :name %>
-        <button class="btn btn-outline-primary" type="submit" aria-describedby="button-addon3">
-          Submit
-        </button>
-        <% if field.id %>
-          <%= link_to 'Delete', [fieldable, field.field_groups.first], method: :delete, data: {confirm: "Are you sure?"}, class: "float-right btn btn-outline-danger", aria_describedby: "button-addon3" %>
-        <% end %>
+    <div class="form-row align-items-center">
+      <div class="form-group col-4">
+        <%= f.select :field_type, options_for_select(%w[text_field check_box number_field text_area]), {prompt: "- enter field type -"}, class: "form-control", id: "inlineFormInput" %>
       </div>
+      <div class="form-group col-4">
+        <%= f.text_field :name, placeholder: "enter field name", class: "form-control", id: "inlineFormInput" %>
+      </div>
+
+      <button class="btn btn-md btn_width btn-outline-primary form-group float-right" id="inlineFormInput" type="submit">
+        Submit
+      </button>
+
+      <% if field.id %>
+        <%= button_to 'Delete', [fieldable, field.field_groups.first], method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-md btn_width btn-outline-danger form-group float-right" %>
+      <% end %>
     </div>
   </div>
 <% end %>

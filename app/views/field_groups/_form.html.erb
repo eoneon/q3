@@ -1,4 +1,12 @@
 <%= form_for [fieldable, FieldGroup.new] do |f| %>
-  <%= f.collection_select :field_id, Field.all, :id, :name, {class: 'form-control', include_blank: true} %>
-  <%= f.submit "Add field" %>
+  <div class="form">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend form-group" id="button-addon1">
+        <%= f.collection_select :field_id, Field.all, :id, :name, include_blank: true, class: "form-control", aria_describedby: "button-addon1" %>
+        <button class="btn btn-sm btn-outline-primary" type="submit" aria-describedby="button-addon1">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
 <% end %>
