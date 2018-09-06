@@ -1,17 +1,18 @@
-<div class="media">
-  <div class="media-body">
-    <tr>
-      <td>
-        <a href="<%= supplier_path(supplier) %>" class="btn btn-link" type="button"  aria-describedby: "button-addon3">
+<tr>
+  <td>
+    <div class="row align-items-center">
+      <div class="col">
+        <a href="<%= supplier_path(supplier) %>" class="btn btn-link" type="button">
           <%= supplier.name %>
         </a>
-        <button class="btn btn-sm btn-outline-info float-right" type="button" data-toggle="collapse" data-target="#collapseSupplierForm#{<%= supplier.id %>}" aria-expanded="false" aria-controls="collapseSupplierForm#{<%= supplier.id %>}">
-          Edit
-        </button>
-        <div class="collapse" id="collapseSupplierForm#{<%= supplier.id %>}">
-          <%= render 'suppliers/form', supplier: supplier %>
-        </div>
-      </td>
-    </tr>
- </div>
-</div>
+      </div>
+      <div class="col">
+        <%= render 'suppliers/btn_group', supplier: supplier %>
+      </div>
+    </div>
+
+    <div class="row">
+      <%= render 'suppliers/multi_form', supplier: supplier %>
+    </div>
+  </td>
+</tr>

@@ -1,18 +1,15 @@
-<h1>Category: <%= @category.name %></h1>
-<p><%= link_to "Edit: #{@category.name}", edit_category_path(@category) %> | <%= link_to "Return to Category List", categories_path %></p><br>
-
-<div>
-  <%= render 'fields/form', fieldable: @category, field: Field.new %>
+<div class="jumbotron">
+  <h1 class="display-4">Art-type: <%= @category.name %></h1>
+  <hr class="my-4">
 </div>
 
-<h4>Add fields to: <%= @category.name %></h4>
 <div>
-  <%= render 'field_groups/form', fieldable: @category %>
-</div>
+  <%= render "categories/multi_form", fieldable: @category %>
+</div><br>
 
-<table class="table table-striped table-hover">
+<table class="table table-hover">
   <thead>
-    <th>Field Name</th>
+    <th>Associated Fields for <%= @category.name %>:</th>
   </thead>
   <tbody>
     <%= render 'field_groups/field_group', fieldable: @category %>

@@ -1,18 +1,14 @@
 <%= form_for fieldable do |f| %>
   <div class="form">
-    <!-- <div class="input-group mb-3">
-      <div class="input-group-prepend form-control" id="button-addon3"> -->
-    <div class="form-row card-body">
-      <!-- <div class="input-group-prepend form-control" id="button-addon3"> -->
-      <div class="form-group col-sm-4">
-        
-        <%= f.text_field :name, placeholder: "enter #{fieldable.class.name.downcase} name", class: "form-control" %>
+    <div class="form-row align-items-center">
+      <div class="form-group col">
+        <%= f.text_field :name, placeholder: "enter #{fieldable.class.name.downcase} name", class: "form-control", id: "inlineFormInput" %>
       </div>
-      <button class="btn btn-sm btn-outline-primary form-group float-right" type="submit">
+      <button class="btn btn-md btn_width btn-outline-primary form-group float-right" id="inlineFormInput" type="submit">
         Submit
       </button>
-      <% if fieldable.id %>
-        <%= button_to 'Delete', fieldable,  method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-outline-danger form-group float-right" %>
+      <% if fieldable.id && controller.action_name != "show" %>
+        <%= button_to 'Delete', fieldable,  method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-md btn_width btn-outline-danger form-group float-right" %>
       <% end %>
       </div>
     </div>
