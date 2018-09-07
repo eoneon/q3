@@ -1,24 +1,20 @@
-<div class="row">
-  <div class="col">
+<div class="form-row">
+  <div class="col-auto offset-md-1">
     <div class="collapse" id="supplierForm#{<%= supplier.id %>}">
       <div class="card-body">
         <%= render 'suppliers/form', supplier: supplier %>
       </div>
     </div>
-  </div>
-  <div class="col-auto">
+
     <div class="collapse" id="invoiceForm#{<%= supplier.id %>}">
       <div class="card-body">
         <%= render 'invoices/form', supplier: supplier, invoice: Invoice.new %>
       </div>
     </div>
-  </div>
-  <div class="col">
+  
     <div class="collapse" id="invoiceList#{<%= supplier.id %>}">
       <div class="card-body">
-        <div>
-          <%= render 'invoices/list', invoices: supplier.invoices %>
-        </div>
+        <%= render 'invoices/list', invoices: supplier.invoices %>
       </div>
     </div>
   </div>

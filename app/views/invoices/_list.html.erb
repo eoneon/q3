@@ -1,7 +1,7 @@
 <% unless invoices.empty? %>
   <div class="btn-group" role="group">
     <% invoices.each do |invoice| %>
-      <a href="<%= supplier_invoice_path(invoice.supplier, invoice) %>" class="btn btn-outline-primary" type="button">
+      <a href="<%= supplier_invoice_path(invoice.supplier, invoice) %>" class="btn btn-sm btn-outline-primary" type="button">
         <%= invoice.display %>
       </a>
     <% end %>
