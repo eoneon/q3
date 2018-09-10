@@ -1,18 +1,21 @@
-<%= form_for [fieldable, field] do |f| %>
+<%= form_with model: field, url: [fieldable, field], id: :field_form do |f| %>
   <div class="form">
     <div class="form-row align-items-center">
-      <div class="form-group col">
+      <div class="form-group col-3">
         <%= f.select :field_type, options_for_select(%w[text_field check_box number_field text_area]), {prompt: "- select field type -"}, class: "form-control", id: "inlineFormInput" %>
       </div>
-      <div class="form-group col">
+      <div class="form-group col-3">
         <%= f.text_field :name, placeholder: "enter field name", class: "form-control", id: "inlineFormInput" %>
       </div>
-      <button class="btn btn-md btn_width btn-outline-primary form-group float-right" id="inlineFormInput" type="submit">
+      <button class="btn btn-sm btn_width btn-outline-primary form-group" type="submit">
         Submit
       </button>
-      <% if field.id %>
-        <%= button_to 'Delete', [fieldable, field.field_groups.first], method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-md btn_width btn-outline-danger form-group float-right" %>
-      <% end %>
+      <!-- <%# if field.id %>
+        <%#= button_to 'Delete', [fieldable, field.field_groups.first], method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-md btn_width btn-outline-danger form-group float-right" %>
+      <%# end %> -->
+      <div class="float-right">
+        <%= render "layouts/flash" %>
+      </div>
     </div>
   </div>
 <% end %>

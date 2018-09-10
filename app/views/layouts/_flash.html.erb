@@ -1,0 +1,18 @@
+<div class="flash">
+  <% if flash[:notice] %>
+    <div class="alert alert-success col offset-md-1 flash_pad" role="alert">
+     <button type="button" class="close btn-sm" data-dismiss="alert">&times;</button>
+     <span><%= flash[:notice] %></span>
+    </div>
+   <% elsif flash.now[:alert] %>
+     <div class="alert alert-danger col offset-md-1 flash_pad" role="alert">
+       <button type="button" class="close" data-dismiss="alert">&times;</button>
+       <%= flash.now[:alert] %>
+     </div>
+   <% elsif flash[:alert] %>
+     <div class="alert alert-warning col offset-md-1 flash_pad" role="alert">
+       <button type="button" class="close" data-dismiss="alert">&times;</button>
+       <%= flash[:alert] %>
+     </div>
+   <% end %>
+ </div>

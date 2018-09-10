@@ -25,25 +25,9 @@
         <li class="nav-link"><%#= "params #{params}" %></li>
         <li class="nav-link"><%#= "session #{session}" %></li> -->
       </ul>
-
-      <div class="flash">
-        <% if flash[:notice] %>
-           <div class="alert alert-success">
-             <button type="button" class="close" data-dismiss="alert">&times;</button>
-             <%= flash[:notice] %>
-           </div>
-         <% elsif flash.now[:alert] %>
-           <div class="alert alert-danger">
-             <button type="button" class="close" data-dismiss="alert">&times;</button>
-             <%= flash.now[:alert] %>
-           </div>
-         <% elsif flash[:alert] %>
-           <div class="alert alert-warning">
-             <button type="button" class="close" data-dismiss="alert">&times;</button>
-             <%= flash[:alert] %>
-           </div>
-         <% end %>
-       </div>
+      <div>
+        <%#= render "layouts/flash" %>
+      </div>
     <%= yield %>
   </body>
 </html>

@@ -29,6 +29,11 @@ class FieldsController < ApplicationController
     if @field.save
       flash[:notice] = "Field was saved successfully."
       redirect_to request.referer
+      # respond_to do |format|
+      #   format.html
+      #   format.js
+      # end
+
     else
       flash.now[:alert] = "Error creating Field. Please try again."
       render :new
@@ -40,11 +45,16 @@ class FieldsController < ApplicationController
     @field.assign_attributes(field_params)
 
     if @field.save
-      flash[:notice] = "field was updated successfully."
-      redirect_to action: :index
+      #flash[:notice] = "✔"
+      #redirect_to action: :index
+
     else
       flash.now[:alert] = "Error updated field. Please try again."
-      render :edit
+      #render :edit
+    end
+    respond_to do |format|
+      flash[:notice] = "updated"
+      format.js
     end
   end
 

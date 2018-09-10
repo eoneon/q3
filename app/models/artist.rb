@@ -4,9 +4,6 @@ class Artist < ApplicationRecord
   def self.by_last_name
     Artist.order("properties -> 'lastname'")
   end
-  # def valid_keys
-  #   properties.map {|k,v| k if v.present?}.compact if properties.present?
-  # end
 
   def name_arr
     [properties["first_name"], properties["last_name"]].compact

@@ -1,17 +1,39 @@
-<%= form_for [invoice, item] do |f| %>
+<%= form_for [invoice, item], :html => {:class => 'form', :id => 'item_form'} do |f| %>
   <div class="form">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend" id="button-addon3">
-        <span class="input-group-text">Sku</span>
-        <%#= f.text_field :name, placeholder: "enter name", aria_describedby: "button-addon3" %>
-        <%= f.number_field :sku, placeholder: "enter sku", aria_describedby: "button-addon3" %>
-        <button class="btn btn-outline-primary" type="submit" aria-describedby="button-addon3">
-          Submit
-        </button>
-        <% if item.id %>
-          <%= link_to 'Delete', [invoice, item], method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "float-right btn btn-outline-danger", aria_describedby: "button-addon3" %>
+    <div class="card card-body">
+      <div class="form-row align-items-center">
+        <div class="form-group col">
+          <%= f.number_field :sku, placeholder: "enter sku", class: "form-control w-10", id: "inlineFormInput" %>
+        </div>
+        <div class="form-group col-4">
+          <%= f.collection_select :artist_id, Artist.by_last_name, :id, :display_name, {include_blank: "- select category -"}, class: "form-control", id: "inlineFormInput" %>
+        </div>
+        <div class="form-group col-4">
+          <%= f.text_field :title, placeholder: "enter title", class: "form-control", id: "inlineFormInput" %>
+        </div>
+        <div class="form-group col-2">
+          <%= f.number_field :retail, placeholder: "enter retail", class: "form-control", id: "inlineFormInput" %>
+        </div>
+      </div>
+    </div>
+    <div class="card card-body">
+      <div class="form-row align-items-center">
+        <div class="form-group col-4">
+          <%= f.collection_select :category_id, Category.all, :id, :name, {include_blank: "- select category -"}, class: "form-control", id: "inlineFormInput", onchange: "this.form.submit();" %>
+        </div>
+        <% if item.id && item.category %>
+          <%= render 'items/fields_for_values', item: item, f: f %>
         <% end %>
       </div>
     </div>
+
+
+    <br>
+    <button class="btn btn-sm btn_width btn-outline-primary form-group float-right" type="submit">
+      Submit
+    </button>
+    <%# if item.id %>
+      <%#= button_to 'Delete', [invoice, item], method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn_width btn-outline-danger form-group" %>
+    <%# end %>
   </div>
 <% end %>

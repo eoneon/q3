@@ -1,36 +1,37 @@
-<h1>Category List</h1><br>
+<div class="row">
+  <div class="col-auto">
+    <h1>Art-Categories</h1>
+  </div>
+  <div class="col-auto offset-md-4 float-right">
 
-<% if @categories.empty? %>
-  <p><strong>No Category</strong></p>
-<% end %>
-
-<div>
-  <%= render 'categories/form', fieldable: Category.new %>
-</div>
-
-<p>
-  Download:
-  <%= link_to "Export categories to CSV", categories_path(format: "csv") %> |
-  <%= link_to "Export categories to Excel", categories_path(format: "xls") %>
-</p>
-
-<h4>Import Fields</h4>
-<%= form_tag import_categories_path, multipart: true do %>
-  <div class="form">
-    <div class="input-group mb-3">
-      <div class="input-group-prepend" id="button-addon3">
-        <%= file_field_tag :file, class: "form-control" %>
-        <button class="btn btn-outline-secondary" type="submit" id="button-addon3">
-          Upload
-        </button>
+    <%= form_tag import_categories_path, multipart: true do %>
+      <div class="form">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend" id="button-addon3">
+            <%= file_field_tag :file, class: "form-control" %>
+            <button class="btn btn-outline-secondary" type="submit" id="button-addon3">
+              Upload
+            </button>
+          </div>
+        </div>
       </div>
+    <% end %>
+
+    <div class="float-right">
+      <%= link_to "Export to CSV", categories_path(format: "csv") %> |
+      <%= link_to "Export to Excel", categories_path(format: "xls") %>
     </div>
   </div>
-<% end %>
+</div><br>
+
 
 <table class="table table-striped table-hover">
   <thead>
-    <th>Category ID & Name</th>
+    <th>
+      <div>
+        <%= render 'categories/form', fieldable: Category.new %>
+      </div>
+    </th>
   </thead>
   <tbody>
     <%= render @categories %>

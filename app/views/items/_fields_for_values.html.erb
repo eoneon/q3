@@ -1,0 +1,12 @@
+<%= hidden_field_tag "item[value_ids][]", nil %>
+<% item.category.fields.each do |field| %>
+  <% if field.values.count == 0 %>
+    <%= f.fields_for :properties, OpenStruct.new(item.properties) do |builder| %>
+      <%#= render "items/fields/#{field.field_type}", item: item,  field: field, f: builder %>
+    <% end %>
+  <% else %>
+    <div class="form-group col">
+      <%= select_tag "item[value_ids][]", options_from_collection_for_select(field.values, :id, :name, selected: selected_option(item.value_ids, field.values)), {prompt: "- select #{field.name} -", onchange: "this.form.submit();", class: "form-control"} %>
+    </div>
+  <% end %>
+<% end %>

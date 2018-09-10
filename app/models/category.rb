@@ -1,7 +1,7 @@
 class Category < ApplicationRecord
   include Importable
 
-  has_many :field_groups, as: :fieldable, dependent: :destroy
+  has_many :field_groups, as: :fieldable
   has_many :fields, through: :field_groups
 
   has_many :sub_categories, dependent: :destroy
