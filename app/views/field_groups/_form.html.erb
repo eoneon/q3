@@ -4,7 +4,7 @@
       <div class="form-group col">
         <%= f.collection_select :field_id, Field.all, :id, :name, {prompt: "- select field name -"}, class: "form-control", id: "inlineFormInput" %>
       </div>
-      <button class="btn btn-md btn_width btn-outline-primary form-group float-right" type="submit" id="inlineFormInput">
+      <button class="btn btn-sm btn_width btn-outline-primary form-group" type="submit" id="inlineFormInput">
         Submit
       </button>
     </div>

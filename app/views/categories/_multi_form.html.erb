@@ -1,35 +1,17 @@
-<div class="btn-group" role="group">
-  <a class="btn btn-outline-secondary" data-toggle="collapse" href="#multiCollapse1" role="button" aria-expanded="false" aria-controls="multiCollapse1">
-    Edit: <%= fieldable.name %>
-  </a>
-  <a class="btn btn-outline-secondary" data-toggle="collapse" href="#multiCollapse2" role="button" aria-expanded="false" aria-controls="multiCollapse2">
-    Create new field
-  </a>
-  <a class="btn btn-outline-secondary" data-toggle="collapse" href="#multiCollapse3" role="button" aria-expanded="false" aria-controls="multiCollapse3">
-    Add existing field
-  </a>
+<div class="collapse" id="multiCollapse1" data-parent="#top-menu">
+  <div class="card card-body">
+    <%= render 'categories/form', fieldable: fieldable %>
+  </div>
 </div>
 
-<div class="row">
-  <div class="col">
-    <div class="collapse" id="multiCollapse1">
-      <div class="card card-body">
-        <%= render 'categories/form', fieldable: fieldable %>
-      </div>
-    </div>
+<div class="collapse" id="multiCollapse2" data-parent="#top-menu">
+  <div class="card card-body">
+    <%= render 'fields/form', fieldable: fieldable, field: Field.new %>
   </div>
-  <div class="col-auto">
-    <div class="collapse" id="multiCollapse2">
-      <div class="card card-body">
-        <%= render 'fields/form', fieldable: fieldable, field: Field.new %>
-      </div>
-    </div>
-  </div>
-  <div class="col">
-    <div class="collapse" id="multiCollapse3">
-      <div class="card card-body">
-        <%= render 'field_groups/form', fieldable: fieldable %>
-      </div>
-    </div>
+</div>
+
+<div class="collapse" id="multiCollapse3" data-parent="#top-menu">
+  <div class="card card-body">
+    <%= render 'field_groups/form', fieldable: fieldable %>
   </div>
 </div>

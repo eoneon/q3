@@ -3,9 +3,15 @@
   <hr class="my-4">
 </div>
 
-<div>
-  <%= render "categories/multi_form", fieldable: @category %>
-</div><br>
+<div id="top-menu">
+  <div>
+    <%= render "categories/btn_group", fieldable: @category %>
+  </div>
+
+  <div>
+    <%= render "categories/multi_form", fieldable: @category %>
+  </div>
+</div>
 
 <table class="table table-hover">
   <thead>
