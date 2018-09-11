@@ -1,0 +1,26 @@
+<%= form_for [field, value] do |f| %>
+  <div class="form">
+    <div class="form-row">
+      <div class="form-group col">
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="basic-addon1">value name</span>
+          </div>
+            <%#= f.label :value_name, id: "inlineFormInput" %>
+          <%= f.text_field :name, placeholder: "enter value name", class: "form-control" %>
+        </div>
+      </div>
+    </div>
+
+    <%= render "values/properties", parent: value, f: f, field_builder: [["title", "text_field"], ["body", "text_field"], ["attribute", "text_field"]] %>
+    
+    <div class="form-row align-items-center">
+      <div class="form-group col">
+        <%= render "values/properties", parent: value, f: f, field_builder: [["selected", "check_box"], ["display_hidden", "check_box"], ["display_none", "check_box"]] %>
+      </div>
+    </div>
+  </div>
+  <button class="btn btn-outline-primary form-group" id="inlineFormInput" type="submit" aria-describedby="button-addon3">
+    Submit
+  </button>
+<% end %>

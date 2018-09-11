@@ -3,12 +3,12 @@
     <a href="<%= field_value_path(value) %>" class="btn btn-link" type="button"  aria-describedby: "button-addon3">
       <%= value.display %>
     </a>
-    <div class="collapse" id="collapseInvoiceForm#{<%= value.id %>}">
+    <div class="collapse" id="collapseValueForm#{<%= value.id %>}">
       <%= render 'values/form', field: value.field, value: value %>
     </div>
   </td>
   <td>
-    <button class="btn btn-sm btn-outline-info float-right" type="button" data-toggle="collapse" data-target="#collapseInvoiceForm#{<%= value.id %>}" aria-expanded="false" aria-controls="collapseInvoiceForm#{<%= value.id %>}">
+    <button class="btn btn-sm btn-outline-info float-right" type="button" data-toggle="collapse" data-target="#collapseValueForm#{<%= value.id %>}" aria-expanded="false" aria-controls="collapseInvoiceForm#{<%= value.id %>}">
       Edit
     </button>
   </td>

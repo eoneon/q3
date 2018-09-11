@@ -4,7 +4,7 @@
       <div class="form-group col">
         <%= f.text_field :name, placeholder: "enter #{fieldable.class.name.downcase} name", class: "form-control", id: "inlineFormInput" %>
       </div>
-      <button class="btn btn-sm btn_width btn-outline-primary form-group" id="inlineFormInput" type="submit">
+      <button class="btn btn-sm btn_width btn-outline-primary form-group" id="inlineFormInput" type="submit" aria-describedby="button-addon3">
         Submit
       </button>
       <% if fieldable.id && controller.action_name != "show" %>

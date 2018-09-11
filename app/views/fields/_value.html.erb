@@ -1,0 +1,20 @@
+<% field.values.each do |value| %>
+  <div id="fieldValues">
+    <div class="card">
+      <div class="card-header" id="valueForm">
+        <h5 class="mb-0">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseValueNewForm" aria-expanded="true" aria-controls="collapseValueNewForm">
+            <%= value.name %>
+          </button>
+        </h5>
+      </div>
+
+      <!-- change to edit form and make id's value.id specific -->
+      <div id="collapseValueNewForm" class="collapse" aria-labelledby="valueForm" data-parent="#fieldValues">
+        <div class="card-body">
+          <%= render "fields/value_form", field: field, value: Value.new %>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>

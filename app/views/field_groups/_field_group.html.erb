@@ -2,7 +2,7 @@
   <tr>
     <td>
       <div class="row align-items-center">
-        <div class="col-auto">
+        <div class="col-1">
           <div class="btn-group-vertical">
             <div class="btn" role="group">
               <%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %>
@@ -15,15 +15,26 @@
           </a>
         </div>
         <div class="col">
-          <button class="btn btn-md btn_width btn-outline-info float-right" type="button" data-toggle="collapse" data-target="#collapseFieldForm#{<%= field_group.field.id %>}" aria-expanded="false" aria-controls="collapseFieldForm#{<%= field_group.field.id %>}" aria-describedby="button-addon1">
-            Edit
+          <button class="btn btn-sm btn_width btn-outline-secondary float-right" type="button" data-toggle="collapse" data-target="#collapseFieldForm#{<%= field_group.field.id %>}" aria-expanded="false" aria-controls="collapseFieldForm#{<%= field_group.field.id %>}" aria-describedby="button-addon1">
+            Edit Field
           </button>
         </div>
       </div>
+
       <div class="row">
         <div class="col-8 offset-md-1">
           <div class="collapse" id="collapseFieldForm#{<%= field_group.field.id %>}">
             <%= render 'fields/form', fieldable: fieldable, field: field_group.field %>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-8 offset-md-1">
+          <div class="collapse" id="collapseFieldForm#{<%= field_group.field.id %>}">
+            <div class="collapse" id="collapseFieldValues#{<%= field_group.field.id %>}">
+              <%= render 'fields/value', field: field_group.field %>
+            </div>
           </div>
         </div>
       </div>
