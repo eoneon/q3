@@ -1,17 +1,17 @@
+<hr>
 <% field.values.each do |value| %>
   <div id="fieldValues">
-    <div class="card">
-      <div class="card-header" id="valueForm">
-        <h5 class="mb-0">
-          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseValueNewForm" aria-expanded="true" aria-controls="collapseValueNewForm">
+    <div id="valueForm">
+      <div class="card mb-3">
+        <div class="card-header pt-0 pb-0 bg-white">
+          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseValueNewForm#{<%= field.id %>}" aria-expanded="true" aria-controls="collapseValueNewForm#{<%= field.id %>}">
             <%= value.name %>
           </button>
-        </h5>
-      </div>
-
-      <div id="collapseValueNewForm" class="collapse" aria-labelledby="valueForm" data-parent="#fieldValues">
-        <div class="card-body">
-          <%= render "fields/values/form", field: field, value: Value.new %>
+        </div>
+        <div id="collapseValueNewForm#{<%= field.id %>}" class="collapse" aria-labelledby="valueForm" data-parent="#fieldValues">
+          <div class="card-body">
+            <%= render "fields/values/form", field: field, value: Value.new %>
+          </div>
         </div>
       </div>
     </div>
