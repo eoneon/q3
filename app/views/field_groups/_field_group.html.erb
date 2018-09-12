@@ -1,43 +1,26 @@
 <% fieldable.field_groups.order(:sort).each do |field_group| %>
-  <tr>
-    <td>
+  <div class="card">
+    <div class="card-body">
       <div class="row align-items-center">
-        <div class="col-1">
-          <div class="btn-group-vertical">
-            <div class="btn" role="group">
-              <%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %>
+        <div class="col-auto">
+          <div class="align-self-end mr-3">
+            <div class="btn-group-vertical">
+              <div class="btn" role="group">
+                <%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %>
+              </div>
             </div>
           </div>
         </div>
-        <div class="col">
-          <a href="<%= polymorphic_path([fieldable, field_group.field]) %>" class="btn btn-link" type="button" aria-describedby: "button-addon1">
-            <%= field_group.field.display %>
-          </a>
-        </div>
-        <div class="col">
-          <button class="btn btn-sm btn_width btn-outline-secondary float-right" type="button" data-toggle="collapse" data-target="#collapseFieldForm#{<%= field_group.field.id %>}" aria-expanded="false" aria-controls="collapseFieldForm#{<%= field_group.field.id %>}" aria-describedby="button-addon1">
-            Edit Field
-          </button>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-8 offset-md-1">
-          <div class="collapse" id="collapseFieldForm#{<%= field_group.field.id %>}">
-            <%= render 'fields/form', fieldable: fieldable, field: field_group.field %>
+        <div class="col align-self-end mr-3">
+          <%= render 'fields/edit', fieldable: fieldable, field: field_group.field %>
+          <div class="collapse" id="collapseFieldValues#{<%= field_group.field.id %>}">
+            <%= render 'fields/values/value', field: field_group.field %>
           </div>
         </div>
-      </div>
-
-      <div class="row">
-        <div class="col-8 offset-md-1">
-          <div class="collapse" id="collapseFieldForm#{<%= field_group.field.id %>}">
-            <div class="collapse" id="collapseFieldValues#{<%= field_group.field.id %>}">
-              <%= render 'fields/value', field: field_group.field %>
-            </div>
-          </div>
+        <div class="col-2 align-self-end mr-3">
+          <%= render "layouts/flash" %>
         </div>
       </div>
-    </td>
-  </tr>
+    </div>
+  </div>
 <% end %>

@@ -9,10 +9,9 @@
         </h5>
       </div>
 
-      <!-- change to edit form and make id's value.id specific -->
       <div id="collapseValueNewForm" class="collapse" aria-labelledby="valueForm" data-parent="#fieldValues">
         <div class="card-body">
-          <%= render "fields/value_form", field: field, value: Value.new %>
+          <%= render "fields/values/form", field: field, value: Value.new %>
         </div>
       </div>
     </div>

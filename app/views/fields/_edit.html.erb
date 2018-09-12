@@ -1,0 +1,25 @@
+<%= form_with model: field, url: [fieldable, field], id: :field_form do |f| %>
+  <div class="form">
+    <div class="form-group">
+      <%#= field.display %>
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Options
+        </button>
+        <div class="dropdown-menu">
+          <button class="dropdown-item" type="submit">
+            Submit
+          </button>
+          <button class="dropdown-item" type="button" data-toggle="collapse" data-target="#collapseFieldValues#{<%= field.id %>}" aria-expanded="false">
+            Field Values
+          </button>
+        </div>
+      </div>
+      <%= f.select :field_type, options_for_select(%w[text_field check_box number_field text_area]), {prompt: "- select field type -"}, class: "form-control" %>
+      <%= f.text_field :name, placeholder: "enter field name", class: "form-control" %>
+      <%#= render "layouts/flash" %>
+      </div>
+    </div>
+  </div>
+<% end %>
