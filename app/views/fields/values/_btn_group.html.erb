@@ -1,8 +1,8 @@
 <div class="btn-group" role="group">
-  <a class="btn btn-sm badge badge-light" data-toggle="collapse" href="#collapseFieldValues#{<%= field.id %>}" role="button" aria-expanded="false" aria-controls="collapseFieldValues#{<%= field.id %>}">
-    Show field values
-  </a>
-  <a class="btn btn-sm badge badge-light" data-toggle="collapse" href="#collapseValueNewForm#{<%= field.id %>}" role="button" aria-expanded="false" aria-controls="collapseValueNewForm#{<%= field.id %>}">
-    Create field value
-  </a>
+  <button class="btn btn-sm btn-outline-secondary" data-toggle="collapse" data-target="#collapseValueNewForm#{<%= field.id %>}" role="button" aria-expanded="false" aria-controls="collapseValueNewForm#{<%= field.id %>}">
+    New
+  </button>
+  <button class="btn btn-sm btn-outline-secondary" data-toggle="collapse" data-target="#collapseValueEditForm#{<%= value.id %>}" role="button" aria-expanded="false" aria-controls="collapseValueEditForm#{<%= value.id %>}">
+    Edit
+  </button>
 </div>

@@ -12,22 +12,25 @@
           </div>
         </div>
 
-
         <div class="col-8 align-self-end mr-3" id="valueForm">
           <%= render 'fields/edit', fieldable: fieldable, field: field_group.field %>
-          <%= render 'fields/values/btn_group', fieldable: fieldable, field: field_group.field %>
 
           <div class="collapse" id="collapseFieldValues#{<%= field_group.field.id %>}" data-parent="#valueForm">
-            <%= render 'fields/values/value', field: field_group.field %>
+            <%#= render 'fields/values/value', field: field_group.field %>
+            <%= render 'fields/values/table', field: field_group.field %>
           </div>
+
           <div class="collapse" id="collapseValueNewForm#{<%= field_group.field.id %>}" data-parent="#valueForm">
             <div class="card mb-3">
+
               <div class="card-header pt-0 pb-0 bg-white">
                 New field value
               </div>
+
               <div class="card-body">
                 <%= render 'fields/values/form', field: field_group.field, value: Value.new %>
               </div>
+
             </div>
           </div>
         </div>
