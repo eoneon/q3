@@ -4,13 +4,20 @@
     <div id="valueForm">
       <div class="card mb-3">
         <div class="card-header pt-0 pb-0 bg-white">
-          <button class="btn btn-link" data-toggle="collapse" data-target="#collapseValueNewForm#{<%= field.id %>}" aria-expanded="true" aria-controls="collapseValueNewForm#{<%= field.id %>}">
-            <%= value.name %>
-          </button>
+          <div class="row align-items-center">
+            <div class="col">
+              value name: <%= value.name %>
+            </div>
+          <div class="col float-right">
+            <button class="btn btn-sm btn-outline-secondary" data-toggle="collapse" data-target="#collapseValueEditForm#{<%= value.id %>}" aria-expanded="true" aria-controls="collapseValueEditForm#{<%= value.id %>}">
+              Expand
+            </button>
+          </div>
+          </div>
         </div>
-        <div id="collapseValueNewForm#{<%= field.id %>}" class="collapse" aria-labelledby="valueForm" data-parent="#fieldValues">
+        <div id="collapseValueEditForm#{<%= value.id %>}" class="collapse" aria-labelledby="valueForm" data-parent="#fieldValues">
           <div class="card-body">
-            <%= render "fields/values/form", field: field, value: Value.new %>
+            <%= render "fields/values/form", field: field, value: value %>
           </div>
         </div>
       </div>
