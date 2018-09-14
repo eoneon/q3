@@ -1,27 +1,23 @@
 <%= form_with model: field, url: [fieldable, field], id: :field_form do |f| %>
-  <div class="form">
-    <div class="form-group">
-      <div class="input-group mb-3">
-        <div class="input-group-prepend">
-          <button class="btn btn-md btn-outline-primary" type="submit">
-            Submit
-          </button>
-          <a class="btn btn-md btn-outline-secondary" data-toggle="collapse" href="#collapseFieldValues#{<%= field.id %>}" role="button" aria-expanded="false" aria-controls="collapseFieldValues#{<%= field.id %>}">
-            Expand
-          </a>
-        </div>
+  <div class="form form-row">
 
-        <%= f.select :field_type, options_for_select(%w[text_field check_box number_field text_area]), {prompt: "- select field type -"}, class: "form-control" %>
-        <%= f.text_field :name, placeholder: "enter field name", class: "form-control" %>
+    <div class="col-5">
+      <%= f.select :field_type, options_for_select(%w[text_field check_box number_field text_area]), {prompt: "- select field type -"}, class: "form-control form-control-sm" %>
+    </div>
+    
+    <div class="col-5">
+      <%= f.text_field :name, placeholder: "enter field name", class: "form-control form-control-sm" %>
+    </div>
 
-        <div class="input-group-append">
-          <% if field.id %>
-            <%= button_to 'Delete', [fieldable, field.field_groups.first], method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-md btn-outline-danger"%>
-          <% end %>
-        </div>
-      </div>
+    <div class="col-2">
+      <button class="btn btn-sm btn-primary" type="submit">
+        Submit
+      </button>
+
+      <% if field.id %>
+        <%= button_to 'Delete', [fieldable, field.field_groups.first], method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-danger" %>
+      <% end %>
     </div>
   <%#= render "layouts/flash" %>
   </div>
-
 <% end %>

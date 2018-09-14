@@ -1,10 +1,11 @@
 <hr>
 <% field.values.each do |value| %>
-  <div id="fieldValues">
+  <div id="values<%= field.id %>">
     <div id="valueForm">
       <div class="card mb-3">
         <div class="card-header pt-0 pb-0 bg-white">
           <div class="row align-items-center">
+
             <div class="col">
               <span>value: <%= value.name %><span>
             </div>
@@ -13,7 +14,8 @@
             </div>
           </div>
         </div>
-        <div id="collapseValueEditForm#{<%= value.id %>}" class="collapse" aria-labelledby="valueForm" data-parent="#fieldValues">
+
+        <div id="collapseValueEditForm#{<%= value.id %>}" class="collapse" aria-labelledby="valueForm" data-parent="#values<%= field.id">
           <div class="card-body">
             <%= render "fields/values/form", field: value.field, value: value %>
           </div>

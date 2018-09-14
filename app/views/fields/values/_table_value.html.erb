@@ -1,33 +1,35 @@
 <% field.values.each do |value| %>
-  <div id="fieldValues">
-    <div id="valueForm">
-      <tr>
-        <td>
-          <div class="row align-items-center">
-            <div class="col-10">
-              <button class="btn btn-sm btn-light btn-block" data-toggle="collapse" data-target="#collapseValueEditForm#{<%= value.id %>}" role="button" aria-expanded="false" aria-controls="collapseValueEditForm#{<%= value.id %>}">
-                <%= value.name %>
-              </button>
-            </div>
-
-
+    <tr>
+      <td id="valueForm<%= field.id %>">
+        <div class="row align-items-center">
+          <div class="col-10">
+            <button class="btn btn-sm btn-light btn-block" data-toggle="collapse" data-target="#collapseValueEditForm<%= value.id %>" role="button" aria-expanded="false" aria-controls="collapseValueEditForm<%= value.id %>">
+              <%= value.name %>
+            </button>
           </div>
 
-          <div class="row align-items-center">
-            <div class="col-10">
-              <div id="collapseValueEditForm#{<%= value.id %>}" class="collapse" aria-labelledby="valueForm" data-parent="#fieldValues">
-                <div class="card">
-                  <div class="card-body">
-                    <%= render "fields/values/form", field: value.field, value: value %>
-                  </div>
-                </div>
-              </div>
+          <div class="col">
+            <button class="btn btn-sm badge badge-primary float-right" data-toggle="collapse" data-target="#collapseValueNewForm<%= field.id %>" role="button" aria-expanded="false" aria-controls="collapseValueNewForm<%= field.id %>">
+              New
+            </button>
+          </div>
+        </div>
+
+        <div class="collapse" id="collapseValueEditForm<%= value.id %>" data-parent="#valueForm<%= field.id %>" aria-labelledby="myForm<%= field.id %>">
+          <div class="card">
+            <div class="card-body">
+              <%= render "fields/values/form", field: field, value: value %>
             </div>
           </div>
+        </div>
 
-
-        </tr>
-      </td>
-    </div>
-  </div>
+        <div class="collapse" id="collapseValueNewForm<%= field.id %>" data-parent="#valueForm<%= field.id %>" aria-labelledby="myForm<%= field.id %>">
+          <div class="card">
+            <div class="card-body">
+              <%= render "fields/values/form", field: field, value: Value.new %>
+            </div>
+          </div>
+        </div>
+      </tr>
+    </td>
 <% end %>

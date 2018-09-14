@@ -2,6 +2,7 @@
   <div class="card">
     <div class="card-body">
       <div class="row align-items-center">
+
         <div class="col-auto">
           <div class="align-self-end mr-3">
             <div class="btn-group-vertical">
@@ -12,15 +13,12 @@
           </div>
         </div>
 
-        <div class="col-8 align-self-end mr-3" id="valueForm">
-          <%= render 'fields/edit', fieldable: fieldable, field: field_group.field %>
 
-          <div class="collapse" id="collapseFieldValues#{<%= field_group.field.id %>}" data-parent="#valueForm">
-            <%#= render 'fields/values/value', field: field_group.field %>
-            <%= render 'fields/values/table', field: field_group.field %>
-          </div>
+        <div class="col-10 align-self-center" id="fieldValues<%= field_group.field.id %>">
+          <%= render 'fields/field', fieldable: fieldable, field: field_group.field %>
 
-          <div class="collapse" id="collapseValueNewForm#{<%= field_group.field.id %>}" data-parent="#valueForm">
+
+          <div class="collapse" id="collapseValueNewForm<%= field_group.field.id %>" data-parent="#fieldValues">
             <div class="card mb-3">
 
               <div class="card-header pt-0 pb-0 bg-white">
@@ -33,10 +31,6 @@
 
             </div>
           </div>
-        </div>
-
-        <div class="col-2 align-self-end mr-3">
-          <%#= render "layouts/flash" %>
         </div>
       </div>
     </div>
