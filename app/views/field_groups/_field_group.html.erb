@@ -13,24 +13,8 @@
           </div>
         </div>
 
-
         <div class="col-10 align-self-center" id="fieldValues<%= field_group.field.id %>">
           <%= render 'fields/field', fieldable: fieldable, field: field_group.field %>
-
-
-          <div class="collapse" id="collapseValueNewForm<%= field_group.field.id %>" data-parent="#fieldValues">
-            <div class="card mb-3">
-
-              <div class="card-header pt-0 pb-0 bg-white">
-                New field value
-              </div>
-
-              <div class="card-body">
-                <%= render 'fields/values/form', field: field_group.field, value: Value.new %>
-              </div>
-
-            </div>
-          </div>
         </div>
       </div>
     </div>
