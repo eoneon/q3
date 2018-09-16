@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
   def index
     @categories = Category.all.order(sort: 'asc')
-    
+
     respond_to do |format|
       format.html
       format.csv { send_data @categories.to_csv(['sort', 'name']), filename: "Categories.csv" }
@@ -11,6 +11,10 @@ class CategoriesController < ApplicationController
 
   def show
     @category = Category.find(params[:id])
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def new

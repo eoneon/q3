@@ -1,0 +1,12 @@
+<%= form_tag import_categories_path, multipart: true do %>
+  <div class="form">
+    <div class="input-group mb-3">
+      <div class="input-group-prepend" id="button-addon3">
+        <%= file_field_tag :file, class: "form-control" %>
+        <button class="btn btn-outline-secondary" type="submit" id="button-addon3">
+          Upload
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>

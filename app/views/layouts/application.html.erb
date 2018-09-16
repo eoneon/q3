@@ -9,25 +9,26 @@
 
   <body>
     <div class="container">
-      <ul class="nav">
-        <li class="nav-link"><%= link_to "Categories", categories_path %></li>
-        <li class="nav-link"><%= link_to "Dimensions", dimensions_path %></li>
-        <li class="nav-link"><%= link_to "Artists", artists_path %></li>
-        <li class="nav-link"><%= link_to "Suppliers", suppliers_path %></li>
-        <!-- <li class="nav-link"><%#= link_to "Items", items_path %></li> -->
-        <li class="nav-link"><%= link_to "Fields", fields_path %></li>
-        <!-- <li class="nav-link"><%#= link_to "Values", field_values_path %></li> -->
-        <!-- <li class="nav-link"><%#= link_to "#{URI::parse(request.referer).path.strip.partition(request.path)}", URI::parse(request.referer).path.strip %></li>
-        <li class="nav-link">request.referer: <%#= URI.parse(request.referer).path %></li>
-        <li class="nav-link">request.path: <%#= request.path %></li>
-        <li class="nav-link">nested_path?: <%#= @category.partitioned_path(request.path, params)[0].empty? %></li>
-        <li class="nav-link">"dynamic_edit:<%#= @category.dynamic_edit(request.path, params) %></li>
-        <li class="nav-link"><%#= "params #{params}" %></li>
-        <li class="nav-link"><%#= "session #{session}" %></li> -->
-      </ul>
-      <div>
-        <%#= render "layouts/flash" %>
+      <nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="btn-toolbar" role="toolbar" aria-label="nav-button-group">
+          <div class="btn-group mr-2" role="group" aria-label="First group">
+            <a href="<%= categories_path %>" class="btn btn-dark" type="button" aria-describedby: "nav-button-group">
+              Categories
+            </a>
+            <a href="<%= dimensions_path %>" class="btn btn-dark" type="button" aria-describedby: "nav-button-group">
+              Dimensions
+            </a>
+            <a href="<%= fields_path %>" class="btn btn-dark" type="button" aria-describedby: "nav-button-group">
+              Fields
+            </a>
+            <a href="<%= suppliers_path %>" class="btn btn-dark" type="button" aria-describedby: "nav-button-group">
+              Suppliers
+            </a>
+          </div>
+
       </div>
-    <%= yield %>
+      </nav>
+      <%= yield %>
+    </div>
   </body>
 </html>
