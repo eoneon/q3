@@ -1,6 +1,7 @@
 class CategoriesController < ApplicationController
   def index
     @categories = Category.all.order(sort: 'asc')
+    #@category = Category.first_category.first
 
     respond_to do |format|
       format.html
@@ -10,7 +11,9 @@ class CategoriesController < ApplicationController
   end
 
   def show
+    #@categories = Category.all.order(sort: 'asc')
     @category = Category.find(params[:id])
+    #@categories = Category.all.order(sort: 'asc')
     respond_to do |format|
       format.html
       format.js

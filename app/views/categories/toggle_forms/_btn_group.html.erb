@@ -1,0 +1,15 @@
+<div class="btn-group float-right" role="group">
+  <a class="btn btn-sm badge badge-primary mr-1" data-toggle="collapse" href="#multiCollapse1" role="button" aria-expanded="false" aria-controls="multiCollapse1">
+    Edit Category
+  </a>
+
+  <div class="btn btn-sm badge badge-danger mr-1">
+    <%= link_to 'Delete Category', fieldable,  method: :delete, data: {confirm: "Are you sure?"}, class: "text-white" %>
+  </div>
+  <a class="btn btn-sm badge badge-primary mr-1" data-toggle="collapse" href="#multiCollapse2" role="button" aria-expanded="false" aria-controls="multiCollapse2">
+    New field
+  </a>
+  <a class="btn btn-sm badge badge-primary mr-1" data-toggle="collapse" href="#multiCollapse3" role="button" aria-expanded="false" aria-controls="multiCollapse3">
+    Existing field
+  </a>
+</div>

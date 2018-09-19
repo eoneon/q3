@@ -5,4 +5,8 @@ module ApplicationHelper
     end
     option_id if option_id.present?
   end
+
+  def local_obj(obj)
+    obj.present? ? obj : Category.first
+  end
 end

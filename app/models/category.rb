@@ -9,6 +9,8 @@ class Category < ApplicationRecord
 
   has_many :items
 
+  scope :first_category, -> {where(sort: 1)}
+
   def sorted_field_groups
     self.field_groups.order(:sort)
   end

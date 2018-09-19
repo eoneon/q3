@@ -3,25 +3,25 @@
 
     <div class="row align-items-center">
       <div class="col-10">
-        <a class="btn btn-sm btn-light btn-block" aria-expanded="false" aria-controls="collapseField<%= field.id %>">
+        <a class="btn btn-sm btn-light btn-block" aria-expanded="false">
           <%= field.name %> | <%= field.field_type %>
         </a>
       </div>
       <div class="col-2">
-        <a class="btn btn-sm btn_width badge badge-primary" data-toggle="collapse" href="#collapseFieldValues<%= field.id %>" role="button" aria-expanded="false" aria-controls="collapseFieldValues<%= field.id %>">
+        <a class="btn btn-sm btn_width badge badge-primary" data-toggle="collapse" href="#collapseFieldValues<%= field.id %>" role="button" aria-expanded="false">
           Show
         </a>
-        <a class="btn btn-sm btn_width badge badge-primary" data-toggle="collapse" href="#collapseField<%= field.id %>" role="button" aria-expanded="false" aria-controls="collapseField<%= field.id %>">
+        <a class="btn btn-sm btn_width badge badge-primary" data-toggle="collapse" href="#collapseField<%= field.id %>" role="button" aria-expanded="false">
           Edit
         </a>
       </div>
     </div>
 
-    <div class="collapse mt-3" id="collapseField<%= field.id %>" data-parent="#fieldValues<%= field.id %>">
+    <div class="collapse mt-3" id="collapseField<%= field.id %>" data-parent="#category<%= fieldable.id %>">
       <%= render 'fields/edit', fieldable: fieldable, field: field %>
     </div>
 
-    <div class="collapse mt-3" id="collapseFieldValues<%= field.id %>" data-parent="#fieldValues<%= field.id %>">
+    <div class="collapse mt-3" id="collapseFieldValues<%= field.id %>" data-parent="#category<%= fieldable.id %>">
       <%= render 'fields/values/table', field: field %>
     </div>
 
