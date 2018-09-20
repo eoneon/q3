@@ -16,9 +16,3 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require_tree .
-
-$(document).ready(function(e){
-  $(".list-group-item").click(function(){
-    $("#cat_show").html(this.dataset.path);
-  });
-});

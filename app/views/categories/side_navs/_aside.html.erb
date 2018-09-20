@@ -1,16 +1,15 @@
 <div class="col-3">
   <div class="list-group" id="list-tab" role="tablist">
     <% categories.each do |category| %>
-    <button class="list-group-item list-group-item-action" id="list-<%= category.id %>-list" data-path="<%= toggle_category_path(category, action: 'toggle') %>" data-toggle="list" role="tab">
-      <%= category.name %>
-    </button>
+      <a class="list-group-item list-group-item-action" id="list-<%= category.id %>-list" href="<%= category_path(category) %>" data-remote="true" data-toggle="list">
+        <%= category.name %>
+      </a>
     <% end %>
   </div>
 </div>
 
 <div class="col-9">
   <div id="cat_show">
-    <%#= render "categories/category", category: local_obj(@category) %>
-    <%#= render 'field_groups/field_group' %>
+    <%= render "categories/category", category: @category %>
   </div>
 </div>

@@ -1,28 +1,21 @@
 class CategoriesController < ApplicationController
   def index
     @categories = Category.all.order(sort: 'asc')
-    #@category = Category.first_category.first
+    @category = @categories.first
 
-    respond_to do |format|
-      format.html
-      format.csv { send_data @categories.to_csv(['sort', 'name']), filename: "Categories.csv" }
-      format.xls { send_data @categories.to_csv(['sort', 'name'], col_sep: "\t") }
-    end
-  end
-
-  def show
-    #@categories = Category.all.order(sort: 'asc')
-    @category = Category.find(params[:id])
-    #render @category
     # respond_to do |format|
     #   format.html
-    #   format.js
+    #   format.csv { send_data @categories.to_csv(['sort', 'name']), filename: "Categories.csv" }
+    #   format.xls { send_data @categories.to_csv(['sort', 'name'], col_sep: "\t") }
     # end
   end
 
-  def toggle
+  def show
     @category = Category.find(params[:id])
-    render '_category'
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def new

@@ -17,7 +17,7 @@ Rails.application.routes.draw do
     end
 
     member do
-      get :export, :toggle
+      get :export
     end
 
     resources :fields
