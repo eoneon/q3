@@ -1,15 +1,7 @@
-<script>
-  $(document).ready(function(){
-    $(".list-group-item").click(function(){
-        $("#cat_show").load(this.dataset.path);
-    });
-  });
-</script>
-
 <div class="col-3">
   <div class="list-group" id="list-tab" role="tablist">
     <% categories.each do |category| %>
-    <button class="list-group-item list-group-item-action" id="list-<%= category.id %>-list" data-path="<%= category_path(category) %>" data-toggle="list" role="tab">
+    <button class="list-group-item list-group-item-action" id="list-<%= category.id %>-list" data-path="<%= toggle_category_path(category, action: 'toggle') %>" data-toggle="list" role="tab">
       <%= category.name %>
     </button>
     <% end %>

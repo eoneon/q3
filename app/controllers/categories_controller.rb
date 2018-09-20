@@ -13,11 +13,16 @@ class CategoriesController < ApplicationController
   def show
     #@categories = Category.all.order(sort: 'asc')
     @category = Category.find(params[:id])
-    #@categories = Category.all.order(sort: 'asc')
-    respond_to do |format|
-      format.html
-      format.js
-    end
+    #render @category
+    # respond_to do |format|
+    #   format.html
+    #   format.js
+    # end
+  end
+
+  def toggle
+    @category = Category.find(params[:id])
+    render '_category'
   end
 
   def new
