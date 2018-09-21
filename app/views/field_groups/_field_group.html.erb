@@ -1,25 +1,22 @@
+<% fieldable.field_groups.order(:sort).each do |field_group| %>
+  <div class="card">
+    <div class="card-body">
+      <div class="row align-items-center">
 
-  <%= fieldable.name %>
-  <% fieldable.field_groups.order(:sort).each do |field_group| %>
-    <div class="card">
-      <div class="card-body">
-        <div class="row align-items-center">
-
-          <div class="col-auto">
-            <div class="align-self-end">
-              <div class="btn-group-vertical">
-                <div class="btn py-0" role="group">
-                  <%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %>
-                </div>
+        <div class="col-auto">
+          <div class="align-self-end">
+            <div class="btn-group-vertical">
+              <div class="btn py-0" role="group">
+                <%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="col-10 align-self-center" id="fieldValues<%= field_group.field.id %>">
-            <%= render 'fields/field', fieldable: fieldable, field: field_group.field %>
-          </div>
+        <div class="col-10 align-self-center" id="fieldValues<%= field_group.field.id %>">
+          <%= render 'fields/field', fieldable: fieldable, field: field_group.field %>
         </div>
       </div>
     </div>
-  
+  </div>
 <% end %>

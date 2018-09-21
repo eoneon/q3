@@ -1,15 +1,8 @@
 <%= form_for fieldable do |f| %>
   <div class="form">
-    <div class="form-row align-items-center">
-      <div class="form-group col">
-        <%= f.text_field :name, placeholder: "enter #{fieldable.class.name.downcase} name", class: "form-control", id: "inlineFormInput" %>
-      </div>
-      <button class="btn btn-sm btn_width btn-outline-primary form-group" id="inlineFormInput" type="submit" aria-describedby="button-addon3">
-        Submit
-      </button>
-      <% if fieldable.id && controller.action_name != "show" %>
-        <%= button_to 'Delete', fieldable,  method: :delete, data: {confirm: "Are you sure?"}, class: "btn btn-md btn_width btn-outline-danger form-group float-right" %>
-      <% end %>
-      </div>
-    </div>
+    <%= f.text_field :name, placeholder: "enter #{fieldable.class.name.downcase} name", class: "form-control" %>
+    <button class="btn btn-sm badge badge-primary float-right" type="submit">
+      Submit
+    </button>
+  </div>
 <% end %>

@@ -1,17 +1,20 @@
-<div class="collapse" id="multiCollapse1" data-parent="#top-menu">
-  <div class="card card-body">
+<div class="collapse" id="category-edit" data-parent="#category-form-group">
+  <div class="card card-body p-1 bg-light">
+    <span class="card-title">Edit Category</span>
     <%= render 'categories/form', fieldable: fieldable %>
   </div>
 </div>
 
-<div class="collapse" id="multiCollapse2" data-parent="#top-menu">
-  <div class="card card-body">
+<div class="collapse" id="field-new" data-parent="#category-form-group">
+  <div class="card card-body p-1 bg-light">
+    <span class="card-title">Create New Field</span>
     <%= render 'fields/form', fieldable: fieldable, field: Field.new %>
   </div>
 </div>
 
-<div class="collapse" id="multiCollapse3" data-parent="#top-menu">
-  <div class="card card-body">
+<div class="collapse" id="field-add" data-parent="#category-form-group">
+  <div class="card card-body p-1 bg-light">
+    <span class="card-title">Associate Existing Field</span>
     <%= render 'field_groups/form', fieldable: fieldable %>
   </div>
 </div>
