@@ -1,4 +1,4 @@
-<%= form_for fieldable do |f| %>
+<%= form_with model: fieldable, url: fieldable, id: :fieldable_form do |f| %>
   <div class="form">
     <%= f.text_field :name, placeholder: "enter #{fieldable.class.name.downcase} name", class: "form-control" %>
     <button class="btn btn-sm badge badge-primary float-right" type="submit">

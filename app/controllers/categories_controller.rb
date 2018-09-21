@@ -43,11 +43,15 @@ class CategoriesController < ApplicationController
     @category.assign_attributes(category_params)
 
     if @category.save
-      flash[:notice] = "Category was updated successfully."
+      @categories = Category.all.order(sort: 'asc')
     else
       flash.now[:alert] = "Error updated category. Please try again."
     end
-    render :edit
+    #render :edit
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   def destroy
