@@ -15,13 +15,19 @@ class FieldGroupsController < ApplicationController
   def sort_up
     @fieldable = set_fieldable
     swap_sort(@fieldable, -1)
-    redirect_to @fieldable
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def sort_down
     @fieldable = set_fieldable
     swap_sort(@fieldable, 1)
-    redirect_to @fieldable
+
+    respond_to do |format|
+      format.js
+    end
   end
 
   def destroy

@@ -1,9 +1,9 @@
 <% fieldable.field_groups.order(:sort).each do |field_group| %>
   <div class="card">
-    <div class="card-body">
+    <div class="card-body py-1">
       <div class="row align-items-center">
 
-        <div class="col-auto">
+        <div class="col-1">
           <div class="align-self-end">
             <div class="btn-group-vertical">
               <div class="btn py-0" role="group">
@@ -13,7 +13,7 @@
           </div>
         </div>
 
-        <div class="col-10 align-self-center" id="fieldValues<%= field_group.field.id %>">
+        <div class="col-11" id="fieldValues<%= field_group.field.id %>">
           <%= render 'fields/field', fieldable: fieldable, field: field_group.field %>
         </div>
       </div>
