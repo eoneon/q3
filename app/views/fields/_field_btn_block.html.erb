@@ -1,0 +1,11 @@
+<button class="btn btn-sm btn-light btn-block" type="button" data-toggle="collapse" data-target="#field-<%= field.id %>-btn-group" aria-expanded="false">
+  <div class="row">
+    <div class="col-auto">
+      <span class="badge badge-primary font-weight-light p-1 m-0"><%= field.field_groups.first.sort %></span>
+    </div>
+
+    <div class="col text-left">
+      <%= field.display %>
+    </div>
+  </div>
+</button>

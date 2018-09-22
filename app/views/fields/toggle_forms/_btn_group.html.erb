@@ -1,0 +1,8 @@
+<div class="btn-group float-right" role="group">
+  <a class="btn btn-sm badge badge-primary mr-1" data-toggle="collapse" href="#field-<%= field.id %>-edit" role="button" aria-expanded="false">
+    Edit Field
+  </a>
+  <div class="btn btn-sm badge badge-danger mr-1">
+    <%= link_to 'Remove Field', [fieldable, field.field_groups.first], method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "text-white" %>
+  </div>
+</div>

@@ -1,14 +1,17 @@
 class FieldGroupsController < ApplicationController
   def create
     @fieldable = set_fieldable
-    field_group = @fieldable.field_groups.build(field_group_params)
+    @field_group = @fieldable.field_groups.build(field_group_params)
 
-    if field_group.save
-      flash[:notice] = "Field chain was saved successfully."
-      redirect_to @fieldable
+    if @field_group.save
+      #redirect_to @fieldable
     else
-      flash.now[:alert] = "Error creating Field chain. Please try again."
-      redirect_to @fieldable
+      #flash.now[:alert] = "Error creating Field chain. Please try again."
+      #redirect_to @fieldable
+    end
+
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -37,11 +40,15 @@ class FieldGroupsController < ApplicationController
 
     if field_group.destroy
       reset_sort(@fieldable, sort)
-      flash[:notice] = "Field chain was deleted successfully."
-      redirect_to @fieldable
+      #flash[:notice] = "Field chain was deleted successfully."
+      #redirect_to @fieldable
     else
-      flash.now[:alert] = "There was an error deleting the Field chain."
-      redirect_to @fieldable
+      #flash.now[:alert] = "There was an error deleting the Field chain."
+      #redirect_to @fieldable
+    end
+
+    respond_to do |format|
+      format.js
     end
   end
 
@@ -50,10 +57,6 @@ class FieldGroupsController < ApplicationController
   def field_group_params
     params.require(:field_group).permit!
   end
-
-  # def set_sort(fieldable, field_group)
-  #   field_group.sort = fieldable.sorted_field_groups.count == 0 ? 1 : fieldable.sorted_field_groups.count + 1
-  # end
 
   def reset_sort(fieldable, sort)
     fieldable.field_groups.where("sort > ?", sort).each do |field|
