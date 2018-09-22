@@ -1,2 +1,2 @@
-$('#form_field').html('<%= escape_javascript render "fields/form", fieldable: @category, field: @field %>');
-$('.flash').html('<%= escape_javascript render "layouts/flash" %>');
+$('#form_field').html('<%= j render "fields/form", fieldable: @category, field: @field %>');
+$('.flash').html('<%= j render "layouts/flash" %>');

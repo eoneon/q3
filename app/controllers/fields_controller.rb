@@ -27,16 +27,17 @@ class FieldsController < ApplicationController
     @field.public_send(fieldables) << fieldable
 
     if @field.save
-      flash[:notice] = "Field was saved successfully."
-      redirect_to request.referer
-      # respond_to do |format|
-      #   format.html
-      #   format.js
-      # end
+      @fieldable = @field.categories.last
+      #flash[:notice] = "Field was saved successfully."
+      #redirect_to request.referer
+      respond_to do |format|
+        format.html
+        format.js
+      end
 
     else
       flash.now[:alert] = "Error creating Field. Please try again."
-      render :new
+      #render :new
     end
   end
 
