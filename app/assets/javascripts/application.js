@@ -16,3 +16,9 @@
 //= require popper
 //= require bootstrap-sprockets
 //= require_tree .
+
+$(document).ready(function(event){
+  $("#category-btn-group").on('hidden.bs.collapse', function(){
+    $("#category-multi_form .collapse").collapse('hide');
+  });
+});

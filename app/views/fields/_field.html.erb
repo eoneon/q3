@@ -7,6 +7,9 @@
       <div class="col">
         <%= render "fields/toggle_forms/btn_group", fieldable: field.field_groups.first.fieldable, field: field %>
       </div>
+      <div class="col-11">
+        <%= render 'fields/values/table', field: field %>
+      </div>
     </div>
   </div>
 </div>
