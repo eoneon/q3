@@ -14,11 +14,13 @@
           </div>
         </div>
 
+
         <div class="col-11" id="field-<%= field_group.field.id %>">
-          <%= render 'fields/field', fieldable: fieldable, field: field_group.field %>
+          <button class="btn btn-block field-toggle text-left" type="button" data-toggle="collapse" data-target="#category-btn-group" aria-expanded="false">
+            <%= render 'fields/field_name', field: field_group.field %>
+          </button>
         </div>
       </div>
-
     </div>
   </div>
 <% end %>

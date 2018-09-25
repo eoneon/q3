@@ -21,4 +21,12 @@ $(document).ready(function(event){
   $("#category-btn-group").on('hidden.bs.collapse', function(){
     $("#category-multi_form .collapse").collapse('hide');
   });
+
+  $("#category-toggle").on('click', function(){
+    $("#toggleIcon").toggleClass('fa-angle-double-right');
+  });
+
+  $(".field-toggle").on('click', function(){
+    $(this).toggleClass('fa-caret-down');
+  });
 });
