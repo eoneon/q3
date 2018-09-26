@@ -1,43 +1,38 @@
-<div id="category-form-group">
-  <div id="category-btn">
-    <div class="card">
+<div id="accordion-category-<%= category.id %>">
+  <div class="card">
 
-      <div class="card-header bg-secondary">
-        <div class="row align-items-center">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col-auto">
+          <h5 class="mb-0">
+            <%= render "categories/toggle_icon", category: category %>
+          </h5>
+        </div>
 
-          <div class="col">
-            <%= render "categories/category_name", category: category %>
-          </div>
+        <div class="col">
+          <%= render "categories/category_name", category: category %>
+        </div>
 
-
-          <div class="col-auto">
-            <div id="category-icon">
-              <%= render "categories/toggle_btn", category: category %>
-            </div>
-          </div>
-
-          <div class="col-auto collapse width" id="category-btn-group">
-            <div style= "width:400px;">
-              <%= render "categories/toggle_forms/btn_group", fieldable: category %>
-            </div>
-          </div>
-
+        <div class="col-auto" id="category-btn-group">
+          <%= render "categories/dropdown", fieldable: category %>
         </div>
       </div>
-
       <div id="category-multi_form">
         <%= render "categories/toggle_forms/multi_form", fieldable: category %>
       </div>
     </div>
 
-    <div class="row">
+    <div id="accordion-field_group-<%= category.id %>">
+      <div class="card-body">
 
-      <div class="col">
-        <div id="category-field_groups">
-          <%= render "field_groups/field_group", fieldable: category %>
+        <div class="col">
+          <div class="collapse show" id="category-<%= category.id %>-field_groups">
+            <%= render "field_groups/field_group", fieldable: category %>
+          </div>
         </div>
-      </div>
 
+      </div>
+      
     </div>
   </div>
 </div>

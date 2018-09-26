@@ -1,0 +1,11 @@
+<div class="dropdown float-right">
+  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Options
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" data-toggle="collapse" href="#category-edit">Edit Category</a>
+    <a class="dropdown-item" data-toggle="collapse" href="#field-new">New field</a>
+    <a class="dropdown-item" data-toggle="collapse" href="#field-add">Existing field</a>
+    <%= link_to 'Delete Category', fieldable,  method: :delete, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+  </div>
+</div>

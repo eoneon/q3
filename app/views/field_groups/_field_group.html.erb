@@ -1,25 +1,47 @@
 <% fieldable.field_groups.order(:sort).each do |field_group| %>
   <div class="card">
-    <div class="card-body py-1">
-
+    <div class="card-header">
       <div class="row align-items-center">
 
-        <div class="col-1">
-          <div class="align-self-end">
-            <div class="btn-group-vertical">
-              <div class="btn py-0" role="group">
-                <%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %>
-              </div>
-            </div>
+        <div class="col-auto">
+          <h5 class="mb-0">
+            <%= render "field_groups/toggle_icon", fieldable: fieldable, field_group: field_group %>
+          </h5>
+        </div>
+
+        <div class="col">
+          <%= render 'fields/field_name', field: field_group.field %>
+        </div>
+
+        <div class="col-auto">
+          <%= render "fields/dropdown", field: field_group.field %>
+        </div>
+
+        <div class="btn-group-vertical">
+          <div class="btn py-0" role="group">
+            <%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %>
+          </div>
+        </div>
+      </div>
+
+      <div class="collapse" id="field-<%= field_group.field.id %>-edit" data-parent="#accordion-field_group-<%= fieldable.id %>">
+        <div class="card card-body p-1 bg-light">
+          <span class="card-title">Edit Field</span>
+          <%= render "fields/form", fieldable: fieldable, field: field_group.field %>
+        </div>
+      </div>
+    </div>
+
+    <div id="accordion-field-<%= field_group.field.id %>-values">
+      <div class="collapse" id="field-<%= field_group.field.id %>-values">
+      <div class="card-body">
+
+        <div class="col">
+
+            <%= render "fields/values/value", field: field_group.field %>
           </div>
         </div>
 
-
-        <div class="col-11" id="field-<%= field_group.field.id %>">
-          <button class="btn btn-block field-toggle text-left" type="button" data-toggle="collapse" data-target="#category-btn-group" aria-expanded="false">
-            <%= render 'fields/field_name', field: field_group.field %>
-          </button>
-        </div>
       </div>
     </div>
   </div>
