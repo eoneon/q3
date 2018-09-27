@@ -12,6 +12,14 @@
         </div>
 
       </div>
+
+      <div class="collapse" id="value-<%= value.id %>-form" data-parent="#accordion-field-<%= field.id %>-values">
+        <div class="card card-body p-1 bg-light">
+          <span class="card-title">Edit Value</span>
+          <%= render "fields/values/form", field: field, value: value %>
+        </div>
+      </div>
+
     </div>
   </div>
 <% end %>
