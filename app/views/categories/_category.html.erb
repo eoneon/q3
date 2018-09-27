@@ -29,7 +29,9 @@
       <div class="card-body">
         <div id="accordion-field_group-<%= category.id %>">
           <div class="col">
-            <%= render "field_groups/field_group", fieldable: category %>
+            <div id="category-<%= category.id %>-field_groups">
+              <%= render "field_groups/field_group", fieldable: category %>
+            </div>
           </div>
         </div>
       </div>

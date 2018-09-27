@@ -1,0 +1,2 @@
+$('#field-<%= @field.id %>-values').html('<%= j render "fields/values/value", field: @field %>');
+$('#field-<%= @field.id %>-new').html("<%= j render 'fields/values/form', field: @field, value: Value.new %>");

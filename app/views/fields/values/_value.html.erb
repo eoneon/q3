@@ -3,7 +3,7 @@
     <div class="card-header">
       <div class="row align-items-center">
 
-        <div class="col mb-0">
+        <div class="col mb-0" id="value-name-<%= value.id %>">
           <%= render 'values/value_name', value: value %>
         </div>
 
@@ -13,10 +13,17 @@
 
       </div>
 
-      <div class="collapse" id="value-<%= value.id %>-form" data-parent="#accordion-field-<%= field.id %>-values">
+      <div class="collapse value-form" id="value-<%= value.id %>-form" data-parent="#accordion-field-<%= field.id %>-values">
         <div class="card card-body p-1 bg-light">
-          <span class="card-title">Edit Value</span>
-          <%= render "fields/values/form", field: field, value: value %>
+          <div>
+            <span class="card-title">Edit Value</span>
+            <button type="button" class="close float-right close-value-form">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div id="value-<%= value.id %>-edit %>">
+            <%= render "fields/values/form", field: field, value: value %>
+          </div>
         </div>
       </div>
 

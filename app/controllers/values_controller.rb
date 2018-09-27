@@ -26,11 +26,15 @@ class ValuesController < ApplicationController
     @value = @field.values.build(value_params)
 
     if @value.save
-      flash[:notice] = "Value was saved successfully."
+      #flash[:notice] = "Value was saved successfully."
     else
-      flash.now[:alert] = "Error creating Value. Please try again."
+      #flash.now[:alert] = "Error creating Value. Please try again."
     end
-    render :edit
+    #render :edit
+    respond_to do |format|
+      #format.html
+      format.js
+    end
   end
 
   def update
@@ -38,23 +42,33 @@ class ValuesController < ApplicationController
     @value.assign_attributes(value_params)
 
     if @value.save
-      flash[:notice] = "value was updated successfully."
-      render :edit
+      #flash[:notice] = "value was updated successfully."
+      #render :edit
     else
-      flash.now[:alert] = "Error updated value. Please try again."
-      render :edit
+      #flash.now[:alert] = "Error updated value. Please try again."
+      #render :edit
+    end
+
+    respond_to do |format|
+      #format.html
+      format.js
     end
   end
 
   def destroy
-    @value = Value.find(params[:id])
-
-    if @value.destroy
-      flash[:notice] = "\"#{@value.name}\" was deleted successfully."
-      redirect_to category_field_path(@value.field)
+    value = Value.find(params[:id])
+    @field = value.field
+    if value.destroy
+      #flash[:notice] = "\"#{@value.name}\" was deleted successfully."
+      #redirect_to category_field_path(@value.field)
     else
-      flash.now[:alert] = "There was an error deleting the value."
-      render :show
+      #flash.now[:alert] = "There was an error deleting the value."
+      #render :show
+    end
+
+    respond_to do |format|
+      #format.html
+      format.js
     end
   end
 

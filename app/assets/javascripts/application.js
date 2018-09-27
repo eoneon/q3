@@ -30,6 +30,10 @@ $(document).ready(function(event){
     $(".field-forms").collapse('hide');
   });
 
+  $(".close-value-form").on('click', function(){
+    $(".value-form").collapse('hide');
+  });
+
   $(".close-category-form").on('click', function(){
     $("#category-multi_form .collapse").collapse('hide');
   });

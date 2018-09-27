@@ -9,7 +9,7 @@
           </h5>
         </div>
 
-        <div class="col">
+        <div class="col" id="field-name-<%= field_group.field.id %>">
           <%= render 'fields/field_name', field: field_group.field %>
         </div>
 
@@ -44,18 +44,22 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <%= render "fields/values/form", field: field_group.field, value: Value.new %>
+          <div id="field-<%= field_group.field.id %>-new">
+            <%= render "fields/values/form", field: field_group.field, value: Value.new %>
+          </div>
         </div>
       </div>
     </div>
 
     <!-- CARD BODY -->
     <!-- MY VALUES -->
-    <div class="collapse" id="field-<%= field_group.field.id %>-values" data-parent="#accordion-field_group-<%= fieldable.id %>">
+    <div class="collapse" id="collapse-field-<%= field_group.field.id %>-values" data-parent="#accordion-field_group-<%= fieldable.id %>">
       <div class="card-body">
         <div id="accordion-field-<%= field_group.field.id %>-values">
           <div class="col">
-            <%= render "fields/values/value", field: field_group.field %>
+            <div id="field-<%= field_group.field.id %>-values">
+              <%= render "fields/values/value", field: field_group.field %>
+            </div>
           </div>
         </div>
       </div>

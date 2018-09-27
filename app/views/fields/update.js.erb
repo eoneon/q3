@@ -1,2 +1,2 @@
 $('#form_field').html('<%= j render "fields/form", fieldable: @category, field: @field %>');
-$('.flash').html('<%= j render "layouts/flash" %>');
+$('#field-name-<%= @field.id %>').html('<%= j render "fields/field_name", field: @field %>');

@@ -5,6 +5,6 @@
   <div class="dropdown-menu">
     <a class="dropdown-item" data-toggle="collapse" href="#field-<%= field.id %>-edit">Edit Field</a>
     <a class="dropdown-item" data-toggle="collapse" href="#field-<%= field.id %>-value-form">New Value</a>
-    <%= link_to 'Delete Field', field,  method: :delete, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+    <%= link_to 'Delete Field', field,  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
   </div>
 </div>
