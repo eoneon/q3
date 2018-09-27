@@ -2,9 +2,9 @@
   <div class="form">
     <div class="form-row">
       <div class="form-group col">
-        <div class="input-group mb-3">
+        <div class="input-group m-0 p-0">
           <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">value name</span>
+            <span class="input-group-text" id="basic-addon1">name</span>
           </div>
           <%= f.text_field :name, placeholder: "enter value name", class: "form-control" %>
         </div>
@@ -19,7 +19,7 @@
       </div>
     </div>
   </div>
-  <button class="btn btn-outline-primary form-group" id="inlineFormInput" type="submit" aria-describedby="button-addon3">
+  <button class="btn btn-sm badge badge-primary float-right" type="submit">
     Submit
   </button>
 <% end %>

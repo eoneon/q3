@@ -30,6 +30,13 @@
           <%= render "fields/form", fieldable: fieldable, field: field_group.field %>
         </div>
       </div>
+
+      <div class="collapse" id="field-<%= field_group.field.id %>-value-form" data-parent="#accordion-field_group-<%= fieldable.id %>">
+        <div class="card card-body p-1 bg-light">
+          <span class="card-title">New Value</span>
+          <%= render "fields/values/form", field: field_group.field, value: Value.new %>
+        </div>
+      </div>
     </div>
 
     <!-- CARD BODY -->
