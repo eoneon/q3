@@ -32,16 +32,15 @@
       </div>
     </div>
 
-    <div id="accordion-field-<%= field_group.field.id %>-values">
-      <div class="collapse" id="field-<%= field_group.field.id %>-values">
+    <!-- CARD BODY -->
+    <!-- MY VALUES -->
+    <div class="collapse" id="field-<%= field_group.field.id %>-values" data-parent="#accordion-field_group-<%= fieldable.id %>">
       <div class="card-body">
-
-        <div class="col">
-
+        <div id="accordion-field-<%= field_group.field.id %>-values">
+          <div class="col">
             <%= render "fields/values/value", field: field_group.field %>
           </div>
         </div>
-
       </div>
     </div>
   </div>

@@ -1,18 +1,18 @@
-<div class="collapse" id="category-edit" data-parent="#accordion-category-<%= fieldable.id %>">
+<div class="collapse" id="category-edit" data-parent="#category-multi_form">
   <div class="card card-body p-1 bg-light">
     <span class="card-title">Edit Category</span>
     <%= render 'categories/form', fieldable: fieldable %>
   </div>
 </div>
 
-<div class="collapse" id="field-new" data-parent="#accordion-category-<%= fieldable.id %>">
+<div class="collapse" id="field-new" data-parent="#category-multi_form">
   <div class="card card-body p-1 bg-light">
     <span class="card-title">Create New Field</span>
     <%= render 'fields/form', fieldable: fieldable, field: Field.new %>
   </div>
 </div>
 
-<div class="collapse" id="field-add" data-parent="#accordion-category-<%= fieldable.id %>">
+<div class="collapse" id="field-add" data-parent="#category-multi_form">
   <div class="card card-body p-1 bg-light">
     <span class="card-title">Associate Existing Field</span>
     <%= render 'field_groups/form', fieldable: fieldable, field_group: FieldGroup.new %>

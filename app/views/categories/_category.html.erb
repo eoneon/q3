@@ -1,6 +1,7 @@
 <div id="accordion-category-<%= category.id %>">
   <div class="card">
 
+    <!-- MY CATEGORY -->
     <div class="card-header">
       <div class="row align-items-center">
         <div class="col-auto">
@@ -22,17 +23,17 @@
       </div>
     </div>
 
-    <div id="accordion-field_group-<%= category.id %>">
+    <!-- CARD BODY -->
+    <!-- MY FIELD GROUPS -->
+    <div class="collapse show" id="collapse-category-<%= category.id %>-field_groups" data-parent="#accordion-category-<%= category.id %>">
       <div class="card-body">
-
-        <div class="col">
-          <div class="collapse show" id="category-<%= category.id %>-field_groups">
+        <div id="accordion-field_group-<%= category.id %>">
+          <div class="col">
             <%= render "field_groups/field_group", fieldable: category %>
           </div>
         </div>
-
       </div>
-      
     </div>
+
   </div>
 </div>
