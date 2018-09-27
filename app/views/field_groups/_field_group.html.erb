@@ -24,16 +24,26 @@
         </div>
       </div>
 
-      <div class="collapse" id="field-<%= field_group.field.id %>-edit" data-parent="#accordion-field_group-<%= fieldable.id %>">
+      <div class="collapse field-forms" id="field-<%= field_group.field.id %>-edit" data-parent="#accordion-field_group-<%= fieldable.id %>">
         <div class="card card-body p-1 bg-light">
-          <span class="card-title">Edit Field</span>
+          <div>
+            <span class="card-title">Edit Field</span>
+            <button type="button" class="close float-right close-field-form">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <%= render "fields/form", fieldable: fieldable, field: field_group.field %>
         </div>
       </div>
 
-      <div class="collapse" id="field-<%= field_group.field.id %>-value-form" data-parent="#accordion-field_group-<%= fieldable.id %>">
+      <div class="collapse field-forms" id="field-<%= field_group.field.id %>-value-form" data-parent="#accordion-field_group-<%= fieldable.id %>">
         <div class="card card-body p-1 bg-light">
-          <span class="card-title">New Value</span>
+          <div>
+            <span class="card-title">New Value</span>
+            <button type="button" class="close float-right close-field-form">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
           <%= render "fields/values/form", field: field_group.field, value: Value.new %>
         </div>
       </div>
