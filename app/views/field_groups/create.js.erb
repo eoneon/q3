@@ -1,2 +1,2 @@
-$('#category-field_groups').html('<%= j render "field_groups/field_group", fieldable: @field_group.fieldable %>');
+$('#category-<%= @fieldable.id %>-field_groups').html('<%= j render "field_groups/field_group/field_group", fieldable: @field_group.fieldable %>');
 $('#field_group_form').html("<%= j render 'field_groups/form', fieldable: @field_group.fieldable, field_group: FieldGroup.new %>");

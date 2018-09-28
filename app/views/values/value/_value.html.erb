@@ -4,11 +4,11 @@
       <div class="row align-items-center">
 
         <div class="col mb-0" id="value-name-<%= value.id %>">
-          <%= render 'values/value_name', value: value %>
+          <%= render 'values/value/value_name', value: value %>
         </div>
 
         <div class="col-auto">
-          <%= render "values/dropdown", field: field, value: value %>
+          <%= render "values/value/dropdown", field: field, value: value %>
         </div>
 
       </div>
@@ -22,7 +22,7 @@
             </button>
           </div>
           <div id="value-<%= value.id %>-edit %>">
-            <%= render "fields/values/form", field: field, value: value %>
+            <%= render "values/form", field: field, value: value %>
           </div>
         </div>
       </div>
