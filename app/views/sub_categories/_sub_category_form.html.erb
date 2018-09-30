@@ -1,5 +1,0 @@
-<%= form_for [category, SubCategory.new] do |f| %>
-<%= hidden_field_tag "sub_category[categorizable_type]", "Dimension" %>
-  <%= f.collection_select :categorizable_id, Dimension.all, :id, :name, {class: 'form-control', include_blank: true} %>
-  <%= f.submit "Add field" %>
-<% end %>

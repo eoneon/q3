@@ -5,19 +5,16 @@
 
         <div class="col-auto">
           <h5 class="mb-0">
-            <%#= render "field_groups/toggle_icon", fieldable: fieldable, field_group: field_group %>
             <%= render "field_groups/field_group/toggle_icon", fieldable: fieldable, field_group: field_group %>
           </h5>
         </div>
 
         <div class="col" id="field-name-<%= field_group.field.id %>">
-          <%#= render 'fields/field_name', field: field_group.field %>
           <%= render 'fields/field/field_name', field: field_group.field %>
         </div>
 
         <div class="col-auto">
-          <%#= render "fields/dropdown", field: field_group.field %>
-          <%= render "fields/field/dropdown", field: field_group.field %>
+          <%= render "fields/field/dropdown", field_group: field_group, field: field_group.field %>
         </div>
 
         <div class="btn-group-vertical">

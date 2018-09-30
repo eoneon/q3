@@ -1,0 +1,2 @@
+<div><%= link_to_if sub_category.sort.present? && sub_category.sort > 1, (fa_icon "chevron-up", text: '', right: true), polymorphic_path([category, sub_category], action: 'sort_up'), class: 'btn-sm mb-0 pb-0', method: :post, remote: true %></div>
+<div><%= link_to_unless sub_category.sort.nil? || category.sorted_sub_categories.last == sub_category, (fa_icon "chevron-down", text: '', right: true), polymorphic_path([category, sub_category], action: 'sort_down'), class: 'btn-sm mb-0 pb-0', method: :post, remote: true %></div>

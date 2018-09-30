@@ -1,13 +1,11 @@
 <div class="col-3">
   <div class="list-group" id="list-tab" role="tablist">
-    <%#= render "categories/side_navs/tabs", categories: categories %>
     <%= render "categories/category/tabs", categories: categories %>
   </div>
 </div>
 
 <div class="col-9">
   <div id="cat_show">
-    <%#= render "categories/category", category: @category %>
     <%= render "categories/category/category", category: @category %>
   </div>
 </div>

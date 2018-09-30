@@ -5,11 +5,12 @@ class Category < ApplicationRecord
   has_many :fields, through: :field_groups
 
   has_many :sub_categories, dependent: :destroy
+  #has_many :sub_categories, as: :categorizable
   has_many :dimensions, through: :sub_categories
 
   has_many :items
 
-  scope :first_category, -> {where(sort: 1)}
+  #scope :first_category, -> {where(sort: 1)}
 
   def sorted_field_groups
     self.field_groups.order(:sort)

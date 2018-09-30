@@ -23,10 +23,17 @@ class DimensionsController < ApplicationController
 
   def create
     @dimension = Dimension.new(dimension_params)
+    #@dimension.public_send(categorizables) << categorizable
 
     if @dimension.save
+      # @categorizable = @dimension.categories.last
       flash[:notice] = "Dimension was saved successfully."
       redirect_to @dimension
+
+      # respond_to do |format|
+      #   format.html
+      #   format.js
+      # end
     else
       flash.now[:alert] = "Error creating Dimension. Please try again."
       render :edit
@@ -43,6 +50,11 @@ class DimensionsController < ApplicationController
       flash.now[:alert] = "Error updated dimension. Please try again."
     end
     render :edit
+
+    # respond_to do |format|
+    #   flash[:notice] = "updated"
+    #   format.js
+    # end
   end
 
   def destroy
@@ -67,4 +79,20 @@ class DimensionsController < ApplicationController
   def dimension_params
     params.require(:dimension).permit!
   end
+
+  # def get_klass
+  #   parent_klasses = %w[category]
+  #   if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
+  #     #klass.camelize.constantize.find params[:"#{klass}_id"]
+  #     klass
+  #   end
+  # end
+  #
+  # def fieldables
+  #   get_klass.pluralize
+  # end
+  #
+  # def fieldable
+  #   get_klass.camelize.constantize.find params[:"#{get_klass}_id"]
+  # end
 end

@@ -1,15 +1,24 @@
 class SubCategoriesController < ApplicationController
   def create
     @category = Category.find(params[:category_id])
-    sub_category = @category.sub_categories.build(sub_category_params)
-    set_sort(@category, sub_category)
+    #@categorizable = set_categorizable
+    @sub_category = @category.sub_categories.build(sub_category_params)
 
-    if sub_category.save
-      flash[:notice] = "Field chain was saved successfully."
-      redirect_to @category
+    #@category = Category.find(params[:category_id])
+    #sub_category = @category.sub_categories.build(sub_category_params)
+    set_sort(@category, @sub_category)
+
+    if @sub_category.save
+      #flash[:notice] = "Field chain was saved successfully."
+      #redirect_to @category
     else
-      flash.now[:alert] = "Error creating Field chain. Please try again."
-      redirect_to @category
+      #flash.now[:alert] = "Error creating Field chain. Please try again."
+      #redirect_to @category
+    end
+
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 
@@ -32,11 +41,14 @@ class SubCategoriesController < ApplicationController
 
     if sub_category.destroy
       reset_sort(@category, sort)
-      flash[:notice] = "Field chain was deleted successfully."
-      redirect_to @category
+      #flash[:notice] = "Field chain was deleted successfully."
+      #redirect_to @category
     else
-      flash.now[:alert] = "There was an error deleting the Field chain."
-      redirect_to @category
+      #flash.now[:alert] = "There was an error deleting the Field chain."
+      #redirect_to @category
+    end
+    respond_to do |format|
+      format.js
     end
   end
 
