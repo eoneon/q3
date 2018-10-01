@@ -22,15 +22,12 @@ class DimensionsController < ApplicationController
   # end
 
   def create
-    category = Category.find(params[:category_id])
-    #@dimension = Dimension.new(dimension_params)
-    @dimension = category.dimensions.build(dimension_params)
+    @category = Category.find(params[:category_id])
+    @dimension = Dimension.create(dimension_params)
 
-    if @dimension.save
-      # @categorizable = @dimension.categories.last
-      #flash[:notice] = "Dimension was saved successfully."
-      #redirect_to @dimension
+    @category.dimensions << @dimension
 
+    if @category.save
       respond_to do |format|
         format.html
         format.js

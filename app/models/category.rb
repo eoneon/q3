@@ -6,7 +6,7 @@ class Category < ApplicationRecord
 
   has_many :sub_categories, dependent: :destroy
   #has_many :sub_categories, as: :categorizable
-  has_many :dimensions, through: :sub_categories
+  has_many :dimensions, through: :sub_categories, source: :categorizable, source_type: "Dimension"
 
   has_many :items
 
