@@ -9,34 +9,35 @@ class DimensionsController < ApplicationController
     end
   end
 
-  def show
-    @dimension = Dimension.find(params[:id])
-  end
+  # def show
+  #   @dimension = Dimension.find(params[:id])
+  # end
 
-  def new
-    @dimension = Dimension.new
-  end
-
-  def edit
-    @dimension = Dimension.find(params[:id])
-  end
+  # def new
+  #   @dimension = Dimension.new
+  # end
+  #
+  # def edit
+  #   @dimension = Dimension.find(params[:id])
+  # end
 
   def create
-    @dimension = Dimension.new(dimension_params)
-    #@dimension.public_send(categorizables) << categorizable
+    category = Category.find(params[:category_id])
+    #@dimension = Dimension.new(dimension_params)
+    @dimension = category.dimensions.build(dimension_params)
 
     if @dimension.save
       # @categorizable = @dimension.categories.last
-      flash[:notice] = "Dimension was saved successfully."
-      redirect_to @dimension
+      #flash[:notice] = "Dimension was saved successfully."
+      #redirect_to @dimension
 
-      # respond_to do |format|
-      #   format.html
-      #   format.js
-      # end
+      respond_to do |format|
+        format.html
+        format.js
+      end
     else
-      flash.now[:alert] = "Error creating Dimension. Please try again."
-      render :edit
+      #flash.now[:alert] = "Error creating Dimension. Please try again."
+      #render :edit
     end
   end
 
@@ -45,27 +46,31 @@ class DimensionsController < ApplicationController
     @dimension.assign_attributes(dimension_params)
 
     if @dimension.save
-      flash[:notice] = "Dimension was updated successfully."
+      #flash[:notice] = "Dimension was updated successfully."
     else
-      flash.now[:alert] = "Error updated dimension. Please try again."
+      #flash.now[:alert] = "Error updated dimension. Please try again."
     end
-    render :edit
+    #render :edit
 
-    # respond_to do |format|
-    #   flash[:notice] = "updated"
-    #   format.js
-    # end
+    respond_to do |format|
+      #flash[:notice] = "updated"
+      format.js
+    end
   end
 
   def destroy
     @dimension = Dimension.find(params[:id])
 
     if @dimension.destroy
-      flash[:notice] = "\"#{@dimension.name}\" was deleted successfully."
-      redirect_to action: :index
+      #flash[:notice] = "\"#{@dimension.name}\" was deleted successfully."
+      #redirect_to action: :index
     else
-      flash.now[:alert] = "There was an error deleting the dimension."
-      render :show
+      #flash.now[:alert] = "There was an error deleting the dimension."
+      #render :show
+    end
+    respond_to do |format|
+      format.html
+      format.js
     end
   end
 

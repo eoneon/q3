@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :dimensions, only: [:create, :update, :destroy]
+
     collection do
       post :import
     end

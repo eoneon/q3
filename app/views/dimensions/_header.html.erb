@@ -1,0 +1,28 @@
+<div class="card">
+
+  <!-- DIMENSIONS -->
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col">
+        <span>Dimensions</span>
+        <button class="btn-link float-right" type="button" data-toggle="collapse" data-target="#category-<%= category.id %>-dimension-form" aria-expanded="false">
+          New Dimension
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="collapse dimension-form" id="category-<%= category.id %>-dimension-form" data-parent="#accordion-sub_category-<%= category.id %>">
+    <div class="card card-body p-1 bg-light">
+      <div>
+        <span class="card-title">New Dimension</span>
+        <button type="button" class="close float-right close-dimension-form">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div id="category-<%= category.id %>-dimension-new">
+        <%= render "dimensions/form", category: category, dimension: Dimension.new %>
+      </div>
+    </div>
+  </div>
+</div>

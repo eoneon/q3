@@ -1,4 +1,4 @@
-class ValuesController < ApplicationController
+ class ValuesController < ApplicationController
   def index
     @values = Value.all
     respond_to do |format|

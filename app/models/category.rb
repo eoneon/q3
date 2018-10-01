@@ -19,4 +19,8 @@ class Category < ApplicationRecord
   def sorted_sub_categories
     self.sub_categories.order(:sort)
   end
+
+  def sorted_dimensions
+    self.sub_categories.where(categorizable_type: 'Dimension').order(:sort)
+  end
 end
