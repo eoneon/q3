@@ -1,0 +1,5 @@
+$('#category-new').html('<%= j render "categories/form", fieldable: Category.new %>');
+$('#list-tab').html('<%= j render "categories/category/tabs", categories: @categories %>');
+$('.list-group-item').removeClass('active');
+$('#list-<%= @category.id %>-list').addClass('active');
+$('#cat_show').html('<%= j render "categories/category/category", category: @category %>');

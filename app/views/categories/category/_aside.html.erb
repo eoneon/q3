@@ -1,4 +1,26 @@
 <div class="col-3">
+  <div class="card">
+    <div class="card-header">
+      <div class="row align-items-center">
+        <div class="col">
+          Art Categories
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapse-category-new" aria-expanded="false">
+            New
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="collapse" id="collapse-category-new">
+      <div class="card-body">
+        <div id="category-new">
+          <%= render "categories/form", fieldable: Category.new %>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="list-group" id="list-tab" role="tablist">
     <%= render "categories/category/tabs", categories: categories %>
   </div>

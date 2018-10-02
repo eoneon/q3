@@ -4,14 +4,12 @@ class FieldGroupsController < ApplicationController
     @field_group = @fieldable.field_groups.build(field_group_params)
 
     if @field_group.save
-      #redirect_to @fieldable
+      respond_to do |format|
+        format.js
+      end
     else
       #flash.now[:alert] = "Error creating Field chain. Please try again."
       #redirect_to @fieldable
-    end
-
-    respond_to do |format|
-      format.js
     end
   end
 
@@ -40,15 +38,11 @@ class FieldGroupsController < ApplicationController
 
     if field_group.destroy
       reset_sort(@fieldable, sort)
-      #flash[:notice] = "Field chain was deleted successfully."
-      #redirect_to @fieldable
-    else
-      #flash.now[:alert] = "There was an error deleting the Field chain."
-      #redirect_to @fieldable
-    end
 
-    respond_to do |format|
-      format.js
+      respond_to do |format|
+        format.js
+      end
+    else
     end
   end
 
@@ -58,26 +52,30 @@ class FieldGroupsController < ApplicationController
     params.require(:field_group).permit!
   end
 
-  def reset_sort(fieldable, sort)
-    fieldable.field_groups.where("sort > ?", sort).each do |field|
-      field.update(sort: field.sort - 1)
-    end
-  end
+  # def reset_sort(fieldable, sort)
+  #   fieldable.field_groups.where("sort > ?", sort).each do |field|
+  #     field.update(sort: field.sort - 1)
+  #   end
+  # end
 
-  def set_fieldable
-    parent_klasses = %w[category dimension]
-    if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
-      klass.camelize.constantize.find params[:"#{klass}_id"]
-    end
-  end
+  # def set_fieldable
+  #   parent_klasses = %w[category dimension]
+  #   if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
+  #     klass.camelize.constantize.find params[:"#{klass}_id"]
+  #   end
+  # end
 
-  def swap_sort(fieldable, pos)
-    field_group = FieldGroup.find(params[:id])
-    sort = field_group.sort
-    sort2 = pos == -1 ? sort - 1 : sort + 1
+  # def target_obj
+  #   params[:controller].singularize.camelize.constantize
+  # end
 
-    field_group2 = @fieldable.field_groups.where(sort: sort2)
-    field_group2.update(sort: sort)
-    field_group.update(sort: sort2)
-  end
+  # def swap_sort(fieldable, pos)
+  #   field_group = target_obj.find(params[:id])
+  #   sort = field_group.sort
+  #   sort2 = pos == -1 ? sort - 1 : sort + 1
+  #
+  #   field_group2 = fieldable.field_groups.where(sort: sort2)
+  #   field_group2.update(sort: sort)
+  #   field_group.update(sort: sort2)
+  # end
 end

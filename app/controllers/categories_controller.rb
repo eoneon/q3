@@ -30,11 +30,14 @@ class CategoriesController < ApplicationController
     @category = Category.new(category_params)
 
     if @category.save
-      flash[:notice] = "Category was saved successfully."
-      redirect_to @category
+      @categories = Category.all.order(sort: 'asc')
+      respond_to do |format|
+        format.html
+        format.js
+      end
     else
-      flash.now[:alert] = "Error creating Category. Please try again."
-      render :edit
+      #flash.now[:alert] = "Error creating Category. Please try again."
+      #render :edit
     end
   end
 
@@ -60,6 +63,9 @@ class CategoriesController < ApplicationController
     if @category.destroy
       flash[:notice] = "\"#{@category.name}\" was deleted successfully."
       redirect_to action: :index
+      # respond_to do |format|
+      #   format.js
+      # end
     else
       flash.now[:alert] = "There was an error deleting the category."
       render :show
