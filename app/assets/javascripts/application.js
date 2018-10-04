@@ -42,6 +42,10 @@ $(document).ready(function(event){
     $("#category-multi_form .collapse").collapse('hide');
   });
 
+  $(".close-sub-field-form").on('click', function(){
+    $(".sub-field-form").collapse('hide');
+  });
+
   // $(".field-toggle").on('click', function(){
   //   $(this).toggleClass('fa-caret-down');
   // });

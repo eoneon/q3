@@ -4,7 +4,8 @@
   </button>
   <div class="dropdown-menu">
     <a class="dropdown-item" data-toggle="collapse" href="#<%= categorizable_href_target(sub_category, 'form') %>"><%= categorizable_label(sub_category, "edit") %></a>
-    <!-- <a class="dropdown-item" data-toggle="collapse" href="#field-<%#= field.id %>-value-form">New Value</a> -->
+    <a class="dropdown-item" data-toggle="collapse" href="#<%= categorizable_href_target(sub_category, 'field-new') %>">New field</a>
+    <a class="dropdown-item" data-toggle="collapse" href="#<%= categorizable_href_target(sub_category, 'field-add') %>">Existing field</a>
     <%= link_to 'Delete Dimension', [category, sub_category],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
   </div>
 </div>

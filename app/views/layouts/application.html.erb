@@ -9,24 +9,19 @@
 
   <body>
     <div class="container">
-      <nav class="fixed-top navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="btn-toolbar" role="toolbar" aria-label="nav-button-group">
-          <div class="btn-group mr-2" role="group" aria-label="First group">
-            <a href="<%= categories_path %>" class="btn" type="button" aria-describedby: "nav-button-group">
-              Categories
-            </a>
-            <a href="<%= dimensions_path %>" class="btn" type="button" aria-describedby: "nav-button-group">
-              Dimensions
-            </a>
-            <a href="<%= fields_path %>" class="btn" type="button" aria-describedby: "nav-button-group">
-              Fields
-            </a>
-            <a href="<%= suppliers_path %>" class="btn" type="button" aria-describedby: "nav-button-group">
-              Suppliers
-            </a>
-          </div>
-
-      </div>
+      <nav class="fixed-top navbar navbar-expand navbar-dark bg-dark">
+        <a href="<%= categories_path %>" class="nav-link text-white">
+          Categories
+        </a>
+        <a href="<%= dimensions_path %>" class="nav-link text-white">
+          Dimensions
+        </a>
+        <a href="<%= fields_path %>" class="nav-link text-white">
+          Fields
+        </a>
+        <a href="<%= suppliers_path %>" class="nav-link text-white">
+          Suppliers
+        </a>
       </nav>
       <%= yield %>
     </div>

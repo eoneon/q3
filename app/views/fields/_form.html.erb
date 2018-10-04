@@ -1,4 +1,4 @@
-<%= form_with model: field, url: [fieldable, field], id: :field_form do |f| %>
+<%= form_with model: field, url: [fieldable, field], id: form_id([fieldable, field]) do |f| %>
   <div class="form">
     <div class="form-row">
       <div class="col-6">

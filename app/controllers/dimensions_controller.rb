@@ -9,17 +9,17 @@ class DimensionsController < ApplicationController
     end
   end
 
-  # def show
-  #   @dimension = Dimension.find(params[:id])
-  # end
+  def show
+    @dimension = Dimension.find(params[:id])
+  end
 
-  # def new
-  #   @dimension = Dimension.new
-  # end
-  #
-  # def edit
-  #   @dimension = Dimension.find(params[:id])
-  # end
+  def new
+    @dimension = Dimension.new
+  end
+
+  def edit
+    @dimension = Dimension.find(params[:id])
+  end
 
   def create
     @category = Category.find(params[:category_id])
