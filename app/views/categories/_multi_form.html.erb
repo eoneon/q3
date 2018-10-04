@@ -1,8 +1,8 @@
-<div class="collapse" id="category-edit" data-parent="#category-multi_form">
+<div class="collapse close-toggle-form" id="category-edit" data-parent="#category-multi_form">
   <div class="card card-body p-1 bg-light">
     <div>
       <span class="card-title">Edit Category</span>
-      <button type="button" class="close float-right close-category-form">
+      <button type="button" class="close float-right close-form">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -10,11 +10,11 @@
   </div>
 </div>
 
-<div class="collapse" id="field-new" data-parent="#category-multi_form">
+<div class="collapse close-toggle-form" id="category-<%= fieldable.id %>-field-form-new" data-parent="#category-multi_form">
   <div class="card card-body p-1 bg-light">
     <div>
       <span class="card-title">Create New Field</span>
-      <button type="button" class="close float-right close-category-form">
+      <button type="button" class="close float-right close-form">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
@@ -24,39 +24,39 @@
   </div>
 </div>
 
-<div class="collapse" id="field-add" data-parent="#category-multi_form">
+<div class="collapse close-toggle-form" id="category-<%= fieldable.id %>-field-group-form-new" data-parent="#category-multi_form">
   <div class="card card-body p-1 bg-light">
     <div>
       <span class="card-title">Associate Existing Field</span>
-      <button type="button" class="close float-right close-category-form">
+      <button type="button" class="close float-right close-form">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div id="category-<%= fieldable.id %>-field_group-new">
+    <div id="category-<%= fieldable.id %>-field-group-new">
       <%= render 'field_groups/form', fieldable: fieldable, field_group: FieldGroup.new %>
     </div>
   </div>
 </div>
 
-<div class="collapse" id="dimension-add" data-parent="#category-multi_form">
+<div class="collapse close-toggle-form" id="category-<%= fieldable.id %>-sub-category-form-new" data-parent="#category-multi_form">
   <div class="card card-body p-1 bg-light">
     <div>
       <span class="card-title">Associate Existing Dimension</span>
-      <button type="button" class="close float-right close-category-form">
+      <button type="button" class="close float-right close-form">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <div id="category-<%= fieldable.id %>-sub_category-new">
+    <div id="category-<%= fieldable.id %>-sub-category-new">
       <%= render 'sub_categories/form', fieldable: fieldable, sub_category: SubCategory.new %>
     </div>
   </div>
 </div>
 
-<div class="collapse" id="dimension-new" data-parent="#category-multi_form">
+<div class="collapse close-toggle-form" id="category-<%= fieldable.id %>-dimension-form-new" data-parent="#category-multi_form">
   <div class="card card-body p-1 bg-light">
     <div>
       <span class="card-title">Create New Dimension</span>
-      <button type="button" class="close float-right close-category-form">
+      <button type="button" class="close float-right close-form">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

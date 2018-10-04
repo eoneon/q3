@@ -22,31 +22,11 @@ $(document).ready(function(event){
     $("#category-multi_form .collapse").collapse('hide');
   });
 
-  // $("#category-toggle").on('click', function(){
-  //   $("#toggleIcon").toggleClass('fa-angle-double-right');
-  // });
-
-  $(".close-field-form").on('click', function(){
-    $(".field-forms").collapse('hide');
-  });
-
-  $(".close-dimension-form").on('click', function(){
-    $(".dimension-form").collapse('hide');
-  });
-
-  $(".close-value-form").on('click', function(){
-    $(".value-form").collapse('hide');
+  $(".close-form").on('click', function(){
+    $(".close-toggle-form").collapse('hide');
   });
 
   $(".close-category-form").on('click', function(){
     $("#category-multi_form .collapse").collapse('hide');
   });
-
-  $(".close-sub-field-form").on('click', function(){
-    $(".sub-field-form").collapse('hide');
-  });
-
-  // $(".field-toggle").on('click', function(){
-  //   $(this).toggleClass('fa-caret-down');
-  // });
 });
