@@ -62,14 +62,17 @@ class FieldsController < ApplicationController
   end
 
   def destroy
+    @fieldable = set_fieldable
     @field = Field.find(params[:id])
 
     if @field.destroy
-      flash[:notice] = "\"#{@field.name}\" was deleted successfully."
-      redirect_to action: :index
+      respond_to do |format|
+        #flash[:notice] = "updated"
+        format.js
+      end
     else
-      flash.now[:alert] = "There was an error deleting the field."
-      render :show
+      # flash.now[:alert] = "There was an error deleting the field."
+      # render :show
     end
   end
 

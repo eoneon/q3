@@ -8,16 +8,16 @@
         </div>
 
         <div class="col-auto">
-          <%= render "values/value/dropdown", field: field, value: value %>
+          <%= render "values/value/drop_down", field: field, value: value %>
         </div>
 
       </div>
 
-      <div class="collapse value-form" id="value-<%= value.id %>-form" data-parent="#accordion-field-<%= field.id %>-values">
+      <div class="collapse close-toggle-form" id="value-<%= value.id %>-form-edit" data-parent="#accordion-field-<%= field.id %>-values">
         <div class="card card-body p-1 bg-light">
           <div>
             <span class="card-title">Edit Value</span>
-            <button type="button" class="close float-right close-value-form">
+            <button type="button" class="close float-right close-form">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>

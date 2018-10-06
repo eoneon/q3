@@ -13,18 +13,18 @@
           <%= render 'fields/field/field_name', field: field_group.field %>
         </div>
 
-        <div class="col-auto">
+        <div class="col-auto mr-0 pr-1">
           <%= render "fields/field/dropdown", field_group: field_group, field: field_group.field %>
         </div>
 
         <div class="btn-group-vertical">
-          <div class="btn py-0" role="group">
+          <div class="btn btn-sm p-0 m-0" role="group">
             <%= render 'field_groups/field_group/sorter', fieldable: fieldable, field_group: field_group %>
           </div>
         </div>
       </div>
 
-      <div class="collapse close-toggle-form" id="field-<%= field_group.field.id %>-edit" data-parent="#accordion-field_group-<%= fieldable.id %>">
+      <div class="collapse close-toggle-form" id="field-group-<%= field_group.id %>-field-<%= field_group.field.id %>-form-edit" data-parent="#accordion-field_group-<%= fieldable.id %>">
         <div class="card card-body p-1 bg-light">
           <div>
             <span class="card-title">Edit Field</span>
@@ -32,11 +32,13 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <%= render "fields/form", fieldable: fieldable, field: field_group.field %>
+          <div id="category-<%= fieldable.id %>-field-group-new">
+            <%= render "fields/form", fieldable: fieldable, field: field_group.field %>
+          </div>
         </div>
       </div>
 
-      <div class="collapse close-toggle-form" id="field-<%= field_group.field.id %>-value-form" data-parent="#accordion-field_group-<%= fieldable.id %>">
+      <div class="collapse close-toggle-form" id="field-group-<%= field_group.id %>-field-<%= field_group.field.id %>-edit" data-parent="#accordion-field_group-<%= fieldable.id %>">
         <div class="card card-body p-1 bg-light">
           <div>
             <span class="card-title">New Value</span>

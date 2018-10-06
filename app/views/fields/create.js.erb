@@ -1,2 +1,2 @@
-$('#category-<%= @fieldable.id %>-field_groups').html('<%= j render "field_groups/field_group/field_group", fieldable: @fieldable %>');
-$('#category-<%= @fieldable.id %>-field-new').html("<%= j render 'fields/form', fieldable: @fieldable, field: Field.new %>");
+$('#<%= klass_to_str(@fieldable) %>-<%= @fieldable.id %>-field_groups').html('<%= j render "field_groups/field_group/field_group", fieldable: @fieldable, Field.new %>');
+$('#<%= klass_to_str(@fieldable) %>-<%= @fieldable.id %>-field-new').html("<%= j render 'fields/form', fieldable: @fieldable, field: Field.new %>");
