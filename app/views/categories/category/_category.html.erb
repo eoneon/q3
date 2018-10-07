@@ -1,4 +1,5 @@
-<div id="accordion-category-<%= category.id %>">
+<div id="<%= dynamic_id(name: 'accordion', klass: category, child_klass: nil) %>">
+
   <div class="card">
 
     <!-- MY CATEGORY -->
@@ -26,11 +27,11 @@
     </div>
 
     <!-- MY FIELD GROUPS -->
-    <div class="collapse show collapse-category-<%= category.id %>" id="collapse-category-<%= category.id %>-field_groups" data-parent="#accordion-category-<%= category.id %>">
+    <div class="collapse show <%= dynamic_id(name: 'collection-target', klass: category, child_klass: nil) %>" id="<%= dynamic_id(name: 'collection-target', klass: category, child_klass: 'field_groups') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: nil) %>">
       <div class="card-body">
-        <div id="accordion-field_group-<%= category.id %>">
+        <div id="<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'field_group') %>">
           <div class="col">
-            <div id="category-<%= category.id %>-field_groups">
+            <div id="<%= dynamic_id(name: 'collection-render', klass: category, child_klass: 'field_groups') %>">
               <%= render "field_groups/field_group/field_group", fieldable: category %>
             </div>
           </div>
@@ -39,11 +40,11 @@
     </div>
 
     <!-- MY SUB CATEGORIES: DIMENSIONS -->
-    <div class="collapse show collapse-category-<%= category.id %>" id="collapse-category-<%= category.id %>-sub_categories" data-parent="#accordion-category-<%= category.id %>">
+    <div class="collapse show <%= dynamic_id(name: 'collection-target', klass: category, child_klass: nil) %>" id="<%= dynamic_id(name: 'collection-target', klass: category, child_klass: 'sub_categories') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: nil) %>">
       <div class="card-body">
-        <div id="accordion-sub_category-<%= category.id %>">
+        <div id="<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
           <div class="col">
-            <div id="category-<%= category.id %>-sub_categories">
+            <div id="<%= dynamic_id(name: 'collection-render', klass: category, child_klass: 'sub_categories') %>">
               <%= render "sub_categories/sub_category/sub_category", category: category %>
             </div>
           </div>

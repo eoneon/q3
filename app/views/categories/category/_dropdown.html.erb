@@ -1,6 +1,6 @@
 <ul class="nav">
   <li class="nav-item-dropdown">
-    <a class="nav-link dropdown-toggle font-weight-light text-muted px-2" data-toggle="dropdown" href="#category-<%= fieldable.id %>-menu" role="button" aria-haspopup="true" aria-expanded="false">Category</a>
+    <a class="nav-link dropdown font-weight-light text-muted px-2" data-toggle="dropdown" href="#<%= dynamic_id(name: 'category-menu', klass: fieldable, child_klass: nil) %>" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars", text: 'Category', right: true) %></a>
     <div class="dropdown-menu">
       <a class="dropdown-item" data-toggle="collapse" href="#category-edit">Edit category</a>
       <div class="dropdown-divider"></div>
@@ -9,19 +9,19 @@
   </li>
 
   <li class="nav-item-dropdown">
-    <a class="nav-link dropdown-toggle font-weight-light text-muted px-2" data-toggle="dropdown" href="#category-<%= fieldable.id %>-field-menu" role="button" aria-haspopup="true" aria-expanded="false">Field</a>
+    <a class="nav-link dropdown font-weight-light text-muted px-2" data-toggle="dropdown" href="#<%= dynamic_id(name: 'field-menu', klass: fieldable, child_klass: nil) %>" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars", text: 'Field', right: true) %></a>
     <div class="dropdown-menu">
 
-      <a class="dropdown-item" data-toggle="collapse" href="#category-<%= fieldable.id %>-field-form-new">New Field</a>
-      <a class="dropdown-item" data-toggle="collapse" href="#category-<%= fieldable.id %>-field-group-form-new">Add Existing Field</a>
+      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field') %>">New Field</a>
+      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field_group') %>">Add Existing Field</a>
     </div>
   </li>
 
   <li class="nav-item-dropdown">
-    <a class="nav-link dropdown-toggle font-weight-light text-muted px-2" data-toggle="dropdown" href="#category-<%= fieldable.id %>-field-menu" role="button" aria-haspopup="true" aria-expanded="false">Dimension</a>
+    <a class="nav-link dropdown font-weight-light text-muted px-2" data-toggle="dropdown" href="#<%= dynamic_id(name: 'dimension-menu', klass: fieldable, child_klass: nil) %>" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars", text: 'Dimension', right: true) %></a>
     <div class="dropdown-menu">
-      <a class="dropdown-item" data-toggle="collapse" href="#category-<%= fieldable.id %>-dimension-form-new">New Dimension</a>
-      <a class="dropdown-item" data-toggle="collapse" href="#category-<%= fieldable.id %>-sub-category-form-new">Add Existing Dimension</a>
+      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'dimension') %>">New Dimension</a>
+      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'sub_category') %>">Add Existing Dimension</a>
     </div>
   </li>
 </ul>

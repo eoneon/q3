@@ -1,8 +1,9 @@
 <ul class="nav">
   <li class="nav-item-dropdown">
-    <a class="nav-link dropdown-toggle font-weight-light text-muted px-2" data-toggle="dropdown" href="#category-<%= field_group.fieldable.id %>-field-menu" role="button" aria-haspopup="true" aria-expanded="false">Field</a>
+    <a class="nav-link dropdown font-weight-light text-muted px-2" data-toggle="dropdown" href="#<%= dynamic_id(name: 'field-menu', klass: field_group, child_klass: nil) %>" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars", text: 'Field', right: true) %></a>
     <div class="dropdown-menu">
-      <a class="dropdown-item" data-toggle="collapse" href="#category-<%= field_group.fieldable.id %>-field-<%= field.id %>-form-edit">Edit Field</a>
+      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-edit-target', klass: field_group.fieldable, child_klass: field) %>">Edit Field</a>
+
       <div class="dropdown-divider"></div>
       <%= link_to 'Remove Field', [field_group.fieldable, field_group],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
       <%= link_to 'Delete Field', [field_group.fieldable, field_group.field],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
@@ -10,9 +11,9 @@
   </li>
 
   <li class="nav-item-dropdown">
-    <a class="nav-link dropdown-toggle font-weight-light text-muted px-2" data-toggle="dropdown" href="#category-<%= field_group.fieldable.id %>-value-menu" role="button" aria-haspopup="true" aria-expanded="false">Value</a>
+    <a class="nav-link dropdown font-weight-light text-muted px-2" data-toggle="dropdown" href="#<%= dynamic_id(name: 'value-menu', klass: field_group, child_klass: nil) %>" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars", text: 'Value', right: true) %></a>
     <div class="dropdown-menu">
-      <a class="dropdown-item" data-toggle="collapse" href="#category-<%= field_group.fieldable.id %>-field-<%= field.id %>-value-form-new">New Value</a>
+      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: field_group, child_klass: 'value') %>">New Value</a>
     </div>
   </li>
 </ul>

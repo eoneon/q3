@@ -1,2 +1,2 @@
-$('#<%= klass_to_str(@fieldable) %>-<%= @fieldable.id %>-field_groups').html('<%= j render "field_groups/field_group/field_group", fieldable: @fieldable, Field.new %>');
-$('#<%= klass_to_str(@fieldable) %>-<%= @fieldable.id %>-field-new').html("<%= j render 'fields/form', fieldable: @fieldable, field: Field.new %>");
+$("#<%= dynamic_id(name: 'collection-render', klass: @fieldable, child_klass: 'field_groups') %>").html('<%= j render "field_groups/field_group/field_group", fieldable: @fieldable %>');
+$("#<%= dynamic_id(name: 'form-new-render', klass: @fieldable, child_klass: 'field') %>").html("<%= j render 'fields/form', fieldable: @fieldable, field: Field.new %>");

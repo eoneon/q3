@@ -1,2 +1,2 @@
-$('#field-<%= @field.id %>-values').html('<%= j render "values/value/value", field: @field %>');
-$('#field-<%= @field.id %>-new').html("<%= j render 'values/form', field: @field, value: Value.new %>");
+$("#<%= dynamic_id(name: 'collection-render', klass: @field.field_groups.first, child_klass: 'values') %>").html('<%= j render "values/value/value", field_group: @field.field_groups.first, field: @field %>');
+$("#<%= dynamic_id(name: 'form-new-render', klass: @field.field_groups.first, child_klass: 'value') %>").html("<%= j render 'values/form', field: @field, value: Value.new %>");

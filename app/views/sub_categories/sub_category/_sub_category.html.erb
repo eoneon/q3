@@ -14,7 +14,7 @@
         </div>
 
         <div class="col-auto">
-          <%= render "sub_categories/sub_category/dropdown", category: category, sub_category: sub_category %>
+          <%= render "sub_categories/sub_category/drop_down", category: category, sub_category: sub_category %>
         </div>
 
         <div class="btn-group-vertical">
@@ -25,7 +25,7 @@
 
       </div>
 
-      <div class="collapse close-toggle-form" id="<%= categorizable_href_target(sub_category, 'edit') %>" data-parent="#accordion-sub_category-<%= category.id %>">
+      <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-edit-target', klass: sub_category, child_klass: sub_category.categorizable) %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
         <div class="card card-body p-1 bg-light">
           <div>
             <span class="card-title"><%= categorizable_label(sub_category, "form") %></span>
@@ -33,13 +33,14 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div id="<%= categorizable_href_target(sub_category, 'edit') %>">
+
+          <div id="<%= dynamic_id(name: 'form-edit-render', klass: sub_category, child_klass: sub_category.categorizable) %>">
             <%= render "dimensions/form", category: category, dimension: sub_category.categorizable %>
           </div>
         </div>
       </div>
 
-      <div class="collapse close-toggle-form" id="<%= categorizable_href_target(sub_category, 'field-form-new') %>" data-parent="#accordion-sub_category-<%= category.id %>">
+      <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: sub_category.categorizable, child_klass: 'field') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
         <div class="card card-body p-1 bg-light">
           <div>
             <span class="card-title">New field</span>
@@ -47,7 +48,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div id="<%= categorizable_href_target(sub_category, 'field-new') %>">
+          <div id="<%= dynamic_id(name: 'form-new-render', klass: sub_category.categorizable, child_klass: 'field') %>">
             <%= render "fields/form", fieldable: sub_category.categorizable, field: Field.new %>
           </div>
         </div>
@@ -56,7 +57,7 @@
     </div>
 
     <!-- ADD FIELD -->
-    <div class="collapse close-toggle-form" id="<%= klass_to_str(sub_category.categorizable) %>-<%= sub_category.categorizable.id %>-field-group-form-new" data-parent="#accordion-sub_category-<%= category.id %>">
+    <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: sub_category.categorizable, child_klass: 'field_group') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
       <div class="card card-body p-1 bg-light">
         <div>
           <span class="card-title">Associate Existing Field</span>
@@ -64,7 +65,7 @@
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
-        <div id="<%= klass_to_str(sub_category.categorizable) %>-<%= sub_category.categorizable.id %>-field-group-new">
+        <div id="<%= dynamic_id(name: 'form-new-render', klass: sub_category.categorizable, child_klass: 'field_group') %>">
           <%= render 'field_groups/form', fieldable: sub_category.categorizable, field_group: FieldGroup.new %>
         </div>
       </div>
@@ -73,11 +74,11 @@
   </div>
 
     <!-- DIMENSION FIELDGROUPS -->
-    <div class="collapse collapse-sub_category-<%= sub_category.id %>" id="collapse-sub_category-<%= sub_category.id %>-field_groups" data-parent="#accordion-sub_category-<%= category.id %>">
+    <div class="collapse collapse-sub_category-<%= sub_category.id %>" id="<%= dynamic_id(name: 'collection-target', klass: sub_category.categorizable, child_klass: 'field_groups') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
       <div class="card-body">
         <div id="accordion-field_group-<%= category.id %>">
           <div class="col">
-            <div id="dimension-<%= sub_category.categorizable.id %>-field_groups">
+            <div id="<%= dynamic_id(name: 'collection-render', klass: sub_category.categorizable, child_klass: 'field_groups') %>">
               <%= render "field_groups/field_group/field_group", fieldable: sub_category.categorizable %>
             </div>
           </div>

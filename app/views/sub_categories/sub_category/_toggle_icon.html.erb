@@ -1,2 +1,2 @@
-<a id="sub_category-toggle" role="button" data-toggle="collapse" href="#collapse-sub_category-<%= sub_category.id %>-field_groups" aria-expanded="false">
+<a id="sub_category-toggle" role="button" data-toggle="collapse" href="#<%= dynamic_id(name: 'collection-target', klass: sub_category.categorizable, child_klass: 'field_groups') %>" aria-expanded="false">
 </a>

@@ -24,7 +24,7 @@
         </div>
       </div>
 
-      <div class="collapse close-toggle-form" id="field-group-<%= field_group.id %>-field-<%= field_group.field.id %>-form-edit" data-parent="#accordion-field_group-<%= fieldable.id %>">
+      <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-edit-target', klass: fieldable, child_klass: field_group.field) %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: fieldable, child_klass: 'field_group') %>">
         <div class="card card-body p-1 bg-light">
           <div>
             <span class="card-title">Edit Field</span>
@@ -32,13 +32,13 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div id="category-<%= fieldable.id %>-field-group-new">
+          <div id="<%= dynamic_id(name: 'form-edit-render', klass: fieldable, child_klass: field_group.field) %>">
             <%= render "fields/form", fieldable: fieldable, field: field_group.field %>
           </div>
         </div>
       </div>
 
-      <div class="collapse close-toggle-form" id="field-group-<%= field_group.id %>-field-<%= field_group.field.id %>-edit" data-parent="#accordion-field_group-<%= fieldable.id %>">
+      <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: field_group, child_klass: 'value') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: fieldable, child_klass: 'field_group') %>">
         <div class="card card-body p-1 bg-light">
           <div>
             <span class="card-title">New Value</span>
@@ -46,7 +46,7 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div id="field-<%= field_group.field.id %>-new">
+          <div id="<%= dynamic_id(name: 'form-new-render', klass: field_group, child_klass: 'value') %>">
             <%= render "values/form", field: field_group.field, value: Value.new %>
           </div>
         </div>
@@ -55,12 +55,12 @@
 
     <!-- CARD BODY -->
     <!-- MY VALUES -->
-    <div class="collapse" id="collapse-field-<%= field_group.field.id %>-values" data-parent="#accordion-field_group-<%= fieldable.id %>">
+    <div class="collapse" id="<%= dynamic_id(name: 'collection-target', klass: field_group, child_klass: 'values') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: fieldable, child_klass: 'field_group') %>">
       <div class="card-body">
         <div id="accordion-field-<%= field_group.field.id %>-values">
           <div class="col">
-            <div id="field-<%= field_group.field.id %>-values">
-              <%= render "values/value/value", field: field_group.field %>
+            <div id="<%= dynamic_id(name: 'collection-render', klass: field_group, child_klass: 'values') %>">
+              <%= render "values/value/value", field_group: field_group, field: field_group.field %>
             </div>
           </div>
         </div>

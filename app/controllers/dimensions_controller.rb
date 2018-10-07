@@ -56,6 +56,7 @@ class DimensionsController < ApplicationController
   end
 
   def destroy
+    @category = Category.find(params[:category_id])
     @dimension = Dimension.find(params[:id])
 
     if @dimension.destroy

@@ -6,15 +6,16 @@
           Art Categories
         </div>
         <div class="col-auto">
-          <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#collapse-category-new" aria-expanded="false">
+
+          <button class="btn btn-sm btn-outline-secondary" type="button" data-toggle="collapse" data-target="#<%= dynamic_id(name: 'form-new-target', klass: 'category', child_klass: nil) %>" aria-expanded="false">
             New
           </button>
         </div>
       </div>
     </div>
-    <div class="collapse" id="collapse-category-new">
+    <div class="collapse" id="<%= dynamic_id(name: 'form-new-target', klass: 'category', child_klass: nil) %>">
       <div class="card-body">
-        <div id="category-new">
+        <div id="<%= dynamic_id(name: 'form-new-render', klass: 'category', child_klass: nil) %>">
           <%= render "categories/form", fieldable: Category.new %>
         </div>
       </div>
