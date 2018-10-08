@@ -63,9 +63,13 @@ class FieldsController < ApplicationController
 
   def destroy
     @fieldable = set_fieldable
-    @field = Field.find(params[:id])
+    field = Field.find(params[:id])
+    field_group = field.field_groups.first
+    sort = field_group.sort
 
-    if @field.destroy
+    if field.destroy
+      reset_sort(@fieldable, sort)
+      
       respond_to do |format|
         #flash[:notice] = "updated"
         format.js
