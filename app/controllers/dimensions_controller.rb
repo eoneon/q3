@@ -39,6 +39,7 @@ class DimensionsController < ApplicationController
   end
 
   def update
+    @category = Category.find(params[:category_id])
     @dimension = Dimension.find(params[:id])
     @dimension.assign_attributes(dimension_params)
 
@@ -50,7 +51,6 @@ class DimensionsController < ApplicationController
     #render :edit
 
     respond_to do |format|
-      #flash[:notice] = "updated"
       format.js
     end
   end

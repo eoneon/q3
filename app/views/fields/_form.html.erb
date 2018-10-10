@@ -2,7 +2,7 @@
   <div class="form">
     <div class="form-row">
       <div class="col-6">
-        <%= f.select :field_type, options_for_select(%w[text_field check_box number_field text_area]), {prompt: "- select field type -"}, class: "form-control" %>
+        <%= f.select :field_type, options_for_select(%w[select_field text_field number_field text_area check_box]), {prompt: "- select field type -"}, class: "form-control" %>
       </div>
       <div class="col-6">
         <%= f.text_field :name, placeholder: "enter field name", class: "form-control" %>

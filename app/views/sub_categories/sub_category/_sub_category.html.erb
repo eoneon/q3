@@ -1,88 +1,23 @@
-<% category.sorted_dimensions.each do |sub_category| %>
+<% category.categorizable_types.each do |categorizable| %>
   <div class="card">
     <div class="card-header">
       <div class="row align-items-center">
-
         <div class="col-auto">
           <h5 class="mb-0">
-            <%= render "sub_categories/sub_category/toggle_icon", category: category, sub_category: sub_category %>
+            <a role="button" data-toggle="collapse" href="#<%= dynamic_id(name: 'collection-target', klass: category, child_klass: categorizable.downcase.pluralize) %>" aria-expanded="false">
+            </a>
           </h5>
         </div>
-
-        <div class="col" id="<%= categorizable_name(sub_category) %>">
-          <%= render poly_path_categorizable_name(sub_category.categorizable), categorizable: sub_category.categorizable %>
-        </div>
-
-        <div class="col-auto">
-          <%= render "sub_categories/sub_category/drop_down", category: category, sub_category: sub_category %>
-        </div>
-
-        <div class="btn-group-vertical">
-          <div class="btn btn-sm py-0" role="group">
-            <%= render 'sub_categories/sub_category/sorter', category: category, sub_category: sub_category %>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-edit-target', klass: sub_category, child_klass: sub_category.categorizable) %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
-        <div class="card card-body p-1 bg-light">
-          <div>
-            <span class="card-title"><%= categorizable_label(sub_category, "form") %></span>
-            <button type="button" class="close float-right close-form">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-
-          <div id="<%= dynamic_id(name: 'form-edit-render', klass: sub_category, child_klass: sub_category.categorizable) %>">
-            <%= render "dimensions/form", category: category, dimension: sub_category.categorizable %>
-          </div>
-        </div>
-      </div>
-
-      <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: sub_category.categorizable, child_klass: 'field') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
-        <div class="card card-body p-1 bg-light">
-          <div>
-            <span class="card-title">New field</span>
-            <button type="button" class="close float-right close-form">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div id="<%= dynamic_id(name: 'form-new-render', klass: sub_category.categorizable, child_klass: 'field') %>">
-            <%= render "fields/form", fieldable: sub_category.categorizable, field: Field.new %>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <!-- ADD FIELD -->
-    <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: sub_category.categorizable, child_klass: 'field_group') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
-      <div class="card card-body p-1 bg-light">
-        <div>
-          <span class="card-title">Associate Existing Field</span>
-          <button type="button" class="close float-right close-form">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div id="<%= dynamic_id(name: 'form-new-render', klass: sub_category.categorizable, child_klass: 'field_group') %>">
-          <%= render 'field_groups/form', fieldable: sub_category.categorizable, field_group: FieldGroup.new %>
+        <div class="col">
+          <span class="text-capitalize font-weight-bold"><%= categorizable.pluralize %></span>
         </div>
       </div>
     </div>
-
-  </div>
-
-    <!-- DIMENSION FIELDGROUPS -->
-    <div class="collapse collapse-sub_category-<%= sub_category.id %>" id="<%= dynamic_id(name: 'collection-target', klass: sub_category.categorizable, child_klass: 'field_groups') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
+    <div class="collapse" id="<%= dynamic_id(name: 'collection-target', klass: category, child_klass: categorizable.downcase.pluralize) %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: categorizable.downcase) %>">
       <div class="card-body">
-        <div id="accordion-field_group-<%= category.id %>">
-          <div class="col">
-            <div id="<%= dynamic_id(name: 'collection-render', klass: sub_category.categorizable, child_klass: 'field_groups') %>">
-              <%= render "field_groups/field_group/field_group", fieldable: sub_category.categorizable %>
-            </div>
-          </div>
-        </div>
+        <% category.categorizable_list(categorizable).each do |sub_category| %>
+          <%= render "sub_categories/sub_category/categorizable", category: category, sub_category: sub_category %>
+        <% end %>
       </div>
     </div>
   </div>

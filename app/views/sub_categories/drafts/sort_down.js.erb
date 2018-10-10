@@ -1,2 +1,1 @@
 $('#<%= dynamic_id(name: "collection-render", klass: @sub_category.category, child_klass: "sub_categories") %>').html('<%= j render "sub_categories/sub_category/sub_category", category: @sub_category.category %>');
-$("#<%= dynamic_id(name: 'form-new-render', klass: fieldable, child_klass: 'field_group') %>").html("<%= j render 'sub_categories/form', fieldable: @sub_category.category, sub_category: SubCategory.new %>");

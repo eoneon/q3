@@ -1,0 +1,11 @@
+<div class="dropdown float-right">
+  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton4" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    Options
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-edit-target', klass: sub_category, child_klass: sub_category.categorizable) %>"><%= categorizable_label(sub_category, "edit") %></a>
+    <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: sub_category.categorizable, child_klass: 'field') %>">New field</a>
+    <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: sub_category.categorizable, child_klass: 'field_group') %>">Existing field</a>
+    <%= link_to 'Delete Dimension', [category, sub_category],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+  </div>
+</div>

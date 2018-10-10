@@ -10,15 +10,26 @@ class Category < ApplicationRecord
 
   has_many :items
 
-  #scope :first_category, -> {where(sort: 1)}
-
   def sorted_field_groups
     self.field_groups.order(:sort)
   end
 
   def sorted_sub_categories
     self.sub_categories.order(:sort)
+    #self.sub_categories.where(categorizable_type: categorizable).order(:sort)
   end
+
+  def categorizable_types
+    ['Dimension']
+  end
+
+  def categorizable_list(categorizable)
+    self.sub_categories.where(categorizable_type: categorizable).order(:sort)
+  end
+
+  # def categorizable_collection(categorizable)
+  #   self.public_send(categorizable.downcase.pluralize)
+  # end
 
   def sorted_dimensions
     self.sub_categories.where(categorizable_type: 'Dimension').order(:sort)

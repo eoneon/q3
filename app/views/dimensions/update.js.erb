@@ -1,2 +1,2 @@
-$("#<%= dynamic_id(name: 'form-new-render', klass: @category, child_klass: @dimension) %>").html('<%= j render "dimensions/form", category: @category, dimension: @dimension %>');
-$('#dimension-name-<%= @dimension.id %>').html('<%= j render "sub_categories/sub_category/sub_category_name", sub_category: @dimension.sub_categories.first %>');
+$("#<%= dynamic_id(name: 'form-edit-render', klass: @category, child_klass: @dimension) %>").html('<%= j render "dimensions/form", category: @category, dimension: @dimension %>');
+$("#<%= dynamic_id(name: 'class-name', klass: @dimension, child_klass: nil) %>").html('<%= j render "dimensions/dimension/dimension_name", categorizable: @dimension %>');
