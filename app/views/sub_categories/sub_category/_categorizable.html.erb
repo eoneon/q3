@@ -35,7 +35,7 @@
         </div>
 
         <div id="<%= dynamic_id(name: 'form-edit-render', klass: sub_category, child_klass: sub_category.categorizable) %>">
-          <%= render "dimensions/form", category: category, dimension: sub_category.categorizable %>
+          <%= render "#{categorizable.downcase.pluralize}/form", category: category, categorizable: sub_category.categorizable %>
         </div>
       </div>
     </div>

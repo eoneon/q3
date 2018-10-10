@@ -1,6 +1,6 @@
-<%= form_with model: dimension, url: [category, dimension], id: :dimension_form do |f| %>
+<%= form_with model: categorizable, url: [category, categorizable], id: "#{klass_name(categorizable)}_form" do |f| %>
   <div class="form">
-    <%= f.text_field :name, placeholder: "enter dimension name", class: "form-control" %>
+    <%= f.text_field :name, placeholder: "enter #{klass_name(categorizable)} name", class: "form-control" %>
     <button class="btn btn-sm badge badge-primary float-right" type="submit">
       Submit
     </button>

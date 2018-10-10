@@ -37,31 +37,3 @@
     </div>
   </div>
 </div>
-
-<div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'sub_category') %>" data-parent="#category-multi_form">
-  <div class="card card-body p-1 bg-light">
-    <div>
-      <span class="card-title">Associate Existing Dimension</span>
-      <button type="button" class="close float-right close-form">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div id="<%= dynamic_id(name: 'form-new-render', klass: fieldable, child_klass: 'sub_category') %>">
-      <%= render 'sub_categories/form', fieldable: fieldable, sub_category: SubCategory.new %>
-    </div>
-  </div>
-</div>
-
-<div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'dimension') %>" data-parent="#category-multi_form">
-  <div class="card card-body p-1 bg-light">
-    <div>
-      <span class="card-title">Create New Dimension</span>
-      <button type="button" class="close float-right close-form">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div id="<%= dynamic_id(name: 'form-new-render', klass: fieldable, child_klass: 'dimension') %>">
-      <%= render 'dimensions/form', category: fieldable, dimension: Dimension.new %>
-    </div>
-  </div>
-</div>

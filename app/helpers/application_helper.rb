@@ -9,6 +9,10 @@ module ApplicationHelper
   # def local_obj(obj)
   #   obj.present? ? obj : Category.first
   # end
+  def categorizable_name(name)
+    name.downcase
+  end
+
   def klass_to_str(obj)
     obj.class.name.underscore
   end

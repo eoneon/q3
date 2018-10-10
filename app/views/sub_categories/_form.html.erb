@@ -1,7 +1,7 @@
 <%= form_for [fieldable, sub_category], id: "sub_category_form", remote: true do |f| %>
 <div class="form">
   <%= hidden_field_tag "sub_category[categorizable_type]", "Dimension" %>
-    <%= f.collection_select :categorizable_id, Dimension.all, :id, :name, {prompt: "- select field name -"}, class: "form-control" %>
+    <%= f.collection_select :categorizable_id, Dimension.all, :id, :name, {prompt: "- select dimension -"}, class: "form-control" %>
     <button class="btn btn-sm badge badge-primary float-right" type="submit">
       Submit
     </button>
