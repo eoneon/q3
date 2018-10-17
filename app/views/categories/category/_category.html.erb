@@ -1,40 +1,15 @@
 <div id="<%= dynamic_id(name: 'accordion', klass: category, child_klass: nil) %>">
-
-  <div class="card">
-
-    <!-- MY CATEGORY -->
-    <div class="card-header">
-      <div class="row align-items-center">
-        <div class="col-auto">
-          <h5 class="mb-0">
-            <%= render "categories/category/toggle_icon", category: category %>
-          </h5>
-        </div>
-
-        <div class="col">
-          <div id="category-name">
-            <%= render "categories/category/category_name", category: category %>
-          </div>
-        </div>
-
-        <div class="col-auto" id="category-btn-group">
-          <%= render "categories/category/dropdown", fieldable: category %>
-        </div>
-      </div>
-      <div id="category-multi_form">
-        <%= render "categories/multi_form", fieldable: category %>
-      </div>
+  <div class="card bg-dark">
+    <!-- CATEGORY -->
+    <div class="card-header py-0">
+      <%= render "categories/category/header", category: category %>
     </div>
 
-    <!-- MY FIELD GROUPS -->
-    <div class="collapse show <%= dynamic_id(name: 'collection-target', klass: category, child_klass: nil) %>" id="<%= dynamic_id(name: 'collection-target', klass: category, child_klass: 'field_groups') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: nil) %>">
-      <div class="card-body">
+    <!-- CATEGORY FIELDS & FIELD-GROUPS -->
+    <div class="collapse show <%= dynamic_id(name: 'collection-target', klass: category, child_klass: nil) %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: nil) %>">
+      <div class="card-body p-3">
         <div id="<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'field_group') %>">
-          <div class="col">
-            <div id="<%= dynamic_id(name: 'collection-render', klass: category, child_klass: 'field_groups') %>">
-              <%= render "field_groups/field_group/field_group", fieldable: category %>
-            </div>
-          </div>
+          <%= render "fields/field/field", fieldable: category %>
         </div>
       </div>
     </div>
@@ -43,10 +18,8 @@
     <div class="collapse show <%= dynamic_id(name: 'collection-target', klass: category, child_klass: nil) %>" id="<%= dynamic_id(name: 'collection-target', klass: category, child_klass: 'sub_categories') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: nil) %>">
       <div class="card-body">
         <div id="<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
-          <div class="col">
-            <div id="<%= dynamic_id(name: 'collection-render', klass: category, child_klass: 'sub_categories') %>">
-              <%= render "sub_categories/sub_category/sub_category", category: category %>
-            </div>
+          <div id="<%= dynamic_id(name: 'collection-render', klass: category, child_klass: 'sub_categories') %>">
+            <%= render "sub_categories/sub_category/sub_category", category: category %>
           </div>
         </div>
       </div>

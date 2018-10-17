@@ -1,0 +1,26 @@
+<div class="row align-items-center">
+  <div class="col-auto">
+    <h5 class="mb-0">
+      <a id="" role="button" data-toggle="collapse" href=".<%= dynamic_id(name: 'collection-target', klass: category, child_klass: categorizable.downcase.pluralize) %>" aria-expanded="true">
+      </a>
+    </h5>
+  </div>
+
+  <!-- =HEADER-NAME -->
+  <div class="col">
+    <span class="text-capitalize font-weight-bold text-white"><%= categorizable.pluralize %></span>
+  </div>
+  <!-- =/HEADER-NAME -->
+
+  <!-- =HEADER-NAV -->
+  <ul class="nav">
+    <li class="nav-item-dropdown">
+      <a class="nav-link dropdown font-weight-light text-muted px-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars") %></a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: category, child_klass: 'dimension') %>">New <%= categorizable %></a>
+        <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: category, child_klass: 'sub_category') %>">Add Existing <%= categorizable %></a>
+      </div>
+    </li>
+  </ul>
+  <!-- =/HEADER-NAV -->
+</div>

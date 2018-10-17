@@ -1,14 +1,18 @@
-<div id="field-form-group">
-  <div id="field-btn-block">
-    <%= render "fields/field_btn_block", field: field %>
+<div class="card border-dark">
+  <div class="card-header py-0">
+    <%= render "fields/field/header", fieldable: fieldable %>
   </div>
-  <div class="collapse" id="field-<%= field.id %>-btn-group" data-parent="#category-field_groups">
-    <div class="row">
-      <div class="col">
-        <%= render "fields/toggle_forms/btn_group", fieldable: field.field_groups.first.fieldable, field: field %>
-      </div>
-      <div class="col-11">
-        <%= render 'fields/values/table', field: field %>
+
+  <!-- FIELD POP-UP FORM-->
+  <div class="<%= dynamic_id(name: 'accordion', klass: fieldable, child_klass: 'field') %>">
+    <%= render "fields/new", fieldable: fieldable %>
+    <%= render "fields/add", fieldable: fieldable %>
+  </div>
+
+  <div class="card-body py-3 px-1">
+    <div class="col">
+      <div id="<%= dynamic_id(name: 'collection-render', klass: fieldable, child_klass: 'field_groups') %>">
+        <%= render "field_groups/field_group/field_group", fieldable: fieldable %>
       </div>
     </div>
   </div>

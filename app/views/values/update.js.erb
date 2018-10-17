@@ -1,2 +1,2 @@
-$('#value-<%= @value.id %>-edit').html('<%= j render "values/form", field: @value.field, value: @value %>');
-$('#value-name-<%= @value.id %>').html('<%= j render "values/value/value_name", value: @value %>');
+$("#<%= dynamic_id(name: 'form-edit-render', klass: @value.field.field_groups.first, child_klass: @value) %>").html('<%= j render "values/form", field: @value.field, value: @value %>');
+$("#<%= dynamic_id(name: 'header', klass: @value, child_klass: nil) %>").html('<%= j render "values/value/value_name", value: @value %>');

@@ -1,0 +1,23 @@
+<div class="row align-items-center">
+  <div class="col-auto">
+    <h5 class="mb-0">
+      <a id="category-toggle" role="button" data-toggle="collapse" href=".<%= dynamic_id(name: 'collection-target', klass: category, child_klass: nil) %>" aria-expanded="true">
+      </a>
+    </h5>
+  </div>
+
+  <div class="col">
+    <div id="category-name">
+      <span class="text-capitalize font-weight-bold text-white"><%= category.name %></span>
+    </div>
+  </div>
+
+  <div class="col-auto">
+    <%= render "categories/category/form_toggle", category: category %>
+  </div>
+</div>
+
+<!-- CATEGORY POP-UP FORM-->
+<div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-edit-target', klass: category, child_klass: nil) %>">
+  <%= render "categories/edit", category: category %>
+</div>

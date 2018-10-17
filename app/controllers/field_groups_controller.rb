@@ -18,7 +18,7 @@ class FieldGroupsController < ApplicationController
     swap_sort(@fieldable, -1)
 
     respond_to do |format|
-      format.js
+      format.js {render file: "/field_groups/field_group/sorter.js.erb"}
     end
   end
 
@@ -27,7 +27,7 @@ class FieldGroupsController < ApplicationController
     swap_sort(@fieldable, 1)
 
     respond_to do |format|
-      format.js
+      format.js {render file: "/field_groups/field_group/sorter.js.erb"}
     end
   end
 
@@ -40,7 +40,7 @@ class FieldGroupsController < ApplicationController
       reset_sort(@fieldable, sort)
 
       respond_to do |format|
-        format.js
+        format.js {render file: "/fields/destroy.js.erb"}
       end
     else
     end

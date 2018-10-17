@@ -1,5 +1,5 @@
-$('#category-new').html('<%= j render "categories/form", fieldable: Category.new %>');
+$("#<%= dynamic_id(name: 'form-new-render', klass: 'category', child_klass: nil) %>").html('<%= j render "categories/form", category: Category.new %>');
 $('#list-tab').html('<%= j render "categories/category/tabs", categories: @categories %>');
 $('.list-group-item').removeClass('active');
 $('#list-<%= @category.id %>-list').addClass('active');
-$('#cat_show').html('<%= j render "categories/category/category", category: @category %>');
+$('#category-show').html('<%= j render "categories/category/category", category: @category %>');

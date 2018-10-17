@@ -4,5 +4,13 @@
 <hr>
 
 <div class="row">
-  <%= render 'categories/category/aside', categories: @categories %>
+  <div class="col-4">
+  <%= render 'categories/aside/aside', categories: @categories %>
+  </div>
+
+  <div class="col-8">
+    <div id="category-show">
+      <%= render "categories/category/category", category: @category %>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,21 @@
+<div class="row align-items-center">
+  <div class="col-auto">
+    <h5 class="mb-0">
+      <a id="field_group-toggle" role="button" data-toggle="collapse" href="#<%= dynamic_id(name: 'collection-target', klass: field_group, child_klass: 'values') %>" aria-expanded="false"></a>
+    </h5>
+  </div>
+
+  <div class="col" id="<%= dynamic_id(name: 'header-name', klass: field_group, child_klass: 'field') %>">
+    <%= render 'fields/field/field_name', field: field_group.field %>
+  </div>
+
+  <div class="col-auto mr-0 pr-1">
+    <%= render "fields/field/toggle_menu", field_group: field_group, field: field_group.field %>
+  </div>
+
+  <div class="btn-group-vertical">
+    <div class="btn btn-sm p-0 m-0" role="group">
+      <%= render 'field_groups/field_group/sorter', fieldable: fieldable, field_group: field_group %>
+    </div>
+  </div>
+</div>

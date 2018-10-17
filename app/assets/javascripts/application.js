@@ -18,15 +18,15 @@
 //= require_tree .
 
 $(document).ready(function(event){
-  $("#category-btn-group").on('hidden.bs.collapse', function(){
-    $("#category-multi_form .collapse").collapse('hide');
-  });
+  //$("#category-btn-group").on('hidden.bs.collapse', function(){
+    //$("#category-multi_form .collapse").collapse('hide');
+  //});
 
   $(".close-form").on('click', function(){
     $(".close-toggle-form").collapse('hide');
   });
 
-  $(".close-category-form").on('click', function(){
-    $("#category-multi_form .collapse").collapse('hide');
-  });
+  //$(".close-category-form").on('click', function(){
+    //$("#category-multi_form .collapse").collapse('hide');
+  //});
 });

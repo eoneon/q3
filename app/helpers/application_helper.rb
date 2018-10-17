@@ -50,7 +50,9 @@ module ApplicationHelper
     if name == "target-collection"
       join_params([target, kollection_name(child_klass)])
     else
-      join_params([target, klass_name(child_klass)])
+      #here: klass_name should be klass_with_id
+      #join_params([target, klass_name(child_klass)])
+      target(target, child_klass)
     end
   end
 

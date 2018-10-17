@@ -1,6 +1,6 @@
-<%= form_with model: fieldable, url: fieldable, id: :fieldable_form do |f| %>
+<%= form_with model: category, url: category, id: :category_form do |f| %>
   <div class="form">
-    <%= f.text_field :name, placeholder: "enter #{fieldable.class.name.downcase} name", class: "form-control" %>
+    <%= f.text_field :name, placeholder: "enter category name", class: "form-control" %>
     <button class="btn btn-sm badge badge-primary float-right" type="submit">
       Submit
     </button>

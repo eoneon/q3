@@ -1,2 +1,2 @@
-$('#form_field').html('<%= j render "fields/form", fieldable: @category, field: @field %>');
-$('#field-name-<%= @field.id %>').html('<%= j render "fields/field/field_name", field: @field %>');
+$('#form_field').html('<%= j render "fields/form", fieldable: @fieldable, field: @field %>');
+$("#<%= dynamic_id(name: 'header-name', klass: @field.field_groups.first, child_klass: 'field') %>").html('<%= j render "fields/field/field_name", field: @field %>');

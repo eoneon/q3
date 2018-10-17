@@ -9,18 +9,18 @@ class FieldsController < ApplicationController
     end
   end
 
-  def show
-    @field = Field.find(params[:id])
-  end
+  # def show
+  #   @field = Field.find(params[:id])
+  # end
 
   # def new
   #   #@category = Category.find(params[:category_id]) if params[:category_id]
   #   @field = Field.new
   # end
 
-  def edit
-    @field = Field.find(params[:id])
-  end
+  # def edit
+  #   @field = Field.find(params[:id])
+  # end
 
   def create
     @fieldable = set_fieldable
@@ -48,6 +48,7 @@ class FieldsController < ApplicationController
     @field.assign_attributes(field_params)
 
     if @field.save
+      @fieldable = set_fieldable
       #flash[:notice] = "✔"
       #redirect_to action: :index
 
@@ -56,7 +57,7 @@ class FieldsController < ApplicationController
       #render :edit
     end
     respond_to do |format|
-      flash[:notice] = "updated"
+      #flash[:notice] = "updated"
       format.js
     end
   end
@@ -69,11 +70,12 @@ class FieldsController < ApplicationController
 
     if field.destroy
       reset_sort(@fieldable, sort)
-      
+
       respond_to do |format|
-        #flash[:notice] = "updated"
+        flash[:notice] = "updated"
         format.js
       end
+
     else
       # flash.now[:alert] = "There was an error deleting the field."
       # render :show

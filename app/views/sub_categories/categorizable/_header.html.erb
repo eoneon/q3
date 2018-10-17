@@ -1,0 +1,24 @@
+<div class="row align-items-center">
+  <!-- ACTUAL DIMENSION TOGGLE -->
+  <div class="col-auto">
+    <h5 class="mb-0">
+      <%= render "sub_categories/categorizable/toggle_icon", category: category, sub_category: sub_category %>
+    </h5>
+  </div>
+  <!-- CLASS NAME: eg, frame & image -->
+  <div class="col" id="<%= dynamic_id(name: 'class-name', klass: sub_category.categorizable, child_klass: nil) %>">
+    <%= render poly_path_categorizable_name(sub_category.categorizable), categorizable: sub_category.categorizable %>
+  </div>
+
+  <!-- DROPDOWN -->
+  <div class="col-auto">
+    <%= render "sub_categories/sub_category/dropdown", category: category, sub_category: sub_category %>
+  </div>
+
+  <div class="btn-group-vertical">
+    <div class="btn btn-sm py-0" role="group">
+      <%= render 'sub_categories/sub_category/sorter', category: category, sub_category: sub_category %>
+    </div>
+  </div>
+
+</div>
