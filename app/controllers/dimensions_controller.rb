@@ -9,49 +9,32 @@ class DimensionsController < ApplicationController
     end
   end
 
-  def show
-    @dimension = Dimension.find(params[:id])
-  end
-
-  def new
-    @dimension = Dimension.new
-  end
-
-  def edit
-    @dimension = Dimension.find(params[:id])
-  end
-
   def create
     @category = Category.find(params[:category_id])
-    @dimension = Dimension.create(dimension_params)
+    @categorizable = Dimension.create(dimension_params)
 
-    @category.dimensions << @dimension
+    @category.dimensions << @categorizable
 
     if @category.save
       respond_to do |format|
-        format.html
-        format.js
+        format.js {render file: "/sub_categories/categorizable/create.js.erb"}
+        #format.js
       end
     else
-      #flash.now[:alert] = "Error creating Dimension. Please try again."
-      #render :edit
     end
   end
 
   def update
     @category = Category.find(params[:category_id])
-    @dimension = Dimension.find(params[:id])
-    @dimension.assign_attributes(dimension_params)
+    @categorizable = Dimension.find(params[:id])
+    @categorizable.assign_attributes(dimension_params)
 
-    if @dimension.save
-      #flash[:notice] = "Dimension was updated successfully."
+    if @categorizable.save
     else
-      #flash.now[:alert] = "Error updated dimension. Please try again."
     end
-    #render :edit
 
     respond_to do |format|
-      format.js
+      format.js {render file: "/sub_categories/categorizable/update.js.erb"}
     end
   end
 
@@ -60,11 +43,7 @@ class DimensionsController < ApplicationController
     @dimension = Dimension.find(params[:id])
 
     if @dimension.destroy
-      #flash[:notice] = "\"#{@dimension.name}\" was deleted successfully."
-      #redirect_to action: :index
     else
-      #flash.now[:alert] = "There was an error deleting the dimension."
-      #render :show
     end
     respond_to do |format|
       format.html
@@ -74,7 +53,7 @@ class DimensionsController < ApplicationController
 
   def import
     Dimension.import(params[:file])
-    redirect_to dimensions_path, notice: 'Categories imported.'
+    redirect_to dimensions_path, notice: 'Dimensions imported.'
   end
 
   private
@@ -82,20 +61,4 @@ class DimensionsController < ApplicationController
   def dimension_params
     params.require(:dimension).permit!
   end
-
-  # def get_klass
-  #   parent_klasses = %w[category]
-  #   if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
-  #     #klass.camelize.constantize.find params[:"#{klass}_id"]
-  #     klass
-  #   end
-  # end
-  #
-  # def fieldables
-  #   get_klass.pluralize
-  # end
-  #
-  # def fieldable
-  #   get_klass.camelize.constantize.find params[:"#{get_klass}_id"]
-  # end
 end

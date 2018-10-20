@@ -6,6 +6,6 @@
     </button>
   </div>
   <div id="<%= dynamic_id(name: 'form-new-render', klass: 'category', child_klass: nil) %>">
-    <%= render 'categories/form', category: category %>
+    <%= render 'categories/form', category: Category.new, form_id: dynamic_id(name: 'form-new', klass: 'category', child_klass: nil) %>
   </div>
 </div>

@@ -1,5 +1,5 @@
-$("#<%= dynamic_id(name: 'form-new-render', klass: 'category', child_klass: nil) %>").html('<%= j render "categories/form", category: Category.new %>');
-$('#list-tab').html('<%= j render "categories/category/tabs", categories: @categories %>');
-$('.list-group-item').removeClass('active');
-$('#list-<%= @category.id %>-list').addClass('active');
-$('#category-show').html('<%= j render "categories/category/category", category: @category %>');
+$("#<%= dynamic_id(name: 'form-new-render', klass: 'category', child_klass: nil) %>").html("<%= j render 'categories/form', category: Category.new, form_id: dynamic_id(name: 'form-new', klass: 'category', child_klass: nil) %>");
+$("#list-tab").html("<%= j render 'categories/aside/tabs', categories: @categories %>");
+$(".list-group-item").removeClass("active");
+$("#list-<%= @category.id %>-list").addClass("active");
+$("#category-show").html("<%= j render 'categories/category/category', category: @category %>");

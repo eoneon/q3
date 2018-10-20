@@ -9,15 +9,6 @@ class FieldsController < ApplicationController
     end
   end
 
-  # def show
-  #   @field = Field.find(params[:id])
-  # end
-
-  # def new
-  #   #@category = Category.find(params[:category_id]) if params[:category_id]
-  #   @field = Field.new
-  # end
-
   # def edit
   #   @field = Field.find(params[:id])
   # end
@@ -93,19 +84,19 @@ class FieldsController < ApplicationController
     params.require(:field).permit!
   end
 
-  def get_klass
-    parent_klasses = %w[category dimension]
-    if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
-      #klass.camelize.constantize.find params[:"#{klass}_id"]
-      klass
-    end
-  end
-
-  def fieldables
-    get_klass.pluralize
-  end
-
-  def fieldable
-    get_klass.camelize.constantize.find params[:"#{get_klass}_id"]
-  end
+  # def get_klass
+  #   parent_klasses = %w[category dimension]
+  #   if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
+  #     #klass.camelize.constantize.find params[:"#{klass}_id"]
+  #     klass
+  #   end
+  # end
+  #
+  # def fieldables
+  #   get_klass.pluralize
+  # end
+  #
+  # def fieldable
+  #   get_klass.camelize.constantize.find params[:"#{get_klass}_id"]
+  # end
 end

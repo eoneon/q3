@@ -4,10 +4,10 @@
   </div>
 
   <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: 'category', child_klass: nil) %>">
-    <%= render "categories/aside/new", category: Category.new %>
+    <%= render "categories/new", category: Category.new %>
   </div>
 </div>
 
 <div class="list-group" id="list-tab" role="tablist">
-  <%= render "categories/category/tabs", categories: categories %>
+  <%= render "categories/aside/tabs", categories: categories %>
 </div>

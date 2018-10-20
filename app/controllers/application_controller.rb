@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_fieldable
-    parent_klasses = %w[category dimension]
+    parent_klasses = %w[category dimension certificate]
     if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
       klass.camelize.constantize.find params[:"#{klass}_id"]
     end

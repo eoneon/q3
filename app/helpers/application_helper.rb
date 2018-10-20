@@ -25,17 +25,21 @@ module ApplicationHelper
     [klass_to_str_plural(obj), klass_to_str(obj), klass_to_str(obj) + "_name"].join("/")
   end
 
-  def form_id(obj_arr)
-    obj_arr.map {|obj| klass_to_str(obj)}.join("_") + "_form"
-  end
+  # def form_id(obj_arr)
+  #   obj_arr.map {|obj| klass_to_str(obj)}.join("_") + "_form"
+  # end
 
   ####NEW HELPERS
+  def konstant(klass)
+    klass.class == String ? klass.camelize.constantize : klass.class.name.constantize
+  end
+
   def klass_name(klass)
-    klass.class == String ? klass : klass.class.name.underscore
+    klass.class == String ? klass.downcase.singularize : klass.class.name.underscore
   end
 
   def kollection_name(klass)
-    klass.class == String ? klass : klass.class.name.underscore.pluralize
+    klass.class == String ? klass.downcase.pluralize : klass.class.name.underscore.pluralize
   end
 
   def klass_with_id(klass)

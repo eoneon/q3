@@ -7,7 +7,7 @@
       </button>
     </div>
     <div id="<%= dynamic_id(name: 'form-edit-render', klass: fieldable, child_klass: field_group.field) %>">
-      <%= render "fields/form", fieldable: fieldable, field: field_group.field %>
+      <%= render "fields/form", fieldable: fieldable, field: field_group.field, form_id: dynamic_id(name: 'form-edit', klass: fieldable, child_klass: field_group.field) %>
     </div>
   </div>
 </div>

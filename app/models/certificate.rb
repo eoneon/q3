@@ -1,4 +1,4 @@
-class Dimension < ApplicationRecord
+class Certificate < ApplicationRecord
   include Importable
 
   has_many :field_groups, as: :fieldable

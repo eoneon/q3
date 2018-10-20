@@ -7,7 +7,7 @@
     </button>
     </div>
     <div id="<%= dynamic_id(name: 'form-edit-render', klass: sub_category, child_klass: sub_category.categorizable) %>">
-      <%= render "#{kollection_name(sub_category.categorizable)}/form", category: category, categorizable: sub_category.categorizable %>
+      <%= render "sub_categories/categorizable/form", category: category, categorizable: sub_category.categorizable, form_id: form_id %>
     </div>
   </div>
 </div>

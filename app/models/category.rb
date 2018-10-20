@@ -5,8 +5,8 @@ class Category < ApplicationRecord
   has_many :fields, through: :field_groups
 
   has_many :sub_categories, dependent: :destroy
-  #has_many :sub_categories, as: :categorizable
-  has_many :dimensions, through: :sub_categories, source: :categorizable, source_type: "Dimension"
+  has_many :dimensions, through: :sub_categories, source: :categorizable, source_type: 'Dimension'
+  has_many :certificates, through: :sub_categories, source: :categorizable, source_type: 'Certificate'
 
   has_many :items
 
@@ -20,15 +20,16 @@ class Category < ApplicationRecord
   end
 
   def categorizable_types
-    ['Dimension']
+    ['Dimension', 'Certificate']
   end
 
   def categorizable_list(categorizable)
     self.sub_categories.where(categorizable_type: categorizable).order(:sort)
   end
-
-  # def categorizable_collection(categorizable)
-  #   self.public_send(categorizable.downcase.pluralize)
+  
+  #this should replace below
+  # def sorted_categorizables(categorizable)
+  #   self.sub_categories.where(categorizable_type: 'Dimension').order(:sort)
   # end
 
   def sorted_dimensions

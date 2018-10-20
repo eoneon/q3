@@ -1,11 +1,11 @@
 <div class="row align-items-center">
   <div class="col-auto">
     <h5 class="mb-0">
-      <a id="field_group-toggle" role="button" data-toggle="collapse" href="#<%= dynamic_id(name: 'collection-target', klass: field_group, child_klass: 'values') %>" aria-expanded="false"></a>
+      <a role="button" data-toggle="collapse" href="#<%= dynamic_id(name: 'collection-target', klass: field_group, child_klass: 'values') %>" aria-expanded="false"></a>
     </h5>
   </div>
 
-  <div class="col" id="<%= dynamic_id(name: 'header-name', klass: field_group, child_klass: 'field') %>">
+  <div class="col" id="<%= dynamic_id(name: 'render-name', klass: field_group, child_klass: 'field') %>">
     <%= render 'fields/field/field_name', field: field_group.field %>
   </div>
 

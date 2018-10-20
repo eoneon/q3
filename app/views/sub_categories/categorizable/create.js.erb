@@ -1,0 +1,2 @@
+$("#<%= dynamic_id(name: 'collection-render', klass: @category, child_klass: kollection_name(@categorizable)) %>").html('<%= j render "sub_categories/sub_category/sub_category", category: @category %>');
+$("#<%= dynamic_id(name: 'form-new-render', klass: @category, child_klass: klass_name(@categorizable)) %>").html("<%= j render 'categorizables/form', category: @category, categorizable: Dimension.new %>");

@@ -5,12 +5,13 @@
 
   <!-- CATEGORIZABLE POP-UP FORM-->
   <div>
-    <%= render "sub_categories/categorizable/edit", category: category, sub_category: sub_category %>
+    <%= render "sub_categories/categorizable/edit", category: category, sub_category: sub_category, form_id: dynamic_id(name: 'form-edit', klass: sub_category.categorizable, child_klass: nil) %>
   </div>
+
   <!-- UPDATED THE ACCORDION DATA PARENT AND NOW IT WORKS -->
-  <div class="collapse" id="<%= dynamic_id(name: 'collection-target', klass: sub_category, child_klass: 'field_groups') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: sub_category, child_klass: nil) %>">
+  <div class="collapse" id="<%= dynamic_id(name: 'collection-target', klass: sub_category, child_klass: 'field_groups') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: klass_name(sub_category.categorizable), child_klass: nil) %>">
     <div class="card-body">
-      <div id="<%= dynamic_id(name: 'accordion', klass: sub_category, child_klass: 'field_groups') %>">
+      <div id="<%= dynamic_id(name: 'accordion', klass: sub_category.categorizable, child_klass: 'field_groups') %>">
         <%= render "fields/field/field", fieldable: sub_category.categorizable %>
       </div>
     </div>

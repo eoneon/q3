@@ -1,23 +1,28 @@
 <% category.categorizable_types.each do |categorizable| %>
+
   <div class="card bg-dark">
+
     <div class="card-header py-0">
       <%= render "sub_categories/sub_category/header", category: category, categorizable: categorizable %>
     </div>
     <!-- FIELD POP-UP FORM-->
-    <div class="<%= dynamic_id(name: 'accordion', klass: category, child_klass: categorizable.downcase) %>">
+    <div id="<%= dynamic_id(name: 'accordion-form-new', klass: klass_name(categorizable), child_klass: nil) %>">
       <%= render "sub_categories/sub_category/new", category: category, categorizable: categorizable %>
       <%= render "sub_categories/sub_category/add", category: category, categorizable: categorizable %>
     </div>
 
     <!-- =BODY: RENDER ACTUAL DIMENSIONS, i.e., sub_category.categorizable  -->
-
-    <div class="collapse show <%= dynamic_id(name: 'collection-target', klass: category, child_klass: categorizable.downcase.pluralize) %>" id="" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: categorizable.downcase) %>">
+    <div class="collapse show <%= dynamic_id(name: 'collection-target', klass: category, child_klass: kollection_name(categorizable)) %>" id="<%= dynamic_id(name: 'accordion', klass: klass_name(categorizable), child_klass: nil) %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: 'sub_category') %>">
       <div class="card-body p-3">
         <% category.categorizable_list(categorizable).each do |sub_category| %>
-        <div id="<%= dynamic_id(name: 'accordion', klass: sub_category, child_klass: categorizable.downcase) %>">
-          <%= render "sub_categories/categorizable/categorizable", category: category, sub_category: sub_category %>
-        </div>
-      <% end %>
+
+          <!-- <div id="<%#= dynamic_id(name: 'accordion', klass: sub_category, child_klass: klass_name(categorizable)) %>"> -->
+          <div id="<%= dynamic_id(name: 'accordion', klass: sub_category, child_klass: nil) %>">
+            <%= render "sub_categories/categorizable/categorizable", category: category, sub_category: sub_category %>
+          </div>
+        <% end %>
+      </div>
     </div>
+
   </div>
 <% end %>

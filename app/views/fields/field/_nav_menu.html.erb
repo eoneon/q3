@@ -1,0 +1,9 @@
+<ul class="nav">
+  <li class="nav-item-dropdown">
+    <a class="nav-link dropdown font-weight-light text-muted px-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars") %></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field') %>">New Field</a>
+      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field_group') %>">Add Existing Field</a>
+    </div>
+  </li>
+</ul>

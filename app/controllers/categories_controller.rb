@@ -18,13 +18,13 @@ class CategoriesController < ApplicationController
     end
   end
 
-  def new
-    @category = Category.new
-  end
-
-  def edit
-    @category = Category.find(params[:id])
-  end
+  # def new
+  #   @category = Category.new
+  # end
+  #
+  # def edit
+  #   @category = Category.find(params[:id])
+  # end
 
   def create
     @category = Category.new(category_params)
@@ -36,8 +36,6 @@ class CategoriesController < ApplicationController
         format.js
       end
     else
-      #flash.now[:alert] = "Error creating Category. Please try again."
-      #render :edit
     end
   end
 
@@ -50,7 +48,7 @@ class CategoriesController < ApplicationController
     else
       flash.now[:alert] = "Error updated category. Please try again."
     end
-    #render :edit
+
     respond_to do |format|
       format.html
       format.js
@@ -58,17 +56,16 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    @category = Category.find(params[:id])
+    category = Category.find(params[:id])
 
-    if @category.destroy
-      flash[:notice] = "\"#{@category.name}\" was deleted successfully."
-      redirect_to action: :index
-      # respond_to do |format|
-      #   format.js
-      # end
+    if category.destroy
+      @categories = Category.all.order(sort: 'asc')
+      @category = @categories.first
     else
-      flash.now[:alert] = "There was an error deleting the category."
-      render :show
+    end
+
+    respond_to do |format|
+      format.js
     end
   end
 

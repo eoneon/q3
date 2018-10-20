@@ -1,0 +1,8 @@
+<%= form_with model: categorizable, url: [category, categorizable], id: form_id do |f| %>
+  <div class="form">
+    <%= f.text_field :name, placeholder: "enter #{klass_name(categorizable)} name", class: "form-control" %>
+    <button class="btn btn-sm badge badge-primary float-right" type="submit">
+      Submit
+    </button>
+  </div>
+<% end %>
