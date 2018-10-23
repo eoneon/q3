@@ -1,0 +1,10 @@
+<% field.values.each do |value| %>
+  <div class="card">
+    <div class="card-header py-0">
+      <%= render "values/body/header", field_group: field_group, field: field, value: value %>
+    </div>
+    <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-edit-target', klass: field_group, child_klass: value) %>" data-parent="#accordion-nav-menu">
+      <%= render "values/forms/edit", field_group: field_group, field: field, value: value %>
+    </div>
+  </div>
+<% end %>

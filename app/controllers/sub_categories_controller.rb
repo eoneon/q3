@@ -1,10 +1,12 @@
 class SubCategoriesController < ApplicationController
   def create
     @category = Category.find(params[:category_id])
-    @sub_category = @category.sub_categories.build(sub_category_params)
+    sub_category = @category.sub_categories.build(sub_category_params)
     #set_sort(@category, @sub_category)
 
-    if @sub_category.save
+    if sub_category.save
+      @categorizable = sub_category.categorizable.first
+
       respond_to do |format|
         format.html
         format.js
@@ -34,6 +36,7 @@ class SubCategoriesController < ApplicationController
   def destroy
     @category = Category.find(params[:category_id])
     sub_category = SubCategory.find(params[:id])
+    @categorizable = sub_category.categorizable.first
     sort = sub_category.sort
 
     if sub_category.destroy

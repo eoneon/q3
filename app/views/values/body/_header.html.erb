@@ -1,8 +1,8 @@
 <div class="row align-items-center">
   <div class="col mb-0" id="<%= dynamic_id(name: 'header', klass: value, child_klass: nil) %>">
-    <%= render "values/value/value_name", value: value %>
+    <%= render "values/body/value_name", value: value %>
   </div>
   <div class="col-auto">
-    <%= render "values/value/form_toggle", field_group: field_group, field: field, value: value %>
+    <%= render "values/body/nav_menu", field_group: field_group, field: field, value: value %>
   </div>
 </div>

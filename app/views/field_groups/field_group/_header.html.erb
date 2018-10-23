@@ -1,16 +1,16 @@
 <div class="row align-items-center">
   <div class="col-auto">
     <h5 class="mb-0">
-      <a role="button" data-toggle="collapse" href="#<%= dynamic_id(name: 'collection-target', klass: field_group, child_klass: 'values') %>" aria-expanded="false"></a>
+      <%= render 'field_groups/field_group/collapse', field_group: field_group %>
     </h5>
   </div>
 
   <div class="col" id="<%= dynamic_id(name: 'render-name', klass: field_group, child_klass: 'field') %>">
-    <%= render 'fields/field/field_name', field: field_group.field %>
+    <%= render 'fields/field/field_name', field_group: field_group, field: field_group.field %>
   </div>
 
   <div class="col-auto mr-0 pr-1">
-    <%= render "fields/field/toggle_menu", field_group: field_group, field: field_group.field %>
+    <%= render "field_groups/field_group/nav_menu", field_group: field_group, field: field_group.field %>
   </div>
 
   <div class="btn-group-vertical">

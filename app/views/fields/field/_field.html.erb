@@ -3,8 +3,10 @@
     <%= render "fields/field/header", fieldable: fieldable %>
   </div>
 
-  <div class="<%= dynamic_id(name: 'accordion-field-menu', klass: fieldable, child_klass: 'field') %>">
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field') %>" data-parent="#accordion-nav-menu">
     <%= render "fields/new", fieldable: fieldable %>
+  </div>
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field_group') %>" data-parent="#accordion-nav-menu">
     <%= render "fields/add", fieldable: fieldable %>
   </div>
 

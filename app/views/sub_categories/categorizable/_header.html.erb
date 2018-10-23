@@ -1,5 +1,4 @@
 <div class="row align-items-center">
-  <!-- ACTUAL DIMENSION TOGGLE -->
   <div class="col-auto">
     <h5 class="mb-0">
       <%= render "sub_categories/categorizable/collapse", category: category, sub_category: sub_category %>
@@ -10,9 +9,8 @@
     <%= render "sub_categories/categorizable/categorizable_name", categorizable: sub_category.categorizable %>
   </div>
 
-  <!-- form_toggle -->
   <div class="col-auto">
-    <%= render "sub_categories/categorizable/form_collapse", category: category, sub_category: sub_category %>
+    <%= render "sub_categories/categorizable/nav_menu", category: category, sub_category: sub_category %>
   </div>
 
   <div class="btn-group-vertical">
@@ -20,5 +18,4 @@
       <%= render 'sub_categories/sub_category/sorter', category: category, sub_category: sub_category %>
     </div>
   </div>
-
 </div>

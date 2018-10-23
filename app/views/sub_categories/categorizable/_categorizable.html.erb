@@ -3,18 +3,16 @@
     <%= render "sub_categories/categorizable/header", category: category, sub_category: sub_category %>
   </div>
 
-  <!-- CATEGORIZABLE POP-UP FORM-->
-  <div>
-    <%= render "sub_categories/categorizable/edit", category: category, sub_category: sub_category, form_id: dynamic_id(name: 'form-edit', klass: sub_category.categorizable, child_klass: nil) %>
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-edit-target', klass: sub_category, child_klass: sub_category.categorizable) %>" data-parent="#accordion-nav-menu">
+    <%= render "sub_categories/categorizable/edit", category: category, sub_category: sub_category %>
   </div>
 
-  <!-- UPDATED THE ACCORDION DATA PARENT AND NOW IT WORKS -->
-  <div class="collapse" id="<%= dynamic_id(name: 'collection-target', klass: sub_category, child_klass: 'field_groups') %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: klass_name(sub_category.categorizable), child_klass: nil) %>">
+  <div class="collapse" id="<%= dynamic_id(name: 'collection-target', klass: sub_category, child_klass: 'field_groups') %>" data-parent="#<%= dynamic_id(name: 'collection', klass: kollection_name(sub_category.categorizable), child_klass: nil) %>">
     <div class="card-body">
+      <!-- here -->
       <div id="<%= dynamic_id(name: 'accordion', klass: sub_category.categorizable, child_klass: 'field_groups') %>">
         <%= render "fields/field/field", fieldable: sub_category.categorizable %>
       </div>
     </div>
   </div>
-
 </div>

@@ -40,13 +40,13 @@ class DimensionsController < ApplicationController
 
   def destroy
     @category = Category.find(params[:category_id])
-    @dimension = Dimension.find(params[:id])
+    @categorizable = Dimension.find(params[:id])
 
-    if @dimension.destroy
+    if @categorizable.destroy
     else
     end
     respond_to do |format|
-      format.html
+      #format.html
       format.js
     end
   end

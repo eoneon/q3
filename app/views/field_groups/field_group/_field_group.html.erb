@@ -5,7 +5,7 @@
       <%= render "field_groups/field_group/header", fieldable: fieldable, field_group: field_group %>
     </div>
 
-    <div>
+    <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-edit-target', klass: fieldable, child_klass: field_group.field) %>" data-parent="#accordion-nav-menu">
       <%= render 'fields/edit', fieldable: fieldable, field_group: field_group %>
     </div>
 
@@ -15,7 +15,7 @@
         <div id="<%= dynamic_id(name: 'accordion', klass: field_group, child_klass: 'value') %>">
           <div class="col">
             <div id="<%= dynamic_id(name: 'collection-render', klass: field_group, child_klass: 'values') %>">
-              <%= render "values/value/value", field_group: field_group, field: field_group.field %>
+              <%= render "values/value", field_group: field_group, field: field_group.field %>
             </div>
           </div>
         </div>

@@ -23,10 +23,10 @@ class Category < ApplicationRecord
     ['Dimension', 'Certificate']
   end
 
-  def categorizable_list(categorizable)
+  def sorted_subcategories(categorizable)
     self.sub_categories.where(categorizable_type: categorizable).order(:sort)
   end
-  
+
   #this should replace below
   # def sorted_categorizables(categorizable)
   #   self.sub_categories.where(categorizable_type: 'Dimension').order(:sort)
