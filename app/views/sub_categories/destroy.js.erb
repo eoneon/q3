@@ -1,1 +1,1 @@
-$('#<%= dynamic_id(name: "collection-render", klass: @category, child_klass: "sub_categories") %>').html('<%= j render "sub_categories/sub_category/sub_category", category: @category %>');
+$('#<%= dynamic_id(name: "collection", klass: kollection_name(@categorizable), child_klass: nil) %>').remove('<%= j render "categorizables/categorizable", category: @category %>');

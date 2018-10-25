@@ -1,2 +1,0 @@
-$("#<%= dynamic_id(name: 'collection', klass: kollection_name(@categorizable), child_klass: nil) %>").append('<%= j render "sub_categories/categorizable/categorizable", category: @category, sub_category: @categorizable.sub_categories.first %>');
-$("#<%= dynamic_id(name: 'form-new-render', klass: @category, child_klass: klass_name(@categorizable)) %>").html("<%= j render 'sub_categories/categorizable/form', category: @category, categorizable: konstant(@categorizable).new, form_id: dynamic_id(name: 'form-new', klass: @category, child_klass: klass_name(@categorizable)) %>");

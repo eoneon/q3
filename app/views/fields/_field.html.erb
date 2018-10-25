@@ -1,0 +1,19 @@
+<div class="card border-dark">
+  <div class="card-header py-0">
+    <%= render "fields/header/header", fieldable: fieldable %>
+  </div>
+
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field') %>" data-parent="#accordion-nav-menu">
+    <%= render "fields/forms/new", fieldable: fieldable %>
+  </div>
+
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field_group') %>" data-parent="#accordion-nav-menu">
+    <%= render "field_groups/forms/add", fieldable: fieldable %>
+  </div>
+
+  <div class="card-body py-3 px-1">
+    <div class="col">
+      <%= render "fields/body", fieldable: fieldable %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+<div class="card bg-dark">
+  <div class="card-header py-0">
+    <%= render "categorizable_types/header/header", category: category, categorizable_type: categorizable_type %>
+  </div>
+
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: category, child_klass: klass_name(categorizable_type)) %>" data-parent="#accordion-nav-menu">
+    <%= render "categorizable_types/forms/new", category: category, categorizable_type: categorizable_type %>
+  </div>
+
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-add-target', klass: category, child_klass: klass_name(categorizable_type)) %>" data-parent="#accordion-nav-menu">
+    <%= render "categorizable_types/forms/add", category: category, categorizable_type: categorizable_type %>
+  </div>
+
+  <div class="collapse" id="<%= dynamic_id(name: 'collection-target', klass: category, child_klass: klass_name(categorizable_type)) %>" data-parent="#<%= dynamic_id(name: 'accordion', klass: category, child_klass: nil) %>">
+    <%= render "categorizable_types/body", categorizable_type: categorizable_type, category: category %>
+  </div>
+</div>

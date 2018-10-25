@@ -1,0 +1,21 @@
+<div class="row align-items-center">
+  <div class="col-auto">
+    <h5 class="mb-0">
+      <%= render "categorizables/header/collapse", category: category, sub_category: sub_category %>
+    </h5>
+  </div>
+  
+  <div class="col" id="<%= dynamic_id(name: 'name-render', klass: sub_category.categorizable, child_klass: nil) %>">
+    <%= render "categorizables/header/categorizable_name", categorizable: sub_category.categorizable %>
+  </div>
+
+  <div class="col-auto">
+    <%= render "categorizables/header/nav_menu", category: category, sub_category: sub_category %>
+  </div>
+
+  <div class="btn-group-vertical">
+    <div class="btn btn-sm py-0" role="group">
+      <%= render 'sub_categories/sorter', category: category, sub_category: sub_category %>
+    </div>
+  </div>
+</div>

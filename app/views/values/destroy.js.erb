@@ -1,1 +1,1 @@
-$("#<%= dynamic_id(name: 'collection-render', klass: @field.field_groups.first, child_klass: 'values') %>").html('<%= j render "values/value", field_group: @field.field_groups.first, field: @field %>');
+$("#<%= dynamic_id(name: 'list-item', klass: @field_group, child_klass: @value) %>").hide(); 

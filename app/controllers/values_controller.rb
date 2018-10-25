@@ -26,7 +26,7 @@
     @value = @field.values.build(value_params)
 
     if @value.save
-      #flash[:notice] = "Value was saved successfully."
+      @field_group = @field.field_groups.first
     else
       #flash.now[:alert] = "Error creating Value. Please try again."
     end
@@ -38,12 +38,12 @@
   end
 
   def update
+    field = Field.find(params[:field_id])
     @value = Value.find(params[:id])
     @value.assign_attributes(value_params)
 
     if @value.save
-      #flash[:notice] = "value was updated successfully."
-      #render :edit
+      @field_group = field.field_groups.first
     else
       #flash.now[:alert] = "Error updated value. Please try again."
       #render :edit
@@ -56,18 +56,15 @@
   end
 
   def destroy
-    value = Value.find(params[:id])
-    @field = value.field
-    if value.destroy
-      #flash[:notice] = "\"#{@value.name}\" was deleted successfully."
-      #redirect_to category_field_path(@value.field)
+    @value = Value.find(params[:id])
+    field = @value.field
+
+    if @value.destroy
+      @field_group = field.field_groups.first
     else
-      #flash.now[:alert] = "There was an error deleting the value."
-      #render :show
     end
 
     respond_to do |format|
-      #format.html
       format.js
     end
   end

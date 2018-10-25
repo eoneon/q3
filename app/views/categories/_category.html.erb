@@ -1,0 +1,17 @@
+<div id="<%= dynamic_id(name: 'accordion', klass: category, child_klass: nil) %>">
+  <div id="accordion-nav-menu">
+    <div class="card bg-dark">
+      <div class="card-header py-0">
+        <%= render "categories/header/header", category: category %>
+      </div>
+
+      <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-edit-target', klass: category, child_klass: nil) %>" data-parent="#accordion-nav-menu">
+        <%= render "categories/forms/edit", category: category %>
+      </div>
+      
+      <div class="collapse show" id="<%= dynamic_id(name: 'collection', klass: category, child_klass: nil) %>">
+        <%= render "categories/body", category: category %>
+      </div>
+    </div>
+  </div>
+</div>

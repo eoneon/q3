@@ -1,3 +1,3 @@
-$("#<%= dynamic_id(name: 'form-edit-render', klass: @category, child_klass: nil) %>").html("<%= j render 'categories/form', category: @category, form_id: dynamic_id(name: 'form-edit', klass: @category, child_klass: nil) %>");
+$("#<%= dynamic_id(name: 'form-edit-render', klass: @category, child_klass: nil) %>").html("<%= j render 'categories/forms/form', category: @category, form_id: dynamic_id(name: 'form-edit', klass: @category, child_klass: nil) %>");
 $("#list-tab").html("<%= j render 'categories/aside/tabs', categories: @categories %>");
-$("#render-name").html("<%= j render 'categories/category/category_name', category: @category %>");
+$("#render-name").html("<%= j render 'categories/header/category_name', category: @category %>");

@@ -1,2 +1,2 @@
-$("#<%= dynamic_id(name: 'collection-render', klass: @fieldable, child_klass: 'field_groups') %>").html('<%= j render "field_groups/field_group/field_group", fieldable: @fieldable %>');
-$("#<%= dynamic_id(name: 'form-new-render', klass: @fieldable, child_klass: 'field_group') %>").html("<%= j render 'field_groups/form', fieldable: @field_group.fieldable, field_group: FieldGroup.new %>");
+$("#<%= dynamic_id(name: 'collection', klass: @fieldable, child_klass: 'field_groups') %>").append('<%= j render "field_groups/field_group", fieldable: @fieldable, field_group: @field_group %>');
+$("#<%= dynamic_id(name: 'form-new-render', klass: @fieldable, child_klass: 'field_group') %>").html("<%= j render 'field_groups/forms/form', fieldable: @fieldable, field_group: FieldGroup.new, form_id: dynamic_id(name: 'form-new', klass: @fieldable, child_klass: 'field_group') %>");

@@ -1,0 +1,6 @@
+<span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: fieldable, child_klass: 'field_groups') %></span>
+<div id="<%= dynamic_id(name: 'collection', klass: fieldable, child_klass: 'field_groups') %>">
+  <% fieldable.field_groups.order(:sort).each do |field_group| %>
+    <%= render "field_groups/field_group", fieldable: fieldable, field_group: field_group %>
+  <% end %>
+</div>

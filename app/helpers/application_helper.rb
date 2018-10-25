@@ -6,9 +6,6 @@ module ApplicationHelper
     option_id if option_id.present?
   end
 
-  # def local_obj(obj)
-  #   obj.present? ? obj : Category.first
-  # end
   def categorizable_name(name)
     name.downcase
   end
@@ -24,10 +21,6 @@ module ApplicationHelper
   def poly_path_categorizable_name(obj)
     [klass_to_str_plural(obj), klass_to_str(obj), klass_to_str(obj) + "_name"].join("/")
   end
-
-  # def form_id(obj_arr)
-  #   obj_arr.map {|obj| klass_to_str(obj)}.join("_") + "_form"
-  # end
 
   ####NEW HELPERS
   def konstant(klass)
@@ -51,11 +44,9 @@ module ApplicationHelper
   end
 
   def join_nested_klass(name, target, child_klass)
-    if name == "target-collection"
+    if name.split("-").include?("collection")
       join_params([target, kollection_name(child_klass)])
     else
-      #here: klass_name should be klass_with_id
-      #join_params([target, klass_name(child_klass)])
       target(target, child_klass)
     end
   end

@@ -1,2 +1,0 @@
-$("#<%= dynamic_id(name: 'form-edit-render', klass: @category, child_klass: @categorizable) %>").html("<%= j render 'sub_categories/categorizable/form', category: @category, categorizable: @categorizable, form_id: dynamic_id(name: 'form-edit', klass: @categorizable, child_klass: nil) %>");
-$("#<%= dynamic_id(name: 'name-render', klass: @categorizable, child_klass: nil) %>").html("<%= j render 'sub_categories/categorizable/categorizable_name', categorizable: @categorizable %>");

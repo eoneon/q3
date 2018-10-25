@@ -16,7 +16,6 @@ class Category < ApplicationRecord
 
   def sorted_sub_categories
     self.sub_categories.order(:sort)
-    #self.sub_categories.where(categorizable_type: categorizable).order(:sort)
   end
 
   def categorizable_types
@@ -26,11 +25,6 @@ class Category < ApplicationRecord
   def sorted_subcategories(categorizable)
     self.sub_categories.where(categorizable_type: categorizable).order(:sort)
   end
-
-  #this should replace below
-  # def sorted_categorizables(categorizable)
-  #   self.sub_categories.where(categorizable_type: 'Dimension').order(:sort)
-  # end
 
   def sorted_dimensions
     self.sub_categories.where(categorizable_type: 'Dimension').order(:sort)

@@ -16,9 +16,10 @@ class DimensionsController < ApplicationController
     @category.dimensions << @categorizable
 
     if @category.save
+      @sub_category = @categorizable.sub_categories.first
+
       respond_to do |format|
-        format.js {render file: "/sub_categories/categorizable/create.js.erb"}
-        #format.js
+        format.js {render file: "/categorizables/create.js.erb"}
       end
     else
     end
@@ -34,20 +35,21 @@ class DimensionsController < ApplicationController
     end
 
     respond_to do |format|
-      format.js {render file: "/sub_categories/categorizable/update.js.erb"}
+      format.js {render file: "/categorizables/update.js.erb"}
     end
   end
 
   def destroy
     @category = Category.find(params[:category_id])
     @categorizable = Dimension.find(params[:id])
-
+    @sub_category = @categorizable.sub_categories.first
+    
     if @categorizable.destroy
+
     else
     end
     respond_to do |format|
-      #format.html
-      format.js
+      format.js {render file: "/categorizables/destroy.js.erb"}
     end
   end
 
