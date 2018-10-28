@@ -6,6 +6,12 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :element_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+
     resources :sub_categories, only: [:create, :update, :sort_up, :sort_down, :destroy] do
       member do
         post :sort_up, :sort_down
@@ -14,6 +20,7 @@ Rails.application.routes.draw do
 
     resources :dimensions, only: [:create, :update, :destroy]
     resources :certificates, only: [:create, :update, :destroy]
+    resources :element_kinds, only: [:create, :update, :destroy]
 
     collection do
       post :import

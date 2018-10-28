@@ -10,6 +10,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  def set_parent
+    parent_klasses = %w[category]
+    if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
+      klass.camelize.constantize.find params[:"#{klass}_id"]
+    end
+  end
+
   def target_klass
     params[:controller].singularize.camelize.constantize
   end

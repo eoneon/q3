@@ -1,0 +1,6 @@
+<span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: elemental, child_klass: 'element_groups') %></span>
+<div id="<%= dynamic_id(name: 'collection', klass: elemental, child_klass: 'element_groups') %>">
+  <% elemental.element_groups.order(:sort).each do |element_group| %>
+    <%= render "element_groups/element_group", elemental: elemental, element_group: element_group %>
+  <% end %>
+</div>

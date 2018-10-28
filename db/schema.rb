@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181017155934) do
+ActiveRecord::Schema.define(version: 20181027040353) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,6 +41,24 @@ ActiveRecord::Schema.define(version: 20181017155934) do
   create_table "dimensions", force: :cascade do |t|
     t.string "name"
     t.integer "sort"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "element_groups", force: :cascade do |t|
+    t.bigint "element_kind_id"
+    t.string "elementable_type"
+    t.bigint "elementable_id"
+    t.integer "sort"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["element_kind_id"], name: "index_element_groups_on_element_kind_id"
+    t.index ["elementable_type", "elementable_id"], name: "index_element_groups_on_elementable_type_and_elementable_id"
+  end
+
+  create_table "element_kinds", force: :cascade do |t|
+    t.string "name"
+    t.string "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

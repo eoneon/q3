@@ -1,0 +1,19 @@
+<div class="card bg-dark">
+  <div class="card-header py-0">
+    <%= render "element_kinds/container/header", elemental: elemental %>
+  </div>
+
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: elemental, child_klass: 'element_group') %>" data-parent="#accordion-nav-menu">
+    <%= render "element_kinds/forms/add", elemental: elemental %>
+  </div>
+
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: elemental, child_klass: 'element_kind') %>" data-parent="#accordion-nav-menu">
+    <%= render "element_kinds/forms/new", elemental: elemental %>
+  </div>
+
+  <div class="card-body py-3 px-1">
+    <div class="col">
+      <%= render "element_kinds/container/body", elemental: elemental %>
+    </div>
+  </div>
+</div>
