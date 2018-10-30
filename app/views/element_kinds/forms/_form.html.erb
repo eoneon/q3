@@ -1,11 +1,12 @@
-<%= form_with model: element_kind, url: [elemental, element_kind], id: form_id do |f| %>
-<div class="form">
-  <div class="form-row">
-    <div class="col-6">
-      <%= f.text_field :name, placeholder: "enter element-type name", class: "form-control" %>
-    </div>
-    <div class="col-6">
-      <%= f.text_field :kind, placeholder: "enter element-type kind", class: "form-control" %>
+<%= form_with model: element_kind, url: [elementable, element_kind], id: form_id do |f| %>
+  <div class="form">
+    <div class="form-row">
+      <div class="col-6">
+        <%= f.text_field :name, placeholder: "enter element-type name", class: "form-control" %>
+      </div>
+      <div class="col-6">
+        <%= f.text_field :kind, placeholder: "enter element-type kind", class: "form-control" %>
+      </div>
     </div>
     <button class="btn btn-sm badge badge-primary float-right" type="submit">
       Submit

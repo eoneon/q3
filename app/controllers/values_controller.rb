@@ -8,32 +8,16 @@
     end
   end
 
-  def show
-    @value = Value.find(params[:id])
-  end
-
-  def new
-    @field = Field.find(params[:field_id])
-    @value = Value.new
-  end
-
-  def edit
-    @value = Value.find(params[:id])
-  end
-
   def create
     @field = Field.find(params[:field_id])
     @value = @field.values.build(value_params)
 
     if @value.save
       @field_group = @field.field_groups.first
-    else
-      #flash.now[:alert] = "Error creating Value. Please try again."
-    end
-    #render :edit
-    respond_to do |format|
-      #format.html
-      format.js
+
+      respond_to do |format|
+        format.js
+      end
     end
   end
 
@@ -44,14 +28,11 @@
 
     if @value.save
       @field_group = field.field_groups.first
-    else
-      #flash.now[:alert] = "Error updated value. Please try again."
-      #render :edit
-    end
 
-    respond_to do |format|
-      #format.html
-      format.js
+
+      respond_to do |format|
+        format.js
+      end
     end
   end
 

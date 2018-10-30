@@ -1,7 +1,7 @@
 <div id="<%= dynamic_id(name: 'list-item', klass: elementable, child_klass: element_group) %>">
   <span class="collapse dynamic-id"><%= dynamic_id(name: 'list-item', klass: elementable, child_klass: element_group) %></span>
   <div class="card">
-    <div>
+    <div class="card-header py-0">
       <%= render "element_groups/header/header", elementable: elementable, element_group: element_group %>
     </div>
 
@@ -9,8 +9,16 @@
       <%= render 'element_kinds/forms/edit', elementable: elementable, element_kind: element_group.element_kind %>
     </div>
 
+    <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: element_group.element_kind, child_klass: 'element') %>" data-parent="#accordion-nav-menu">
+      <%= render "element/forms/new", element_kind: element_kind %>
+    </div>
+
     <div class="collapse" id="<%= dynamic_id(name: 'collection-target', klass: element_group, child_klass: 'elements') %>" data-parent="#<%= dynamic_id(name: 'collection', klass: elementable, child_klass: 'element_groups') %>">
-      <%#= render "element_groups/body", element_group: element_group %>
+      <div class="card-body">
+        <% element_group.element_kind.elements.order(:sort) do |element| %>
+          <%= render "elements/container", element_kind: element_group.element_kind, element: element %>
+        <% end %>
+      </div>
     </div>
   </div>
 </div>

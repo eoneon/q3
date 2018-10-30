@@ -72,6 +72,14 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :element_kinds, only: [] do
+    resources :elements, only: [:create, :update, :sort_up, :sort_down, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
   resources :artists do
     collection do
       post :import

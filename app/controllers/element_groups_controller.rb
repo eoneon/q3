@@ -37,7 +37,7 @@ class ElementGroupsController < ApplicationController
       reset_sort(@elementable, sort)
 
       respond_to do |format|
-        format.js {render file: "/elementable/destroy.js.erb"}
+        format.js {render file: "/element_kinds/destroy.js.erb"}
       end
     end
   end

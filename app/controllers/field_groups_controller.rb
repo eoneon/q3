@@ -1,6 +1,6 @@
 class FieldGroupsController < ApplicationController
   def create
-    @fieldable = set_fieldable
+    @fieldable = set_parent
     @field_group = @fieldable.field_groups.build(field_group_params)
 
     if @field_group.save
@@ -12,7 +12,7 @@ class FieldGroupsController < ApplicationController
   end
 
   def sort_up
-    @fieldable = set_fieldable
+    @fieldable = set_parent
     swap_sort(@fieldable, -1)
 
     respond_to do |format|
@@ -21,7 +21,7 @@ class FieldGroupsController < ApplicationController
   end
 
   def sort_down
-    @fieldable = set_fieldable
+    @fieldable = set_parent
     swap_sort(@fieldable, 1)
 
     respond_to do |format|
@@ -30,7 +30,7 @@ class FieldGroupsController < ApplicationController
   end
 
   def destroy
-    @fieldable = set_fieldable
+    @fieldable = set_parent
     @field_group = FieldGroup.find(params[:id])
     sort = @field_group.sort
 

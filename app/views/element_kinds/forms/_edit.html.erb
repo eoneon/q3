@@ -5,7 +5,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div id="<%= dynamic_id(name: 'form-edit-render', klass: elemental, child_klass: element_kind) %>">
-    <%= render "element_kinds/forms/form", elemental: elemental, element_kind: element_kind, form_id: dynamic_id(name: 'form-edit', klass: elemental, child_klass: element_kind)  %>
+  <div id="<%= dynamic_id(name: 'form-edit-render', klass: elementable, child_klass: element_kind) %>">
+    <%= render "element_kinds/forms/form", elementable: elementable, element_kind: element_kind, form_id: dynamic_id(name: 'form-edit', klass: elementable, child_klass: element_kind)  %>
   </div>
 </div>

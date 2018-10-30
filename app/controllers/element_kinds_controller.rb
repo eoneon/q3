@@ -5,7 +5,7 @@ class ElementKindsController < ApplicationController
     @elementable.element_kinds << @element_kind
 
     if @element_kind.save
-      #@element_group = @element_kind.element_groups.first
+      @element_group = @element_kind.element_groups.first
 
       respond_to do |format|
         format.js
@@ -29,8 +29,8 @@ class ElementKindsController < ApplicationController
   def destroy
     @elementable = set_parent
     element_kind = ElementKind.find(params[:id])
-    @element_kind_group = element_kind.element_groups.first
-    sort = @element_kind_group.sort
+    @element_group = element_kind.element_groups.first
+    sort = @element_group.sort
 
     if element_kind.destroy
       reset_sort(@elementable, sort)

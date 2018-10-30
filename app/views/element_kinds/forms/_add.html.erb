@@ -5,7 +5,7 @@
       <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div id="<%= dynamic_id(name: 'form-new-render', klass: elemental, child_klass: 'element_group') %>">
-    <%= render "element_groups/form", elemental: elemental, element_group: ElementGroup.new, form_id: dynamic_id(name: 'form-new', klass: elemental, child_klass: 'element_group')  %>
+  <div id="<%= dynamic_id(name: 'form-new-render', klass: elementable, child_klass: 'element_group') %>">
+    <%= render "element_groups/form", elementable: elementable, element_group: ElementGroup.new, form_id: dynamic_id(name: 'form-new', klass: elementable, child_klass: 'element_group')  %>
   </div>
 </div>

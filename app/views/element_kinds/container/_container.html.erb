@@ -1,19 +1,22 @@
 <div class="card bg-dark">
   <div class="card-header py-0">
-    <%= render "element_kinds/container/header", elemental: elemental %>
+    <%= render "element_kinds/container/header", elementable: elementable %>
   </div>
 
-  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: elemental, child_klass: 'element_group') %>" data-parent="#accordion-nav-menu">
-    <%= render "element_kinds/forms/add", elemental: elemental %>
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: elementable, child_klass: 'element_group') %>" data-parent="#accordion-nav-menu">
+    <%= render "element_kinds/forms/add", elementable: elementable %>
   </div>
 
-  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: elemental, child_klass: 'element_kind') %>" data-parent="#accordion-nav-menu">
-    <%= render "element_kinds/forms/new", elemental: elemental %>
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: elementable, child_klass: 'element_kind') %>" data-parent="#accordion-nav-menu">
+    <%= render "element_kinds/forms/new", elementable: elementable %>
   </div>
 
   <div class="card-body py-3 px-1">
     <div class="col">
-      <%= render "element_kinds/container/body", elemental: elemental %>
+      <span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: elementable, child_klass: 'element_groups') %></span>
+      <div id="<%= dynamic_id(name: 'collection', klass: elementable, child_klass: 'element_groups') %>">
+        <%= render "element_kinds/container/body", elementable: elementable %>
+      </div>
     </div>
   </div>
 </div>

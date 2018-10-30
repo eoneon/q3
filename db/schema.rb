@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181027040353) do
+ActiveRecord::Schema.define(version: 20181029205243) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -61,6 +61,16 @@ ActiveRecord::Schema.define(version: 20181027040353) do
     t.string "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "elements", force: :cascade do |t|
+    t.string "name"
+    t.string "kind"
+    t.integer "sort"
+    t.bigint "element_kind_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["element_kind_id"], name: "index_elements_on_element_kind_id"
   end
 
   create_table "field_groups", force: :cascade do |t|
@@ -142,6 +152,7 @@ ActiveRecord::Schema.define(version: 20181027040353) do
     t.index ["properties"], name: "index_values_on_properties", using: :gist
   end
 
+  add_foreign_key "elements", "element_kinds"
   add_foreign_key "field_groups", "categories", column: "fieldable_id"
   add_foreign_key "field_groups", "fields"
   add_foreign_key "invoices", "suppliers"
