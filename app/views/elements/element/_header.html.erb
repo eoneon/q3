@@ -1,0 +1,21 @@
+<div class="row align-items-center">
+  <div class="col-auto">
+    <h5 class="mb-0">
+      <a role="button" data-toggle="collapse" href="#<%= dynamic_id(name: 'collection-target', klass: element, child_klass: nil) %>" aria-expanded="false"></a>
+    </h5>
+  </div>
+
+  <div class="col" id="<%= dynamic_id(name: 'name-render', klass: element_kind, child_klass: element) %>">
+    <%= render "elements/element/element_name", element: element %>
+  </div>
+
+  <div class="col-auto">
+    <%= render "elements/element/nav_menu", element_kind: element_kind, element: element %>
+  </div>
+
+  <div class="btn-group-vertical">
+    <div class="btn btn-sm py-0" role="group">
+      <%#= render 'elements/header/sorter', elementable: elementable, element: element %>
+    </div>
+  </div>
+</div>

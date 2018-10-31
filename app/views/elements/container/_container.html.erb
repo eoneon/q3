@@ -1,0 +1,20 @@
+<div class="card border-dark">
+  <div class="card-header py-2">
+    <%= render "elements/container/header", element_kind: element_kind %>
+  </div>
+
+  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: element_kind, child_klass: 'element') %>" data-parent="#accordion-nav-menu">
+    <%= render "elements/forms/new", element_kind: element_kind %>
+  </div>
+
+  <div class="card-body py-3 px-1">
+    <div class="col">
+      <span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: element_kind, child_klass: 'element') %></span>
+      <div id="<%= dynamic_id(name: 'collection', klass: element_kind, child_klass: 'element') %>">
+        <% element_kind.elements.order(:sort).each do |element| %>
+          <%= render "elements/element", element_kind: element_kind, element: element %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

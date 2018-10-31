@@ -9,4 +9,8 @@ class Element < ApplicationRecord
   def set_sort
     self.sort = element_kind.elements.count == 0 ? 1 : element_kind.elements.count + 1
   end
+
+  def sorted_field_groups
+    self.field_groups.order(:sort)
+  end
 end

@@ -1,0 +1,8 @@
+<%= form_with model: element, url: [element_kind, element], id: form_id do |f| %>
+  <div class="form">
+    <%= f.text_field :name, placeholder: "enter element name", class: "form-control" %>
+    <button class="btn btn-sm badge badge-primary float-right" type="submit">
+      Submit
+    </button>
+  </div>
+<% end %>

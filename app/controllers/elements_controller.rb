@@ -1,11 +1,11 @@
 class ElementsController < ApplicationController
   def create
     @element_kind = ElementKind.find(params[:element_kind_id])
-    @element = Element.create(element_params)
+    @element = @element_kind.elements.build(element_params)
     #@element_kind.elements << @element
 
     if @element.save
-      @element_group = @element_kind.element_groups.first
+      #@element_group = @element_kind.element_groups.first
       respond_to do |format|
         format.js
       end

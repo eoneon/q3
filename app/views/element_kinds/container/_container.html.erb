@@ -11,12 +11,10 @@
     <%= render "element_kinds/forms/new", elementable: elementable %>
   </div>
 
-  <div class="card-body py-3 px-1">
-    <div class="col">
-      <span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: elementable, child_klass: 'element_groups') %></span>
-      <div id="<%= dynamic_id(name: 'collection', klass: elementable, child_klass: 'element_groups') %>">
-        <%= render "element_kinds/container/body", elementable: elementable %>
-      </div>
+  <div class="card card-body py-1 px-1">
+    <span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: elementable, child_klass: 'element_groups') %></span>
+    <div id="<%= dynamic_id(name: 'collection', klass: elementable, child_klass: 'element_groups') %>">
+      <%= render "element_kinds/container/body", elementable: elementable %>
     </div>
   </div>
 </div>
