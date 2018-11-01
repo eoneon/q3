@@ -3,15 +3,8 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # def set_parent
-  #   parent_klasses = %w[category dimension certificate]
-  #   if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
-  #     klass.camelize.constantize.find params[:"#{klass}_id"]
-  #   end
-  # end
-
   def set_parent
-    parent_klasses = %w[category element]
+    parent_klasses = %w[category element element_kind]
     if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
       klass.camelize.constantize.find params[:"#{klass}_id"]
     end

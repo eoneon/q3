@@ -1,2 +1,2 @@
-<div style="font-size: 0.5rem;"><%= link_to_if element_group.sort.present? && element_group.sort > 1, (fa_icon "chevron-up"), polymorphic_path([elementable, element_group], action: 'sort_up'), method: :post, remote: true %></div>
-<div style="font-size: 0.5rem;"><%= link_to_unless element_group.sort.nil? || elementable.element_groups.order(:sort).last == element_group, (fa_icon "chevron-down"), polymorphic_path([elementable, element_group], action: 'sort_down'), method: :post, remote: true %></div>
+<div style="font-size: 0.5rem;"><%= link_to_if element.sort.present? && element.sort > 1, (fa_icon "chevron-up"), polymorphic_path([element_kind, element], action: 'sort_up'), method: :post, remote: true %></div>
+<div style="font-size: 0.5rem;"><%= link_to_unless element.sort.nil? || element_kind.sorted_elements.last == element, (fa_icon "chevron-down"), polymorphic_path([element_kind, element], action: 'sort_down'), method: :post, remote: true %></div>

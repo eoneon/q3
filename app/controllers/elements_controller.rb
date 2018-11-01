@@ -24,6 +24,24 @@ class ElementsController < ApplicationController
     end
   end
 
+  def sort_up
+    @element_kind = set_parent
+    swap_sort(@element_kind, -1)
+
+    respond_to do |format|
+      format.js {render file: "/elements/sorter.js.erb"}
+    end
+  end
+
+  def sort_down
+    @element_kind = set_parent
+    swap_sort(@element_kind, 1)
+
+    respond_to do |format|
+      format.js {render file: "/elements/sorter.js.erb"}
+    end
+  end
+
   def destroy
     @element_kind = ElementKind.find(params[:element_kind_id])
     @element = Element.find(params[:id])

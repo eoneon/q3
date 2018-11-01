@@ -9,12 +9,7 @@
 
   <div class="card-body py-3 px-1">
     <div class="col">
-      <span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: element_kind, child_klass: 'element') %></span>
-      <div id="<%= dynamic_id(name: 'collection', klass: element_kind, child_klass: 'element') %>">
-        <% element_kind.elements.order(:sort).each do |element| %>
-          <%= render "elements/element", element_kind: element_kind, element: element %>
-        <% end %>
-      </div>
+      <%= render "elements/container/body", element_kind: element_kind %>
     </div>
   </div>
 </div>

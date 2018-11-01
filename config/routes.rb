@@ -1,26 +1,18 @@
 Rails.application.routes.draw do
   resources :categories do
+    resources :fields
     resources :field_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
       member do
         post :sort_up, :sort_down
       end
     end
 
+    resources :element_kinds, only: [:create, :update, :destroy]
     resources :element_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
       member do
         post :sort_up, :sort_down
       end
     end
-
-    resources :sub_categories, only: [:create, :update, :sort_up, :sort_down, :destroy] do
-      member do
-        post :sort_up, :sort_down
-      end
-    end
-
-    resources :dimensions, only: [:create, :update, :destroy]
-    resources :certificates, only: [:create, :update, :destroy]
-    resources :element_kinds, only: [:create, :update, :destroy]
 
     collection do
       post :import
@@ -29,44 +21,14 @@ Rails.application.routes.draw do
     member do
       get :export
     end
-
-    resources :fields
-    resources :dimensions
   end
+  #/=categories
 
   resources :elements do
     resources :field_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
       member do
         post :sort_up, :sort_down
       end
-    end
-    collection do
-      post :import
-    end
-    resources :fields
-  end
-
-  resources :dimensions do
-    resources :field_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
-      member do
-        post :sort_up, :sort_down
-      end
-    end
-    collection do
-      post :import
-    end
-    resources :fields
-  end
-
-  #can I just prepend certificates above?
-  resources :certificates do
-    resources :field_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
-      member do
-        post :sort_up, :sort_down
-      end
-    end
-    collection do
-      post :import
     end
     resources :fields
   end
@@ -108,13 +70,6 @@ Rails.application.routes.draw do
 
   resources :invoices, only: [] do
     resources :items, except: [:index]
-      # member do
-      #   get :create_skus, :export , except: [:index]
-      # end
-      # collection do
-      #   post :import
-      # end
-    # end
   end
 
   resources :items do
