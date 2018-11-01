@@ -1,0 +1,2 @@
+$("#<%= dynamic_id(name: 'form-edit-render', klass: @element_kind, child_klass: @element) %>").html("<%= j render 'elements/forms/form', element_kind: @element_kind, element: @element, form_id: dynamic_id(name: 'form-edit', klass: @element_kind, child_klass: @element) %>");
+$("#<%= dynamic_id(name: 'name-render', klass: @element_kind, child_klass: @element) %>").html("<%= j render 'elements/element/element_name', element: @element %>");

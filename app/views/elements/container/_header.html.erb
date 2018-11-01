@@ -1,6 +1,8 @@
 <div class="row align-items-center">
   <div class="col">
-    <span class="text-capitalize font-weight-light"><%= element_kind.name %> elements</span>
+    <div id="<%= dynamic_id(name: 'header-render', klass: element_kind, child_klass: nil )%>">
+      <%= render "elements/container/element_kind_name", element_kind: element_kind %>
+    </div>
   </div>
 
   <div>

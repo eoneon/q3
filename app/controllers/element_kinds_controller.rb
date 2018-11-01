@@ -14,14 +14,14 @@ class ElementKindsController < ApplicationController
   end
 
   def update
+    @elementable = set_parent
     @element_kind = ElementKind.find(params[:id])
     @element_kind.assign_attributes(element_kind_params)
 
     if @element_kind.save
-      @elementable = set_parent
-
       respond_to do |format|
         format.js
+        format.html
       end
     end
   end
