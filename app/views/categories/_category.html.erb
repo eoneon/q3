@@ -8,7 +8,7 @@
       <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-edit-target', klass: category, child_klass: nil) %>" data-parent="#accordion-nav-menu">
         <%= render "categories/forms/edit", category: category %>
       </div>
-      
+
       <div class="collapse show" id="<%= dynamic_id(name: 'collection', klass: category, child_klass: nil) %>">
         <%= render "categories/body", category: category %>
       </div>

@@ -10,10 +10,8 @@
     </div>
 
     <div class="collapse" id="<%= dynamic_id(name: 'collection-target', klass: element, child_klass: nil) %>" data-parent="#<%= dynamic_id(name: 'collection', klass: element_kind, child_klass: 'elements') %>">
-      <div class="card-body py-3">
-        <div class="card card-body p-3">
-          <%= render "fields/field", fieldable: element %>
-        </div>
+      <div class="card-body py-2">
+        <%= render "fields/field", fieldable: element %>
       </div>
     </div>
   </div>

@@ -7,14 +7,12 @@
     <%= render "values/forms/new", field_group: field_group %>
   </div>
 
-  <div class="card-body py-3 px-1">
-    <div class="col">
-      <span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: field_group, child_klass: 'values') %></span>
-      <div id="<%= dynamic_id(name: 'collection', klass: field_group, child_klass: 'values') %>">
-        <% field.values.each do |value| %>
-            <%= render "values/value/value", field_group: field_group, field: field, value: value %>
-        <% end %>
-      </div>
+  <div class="card-body p-2">
+    <span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: field_group, child_klass: 'values') %></span>
+    <div id="<%= dynamic_id(name: 'collection', klass: field_group, child_klass: 'values') %>">
+      <% field.values.each do |value| %>
+          <%= render "values/value/value", field_group: field_group, field: field, value: value %>
+      <% end %>
     </div>
   </div>
 </div>

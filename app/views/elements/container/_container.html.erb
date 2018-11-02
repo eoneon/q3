@@ -1,5 +1,5 @@
 <div class="card border-dark">
-  <div class="card-header py-2">
+  <div class="card-header py-0">
     <%= render "elements/container/header", element_kind: element_kind %>
   </div>
 
@@ -7,9 +7,7 @@
     <%= render "elements/forms/new", element_kind: element_kind %>
   </div>
 
-  <div class="card-body py-3 px-1">
-    <div class="col">
-      <%= render "elements/container/body", element_kind: element_kind %>
-    </div>
+  <div class="card-body p-2">
+    <%= render "elements/container/body", element_kind: element_kind %>
   </div>
 </div>
