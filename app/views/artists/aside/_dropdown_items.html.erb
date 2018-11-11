@@ -1,0 +1,3 @@
+<% artists.each do |artist| %>
+  <a class="dropdown-item" id="<%= dynamic_id(name: 'dropdown-item', klass: artist, child_klass: nil) %>" href="<%= artist_path(artist) %>" data-remote="true"><%= artist.last_first %></a>
+<% end %>

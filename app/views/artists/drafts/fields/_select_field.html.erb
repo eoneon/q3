@@ -1,0 +1,8 @@
+<div class="form-group col-auto">
+  <%= ff.label field_build[0] %><br>
+  <% if parent.properties.present? && parent.properties[field_build[0]].present? %>
+    <%= ff.select field_build[0], options_for_select(field_build[2], parent.properties[field_build[0]]), {class: 'form-control', :include_blank => true}  %>
+  <% else %>
+    <%= ff.select field_build[0], options_for_select(field_build[2]), {class: 'form-control', :include_blank => true}  %>
+  <% end %>
+</div>

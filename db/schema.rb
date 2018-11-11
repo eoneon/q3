@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20181029205243) do
+ActiveRecord::Schema.define(version: 20181109003054) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,19 @@ ActiveRecord::Schema.define(version: 20181029205243) do
     t.index ["supplier_id"], name: "index_invoices_on_supplier_id"
   end
 
+  create_table "item_types", force: :cascade do |t|
+    t.integer "sort"
+    t.hstore "properties"
+    t.bigint "artist_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.bigint "category_id"
+    t.index ["artist_id"], name: "index_item_types_on_artist_id"
+    t.index ["category_id"], name: "index_item_types_on_category_id"
+    t.index ["properties"], name: "index_item_types_on_properties", using: :gist
+  end
+
   create_table "items", force: :cascade do |t|
     t.integer "sku"
     t.integer "retail"
@@ -156,6 +169,7 @@ ActiveRecord::Schema.define(version: 20181029205243) do
   add_foreign_key "field_groups", "categories", column: "fieldable_id"
   add_foreign_key "field_groups", "fields"
   add_foreign_key "invoices", "suppliers"
+  add_foreign_key "item_types", "artists"
   add_foreign_key "items", "artists"
   add_foreign_key "items", "categories"
   add_foreign_key "value_groups", "\"values\"", column: "value_id"

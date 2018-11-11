@@ -22,11 +22,6 @@
     width: 45px;
 }
 
-.flash_pad {
-  padding-top: 0.35rem;
-  padding-bottom: 0.35rem;
-}
-
 body {
   padding-top: 65px;
 }
@@ -38,11 +33,10 @@ summary {
 .mb-0 > a:after {
   content: "\f0da";
   font-family: 'FontAwesome';
-  //outline: none !important;
 }
+
 .mb-0 > a[aria-expanded="true"]:after {
   content: "\f0d7";
-  //outline: none !important;
 }
 
 #nav-bar {

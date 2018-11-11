@@ -1,29 +1,17 @@
-<h1>Artist#index</h1>
-Artist artists artist
-<% if @artists.empty? %>
-  <p><strong>No Artist</strong></p>
-<% end %>
+<div class="row justify-content-center">
+  <h1>Artists & Item-Types</h1>
+</div>
+<hr>
 
-<p>
-  Download:
-  <%= link_to "Export artists to CSV", artists_path(format: "csv") %> |
-  <%= link_to "Export artists to Excel", artists_path(format: "xls") %>
-</p>
+<div class="row">
+  <div class="col-4">
+    <div id="artist-aside">
+      <%= render "artists/aside/aside", artists: @artists %>
+    </div>
+  </div>
 
-<h4>Import Fields</h4>
-<%= form_tag import_artists_path, multipart: true do %>
-  <%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
-<% end %>
-
-<%= link_to "New Artist", new_artist_path %>
-
-<table class="table table-striped table-hover">
-  <thead>
-    <th>ID</th>
-    <th>Name</th>
-  </thead>
-  <tbody>
-    <%= render @artists %>
-  </tbody>
-</table>
+  <div class="col-8">
+    <div id="artist-show">
+    </div>
+  </div>
+</div>

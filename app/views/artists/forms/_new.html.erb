@@ -1,0 +1,11 @@
+<div class="card card-body p-2 bg-light">
+  <div>
+    <span class="card-title font-weight-light">New Artist</span>
+    <button type="button" class="close float-right close-form">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div id="<%= dynamic_id(name: 'form-new-render', klass: 'artist', child_klass: nil) %>">
+    <%= render 'artists/forms/form', artist: artist, form_id: dynamic_id(name: 'form-new', klass: 'artist', child_klass: nil) %>
+  </div>
+</div>

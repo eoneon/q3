@@ -1,0 +1,15 @@
+<%= form_with model: artist, url: artist, id: form_id do |f| %>
+  <div class="form">
+    <% %w[first_name last_name years].each do |field| %>
+      <%= f.fields_for :properties, OpenStruct.new(artist.properties) do |ff| %>
+        <div class="field">
+          <%= ff.text_field field, placeholder: field, class: "form-control" %>
+        </div>
+      <% end %>
+    <% end %>
+    <%= f.number_field :artist_id, placeholder: "artist-id", class: "form-control" %>
+    <button class="btn btn-sm badge badge-primary float-right" type="submit">
+      Submit
+    </button>
+  </div>
+<% end %>

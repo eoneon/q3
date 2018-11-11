@@ -1,0 +1,4 @@
+$("#artist-show").hide();
+$("#<%= dynamic_id(name: 'dropdown', klass: 'artists', child_klass: nil) %>").html("<%= j render 'artists/aside/dropdown', artists: @artists %>");
+$("#artist-header").html("<%= j render 'artists/aside/header', artists: @artists, artist: nil %>");
+$("#form-edit-render").hide();

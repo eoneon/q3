@@ -1,0 +1,26 @@
+<div class="row">
+  <span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: 'artist', child_klass: nil) %></span>
+  <div id="<%= dynamic_id(name: 'dropdown', klass: 'artist', child_klass: nil) %>">
+    <%= render "artists/aside/dropdown", artists: artists %>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col">
+    <div class="card">
+      <div id="artist-header">
+        <%= render "artists/aside/header", artists: artists, artist: @artist %>
+      </div>
+
+      <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: 'artist', child_klass: nil) %>">
+        <%= render "artists/forms/new", artist: Artist.new %>
+      </div>
+
+
+      <div class="collapse close-toggle-form" id="form-edit-target">
+        <%= render "artists/forms/edit", artist: @artist %>
+      </div>
+
+    </div>
+  </div>
+</div>

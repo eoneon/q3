@@ -18,24 +18,14 @@ class CategoriesController < ApplicationController
     end
   end
 
-  # def new
-  #   @category = Category.new
-  # end
-  #
-  # def edit
-  #   @category = Category.find(params[:id])
-  # end
-
   def create
     @category = Category.new(category_params)
+    @categories = Category.all.order(sort: 'asc')
 
     if @category.save
-      @categories = Category.all.order(sort: 'asc')
       respond_to do |format|
-        format.html
         format.js
       end
-    else
     end
   end
 
@@ -45,13 +35,10 @@ class CategoriesController < ApplicationController
 
     if @category.save
       @categories = Category.all.order(sort: 'asc')
-    else
-      flash.now[:alert] = "Error updated category. Please try again."
-    end
 
-    respond_to do |format|
-      format.html
-      format.js
+      respond_to do |format|
+        format.js
+      end
     end
   end
 
@@ -61,11 +48,10 @@ class CategoriesController < ApplicationController
     if category.destroy
       @categories = Category.all.order(sort: 'asc')
       @category = @categories.first
-    else
-    end
 
-    respond_to do |format|
-      format.js
+      respond_to do |format|
+        format.js
+      end
     end
   end
 

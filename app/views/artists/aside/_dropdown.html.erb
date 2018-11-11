@@ -1,0 +1,11 @@
+<div class="col">
+  <div class="dropdown">
+    <button class="btn btn-secondary btn-block dropdown-toggle py-0" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Select Artist
+    </button>
+
+    <div class="dropdown-menu" id="<%= dynamic_id(name: 'dropdown', klass: 'artist', child_klass: nil) %>" aria-labelledby="dropdownMenuLink">
+      <%= render "artists/aside/dropdown_items", artists: artists %>
+    </div>
+  </div>
+</div>

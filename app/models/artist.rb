@@ -1,8 +1,8 @@
 class Artist < ApplicationRecord
-  has_many :items
+  has_many :items, dependent: :destroy
 
   def self.by_last_name
-    Artist.order("properties -> 'lastname'")
+    Artist.all.order("properties -> 'lastname'")
   end
 
   def name_arr
