@@ -1,0 +1,15 @@
+<div id="item_type-tabs-update">
+  <%= render "artists/tabs/header", artist: artist %>
+</div>
+
+<div class="collapse close-toggle-form" id="item_type-new-aside-show" data-parent="#accordion-nav-menu-aside">
+  <%= render "item_types/forms/new", artist: artist, item_type: ItemType.new %>
+</div>
+
+<div class="card-body">
+  <div class="list-group" id="list-tab" role="tablist">
+    <% if artist.present? %>
+      <%= render "artists/aside/tabs", artist: artist %>
+    <% end %>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 <div class="row align-items-center">
-  <div class="col">
-    <span class="text-capitalize font-weight-light"><%= klass_name(fieldable) %> fields</span>
+  <div class="col text-capitalize font-weight-light" id="<%= dynamic_id(name: 'display-header', klass: @category, child_klass: 'fields') %>">
+    <%= render "fields/header/display", fieldable: fieldable %>
   </div>
 
   <div>

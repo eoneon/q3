@@ -1,11 +1,11 @@
-<% artists.each do |artist| %>
-  <% if artist.sort == 1 %>
-    <a class="list-group-item list-group-item-action active" id="list-<%= artist.id %>-list" href="<%= artist_path(artist) %>" data-remote="true" data-toggle="list">
-      <%= artist.name %>
+<% artist.item_types.each do |item_type| %>
+  <% if item_type.sort == 1 %>
+    <a class="list-group-item list-group-item-action" id="list-<%= item_type.id %>-list" href="<%= artist_item_type_path([artist, item_type]) %>" data-remote="true" data-toggle="list">
+      <%= item_type.name %>
     </a>
   <% else %>
-    <a class="list-group-item list-group-item-action" id="list-<%= artist.id %>-list" href="<%= artist_path(artist) %>" data-remote="true" data-toggle="list">
-      <%= artist.name %>
+    <a class="list-group-item list-group-item-action" id="list-<%= item_type.id %>-list" href="<%= artist_item_type_path([artist, item_type]) %>" data-remote="true" data-toggle="list">
+      <%= item_type.name %>
     </a>
   <% end %>
 <% end %>

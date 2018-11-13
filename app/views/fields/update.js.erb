@@ -1,2 +1,3 @@
 $("#<%= dynamic_id(name: 'form-edit-render', klass: @fieldable, child_klass: @field) %>").html("<%= j render 'fields/forms/form', fieldable: @fieldable, field: @field, form_id: dynamic_id(name: 'form-edit', klass: @fieldable, child_klass: @field) %>");
-$("#<%= dynamic_id(name: 'render-name', klass: @field.field_groups.first, child_klass: 'field') %>").html('<%= j render "field_groups/header/field_name", field: @field %>');
+$("#<%= dynamic_id(name: 'display-name', klass: @fieldable.field_groups.first, child_klass: nil) %>").html("<%= j render 'field_groups/header/field_name', field: @field %>");
+$("#<%= dynamic_id(name: 'display-header', klass: @fieldable.field_groups.first, child_klass: 'values') %>").html('<%= j render "values/container/display", field: @field %>');

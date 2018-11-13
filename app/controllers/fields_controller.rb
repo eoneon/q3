@@ -10,7 +10,7 @@ class FieldsController < ApplicationController
   end
 
   def create
-    @fieldable = set_fieldable
+    @fieldable = set_parent
     @field = Field.new(field_params)
 
     @fieldable.fields << @field
@@ -28,26 +28,19 @@ class FieldsController < ApplicationController
   end
 
   def update
+    @fieldable = set_parent
     @field = Field.find(params[:id])
     @field.assign_attributes(field_params)
 
     if @field.save
-      @fieldable = set_fieldable
-      #flash[:notice] = "✔"
-      #redirect_to action: :index
-
-    else
-      flash.now[:alert] = "Error updated field. Please try again."
-      #render :edit
-    end
-    respond_to do |format|
-      #flash[:notice] = "updated"
-      format.js
+      respond_to do |format|
+        format.js
+      end
     end
   end
 
   def destroy
-    @fieldable = set_fieldable
+    @fieldable = set_parent
     field = Field.find(params[:id])
     @field_group = field.field_groups.first
     sort = @field_group.sort

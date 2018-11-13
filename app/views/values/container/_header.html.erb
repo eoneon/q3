@@ -1,6 +1,6 @@
 <div class="row align-items-center">
-  <div class="col">
-    <span class="text-capitalize font-weight-light">field values</span>
+  <div class="col font-weight-light" id="<%= dynamic_id(name: 'display-header', klass: field_group, child_klass: 'values') %>">
+    <%= render "values/container/display", field: field_group.field %>
   </div>
 
   <ul class="nav">

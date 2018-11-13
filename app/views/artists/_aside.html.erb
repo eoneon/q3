@@ -1,0 +1,13 @@
+<div id="accordion-nav-menu-aside">
+  <div class="card my-0 py-0">
+    <%= render "artists/aside/header", artists: artists, artist: @artist %>
+  </div>
+
+  <div class="card">
+    <%= render "artists/forms/container", artist: @artist %>
+  </div>
+
+  <div class="card my-2">
+    <%= render "artists/aside/body", artist: @artist %>
+  </div>
+</div>

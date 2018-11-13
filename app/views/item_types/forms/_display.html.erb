@@ -1,12 +1,10 @@
-<div class="col text-white">
+<div class="col">
   <% if artist.present? %>
     <span class="collapse dynamic-id"><%= dynamic_id(name: 'name-render', klass: artist, child_klass: nil) %></span>
     <div id="<%= dynamic_id(name: 'name-render', klass: artist, child_klass: nil) %>">
-      <span id="<%= dynamic_id(name: 'name-render', klass: artist, child_klass: nil) %>">artist: <%= artist.last_first %></span>
+      <span id="<%= dynamic_id(name: 'name-render', klass: artist, child_klass: nil) %>"><%= artist.last_first %></span>
     </div>
   <% else %>
-    <div class="font-weight-light">
-      select artist
-    </div>
+    <span class="font-italic font-weight-light">- No artists created -</span>
   <% end %>
 </div>

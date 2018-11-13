@@ -1,0 +1,15 @@
+<div class="card-header bg-dark py-0 px-1">
+  <div class="row align-items-center text-white">
+    <div class="col">
+      <div id="name-render">
+        <%= render "artists/aside/display", artist: artist %>
+      </div>
+    </div>
+
+    <div class="col-auto">
+      <div id="<%= dynamic_id(name: 'nav-menu', klass: 'artist', child_klass: nil) %>">
+        <%= render "artists/aside/nav_menu", artist: artist %>
+      </div>
+    </div>
+  </div>
+</div>

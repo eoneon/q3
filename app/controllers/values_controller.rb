@@ -28,8 +28,6 @@
 
     if @value.save
       @field_group = field.field_groups.first
-
-
       respond_to do |format|
         format.js
       end
@@ -42,11 +40,9 @@
 
     if @value.destroy
       @field_group = field.field_groups.first
-    else
-    end
-
-    respond_to do |format|
-      format.js
+      respond_to do |format|
+        format.js
+      end
     end
   end
 

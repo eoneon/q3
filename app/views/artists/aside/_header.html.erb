@@ -1,15 +1,21 @@
-<div class="card-header py-0">
-  <div class="row align-items-center">
-    <div class="col">
-      <div id="name-render">
-        <%= render "artists/aside/display", artist: artist %>
+<ul class="list-group list-group-flush">
+  <li class="list-group-item bg-dark rounded-top py-0 px-1">
+    <div class="row align-items-center">
+      <div class="col py-0">
+        <div id="artist-name-aside-update">
+          <%= render "artists/aside/display", artist: artist %>
+        </div>
       </div>
-    </div>
 
-    <div class="col-auto">
-      <div id="<%= dynamic_id(name: 'nav-menu', klass: 'artist', child_klass: nil) %>">
-        <%= render "artists/aside/nav_menu", artist: artist %>
+      <div class="col-auto px-0 border-left border-right border-secondary" id="artist-dropdown-aside-update">
+        <%= render "artists/aside/dropdown", artists: artists, artist: artist %>
+      </div>
+
+      <div class="col-auto pl-0 pr-3">
+        <div id="artist-nav-menu-aside-update">
+          <%= render "artists/aside/nav_menu", artist: artist %>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+  </li>
+</ul>

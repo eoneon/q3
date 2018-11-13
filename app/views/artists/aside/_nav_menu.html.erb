@@ -1,14 +1,14 @@
 <ul class="nav">
   <li class="nav-item-dropdown">
-    <a class="nav-link dropdown font-weight-light text-muted py-0 px-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars") %></a>
+    <a class="nav-link dropdown font-weight-light text-muted py-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars") %></a>
     <div class="dropdown-menu">
       <% if artist.present? %>
-        <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: 'artist', child_klass: nil) %>">New Artist</a>
-        <a class="dropdown-item" data-toggle="collapse" href="#form-edit-target">Edit Artist</a>
+        <a class="dropdown-item" data-toggle="collapse" href="#artist-new-aside-show">New Artist</a>
+        <a class="dropdown-item" data-toggle="collapse" href="#artist-edit-aside-show">Edit Artist</a>
         <div class="dropdown-divider"></div>
         <%= link_to 'Delete Artist', artist,  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
       <% else %>
-        <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: 'artist', child_klass: nil) %>">New Artist</a>
+        <a class="dropdown-item" data-toggle="collapse" href="#artist-new-aside-show">New Artist</a>
       <% end %>
     </div>
   </li>

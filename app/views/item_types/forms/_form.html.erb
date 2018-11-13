@@ -1,0 +1,8 @@
+<%= form_with model: item_type, url: [artist, item_type], id: form_id do |f| %>
+  <div class="form">
+    <%= f.text_field :name, placeholder: "enter item-type", class: "form-control" %>
+    <button class="btn btn-sm badge badge-primary float-right" type="submit">
+      Submit
+    </button>
+  </div>
+<% end %>

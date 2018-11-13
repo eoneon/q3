@@ -6,8 +6,8 @@
       </h5>
     </div>
 
-    <div class="col" id="<%= dynamic_id(name: 'render-name', klass: field_group, child_klass: 'field') %>">
-      <%= render 'field_groups/header/field_name', field_group: field_group, field: field_group.field %>
+    <div class="col" id="<%= dynamic_id(name: 'display-name', klass: field_group, child_klass: nil) %>">
+      <%= render 'field_groups/header/field_name', field: field_group.field %>
     </div>
 
     <div class="col-auto mr-0 pr-1">
