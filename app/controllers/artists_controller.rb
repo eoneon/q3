@@ -1,6 +1,11 @@
 class ArtistsController < ApplicationController
   def index
     @artists = Artist.ordered_artists
+
+    respond_to do |format|
+      format.js
+      format.html
+    end
   end
 
   def show

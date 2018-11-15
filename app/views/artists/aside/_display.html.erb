@@ -1,11 +1,7 @@
-<div class="col text-white">
+<div class="col text-white font-weight-light">
   <% if artist.present? %>
-    <div>
-      <span><%= artist.display_name %></span>
-    </div>
+    <%= artist.display_name %>
   <% else %>
-    <div class="font-weight-light">
-      select artist
-    </div>
+    Select artist
   <% end %>
 </div>

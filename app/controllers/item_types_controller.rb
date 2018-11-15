@@ -3,7 +3,7 @@ class ItemTypesController < ApplicationController
     @artist = Artist.find(params[:artist_id])
     @item_type = @artist.item_types.build(item_type_params)
 
-    #@artist.item_types << @item_type
+    @artist.item_types << @item_type
 
     if @item_type.save
       respond_to do |format|

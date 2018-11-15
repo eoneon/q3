@@ -1,2 +1,2 @@
 $("#item_type-new-tabs-update").html("<%= j render 'item_types/forms/form', artist: @artist, item_type: ItemType.new, form_id: 'item_type-new-tabs-form-id' %>");
-$("#item_type-display-tabs-update").html("<%= render 'artists/tabs/display', artist: @artist %>");
+$("#item_type-tab-list-update").append("<%= j render 'item_types/tab', artist: @artist, item_type: @item_type %>");
