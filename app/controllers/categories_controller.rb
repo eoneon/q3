@@ -2,12 +2,6 @@ class CategoriesController < ApplicationController
   def index
     @categories = Category.all.order(sort: 'asc')
     @category = @categories.first
-
-    # respond_to do |format|
-    #   format.html
-    #   format.csv { send_data @categories.to_csv(['sort', 'name']), filename: "Categories.csv" }
-    #   format.xls { send_data @categories.to_csv(['sort', 'name'], col_sep: "\t") }
-    # end
   end
 
   def show

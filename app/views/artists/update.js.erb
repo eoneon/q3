@@ -2,5 +2,4 @@ $("#artist-body-update").html("<%= j render 'artists/artist', artist: @artist %>
 $("#artist-name-aside-update").html("<%= j render 'artists/aside/display', artist: @artist %>");
 $("#artist-dropdown-aside-update").html("<%= j render 'artists/aside/dropdown', artists: @artists, artist: @artist %>");
 $("#artist-nav-menu-aside-update").html("<%= j render 'artists/aside/nav_menu', artist: @artist %>");
-$("#artist-edit-aside-update").html("<%= j render 'artists/forms/form', artist: @artist, form_id: 'artist-edit-aside-form-id' %>");
-$("#item_type-new-aside-update").html("<%= j render 'item_types/forms/form', artist: @artist, item_type: ItemType.new, form_id: 'item_type-new-aside-form-id' %>");
+$("#artist-edit-tabs-update").html("<%= j render 'artists/forms/form', artist: @artist, form_id: 'artist-edit-tabs-form-id' %>");

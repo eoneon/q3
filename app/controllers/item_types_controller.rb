@@ -3,7 +3,7 @@ class ItemTypesController < ApplicationController
     @artist = Artist.find(params[:artist_id])
     @item_type = @artist.item_types.build(item_type_params)
 
-    @artist.item_types << @item_type
+    #@artist.item_types << @item_type
 
     if @item_type.save
       respond_to do |format|
@@ -24,11 +24,31 @@ class ItemTypesController < ApplicationController
     end
   end
 
+  def sort_up
+    @artist = Artist.find(params[:artist_id])
+    swap_sort(@artist, -1)
+
+    respond_to do |format|
+      format.js {render file: "/item_types/sorter.js.erb"}
+    end
+  end
+
+  def sort_down
+    @artist = Artist.find(params[:artist_id])
+    swap_sort(@artist, 1)
+
+    respond_to do |format|
+      format.js {render file: "/item_types/sorter.js.erb"}
+    end
+  end
+
   def destroy
     @artist = Artist.find(params[:artist_id])
     @item_type = ItemType.find(params[:id])
 
     if @item_type.destroy
+      reset_sort(@artist, sort)
+
       respond_to do |format|
         format.js
       end

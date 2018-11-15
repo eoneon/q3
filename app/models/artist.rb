@@ -1,12 +1,13 @@
 class Artist < ApplicationRecord
   has_many :items, dependent: :destroy
+  has_many :item_types, dependent: :destroy
 
-  def self.by_last_name
-    Artist.all.order("properties -> 'lastname'")
+  def self.ordered_artists
+    Artist.order("properties -> 'last_name'")
   end
 
   def name_arr
-    [properties["first_name"], properties["last_name"]].compact
+    [properties["first_name"], properties["last_name"]].reject {|i| i.blank?}
   end
 
   def first_last
@@ -18,10 +19,10 @@ class Artist < ApplicationRecord
   end
 
   def format_years
-    "(#{properties["years"]})" if properties["years"]
+    "(#{properties["years"]})" unless properties["years"].blank?
   end
 
   def display_name
-    [first_last, format_years].compact.join(" ")
+    [first_last, format_years].reject {|i| i.blank?}.join(" ")
   end
 end

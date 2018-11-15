@@ -1,6 +1,6 @@
 <div class="col">
-  <% if artist.present? %>
-    <span class="font-weight-light">Item-Types</span>  
+  <% if artist.present? && artist.item_types.count > 0 %>
+    <span class="font-weight-light">Item-Types</span>
   <% else %>
     <span class="font-italic font-weight-light">- No item-types created -</span>
   <% end %>

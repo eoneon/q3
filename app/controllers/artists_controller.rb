@@ -1,10 +1,10 @@
 class ArtistsController < ApplicationController
   def index
-    @artists = Artist.all.order("properties -> 'lastname'")
+    @artists = Artist.ordered_artists
   end
 
   def show
-    @artists = Artist.all.order("properties -> 'lastname'")
+    @artists = Artist.ordered_artists
     @artist = Artist.find(params[:id])
 
     respond_to do |format|
@@ -16,10 +16,10 @@ class ArtistsController < ApplicationController
     @artist = Artist.new(artist_params)
 
     if @artist.save
-      @artists = Artist.all.order("properties -> 'lastname'").to_a
+      @artists = Artist.ordered_artists
 
       respond_to do |format|
-        format.js
+        format.js #{render file: "/artists/update.js.erb"}
       end
     end
   end
@@ -29,7 +29,7 @@ class ArtistsController < ApplicationController
     @artist.assign_attributes(artist_params)
 
     if @artist.save
-      @artists = Artist.all.order("properties -> 'lastname'").to_a
+      @artists = Artist.ordered_artists
 
       respond_to do |format|
         format.js
@@ -41,7 +41,7 @@ class ArtistsController < ApplicationController
     artist = Artist.find(params[:id])
 
     if artist.destroy
-      @artists = Artist.all.order("properties -> 'lastname'").to_a
+      @artists = Artist.ordered_artists
 
       respond_to do |format|
         format.js

@@ -1,8 +1,7 @@
 <div class="col text-white">
   <% if artist.present? %>
-    <span class="collapse dynamic-id"><%= dynamic_id(name: 'name-render', klass: artist, child_klass: nil) %></span>
-    <div id="<%= dynamic_id(name: 'name-render', klass: artist, child_klass: nil) %>">
-      <span id="<%= dynamic_id(name: 'name-render', klass: artist, child_klass: nil) %>">artist: <%= artist.last_first %></span>
+    <div>
+      <span><%= artist.display_name %></span>
     </div>
   <% else %>
     <div class="font-weight-light">

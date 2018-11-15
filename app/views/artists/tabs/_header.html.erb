@@ -1,13 +1,13 @@
 <div class="card-header py-0">
   <div class="row align-items-center">
     <div class="col">
-      <div id="tabs-display">
+      <div id="item_type-display-tabs-update">
         <%= render "artists/tabs/display", artist: artist %>
       </div>
     </div>
 
     <div class="col-auto">
-      <div id="<%= dynamic_id(name: 'nav-menu', klass: 'artist', child_klass: nil) %>">
+      <div id="item_type-nav-menu-tabs-update">
         <%= render "artists/tabs/nav_menu", artist: artist %>
       </div>
     </div>

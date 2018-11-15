@@ -1,2 +1,11 @@
-$("#artist-aside-update").html("<%= j render 'artists/aside', artists: @artists, artist: @artist %>");
 $("#artist-body-update").html("<%= j render 'artists/artist', artist: @artist %>");
+$("#artist-name-aside-update").html("<%= j render 'artists/aside/display', artist: @artist %>");
+$("#artist-dropdown-aside-update").html("<%= j render 'artists/aside/dropdown', artists: @artists, artist: @artist %>");
+$("#artist-nav-menu-aside-update").html("<%= j render 'artists/aside/nav_menu', artist: @artist %>");
+$("#artist-edit-aside-update").html("<%= j render 'artists/forms/form', artist: @artist, form_id: 'artist-edit-aside-form-id' %>");
+$("#artist-new-aside-update").html("<%= j render 'artists/forms/form', artist: Artist.new, form_id: 'artist-new-aside-form-id' %>");
+$("#item_type-new-tabs-update").html("<%= j render 'item_types/forms/form', artist: @artist, item_type: ItemType.new, form_id: 'item_type-new-tabs-form-id' %>");
+$("#item_type-display-tabs-update").html("<%= j render 'artists/tabs/display', artist: @artist %>");
+<% if @artist.present? %>
+  $("#item_type-dropdown-toggle-new-update").removeClass("disabled")
+<% end %>
