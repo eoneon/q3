@@ -1,9 +1,7 @@
 <% if artist.present? %>
   <% artist.item_types.each do |item_type| %>
     <div id="item_type-tab-list">
-    <a class="list-group-item list-group-item-action py-1" id="list-<%= item_type.id %>-list" href="<%= artist_item_type_path(artist, item_type) %>" data-remote="true" data-toggle="list">
-      <%= item_type.name %>
-    </a>
+      <%= render "item_types/tab", artist: artist, item_type: item_type %>
     </div>
   <% end %>
 <% end %>

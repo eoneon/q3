@@ -1,4 +1,13 @@
 class ItemTypesController < ApplicationController
+  def show
+    #@artist = Artist.find(params[:artist_id])
+    @item_type = ItemType.find(params[:id])
+
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def create
     @artist = Artist.find(params[:artist_id])
     @item_type = @artist.item_types.build(item_type_params)

@@ -55,7 +55,7 @@ Rails.application.routes.draw do
   end
 
   resources :artists do
-    resources :item_types, only: [:create, :update, :sort_up, :sort_down, :destroy] do
+    resources :item_types, only: [:create, :update, :show, :sort_up, :sort_down, :destroy] do
       member do
         post :sort_up, :sort_down
       end
