@@ -1,11 +1,9 @@
-<div class="card card-body p-1 bg-light">
-  <div>
-    <span class="card-title font-weight-light pl-1"><small>Edit Item-type</small></span>
-    <button class="close float-right pr-3" type="button" data-toggle="collapse" data-target="#item_type-edit-body-show" aria-expanded="false">
-      <span aria-hidden="true"><small>&times;</small></span>
-    </button>
-  </div>
-  <div id="item_type-edit-body-update">
-    <%= render 'item_types/forms/form', artist: item_type.artist, item_type: item_type, form_id: 'edit-item_type-form' %>
-  </div>
+<div>
+  <span class="font-weight-light pl-1"><small>Edit Item-type</small></span>
+  <button class="close float-right pr-3" type="button" data-toggle="collapse" data-target="#item_type-edit-show" aria-expanded="false">
+    <span aria-hidden="true"><small>&times;</small></span>
+  </button>
+</div>
+<div id="item_type-edit-form">
+  <%= render 'item_types/forms/form', artist: item_type.artist, item_type: item_type, form_id: 'edit-item_type' %>
 </div>

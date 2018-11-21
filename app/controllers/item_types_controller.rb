@@ -20,14 +20,17 @@ class ItemTypesController < ApplicationController
   end
 
   def update
-    # @item_typeable = set_parent
     @artist = Artist.find(params[:artist_id])
     @item_type = ItemType.find(params[:id])
     @item_type.assign_attributes(item_type_params)
 
     if @item_type.save
       respond_to do |format|
-        format.js
+        if params[:form_id] == 'category-add-form'
+          format.js {render file: "/item_types/category_update.js.erb"}
+        else
+          format.js
+        end
       end
     end
   end

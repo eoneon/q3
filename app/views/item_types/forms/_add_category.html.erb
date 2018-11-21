@@ -1,0 +1,7 @@
+<div class="form-row">
+  <small>Category</small>
+  <%= f.collection_select :category_id, Category.all, :id, :name, {include_blank: true}, {class: "form-control form-control-sm", onchange: 'javascript: $( this ).trigger("submit.rails")'} %>
+</div>
+<% if item_type.category_id.present? %>
+  <%= render "item_types/forms/properties", item_type: item_type, f: f %>
+<% end %>

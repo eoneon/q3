@@ -1,9 +1,5 @@
 <%= f.fields_for :properties, OpenStruct.new(item_type.properties) do |ff| %>
   <% item_type.category.fields.each do |field| %>
-    <ul class="list-group list-group">
-      <li class="list-group-item bg-light py-0">
-        <%= render "item_types/fields/#{field.field_type}", item_type: item_type, field: field, f: ff %>
-      </li>
-    </ul>
+    <%= render "item_types/fields/#{field.field_type}", item_type: item_type, field: field, ff: ff %>
   <% end %>
 <% end %>

@@ -1,9 +1,10 @@
 <%= form_with model: item_type, url: [artist, item_type], id: form_id do |f| %>
   <div class="form">
-    <%= f.hidden_field :form_id, value: form_id %>
-    <%= f.text_field :name, placeholder: "enter item-type", class: "form-control sm" %>
-    <button class="btn btn-sm badge badge-primary float-right" type="submit">
-      Submit
-    </button>
+    <%= hidden_field_tag :form_id, form_id %>
+    <% if form_id == 'category-add-form' %>
+      <%= render "item_types/forms/add_category", item_type: item_type, f: f %>
+    <% else %>
+      <%= render "item_types/forms/edit_item_type", item_type: item_type, f: f %>
+    <% end %>
   </div>
 <% end %>

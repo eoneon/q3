@@ -1,0 +1,16 @@
+<%= form_with model: item_type, url: [artist, item_type], id: form_id do |f| %>
+  <div class="form">
+    <%= f.hidden_field :form_id, value: form_id %>
+    <% if form_id == 'category-add-form' %>
+      <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: "- select category name -"}, {class: "form-control form-control-sm", onchange: 'javascript: $( this ).trigger("submit.rails")'} %>
+      <% if item_type.category_id.present? %>
+        <%= render "item_types/forms/properties", item_type: item_type, f: f %>
+      <% end %>
+    <% else %>
+      <%= f.text_field :name, placeholder: "enter item-type", class: "form-control sm" %>
+      <button class="btn btn-sm badge badge-primary float-right" type="submit">
+        Submit
+      </button>
+    <% end %>
+  </div>
+<% end %>
