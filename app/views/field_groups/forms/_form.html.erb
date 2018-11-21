@@ -1,6 +1,6 @@
 <%= form_for [fieldable, field_group], id: "field_group_form", remote: true do |f| %>
   <div class="form">
-    <%= f.collection_select :field_id, Field.all, :id, :name, {prompt: "- select field name -"}, class: "form-control" %>
+    <%= f.collection_select :field_id, Field.all, :id, :name, {prompt: "- select field name -"}, class: "form-control form-control-sm" %>
     <button class="btn btn-sm badge badge-primary float-right" type="submit">
       Submit
     </button>

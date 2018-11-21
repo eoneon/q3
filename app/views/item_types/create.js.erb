@@ -1,6 +1,5 @@
 $("#item_type-show").html("<%= j render 'item_types/show', item_type: @item_type %>");
-$("#item_type-display-tabs-update").html("<%= j render 'artists/tabs/display', artist: @artist %>");
-$("#item_type-new-tabs-update").html("<%= j render 'item_types/forms/form', artist: @artist, item_type: ItemType.new, form_id: 'item_type-new-tabs-form-id' %>");
-$(".list-group-item").removeClass("active");
-$("#item_type-tab-body-update").append("<%= j render 'item_types/tab', artist: @item_type.artist, item_type: @item_type %>");
+$("#item_type-display-tabs-update").html("<%= j render 'artists/tabs/display', artist: @item_type.artist %>");
+$("#item_type-new-tabs-update").html("<%= j render 'item_types/forms/form', artist: @item_type.artist, item_type: ItemType.new, form_id: 'item_type-new-tabs-form-id' %>");
+$("#item_type-tab-body-update").html("<%= j render 'artists/aside/tabs', artist: @item_type.artist %>");
 $("#item_type-list-item-<%= @item_type.id %>").addClass("active");

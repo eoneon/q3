@@ -1,8 +1,6 @@
 class ItemTypesController < ApplicationController
   def show
-    #@artist = Artist.find(params[:artist_id])
     @item_type = ItemType.find(params[:id])
-
     respond_to do |format|
       format.js
     end
@@ -22,6 +20,7 @@ class ItemTypesController < ApplicationController
   end
 
   def update
+    # @item_typeable = set_parent
     @artist = Artist.find(params[:artist_id])
     @item_type = ItemType.find(params[:id])
     @item_type.assign_attributes(item_type_params)
@@ -54,6 +53,7 @@ class ItemTypesController < ApplicationController
   def destroy
     @artist = Artist.find(params[:artist_id])
     @item_type = ItemType.find(params[:id])
+    sort = @item_type.sort
 
     if @item_type.destroy
       reset_sort(@artist, sort)

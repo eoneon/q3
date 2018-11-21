@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
   private
 
   def set_parent
-    parent_klasses = %w[category element element_kind]
+    parent_klasses = %w[category artist element element_kind]
     if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
       klass.camelize.constantize.find params[:"#{klass}_id"]
     end

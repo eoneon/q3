@@ -1,1 +1,18 @@
-<%= item_type.name %>
+<div id="accordion-nav-menu-body">
+  <div class="card my-0 pb-1">
+    <%= render "item_types/header/header", item_type: item_type %>
+  </div>
+
+  <div class="card">
+    <div class="card-header py-0">
+      <%= render "item_types/category/header", item_type: item_type %>
+    </div>
+
+    <div class="collapse show" id="item_type-category-fields">
+      <div class="card-body">
+        <%= render "item_types/forms/category_form", item_type: item_type, form_id: 'category-add-form' %>
+      </div>
+    </div>
+  </div>
+
+</div>

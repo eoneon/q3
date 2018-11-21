@@ -17,12 +17,14 @@
 //= require bootstrap-sprockets
 //= require_tree .
 
-$(document).ready(function(event){
+// $(document).ready(function(){
+$(document).on('turbolinks:load', function(){
   //$("#category-btn-group").on('hidden.bs.collapse', function(){
     //$("#category-multi_form .collapse").collapse('hide');
   //});
 
-  $(".close-form").on('click', function(){
+  $(".close-form").on('click', function(event){
+    event.preventDefault();
     $(".close-toggle-form").collapse('hide');
   });
 

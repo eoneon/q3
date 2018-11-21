@@ -1,0 +1,27 @@
+<ul class="list-group list-group">
+  <li class="list-group-item py-0 bg-dark">
+    <div class="row align-items-center">
+      <div class="col-auto">
+        <h5 class="mb-0 px-2">
+          <a role="button" data-toggle="collapse" href="#item_type-category-fields" aria-expanded="true"></a>
+        </h5>
+      </div>
+
+      <div class="col">
+        <%#= render "categories/header/category_name", category: category %>
+      </div>
+
+      <div class="col-auto">
+        <div class="dropdown">
+          <button class="btn btn-transparent rounded-0 dropdown-toggle text-secondary py-0 mr-1 bg-dark" type="button" data-toggle="dropdown" aria-haspopup="true">
+            categories
+          </button>
+
+          <div class="dropdown-menu" id="">
+            <%#= render "artists/aside/dropdown_items", artists: artists %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

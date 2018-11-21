@@ -14,6 +14,8 @@ Rails.application.routes.draw do
       end
     end
 
+    resources :item_types, only: [:update]
+
     collection do
       post :import
     end

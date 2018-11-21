@@ -1,3 +1,3 @@
 $("#item_type-show").html("<%= j render 'item_types/show', item_type: @item_type %>");
-$(".list-group-item").removeClass("active");
+$("#item_type-tab-body-update").html("<%= j render 'artists/aside/tabs', artist: @item_type.artist %>");
 $("#item_type-list-item-<%= @item_type.id %>").addClass("active");

@@ -1,11 +1,11 @@
-<div class="card card-body p-2 bg-light">
+<div class="card card-body p-1 bg-light">
   <div>
-    <span class="card-title font-weight-light">Edit Item-type</span>
-    <button type="button" class="close float-right close-form">
-      <span aria-hidden="true">&times;</span>
+    <span class="card-title font-weight-light pl-1"><small>Edit Item-type</small></span>
+    <button class="close float-right pr-3" type="button" data-toggle="collapse" data-target="#item_type-edit-body-show" aria-expanded="false">
+      <span aria-hidden="true"><small>&times;</small></span>
     </button>
   </div>
-  <div id="<%= dynamic_id(name: 'form-edit-render', klass: artist, child_klass: item_type) %>">
-    <%= render 'item_types/forms/form', artist: artist, item_type: item_type, form_id: 'edit-item_type' %>
+  <div id="item_type-edit-body-update">
+    <%= render 'item_types/forms/form', artist: item_type.artist, item_type: item_type, form_id: 'edit-item_type-form' %>
   </div>
 </div>

@@ -7,7 +7,7 @@ class Category < ApplicationRecord
   has_many :element_groups, as: :elementable
   has_many :element_kinds, through: :element_groups
 
-  has_many :item_types
+  has_many :item_types, dependent: :destroy
   #has_many :sub_categories, dependent: :destroy
   #has_many :dimensions, through: :sub_categories, source: :categorizable, source_type: 'Dimension'
   #has_many :certificates, through: :sub_categories, source: :categorizable, source_type: 'Certificate'

@@ -1,0 +1,10 @@
+<ul class="nav">
+  <li class="nav-item-dropdown">
+    <a class="nav-link dropdown font-weight-light text-muted py-0" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars") %></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" data-toggle="collapse" href="#item_type-edit-body-show">Edit Item-Type</a>
+      <div class="dropdown-divider"></div>
+      <%= link_to 'Delete Artist', [item_type.artist, item_type], method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+    </div>
+  </li>
+</ul>

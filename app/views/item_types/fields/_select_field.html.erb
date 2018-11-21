@@ -1,0 +1,3 @@
+<div class="form-group col">
+  <%= f.select field.name, options_for_select(field.values.pluck(:name), item_type.properties.try(:[], field.name)), {class: 'form-control', include_blank: true, onchange: 'javascript: $( this ).trigger("submit.rails")'}  %>
+</div>
