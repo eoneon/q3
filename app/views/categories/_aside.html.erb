@@ -1,0 +1,17 @@
+<div class="card bg-light mb-3">
+  <%= render "categories/forms/new", category: Category.new %>
+</div>
+
+<div class="card">
+  <div class="card-header py-1">
+    <div class="row align-items-center">
+      <div class="col">
+        Mediums
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="list-group" id="list-tab" role="tablist">
+  <%= render "categories/tabs", categories: categories %>
+</div>

@@ -1,1 +1,3 @@
-$("#category-show").html("<%= j render 'categories/category', category: @category %>");
+$("#category-show").html("<%= j render 'categories/show', category: @category %>");
+$("#category-toggle").removeClass("disabled");
+$("#category-field-toggle").removeClass("disabled");

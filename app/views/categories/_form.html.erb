@@ -1,0 +1,14 @@
+<%= form_with model: category, url: category, id: form_id do |f| %>
+  <div class="form">
+    <div class="form-row align-items-center">
+      <div class="col">
+        <%= f.text_field :name, placeholder: "enter category name", class: "form-control" %>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-sm badge badge-primary float-right" type="submit">
+          Submit
+        </button>
+      </div>
+    </div>
+  </div>
+<% end %>

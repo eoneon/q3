@@ -1,0 +1,9 @@
+<div class="card mb-2">
+  <div class="card-header py-0 px-3">
+    <%= render "categories/category/header", category: category %>
+  </div>
+
+  <div class="collapse" id="category-edit" data-parent="#accordion-nav-menu-body">
+    <%= render "categories/forms/edit", category: category %>
+  </div>
+</div>

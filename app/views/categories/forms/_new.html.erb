@@ -1,11 +1,10 @@
-<div class="card card-body p-2">
+<div class="p-2">
   <div>
-    <span class="card-title font-weight-light">New Category</span>
+    <span class="card-title font-weight-light"><small>New Category</small></span>
     <button type="button" class="close float-right close-form">
-      <span aria-hidden="true">&times;</span>
     </button>
   </div>
-  <div id="<%= dynamic_id(name: 'form-new-render', klass: 'category', child_klass: nil) %>">
-    <%= render 'categories/forms/form', category: Category.new, form_id: dynamic_id(name: 'form-new', klass: 'category', child_klass: nil) %>
+  <div id="category-new-form">
+    <%= render 'categories/form', category: Category.new, form_id: "category-new-form-id" %>
   </div>
 </div>

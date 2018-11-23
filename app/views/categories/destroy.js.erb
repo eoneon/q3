@@ -1,3 +1,3 @@
 $("#list-tab").html("<%= j render 'categories/aside/tabs', categories: @categories %>");
 $("#list-<%= @category.id %>-list").addClass("active");
-$("#category-show").html("<%= j render 'categories/category', category: @category %>");
+$("#category-show").html("<%= j render 'categories/show', category: @category %>");

@@ -1,7 +1,7 @@
 class CategoriesController < ApplicationController
   def index
     @categories = Category.all.order(sort: 'asc')
-    @category = @categories.first
+    #@category = @categories.first
   end
 
   def show
