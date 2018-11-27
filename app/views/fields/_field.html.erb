@@ -1,17 +1,22 @@
-<div class="card border-dark">
-  <div class="card-header py-0">
-    <%= render "fields/header/header", fieldable: fieldable %>
+<div class="card">
+  <div class="card-header py-0 px-3 border border-secondary">
+    <div id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'header') %>">
+      <%= render "fields/header/header", fieldable: fieldable, field_group: field_group %>
+    </div>
+  </div>
+  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'edit') %>" data-parent="#accordion-nav-menu-body">
+    <%= render "fields/forms/edit", fieldable: fieldable, field_group: field_group %>
   </div>
 
-  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field') %>" data-parent="#accordion-nav-menu">
-    <%= render "fields/forms/new", fieldable: fieldable %>
+  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field-value', tag: 'new') %>" data-parent="#accordion-nav-menu-body">
+    <%= render "values/forms/new", field_group: field_group %>
   </div>
 
-  <div class="collapse close-toggle-form" id="<%= dynamic_id(name: 'form-new-target', klass: fieldable, child_klass: 'field_group') %>" data-parent="#accordion-nav-menu">
-    <%= render "field_groups/forms/add", fieldable: fieldable %>
+  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field-value', tag: 'index') %>" data-parent="#accordion-nav-menu-body">
+    <div class="card-body p-2">
+      <%= render "values/index", field_group: field_group, field: field_group.field %>
+    <%#= render "values/value", field_group: field_group, field: field_group.field %>
+    </div>
   </div>
-
-  <div class="card-body p-2">
-    <%= render "fields/body", fieldable: fieldable %>
-  </div>
+  <%#= render "element_kinds/container/container", elementable: category %>
 </div>

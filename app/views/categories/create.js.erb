@@ -1,5 +1,7 @@
-$("#category-new-form").html("<%= j render 'categories/forms/form', category: Category.new, form_id: 'category-new-form-id'");
+$("#category-new-form").html("<%= j render 'categories/form', category: Category.new, form_id: 'category-new-form-id' %>");
 $("#list-tab").html("<%= j render 'categories/tabs', categories: @categories %>");
 $(".list-group-item").removeClass("active");
-$("#list-<%= @category.id %>-list").addClass("active");
+$("#<%= dyno_id(n1: 'category', k1: @category, tag: 'tab') %>").addClass("active");
 $("#category-show").html("<%= j render 'categories/show', category: @category %>");
+$("#category-toggle").removeClass("disabled");
+$("#category-field-toggle").removeClass("disabled");

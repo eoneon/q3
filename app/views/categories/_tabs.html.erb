@@ -1,5 +1,5 @@
 <% categories.each do |category| %>
-  <a class="list-group-item list-group-item-action py-1" id="list-<%= category.id %>-list" href="<%= category_path(category) %>" data-remote="true" data-toggle="list">
+  <a class="list-group-item list-group-item-action py-1" id="<%= dyno_id(n1: 'category', k1: category, tag: 'tab') %>" href="<%= category_path(category) %>" data-remote="true" data-toggle="list">
     <%= category.name %>
   </a>
 <% end %>

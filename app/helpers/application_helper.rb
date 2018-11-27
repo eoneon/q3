@@ -1,4 +1,22 @@
 module ApplicationHelper
+  def dyno_id(args={})
+    arr = [:n1, :k1, :n2, :k2, :tag].keep_if {|k| args.has_key?(k)}
+    arr.map {|k| format_id_args(args, k)}.join('-')
+  end
+
+  def format_id_args(args, k)
+    [:k1, :k2].include?(k) ? klass_id(args[k]) : args[k]
+  end
+
+  # def dyno_id(name, klass, tag)
+  #   [name, klass_id(klass), tag].compact.join('-')
+  # end
+
+  def klass_id(klass)
+    klass.id if klass.present?
+  end
+
+  ###
   def konstant(klass)
     klass.class == String ? klass.camelize.constantize : klass.class.name.constantize
   end

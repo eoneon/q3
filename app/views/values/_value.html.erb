@@ -1,0 +1,8 @@
+<div class="card">
+  <div class="card-header py-0 px-3">
+    <%= render "values/header/header", field_group: field_group, value: value %>
+  </div>
+  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value', k2: value, tag: 'edit') %>" data-parent="#accordion-nav-menu-body">
+    <%= render "values/forms/edit", field_group: field_group, value: value %>
+  </div>
+</div>

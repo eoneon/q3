@@ -1,3 +1,4 @@
 $("#category-show").html("<%= j render 'categories/show', category: @category %>");
+$("#category-field_group-add-form").html("<%= j render 'field_groups/forms/form', fieldable: @category, field_group: FieldGroup.new, form_id: 'category-field_group-add-form-id' %>");
 $("#category-toggle").removeClass("disabled");
 $("#category-field-toggle").removeClass("disabled");

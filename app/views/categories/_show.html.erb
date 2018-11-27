@@ -1,9 +1,20 @@
-<div class="card mb-2">
+<div class="card border mb-2">
   <div class="card-header py-0 px-3">
-    <%= render "categories/category/header", category: category %>
+    <%= render "categories/header/header", category: category %>
   </div>
 
   <div class="collapse" id="category-edit" data-parent="#accordion-nav-menu-body">
     <%= render "categories/forms/edit", category: category %>
   </div>
+
+  <div class="collapse" id="category-field-new" data-parent="#accordion-nav-menu-body">
+    <%= render "fields/forms/new", fieldable: category %>
+  </div>
+
+  <div class="collapse" id="category-field_group-add" data-parent="#accordion-nav-menu-body">
+    <%= render "field_groups/forms/add", fieldable: category %>
+  </div>
+
+  <%= render "fields/index", fieldable: category %>
+  <%#= render "element_kinds/container/container", elementable: category %>
 </div>

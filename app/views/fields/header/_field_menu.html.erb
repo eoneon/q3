@@ -1,0 +1,11 @@
+<div class="dropdown">
+  <button id="" type="button" class="btn btn-light border-left dropdown-toggle" style="width: 100px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <small>Field</small>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" data-toggle="collapse" href="#<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'edit') %>">Edit field</a>
+    <div class="dropdown-divider"></div>
+    <%= link_to 'Remove Field', [field_group.fieldable, field_group],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+    <%= link_to 'Delete Field', [field_group.fieldable, field_group.field],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+  </div>
+</div>

@@ -1,1 +1,1 @@
-$("#<%= dynamic_id(name: 'list-item', klass: @fieldable, child_klass: @field_group) %>").hide();
+$("#<%= dyno_id(n1: klass_name(@fieldable), k1: @fieldable, n2: 'field', tag: 'index') %>").html('<%= j render "fields/index", fieldable: @fieldable %>');

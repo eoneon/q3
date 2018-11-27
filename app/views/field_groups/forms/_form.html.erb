@@ -1,8 +1,14 @@
-<%= form_for [fieldable, field_group], id: "field_group_form", remote: true do |f| %>
+<%= form_with model: field_group, url: [fieldable, field_group], id: form_id do |f| %>
   <div class="form">
-    <%= f.collection_select :field_id, Field.all, :id, :name, {prompt: "- select field name -"}, class: "form-control form-control-sm" %>
-    <button class="btn btn-sm badge badge-primary float-right" type="submit">
-      Submit
-    </button>
+    <div class="form-row align-items-center">
+      <div class="col">
+        <%= f.collection_select :field_id, Field.all, :id, :name, {prompt: "- select field name -"}, class: "form-control form-control-sm" %>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-sm badge badge-primary float-right" type="submit">
+          Submit
+        </button>
+      </div>
+    </div>
   </div>
 <% end %>

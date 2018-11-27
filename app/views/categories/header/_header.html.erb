@@ -1,17 +1,14 @@
-<div class="row align-items-center">
-  <div class="col-auto">
-    <h5 class="mb-0">
-      <%= render "categories/header/collapse", category: category %>
-    </h5>
-  </div>
-
+<div class="row align-items-center bg-dark">
   <div class="col">
-    <div id="render-name">
-      <%= render "categories/header/category_name", category: category %>
+    <div id="category-display">
+      <%= render "categories/header/display", category: category %>
     </div>
   </div>
-  
+
   <div class="col-auto">
-    <%= render "categories/header/nav_menu", category: category %>
+    <div class="row align-items-center">
+      <%= render "categories/header/category_menu", category: category %>
+      <%= render "categories/header/field_menu" %>
+    </div>
   </div>
 </div>

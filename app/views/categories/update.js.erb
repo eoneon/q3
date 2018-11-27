@@ -1,5 +1,3 @@
-$("#<%= dynamic_id(name: 'form-edit-render', klass: @category, child_klass: nil) %>").html("<%= j render 'categories/forms/form', category: @category, form_id: dynamic_id(name: 'form-edit', klass: @category, child_klass: nil) %>");
-$("#list-tab").html("<%= j render 'categories/aside/tabs', categories: @categories %>");
-$("#render-name").html("<%= j render 'categories/header/category_name', category: @category %>");
-$("#<%= dynamic_id(name: 'display-header', klass: @category, child_klass: 'fields') %>").html("<%= j render 'fields/header/display', fieldable: @category %>");
-$("#<%= dynamic_id(name: 'display-header', klass: @category, child_klass: 'elements') %>").html("<%= j render 'element_kinds/container/display', elementable: @category %>");
+$("#category-edit-form").html("<%= j render 'categories/form', category: @category, form_id: 'category-edit-form-id' %>");
+$("#category-display").html("<%= j render 'categories/header/display', category: @category %>");
+$("#<%= dyno_id(n1: 'category', k1: @category, tag: 'tab') %>").text("<%= @category.name %>");

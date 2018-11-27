@@ -1,0 +1,10 @@
+<div class="dropdown style="width: 100px"">
+  <button id="value-toggle" type="button" class="btn btn-light border-left dropdown-toggle" style="width: 100px" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <small>Value</small>
+  </button>
+  <div class="dropdown-menu">
+    <a class="dropdown-item" data-toggle="collapse" href="#<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value', k2: value, tag: 'edit') %>">Edit value</a>
+    <div class="dropdown-divider"></div>
+    <%= link_to 'Delete Value', [value.field, value],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+  </div>
+</div>

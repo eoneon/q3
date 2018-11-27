@@ -1,11 +1,11 @@
 <div class="card card-body p-2 bg-light">
   <div>
-    <span class="card-title font-weight-light">New field</span>
-    <button type="button" class="close float-right close-form">
-      <span aria-hidden="true">&times;</span>
+    <span class="card-title font-weight-light"><small>New Field</small></span>
+    <button class="close float-right pr-4" type="button" data-toggle="collapse" data-target="#category-field-new" aria-expanded="false">
+      <span aria-hidden="true"><small>&times;</small></span>
     </button>
   </div>
-  <div id="<%= dynamic_id(name: 'form-new-render', klass: fieldable, child_klass: 'field') %>">
-    <%= render "fields/forms/form", fieldable: fieldable, field: Field.new, form_id: dynamic_id(name: 'form-new', klass: fieldable, child_klass: 'field')  %>
+  <div id="category-field-new-form">
+    <%= render "fields/form", fieldable: fieldable, field: Field.new, form_id: 'category-field-new-form-id' %>
   </div>
 </div>

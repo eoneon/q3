@@ -1,15 +1,17 @@
 <%= form_with model: field, url: [fieldable, field], id: form_id do |f| %>
   <div class="form">
-    <div class="form-row">
-      <div class="col-6">
+    <div class="form-row align-items-center">
+      <div class="col">
         <%= f.select :field_type, options_for_select(%w[select_field text_field number_field text_area check_box], selected: field.field_type), {prompt: "- select field type -"}, {class: "form-control"} %>
       </div>
-      <div class="col-6">
+      <div class="col">
         <%= f.text_field :name, placeholder: "enter field name", class: "form-control" %>
       </div>
+      <div class="col-auto">
+        <button class="btn btn-sm badge badge-primary float-right" type="submit">
+          Submit
+        </button>
+      </div>
     </div>
-    <button class="btn btn-sm badge badge-primary float-right" type="submit">
-      Submit
-    </button>
   </div>
 <% end %>
