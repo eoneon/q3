@@ -1,25 +1,15 @@
 <%= form_with model: value, url: [field, value], id: form_id do |f| %>
   <div class="form">
-    <div class="form-row">
-      <div class="form-group col">
-        <div class="input-group m-0 p-0">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">name</span>
-          </div>
-          <%= f.text_field :name, placeholder: "enter value name", class: "form-control" %>
-        </div>
-      </div>
-    </div>
-
-    <%= render "values/forms/properties", parent: value, f: f, field_builder: [["title", "text_field"], ["body", "text_field"], ["attribute", "text_field"]] %>
-
     <div class="form-row align-items-center">
-      <div class="form-group col">
-        <%= render "values/forms/properties", parent: value, f: f, field_builder: [["selected", "check_box"], ["display_hidden", "check_box"], ["display_none", "check_box"]] %>
+      <div class="col">
+        <%= f.text_field :name, placeholder: "enter value name", class: "form-control" %>
+      </div>
+      <div class="col-auto">
+        <button class="btn btn-sm badge badge-primary float-right" type="submit">
+          Submit
+        </button>
       </div>
     </div>
+    <%= render "values/properties", value: value, f: f %>
   </div>
-  <button class="btn btn-sm badge badge-primary float-right" type="submit">
-    Submit
-  </button>
 <% end %>

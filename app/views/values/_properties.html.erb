@@ -1,0 +1,26 @@
+<%= f.fields_for :properties, OpenStruct.new(value.properties) do |ff| %>
+  <% %w(title body attribute).each do |k| %>
+    <div class="form-row align-items-center">
+      <div class="col">
+        <span><small><%= "#{k} value" %></small></span>
+        <div class="input-group-text">
+          <div class="form-check form-check-inline">
+            <%= ff.radio_button k, value.name, checked: true, class: 'form-check-input', onchange: 'javascript: $( this ).trigger("submit.rails")' %>
+            <%= ff.label value.name, class: 'form-check-label' %>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <%= ff.radio_button k, 'none', class: 'form-check-input', onchange: 'javascript: $( this ).trigger("submit.rails")' %>
+            <%= ff.label 'none', class: 'form-check-label' %>
+          </div>
+
+          <div class="form-check form-check-inline">
+            <%= ff.radio_button k, 'custom', class: 'form-check-input', onchange: 'javascript: $( this ).trigger("submit.rails")' %>
+            <%= ff.label 'custom', class: 'form-check-label' %>
+          </div>
+          <%= ff.text_field "#{k}_value", placeholder: "#{k} value", class: 'form-control form-control-sm', readonly: false %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+<% end %>

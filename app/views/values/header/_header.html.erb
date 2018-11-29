@@ -1,5 +1,5 @@
 <div class="row align-items-center">
-  <div class="col font-weight-light" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value', k2: value) %>">
+  <div class="col font-weight-light <%= dyno_id(n1: 'display', k1: field_group, k2: value) %>">
     <%= render "values/header/display", value: value %>
   </div>
   <div class="col-auto">

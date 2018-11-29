@@ -8,14 +8,13 @@
     <%= render "fields/forms/edit", fieldable: fieldable, field_group: field_group %>
   </div>
 
-  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field-value', tag: 'new') %>" data-parent="#accordion-nav-menu-body">
+  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value', tag: 'new') %>" data-parent="#accordion-nav-menu-body">
     <%= render "values/forms/new", field_group: field_group %>
   </div>
 
-  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field-value', tag: 'index') %>" data-parent="#accordion-nav-menu-body">
+  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value', tag: 'index') %>" data-parent="#accordion-nav-menu-body">
     <div class="card-body p-2">
       <%= render "values/index", field_group: field_group, field: field_group.field %>
-    <%#= render "values/value", field_group: field_group, field: field_group.field %>
     </div>
   </div>
   <%#= render "element_kinds/container/container", elementable: category %>

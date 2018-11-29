@@ -1,2 +1,2 @@
-$("#<%= dynamic_id(name: 'collection', klass: @field_group, child_klass: 'values') %>").append("<%= j render 'values/value/value', field_group: @field_group, field: @field, value: @value %>");
-$("#<%= dynamic_id(name: 'form-new-render', klass: @field_group, child_klass: 'value') %>").html("<%= j render 'values/forms/form', field: @field, value: Value.new, form_id: dynamic_id(name: 'form-new', klass: 'value', child_klass: nil) %>");
+$("#<%= dyno_id(n1: 'field_group', k1: @field_group, n2: 'value', tag: 'index') %>").append("<%= j render 'values/value', field_group: @field_group, field: @field, value: @value %>");
+$("#<%= dyno_id(n1: 'field_group', k1: @field_group, n2: 'value', tag: 'new-form') %>").html("<%= j render 'values/forms/form', field: @field, value: Value.new, form_id: dyno_id(n1: 'field_group', k1: @field_group, n2: 'value', tag: 'new-form-id') %>");

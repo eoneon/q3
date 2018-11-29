@@ -1,2 +1,3 @@
-$("#<%= dynamic_id(name: 'form-edit-render', klass: @field_group, child_klass: @value) %>").html("<%= j render 'values/forms/form', field: @value.field, value: @value, form_id: dynamic_id(name: 'form-edit', klass: @field_group, child_klass: @value) %>");
-$("#<%= dynamic_id(name: 'render-name', klass: @field_group, child_klass: @value) %>").html('<%= j render "values/value/value_name", value: @value %>');
+$("#<%= dyno_id(n1: 'field_group', k1: @field_group, n2: 'value', k2: @value, tag: 'edit-form') %>").html("<%= j render 'values/forms/form', field: @value.field, value: @value, form_id: dyno_id(n1: 'field_group', k1: @field_group, n2: 'value', k2: @value, tag: 'edit-form-id') %>");
+$(".<%= dyno_id(n1: 'display', k1: @field_group, k2: @value) %>").html('<%= j render "values/header/display", value: @value %>');
+$("input:radio[value!='custom']:checked").closest(".col").find("input:text").attr('readonly', 'true');
