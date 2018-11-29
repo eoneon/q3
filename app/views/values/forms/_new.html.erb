@@ -6,6 +6,6 @@
     </button>
   </div>
   <div id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value', tag: 'new-form') %>">
-    <%= render "values/forms/form", field: field_group.field, value: Value.new, form_id: dyno_id(n1: 'field_group', k1: field_group, n2: 'value', tag: 'new-form-id')  %>
+    <%= render "values/forms/form", field: field_group.field, value: Value.new, form_id: dyno_id(n1: 'field_group', k1: field_group, n2: 'value', tag: 'new-form-id'), tag: 'new'  %>
   </div>
 </div>

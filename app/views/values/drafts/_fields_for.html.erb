@@ -1,0 +1,5 @@
+<%= f.fields_for :properties, OpenStruct.new(parent.properties) do |ff| %>
+  <% field_builder.each do |field_build| %>
+    <%= render "values/forms/fields/#{field_build[1]}", parent: parent, field_build: field_build, ff: ff   %>
+  <% end %>
+<% end %>

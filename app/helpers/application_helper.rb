@@ -8,9 +8,9 @@ module ApplicationHelper
     [:k1, :k2].include?(k) ? klass_id(args[k]) : args[k]
   end
 
-  # def dyno_id(name, klass, tag)
-  #   [name, klass_id(klass), tag].compact.join('-')
-  # end
+  def collapse_show?(selector, tag)
+    'show' if selector.split('-').include?(tag)
+  end
 
   def klass_id(klass)
     klass.id if klass.present?
