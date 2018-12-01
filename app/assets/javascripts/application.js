@@ -11,7 +11,7 @@
 // about supported directives.
 //
 //= require jquery3
-//= require jquery_ujs
+//= require rails-ujs
 //= require turbolinks
 //= require popper
 //= require bootstrap-sprockets
@@ -19,16 +19,9 @@
 
 // $(document).ready(function(){
 $(document).on('turbolinks:load', function(){
-  //$("#category-btn-group").on('hidden.bs.collapse', function(){
-    //$("#category-multi_form .collapse").collapse('hide');
-  //});
-
-  $(".close-form").on('click', function(event){
-    event.preventDefault();
-    $(".close-toggle-form").collapse('hide');
+  $(".value-toggle-edit").click(function() {
+    alert("hello");
+    // $(this).closest("form").find("input:text").attr('readonly', 'false');
+    // $(this).closest("form").find("button:submit").removeClass("disabled");
   });
-
-  //$(".close-category-form").on('click', function(){
-    //$("#category-multi_form .collapse").collapse('hide');
-  //});
 });

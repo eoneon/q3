@@ -8,8 +8,13 @@ module ApplicationHelper
     [:k1, :k2].include?(k) ? klass_id(args[k]) : args[k]
   end
 
-  def collapse_show?(selector, tag)
-    'show' if selector.split('-').include?(tag)
+  def collapse_show?(selector, *tags)
+    # 'show' if selector.split('-').include?(tag)
+    'show' if include_any?(selector.split('-'), tags)
+  end
+
+  def include_any?(arr_x, arr_y)
+    arr_x.any? {|x| arr_y.include?(x)}
   end
 
   def klass_id(klass)

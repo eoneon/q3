@@ -1,19 +1,19 @@
 <%= form_with model: value, url: [field, value], id: form_id do |f| %>
   <div class="form">
-    <div class="collapse <%= collapse_show?(form_id, tag) %>">
+    <div class="collapse <%= collapse_show?(form_id, 'name', 'new') %>">
       <div class="form-row align-items-center">
         <div class="col">
-          <%= f.text_field :name, placeholder: "enter value name", class: "form-control" %>
+          <%= f.text_field :name, placeholder: "enter value name", class: "form-control form-control-sm", readonly: false %>
         </div>
-        <div class="col-auto">
-          <button class="btn btn-sm badge badge-primary float-right" type="submit">
-            Submit
-          </button>
-        </div>
+
+        <button class="btn btn-sm badge badge-primary" type="submit">
+          Submit
+        </button>
       </div>
     </div>
     <div class="collapse <%= collapse_show?(form_id, 'properties') %>">
       <%= render "values/forms/fields_for", value: value, f: f %>
     </div>
   </div>
+  <!-- <div class="col-auto"> -->
 <% end %>

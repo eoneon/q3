@@ -1,10 +1,32 @@
 <div class="row align-items-center">
-  <div class="col font-weight-light <%= dyno_id(n1: 'display', k1: field_group, k2: value) %>">
-    <%= render "values/header/display", value: value %>
-  </div>
   <div class="col-auto">
-    <div class="row align-items-center">
-      <%= render "values/header/value_menu", field_group: field_group, value: value %>
+    <h5 class="mb-0">
+      <a id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-properties', k2: value, tag: 'edit-collapse') %>" role="button" data-toggle="collapse" href="#<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-properties', k2: value, tag: 'edit') %>" aria-expanded="false">
+      </a>
+    </h5>
+  </div>
+
+  <div class="col">
+    <div id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-name', k2: value, tag: 'edit-form') %>">
+      <%= render "values/forms/form", field: field_group.field, value: value, form_id: dyno_id(n1: 'field_group', k1: field_group, n2: 'value-name', k2: value, tag: 'edit-form-id') %>
     </div>
   </div>
+
+  <div class="col-auto border">
+    <button class="btn btn-sm btn-light float-right value-toggle-edit" type="button">
+      Edit
+    </button>
+  </div>
+
+  <div class="col-auto">
+    <a href="<%= field_value_path([field_group.field, value]) %>" data-method="delete" data-remote="true" data-confirm="Are you sure?" class="btn btn-lg btn-light my-0 py-0" role="button"><span>&times;</span></a>
+  </div>
 </div>
+<script>
+  // onclick="toggleEditValue()"
+  // $("value-edit-toggle").click(function(){
+  //   alert("Hello! I am an alert box!!");
+    // $(this).closest("form").find("input:text").attr('readonly', 'false');
+    // $(this).closest("form").find("button:submit").removeClass("disabled");
+  // });
+</script>
