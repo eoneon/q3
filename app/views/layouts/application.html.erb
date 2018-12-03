@@ -26,8 +26,17 @@
       <%= yield %>
     </div>
     <script>
-      function toggleEditValue() {
-       alert("Hello! I am an alert box!!");
+      function toggleEditForm(form_id){
+        var value_form = document.getElementById(form_id);
+        var input_name = value_form.getElementsByClassName('edit-name')[0];
+        var submit_btn = value_form.getElementsByClassName('submit-value')[0];
+        if (input_name.readOnly == true) {
+          input_name.readOnly = false;
+          submit_btn.disabled = false;
+        } else {
+         input_name.readOnly = true;
+         submit_btn.disabled = true;
+        }
       }
     </script>
   </body>

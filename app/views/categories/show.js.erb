@@ -4,4 +4,4 @@ $("#category-toggle").removeClass("disabled");
 $("#category-field-toggle").removeClass("disabled");
 $("input:radio[value!='custom']:checked").closest(".col").find("input:text").attr('readonly', 'true');
 $("form[id*='value-name']").find("input:text").attr('readonly', 'true');
-$("form[id*='value-name']").find("button:submit").addClass("disabled");
+$("form[id*='value-name']").find("button:submit").attr("disabled", "disabled"); 

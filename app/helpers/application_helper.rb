@@ -9,7 +9,6 @@ module ApplicationHelper
   end
 
   def collapse_show?(selector, *tags)
-    # 'show' if selector.split('-').include?(tag)
     'show' if include_any?(selector.split('-'), tags)
   end
 

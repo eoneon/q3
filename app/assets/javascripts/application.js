@@ -12,16 +12,10 @@
 //
 //= require jquery3
 //= require rails-ujs
-//= require turbolinks
 //= require popper
 //= require bootstrap-sprockets
 //= require_tree .
 
-// $(document).ready(function(){
-$(document).on('turbolinks:load', function(){
-  $(".value-toggle-edit").click(function() {
-    alert("hello");
-    // $(this).closest("form").find("input:text").attr('readonly', 'false');
-    // $(this).closest("form").find("button:submit").removeClass("disabled");
-  });
+$(document).ready(function(){
+
 });

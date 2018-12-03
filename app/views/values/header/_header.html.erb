@@ -12,8 +12,8 @@
     </div>
   </div>
 
-  <div class="col-auto border">
-    <button class="btn btn-sm btn-light float-right value-toggle-edit" type="button">
+  <div onclick="toggleEditForm('<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-name', k2: value, tag: 'edit-form-id') %>')" class="col-auto border">
+    <button class="btn btn-sm btn-light float-right" type="button">
       Edit
     </button>
   </div>
@@ -22,11 +22,3 @@
     <a href="<%= field_value_path([field_group.field, value]) %>" data-method="delete" data-remote="true" data-confirm="Are you sure?" class="btn btn-lg btn-light my-0 py-0" role="button"><span>&times;</span></a>
   </div>
 </div>
-<script>
-  // onclick="toggleEditValue()"
-  // $("value-edit-toggle").click(function(){
-  //   alert("Hello! I am an alert box!!");
-    // $(this).closest("form").find("input:text").attr('readonly', 'false');
-    // $(this).closest("form").find("button:submit").removeClass("disabled");
-  // });
-</script>

@@ -25,11 +25,16 @@
     field = Field.find(params[:field_id])
     @value = Value.find(params[:id])
     @value.assign_attributes(value_params)
+    @form_id = params[:form_id]
 
     if @value.save
       @field_group = field.field_groups.first
       respond_to do |format|
-        format.js
+        if @form_id.split("-").include?("properties")
+          format.js {render file: "/values/properties_update.js.erb"}
+        else
+          format.js
+        end
       end
     end
   end
