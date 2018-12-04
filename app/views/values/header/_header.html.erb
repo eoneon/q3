@@ -12,13 +12,13 @@
     </div>
   </div>
 
-  <div onclick="toggleEditForm('<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-name', k2: value, tag: 'edit-form-id') %>')" class="col-auto border">
-    <button class="btn btn-sm btn-light float-right" type="button">
+  <div class="col-auto border">
+    <button class="btn btn-sm btn-light float-right" type="button" onclick="toggleEditForm('<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-name', k2: value, tag: 'edit-form-id') %>')">
       Edit
     </button>
   </div>
 
   <div class="col-auto">
-    <a href="<%= field_value_path([field_group.field, value]) %>" data-method="delete" data-remote="true" data-confirm="Are you sure?" class="btn btn-lg btn-light my-0 py-0" role="button"><span>&times;</span></a>
+    <a href="<%= field_value_path([field_group.field, value]) %>" data-method="delete" data-remote="true" data-confirm="Are you sure?" class="btn btn-md btn-light my-0 py-0 text-danger" role="button"><span>&times;</span></a>
   </div>
 </div>

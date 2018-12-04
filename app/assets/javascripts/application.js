@@ -17,9 +17,4 @@
 //= require_tree .
 
 $(document).ready(function(){
-  // $(".toggle-readonly").click(function() {
-  //   alert("hi");
-    // $(this).closest("form").find("input:text").attr('readonly', 'false');
-    // $(this).closest("form").find("button:submit").removeClass("disabled");
-  // });
 });

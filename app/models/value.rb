@@ -14,18 +14,15 @@ class Value < ApplicationRecord
   end
 
   def reset_properties
-    # if properties_changed?
-      %w(title body attribute).each do |k|
-        if properties[k] == 'none'  
-          properties["#{k}_value"] = ""
-        elsif properties[k] == 'custom' && properties["#{k}_value"] == name
-          properties["#{k}_value"] = ""
-        elsif properties[k] != 'custom' && properties[k] == name
-          properties["#{k}_value"] = name
-        end
+    %w(title body attribute).each do |k|
+      if properties[k] == 'none' || (properties[k] == 'custom' && properties["#{k}_value"] == name)
+        properties["#{k}_value"] = ""
+      elsif properties[k] == name
+        properties["#{k}_value"] = name
       end
-    # end
+    end
   end
+
   #before_create :set_sort
   #after_save :set_parent
 
@@ -36,8 +33,5 @@ class Value < ApplicationRecord
 
   # def sorted_categories
   #   Value.all.order(:sort)
-  # end
-  # def self.field_keys
-  #   %w[parent title body both attribute selected display_hidden display_none]
   # end
 end

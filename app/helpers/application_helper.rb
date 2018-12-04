@@ -16,8 +16,25 @@ module ApplicationHelper
     arr_x.any? {|x| arr_y.include?(x)}
   end
 
+  def include_pat?(str, pat)
+    str.index(/#{pat}/)
+  end
+
   def klass_id(klass)
     klass.id if klass.present?
+  end
+
+  def klass_name(klass)
+    klass.class == String ? klass.downcase.singularize : klass.class.name.underscore
+    # klass.class.name.underscore if klass.present?
+  end
+
+  def klass_with_id(klass)
+    join_params([klass_name(klass), klass.id]) if klass.present?
+  end
+
+  def join_params(args)
+    args.join("-")
   end
 
   ###
@@ -25,21 +42,21 @@ module ApplicationHelper
     klass.class == String ? klass.camelize.constantize : klass.class.name.constantize
   end
 
-  def klass_name(klass)
-    klass.class == String ? klass.downcase.singularize : klass.class.name.underscore
-  end
+  # def klass_name(klass)
+  #   klass.class == String ? klass.downcase.singularize : klass.class.name.underscore
+  # end
 
   def kollection_name(klass)
     klass.class == String ? klass.downcase.pluralize : klass.class.name.underscore.pluralize
   end
 
-  def klass_with_id(klass)
-    join_params([klass_name(klass), klass.id])
-  end
+  # def klass_with_id(klass)
+  #   join_params([klass_name(klass), klass.id])
+  # end
 
-  def join_params(args)
-    args.join("-")
-  end
+  # def join_params(args)
+  #   args.join("-")
+  # end
 
   def join_nested_klass(name, target, child_klass)
     if name.split("-").include?("collection")
