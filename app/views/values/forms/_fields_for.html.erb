@@ -5,17 +5,17 @@
         <span><small><%= "#{k} value" %></small></span>
         <div class="input-group-text">
           <div class="form-check form-check-inline">
-            <%= ff.radio_button k, value.name, checked: true, class: 'form-check-input', onchange: ('Rails.fire(this.form, "submit")') %>
+            <%= ff.radio_button k, value.name, checked: true, class: 'form-check-input', onchange: 'javascript: $(this).trigger("submit.rails")' %>
             <%= ff.label value.name, class: 'form-check-label' %>
           </div>
 
           <div class="form-check form-check-inline">
-            <%= ff.radio_button k, 'none', class: 'form-check-input', onchange: ('Rails.fire(this.form, "submit")') %>
+            <%= ff.radio_button k, 'none', class: 'form-check-input toggle-readonly', onchange: 'javascript: $(this).trigger("submit.rails")' %>
             <%= ff.label 'none', class: 'form-check-label' %>
           </div>
 
           <div class="form-check form-check-inline">
-            <%= ff.radio_button k, 'custom', class: 'form-check-input', onchange: 'Rails.fire(this.form, "submit")' %>
+            <%= ff.radio_button k, 'custom', class: 'form-check-input', onchange: 'javascript: $(this).trigger("submit.rails")' %>
             <%= ff.label 'custom', class: 'form-check-label' %>
           </div>
           <%= ff.text_field "#{k}_value", placeholder: "#{k} value", class: 'form-control form-control-sm', readonly: false %>

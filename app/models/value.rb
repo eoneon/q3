@@ -16,9 +16,11 @@ class Value < ApplicationRecord
   def reset_properties
     # if properties_changed?
       %w(title body attribute).each do |k|
-        if properties[k] == 'none'
+        if properties[k] == 'none'  
           properties["#{k}_value"] = ""
-        elsif properties[k] == name
+        elsif properties[k] == 'custom' && properties["#{k}_value"] == name
+          properties["#{k}_value"] = ""
+        elsif properties[k] != 'custom' && properties[k] == name
           properties["#{k}_value"] = name
         end
       end

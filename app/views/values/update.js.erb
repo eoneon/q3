@@ -1,3 +1,3 @@
 $("#<%= dyno_id(n1: 'field_group', k1: @field_group, n2: 'value', k2: @value, tag: 'edit-form') %>").html("<%= j render 'values/forms/form', field: @value.field, value: @value, form_id: @form_id %>");
 $("form[id*='value-name']").find("input:text").attr('readonly', 'true');
-$("form[id*='value-name']").find("button:submit").attr("disabled", "disabled"); 
+$("form[id*='value-name']").find("button:submit").attr("disabled", "disabled");

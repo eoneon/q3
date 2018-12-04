@@ -11,11 +11,15 @@
 // about supported directives.
 //
 //= require jquery3
-//= require rails-ujs
+//= require jquery_ujs
 //= require popper
 //= require bootstrap-sprockets
 //= require_tree .
 
 $(document).ready(function(){
-
+  // $(".toggle-readonly").click(function() {
+  //   alert("hi");
+    // $(this).closest("form").find("input:text").attr('readonly', 'false');
+    // $(this).closest("form").find("button:submit").removeClass("disabled");
+  // });
 });
