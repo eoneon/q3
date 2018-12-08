@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :field_groups
   resources :categories do
     resources :fields
     resources :field_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do

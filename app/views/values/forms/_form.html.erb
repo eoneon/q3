@@ -1,18 +1,18 @@
 <%= form_with model: value, url: [field, value], id: form_id do |f| %>
-  <div class="form">
+  <div class="form my-2">
     <%= hidden_field_tag :form_id, form_id %>
-    <div class="collapse <%= collapse_show?(form_id, 'name', 'new') %>">
+    <div class="collapse <%= dom_attr(form_id, 'show', 'name', 'new') %>">
       <div class="form-row align-items-center">
         <div class="col">
-          <%= f.text_field :name, placeholder: "enter value name", class: "form-control form-control-sm edit-name py-0", readonly: false %>
+          <%= f.text_field :name, placeholder: "enter value name", class: "form-control form-control-sm edit-text py-0", readonly: false %>
         </div>
 
-        <button class="btn btn-sm badge badge-primary submit-value" type="submit">
+        <button class="btn btn-sm badge badge-primary submit-btn" type="submit">
           Submit
         </button>
       </div>
     </div>
-    <div class="collapse <%= collapse_show?(form_id, 'properties') %>">
+    <div class="collapse <%= dom_attr(form_id, 'show', 'properties') %>">
       <%= render "values/forms/fields_for", value: value, f: f %>
     </div>
   </div>

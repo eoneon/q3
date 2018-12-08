@@ -1,11 +1,12 @@
 <%= form_with model: category, url: category, id: form_id do |f| %>
   <div class="form">
+    <%= hidden_field_tag :form_id, form_id %>
     <div class="form-row align-items-center">
       <div class="col">
-        <%= f.text_field :name, placeholder: "enter category name", class: "form-control" %>
+        <%= f.text_field :name, placeholder: dom_attr(form_id, ['enter category name','select a medium from tab panel'], 'new'), class: "form-control form-control-sm edit-text py-0", readonly: false %>
       </div>
       <div class="col-auto">
-        <button class="btn btn-sm badge badge-primary float-right" type="submit">
+        <button class="btn btn-sm badge badge-primary submit-btn" type="submit">
           Submit
         </button>
       </div>
