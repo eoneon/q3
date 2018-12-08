@@ -16,9 +16,9 @@ module ApplicationHelper
     [str_arr.take(idx), pat2].compact.join('-')
   end
 
-  def dom_attr(ref, attr_tag, *tags)
-    attr_tag if include_any?(ref.split('-'), tags)
-  end
+  # def dom_attr(ref, attr_tag, *tags)
+  #   attr_tag if include_any?(ref.split('-'), tags)
+  # end
 
   # def collapse_show?(dom_ref, *tags)
   #   'show' if include_any?(dom_ref.split('-'), tags)
@@ -42,9 +42,9 @@ module ApplicationHelper
 
   def handle_option_by_type(optns, n)
     if optns.class == Array
-      optns[n]
+      " #{optns[n]}"
     else
-      optns if n == 0
+      " #{optns}" if n == 0
     end
   end
 

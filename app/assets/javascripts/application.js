@@ -17,7 +17,8 @@
 //= require_tree .
 
 $(document).ready(function(){
-  $("#edit-form-id").find(".submit-btn").attr("disabled", "disabled");
+  $("#edit-form-id").find(".submit-btn").prop("disabled", true);
   $("#edit-form-id").find(".edit-text").prop("readonly", true);
-  $("#edit-category-btn").attr("disabled", "disabled");
+  $("#edit-category-btn").prop("disabled", true);
+  $("#field-forms-toggle").prop("disabled", true);
 });

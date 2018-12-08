@@ -1,0 +1,9 @@
+<div class="input-group input-group-sm">
+  <div class="input-group-prepend">
+    <button class="btn btn-outline-secondary<%= dom_attr(form_id, 'edit-toggle', 'edit') %>" type="button" id="edit-category-btn"><%= dom_attr(form_id, ['new', 'edit'], 'new') %></button>
+  </div>
+  <%= f.text_field :name, placeholder: dom_attr(form_id, ['enter category name','select a medium from tab panel'], 'new'), class: "form-control edit-text border-secondary", readonly: false %>
+  <div class="input-group-append">
+    <button class="btn btn-outline-primary submit-btn" type="submit">Submit</button>
+  </div>
+</div>

@@ -1,11 +1,11 @@
 $("#category-show").html("<%= j render 'categories/show', category: @category %>");
 // $("#category-field_group-add-form").html("<%= j render 'field_groups/forms/form', fieldable: @category, field_group: FieldGroup.new, form_id: 'category-field_group-add-form-id' %>");
 // $("#category-toggle").removeClass("disabled");
-$("#<%= dom_ref(@category, 'edit-form-id') %>").find(".submit-btn").attr("disabled", "disabled");
+$("#<%= dom_ref(@category, 'edit-form-id') %>").find(".submit-btn").prop("disabled", true);
 $("#<%= dom_ref(@category, 'edit-form-id') %>").find(".edit-text").prop("readonly", true);
-$("input:radio[value!='custom']:checked").closest(".col").find("input:text").attr("readonly", "true");
-$("form[id*='value-name']").find("input:text").attr('readonly', 'true');
-$("form[id*='value-name']").find("button:submit").attr("disabled", "disabled");
+$("input:radio[value!='custom']:checked").closest(".col").find("input:text").prop("readonly", true);
+$("form[id*='value-name']").find("input:text").prop('readonly', true);
+$("form[id*='value-name']").find("button:submit").prop("disabled", true);
 $("#field-field_group-new-toggle").click(function(){
   if ($(this).text() == "new field") {
     $(this).text("add field");

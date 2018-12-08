@@ -1,9 +1,5 @@
 <div class="row align-items-center bg-light">
-  <div class="btn-group-vertical border-right">
-    <div class="btn btn-sm py-0 px-2 m-0" role="group">
-      <%= render 'field_groups/sorter', fieldable: fieldable, field_group: field_group %>
-    </div>
-  </div>
+  <%= render 'field_groups/sort_btn_group', fieldable: fieldable, field_group: field_group %>
 
   <div class="col-auto">
     <h5 class="mb-0">
@@ -16,7 +12,7 @@
       <%= field_group.field.name %>
     </div>
   </div>
-  
+
   <div class="col-auto">
     <div class="row align-items-center">
       <%= render "fields/header/field_menu", field_group: field_group %>
