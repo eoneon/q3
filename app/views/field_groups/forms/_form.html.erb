@@ -1,14 +1,8 @@
 <%= form_with model: field_group, url: [fieldable, field_group], id: form_id do |f| %>
   <div class="form">
+    <%= hidden_field_tag :form_id, form_id %>
     <div class="form-row align-items-center">
-      <div class="col">
-        <%= f.collection_select :field_id, Field.all, :id, :name, {prompt: "- select field name -"}, {class: "form-control form-control-sm py-0"} %>
-      </div>
-      <div class="col-auto">
-        <button class="btn btn-sm badge badge-primary float-right" type="submit">
-          Submit
-        </button>
-      </div>
+      <%= render "field_groups/forms/input_group", f: f, form_id: form_id %>
     </div>
   </div>
 <% end %>

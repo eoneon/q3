@@ -7,22 +7,30 @@ module ApplicationHelper
     i.class == String ? i : klass_and_id(i)
   end
 
-  def new_dom_ref(dom_ref, pat, pat2)
+  def new_dom_ref(str, pat, pat2)
     repl_at(str.split('-'), pat, pat2)
   end
 
   def repl_at(str_arr, pat, pat2)
-    idx = str_arr[pat]
+    idx = str_arr.index(pat)
     [str_arr.take(idx), pat2].compact.join('-')
   end
 
-  # def dom_attr(ref, attr_tag, *tags)
-  #   attr_tag if include_any?(ref.split('-'), tags)
-  # end
+  def dom_attr(str, optns, *tags)
+    if include_any?(str.split('-'), tags)
+      handle_option_by_type(optns, 0)
+    else
+      handle_option_by_type(optns, 1)
+    end
+  end
 
-  # def collapse_show?(dom_ref, *tags)
-  #   'show' if include_any?(dom_ref.split('-'), tags)
-  # end
+  def handle_option_by_type(optns, n)
+    if optns.class == Array
+      optns[n]
+    else
+      optns if n == 0
+    end
+  end
 
   def include_any?(arr_x, arr_y)
     arr_x.any? {|x| arr_y.include?(x)}
@@ -32,21 +40,7 @@ module ApplicationHelper
     str.index(/#{pat}/)
   end
 
-  def dom_attr(ref, optns, *tags)
-    if include_any?(ref.split('-'), tags)
-      handle_option_by_type(optns, 0)
-    else
-      handle_option_by_type(optns, 1)
-    end
-  end
 
-  def handle_option_by_type(optns, n)
-    if optns.class == Array
-      " #{optns[n]}"
-    else
-      " #{optns}" if n == 0
-    end
-  end
 
   ####end
   def dyno_id(args={})

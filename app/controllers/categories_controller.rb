@@ -28,7 +28,8 @@ class CategoriesController < ApplicationController
     @category.assign_attributes(category_params)
 
     if @category.save
-      @categories = Category.all.order(sort: 'asc')
+      @form_id = params[:form_id]
+      #@categories = Category.all.order(sort: 'asc')
 
       respond_to do |format|
         format.js

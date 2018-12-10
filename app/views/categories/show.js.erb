@@ -1,61 +1,35 @@
 $("#category-show").html("<%= j render 'categories/show', category: @category %>");
-// $("#category-field_group-add-form").html("<%= j render 'field_groups/forms/form', fieldable: @category, field_group: FieldGroup.new, form_id: 'category-field_group-add-form-id' %>");
-// $("#category-toggle").removeClass("disabled");
-$("#<%= dom_ref(@category, 'edit-form-id') %>").find(".submit-btn").prop("disabled", true);
-$("#<%= dom_ref(@category, 'edit-form-id') %>").find(".edit-text").prop("readonly", true);
-$("input:radio[value!='custom']:checked").closest(".col").find("input:text").prop("readonly", true);
+$("#category-edit-btn").prop("disabled", false);
+$("#category-toggle").removeClass("disabled").attr("href", "#category-field-forms");
+$("#category-delete-btn").removeClass("disabled").attr("href", "<%= category_path(@category) %>");
+//category will change to @fieldable
+$("#category-field-new").find("fieldset").prop("disabled", false);
+
 $("form[id*='value-name']").find("input:text").prop('readonly', true);
 $("form[id*='value-name']").find("button:submit").prop("disabled", true);
-$("#field-field_group-new-toggle").click(function(){
-  if ($(this).text() == "new field") {
-    $(this).text("add field");
+$("input:radio[value!='custom']:checked").closest(".col").find("input:text").prop("readonly", true);
+
+
+$(".category-field-forms-toggle").click(function(){
+  if ($(this).text() == "new") {
+    $(this).text("add");
     $("#category-field_group-add").toggleClass("show");
     $("#category-field-new").toggleClass("show");
   } else {
-    $(this).text("new field");
+    $(this).text("new");
     $("#category-field_group-add").toggleClass("show");
     $("#category-field-new").toggleClass("show");
   }
 });
 
-$(".edit-toggle").click(function(){
-  var my_form = $(this).closest(".card-header").find("form");
-  var my_input = $(my_form).find(".edit-text");
-  if ($(my_input).prop("readonly") == true) {
-    $(my_input).prop("readonly", false);
+$("#category-edit-btn").click(function(){
+  var form = $(this).closest(".form");
+  var input = $(form).find("input:text");
+  if ($(input).prop("readonly") == true) {
+    $(input).prop("readonly", false);
+    $(form).find("button[type='submit']").prop("disabled", false);
   } else {
-    $(my_input).prop("readonly", true);
+    $(input).prop("readonly", true);
+    $(form).find("button[type='submit']").prop("disabled", true);
   }
 });
-// if (text === "new field") {
-//   $(this).text("add field");
-//   $("#category-field_group-add").toggleClass("show");
-// else
-
-// $(".edit-toggle").click(function(){
-//   var my_form = $(this).closest(".card-header").find("form");
-//   var edit_input = $(my_form).find(".edit-text").attr("readonly"));
-//   if edit_input == ""
-  // var input_value = $(this).closest(".card-header").find("form").find(".edit-text").attr("readonly").find(".edit-text").attr("readonly");
-  //$(my_form).find(".edit-text").attr("readonly", "true");
-  // $(my_form).find(".edit-text").removeAttr("readonly");
-  //$(my_form).find(".edit-text")
-  //alert($(this).closest(".card-header").find("form").find(".edit-text").attr("readonly"));
-  //if ( $(this).closest(".card-header").find("form").find(".edit-text").attr("readonly") == "readonly" ){
-    //$(this).closest(".card-header").find("form").find(".edit-text").attr("readonly", "false");
-    //$(input).attr("readonly", "false");
-    //$(my_form).find("input:text").attr("readonly", "false")
-    //alert($(input).attr("readonly"));
-    //
-  //} else {
-    //$(this).closest(".card-header").find("form").find(".edit-text").attr("readonly", "true");
-    //alert("hi"); //$(input).attr("readonly")
-  //}
-  //   alert($(input).attr("readonly"))
-    // $(my_form).hide();
-    // $(my_form).find(".edit-text").removeAttr("readonly");
-  // }
-  // $(this).closest(".card-header").find(".edit-text").attr();
-  // find(".edit-text").attr('readonly', 'false');
-  // $("this").closest("form").find(".submit-btn").removeClass("disabled");
-//});

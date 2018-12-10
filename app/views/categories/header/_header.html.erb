@@ -1,21 +1,19 @@
-<div class="row align-items-center bg-light">
+<div class="row align-items-center bg-light" id="category-header">
   <div class="col-auto">
     <h5 class="mb-0 ml-2">
-      <a id="<%= dom_ref(category, 'field-forms-toggle') %>" role="button" data-toggle="collapse" href="#<%= dom_ref(category, 'field-form-body') %>" aria-expanded="false"></a>
+      <a class="disabled" id="category-toggle" role="button" data-toggle="collapse" href="" aria-expanded="false"></a>
     </h5>
   </div>
 
   <div class="col">
-    <div id="<%= dom_ref(category, 'edit-form') %>">
-      <%= render "categories/form", category: category, form_id: dom_ref(category, 'edit-form-id') %>
+    <div id="category-edit-form">
+      <%= render "categories/form", category: category, form_id: 'category-edit-form-id' %>
     </div>
   </div>
 
-  <!-- <div class="col-auto">
-    <button class="btn btn-lg badge badge-light border border-white rounded text-muted float-right edit-toggle" id="edit-category-btn" type="button">
-      Edit
-    </button>
-  </div> -->
+  <div class="col-auto">
+    <a id="category-delete-btn" href="" data-method="delete" data-remote="true" data-confirm="Are you sure?" class="btn btn-sm btn-outline-secondary px-3 text-danger disabled" role="button"><span>&times;</span></a>
+  </div>
 
   <!-- <div class="col-auto">onclick="toggleEditForm('<%#= dom_ref(category, 'edit-form-id') %>')"
     <div class="row align-items-center">

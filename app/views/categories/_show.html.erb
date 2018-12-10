@@ -3,13 +3,11 @@
     <%= render "categories/header/header", category: category %>
   </div>
 
-  <div class="collapse" id="<%= dom_ref(category, 'field-form-body') %>" data-parent="#accordion-nav-menu-body">
-    <div class="card card-body p-1 m-1 bg-light">
+  <div class="collapse" id="category-field-forms" data-parent="#accordion-nav-menu-body">
+    <div class="card card-body p-2 m-2 bg-light">
       <div class="row align-items-center">
-        <div class="col-auto">
-          <button class="btn btn-sm badge badge-light border border-white rounded text-muted float-left" id="field-field_group-new-toggle" type="button">new field</button>
-        </div>
-        <div class="col">
+
+        <div class="col-10 offset-1">
           <div class="collapse show" id="category-field-new">
             <%= render "fields/forms/new", fieldable: category %>
           </div>
@@ -21,10 +19,6 @@
       </div>
     </div>
   </div>
-
-  <!-- <div class="collapse" id="category-edit" data-parent="#accordion-nav-menu-body">
-    <%#= render "categories/forms/edit", category: category %>
-  </div> -->
 
   <%= render "fields/index", fieldable: category %>
   <%#= render "element_kinds/container/container", elementable: category %>

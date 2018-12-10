@@ -1,3 +1,4 @@
-$("#category-edit-form").html("<%= j render 'categories/form', category: @category, form_id: 'category-edit-form-id' %>");
-$("#category-display").html("<%= j render 'categories/header/display', category: @category %>");
-$("#<%= dyno_id(n1: 'category', k1: @category, tag: 'tab') %>").text("<%= @category.name %>");
+$("#<%= dom_ref(@category, 'edit-form') %>").html("<%= j render 'categories/form', category: @category, form_id: @form_id %>");
+$("#<%= dom_ref(@category, 'tab-item') %>").text("<%= @category.name %>");
+$("#<%= @form_id %>").find("input:text").prop("readonly", true);
+$("#<%= @form_id %>").find("button[type='submit']").prop("disabled", true);
