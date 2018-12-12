@@ -1,35 +1,20 @@
 $("#category-show").html("<%= j render 'categories/show', category: @category %>");
-$("#category-edit-btn").prop("disabled", false);
-$("#category-toggle").removeClass("disabled").attr("href", "#category-field-forms");
+$(".toggle-edit-access").prop("disabled", false);
+$("#category-toggle").removeClass("disabled").attr("href", "#category-body").attr("aria-expanded", true);
+$("#category-body").toggleClass("show")
 $("#category-delete-btn").removeClass("disabled").attr("href", "<%= category_path(@category) %>");
-//category will change to @fieldable
-$("#category-field-new").find("fieldset").prop("disabled", false);
+$("form[id*='edit']").find("input:text, select, button:submit").prop('disabled', true);
+$("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
 
-$("form[id*='value-name']").find("input:text").prop('readonly', true);
-$("form[id*='value-name']").find("button:submit").prop("disabled", true);
-$("input:radio[value!='custom']:checked").closest(".col").find("input:text").prop("readonly", true);
-
-
-$(".category-field-forms-toggle").click(function(){
-  if ($(this).text() == "new") {
-    $(this).text("add");
-    $("#category-field_group-add").toggleClass("show");
-    $("#category-field-new").toggleClass("show");
-  } else {
-    $(this).text("new");
-    $("#category-field_group-add").toggleClass("show");
-    $("#category-field-new").toggleClass("show");
-  }
+$(".new-add-field-toggle").click(function(){
+  $("#category-field_group-add, #category-field-new").toggleClass("show");
 });
 
-$("#category-edit-btn").click(function(){
+$(".toggle-edit-access").click(function(){
   var form = $(this).closest(".form");
-  var input = $(form).find("input:text");
-  if ($(input).prop("readonly") == true) {
-    $(input).prop("readonly", false);
-    $(form).find("button[type='submit']").prop("disabled", false);
+  if ($(form).find("input:text").prop("disabled") == true) {
+    $(form).find("input:text, select, button:submit").prop("disabled", false);
   } else {
-    $(input).prop("readonly", true);
-    $(form).find("button[type='submit']").prop("disabled", true);
+    $(form).find("input:text, select, button:submit").prop("disabled", true);
   }
 });

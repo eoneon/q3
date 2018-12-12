@@ -1,8 +1,9 @@
 <div class="input-group input-group-sm">
   <div class="input-group-prepend">
-    <button class="btn btn-outline-secondary" type="button" id="<%= new_dom_ref(form_id, 'form', 'btn') %>" disabled><%= dom_attr(form_id, ['new', 'edit'], 'new') %></button></div>
-  <%= f.text_field :name, placeholder: dom_attr(form_id, ['enter category name','select a medium from tab panel'], 'new'), class: "form-control edit-text border-secondary", readonly: true %>
+    <button class="btn btn-outline-secondary <%= dom_attr(form_id, 'toggle-edit-access', 'edit') %>" type="button" id="<%= new_dom_ref(form_id, 'form', 'btn') %>" disabled><%= dom_attr(form_id, ['new', 'edit'], 'new') %></button>
+  </div>
+  <%= f.text_field :name, placeholder: dom_attr(form_id, ['enter category name','select a medium from tab panel'], 'new'), class: "form-control edit-text border-secondary" %>
   <div class="input-group-append">
-    <button class="btn btn-outline-primary" type="submit" disabled>Submit</button>
+    <button class="btn btn-outline-primary" type="submit">Submit</button>
   </div>
 </div>

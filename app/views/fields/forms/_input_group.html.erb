@@ -1,9 +1,9 @@
 <div class="input-group input-group-sm">
   <div class="input-group-prepend">
-    <button class="btn btn-outline-secondary category-field-forms-toggle" type="button" id="category-field-forms-toggle"><%= dom_attr(form_id, ['new', 'edit'], 'new') %></button>
+    <button class="btn btn-outline-secondary <%= dom_attr(form_id, ['new-add-field-toggle', 'toggle-edit-access'], 'new') %>" type="button" id="category-field-forms-toggle"><%= dom_attr(form_id, ['new', 'edit'], 'new') %></button>
   </div>
-  <%= f.select :field_type, options_for_select(%w[select_field text_field number_field text_area check_box], selected: field.field_type), {prompt: "- select field type -"}, {class: "form-control border-secondary"} %>
   <%= f.text_field :name, placeholder: "enter field name", class: "form-control border-secondary" %>
+  <%= f.select :field_type, options_for_select(%w[select_field text_field number_field text_area check_box], selected: field.field_type), {prompt: "- select field type -"}, {class: "form-control border-secondary"} %>
   <div class="input-group-append">
     <button class="btn btn-outline-primary" type="submit">Submit</button>
   </div>

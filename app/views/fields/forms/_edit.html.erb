@@ -1,11 +1,3 @@
-<div class="card-body bg-light pt-0 pb-3">
-  <div>
-    <span class="card-title font-weight-light"><small>Edit Field</small></span>
-    <button class="close float-right pr-4" type="button" data-toggle="collapse" data-target="#<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'edit') %>" aria-expanded="false">
-      <span aria-hidden="true"><small>&times;</small></span>
-    </button>
-  </div>
-  <div id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'edit-form') %>">
-    <%= render "fields/form", fieldable: fieldable, field: field_group.field, form_id: dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'edit-form-id') %>
-  </div>
+<div id="<%= dom_ref(fieldable, field_group.field, 'edit-form') %>">
+  <%= render "fields/form", fieldable: fieldable, field: field_group.field, form_id: dom_ref(fieldable, field_group.field, 'edit-form-id') %>
 </div>

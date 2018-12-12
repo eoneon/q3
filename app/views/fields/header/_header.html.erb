@@ -7,16 +7,10 @@
     </h5>
   </div>
 
-  <div class="col font-weight-bold">
-    <div id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'display') %>">
-      <%= field_group.field.name %>
-    </div>
-  </div>
-
-  <div class="col-auto">
-    <div class="row align-items-center">
-      <%= render "fields/header/field_menu", field_group: field_group %>
-      <%#= render "fields/header/value_menu", field_group: field_group %>
+  <div class="col">
+    <div class="card border border-danger bg-light">
+      <div class="card-body py-0">
+        <%= render "fields/forms/edit", fieldable: fieldable, field_group: field_group  %>
     </div>
   </div>
 </div>

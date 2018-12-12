@@ -17,6 +17,7 @@ class FieldsController < ApplicationController
 
     if @field.save
       @field_group = @field.field_groups.first
+      @form_id = params[:form_id]
 
       respond_to do |format|
         format.html
@@ -33,6 +34,7 @@ class FieldsController < ApplicationController
     @field.assign_attributes(field_params)
 
     if @field.save
+      @form_id = params[:form_id]
       respond_to do |format|
         format.js
       end

@@ -17,6 +17,6 @@
 //= require_tree .
 
 $(document).ready(function(){
-  $("#category-new-form").find("input:text").prop("readonly", false);
-  $("#category-new-form").find("button[type='submit']").prop("disabled", false);
+  $("#category-new-form").find("input:text, button:submit").prop("disabled", false);
+  $("form[id*='edit']").find("input:text, button:submit").prop('disabled', true);
 });

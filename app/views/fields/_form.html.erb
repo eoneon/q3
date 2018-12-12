@@ -1,10 +1,8 @@
 <%= form_with model: field, url: [fieldable, field], id: form_id do |f| %>
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
-    <fieldset disabled>
-      <div class="form-row align-items-center">
-        <%= render "fields/forms/input_group", field: field, f: f, form_id: form_id %>
-      </div>
-    </fieldset>
+    <div class="form-row align-items-center">
+      <%= render "fields/forms/input_group", field: field, f: f, form_id: form_id %>
+    </div>
   </div>
 <% end %>

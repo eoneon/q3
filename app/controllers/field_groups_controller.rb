@@ -4,6 +4,7 @@ class FieldGroupsController < ApplicationController
     @field_group = @fieldable.field_groups.build(field_group_params)
 
     if @field_group.save
+      @form_id = params[:form_id]
       respond_to do |format|
         format.js
       end

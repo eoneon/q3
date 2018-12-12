@@ -1,15 +1,14 @@
-<div class="card">
-  <div class="card-header py-0 px-3 border border-secondary">
-    <div id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'header') %>">
-      <%= render "fields/header/header", fieldable: fieldable, field_group: field_group %>
-    </div>
-  </div>
-  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'edit') %>" data-parent="#accordion-nav-menu-body">
-    <%= render "fields/forms/edit", fieldable: fieldable, field_group: field_group %>
+<div class="card border">
+  <div class="card-header border py-0 border-primary">
+    <%= render "fields/header/header", fieldable: fieldable, field_group: field_group %>
   </div>
 
-  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value', tag: 'index') %>" data-parent="#accordion-nav-menu-body">
-    <div class="card-body p-2">
+  <!-- <div class="collapse" id="<%#= dyno_id(n1: 'field_group', k1: field_group, n2: 'field', tag: 'edit') %>">
+    <%#= render "fields/forms/edit", fieldable: fieldable, field_group: field_group %>
+  </div> -->
+
+  <div class="collapse" id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value', tag: 'index') %>">
+    <div class="card-body border border-danger p-2">
       <%= render "values/index", field_group: field_group, field: field_group.field %>
     </div>
   </div>
