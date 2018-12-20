@@ -1,9 +1,5 @@
-<div class="input-group input-group-sm">
-  <div class="input-group-prepend">
-    <button class="btn btn-outline-secondary new-add-field-toggle" type="button" id="category-field-forms-toggle">add</button>
-  </div>
-  <%= f.collection_select :field_id, Field.all, :id, :name, {prompt: "- select field name -"}, {class: "form-control border-secondary"} %>
-  <div class="input-group-append">
-    <button class="btn btn-outline-primary" type="submit">Submit</button>
-  </div>
+<div class="input-group input-group-sm align-items-center bg-disabled">
+  <button class="btn btn-sm rounded-circle bg-transparent toggle-input-access" type="button" id="<%= new_dom_ref(form_id, 'form', 'btn') %>"><%= (fa_icon "toggle-off") %></button>
+  <%= f.collection_select :field_id, Field.all, :id, :name, {prompt: "- select field -"}, {class: "form-control border-0 ml-2"} %>
+  <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit"><%= (fa_icon "plus-circle") %></button>
 </div>

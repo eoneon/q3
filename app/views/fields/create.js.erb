@@ -1,2 +1,2 @@
-$("#<%= dom_ref(@fieldable, 'field-index') %>").append('<%= j render "fields/field", fieldable: @fieldable, field_group: @field_group %>');
+$("#<%= dom_ref(@fieldable, 'field-index') %>").append('<%= j render "fields/show", fieldable: @fieldable, field_group: @field_group %>');
 $("#<%= dom_ref(@fieldable, 'field-new-form') %>").html("<%= j render 'fields/form', fieldable: @fieldable, field: Field.new, form_id: @form_id %>");

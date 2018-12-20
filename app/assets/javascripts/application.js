@@ -18,5 +18,6 @@
 
 $(document).ready(function(){
   $("#category-new-form").find("input:text, button:submit").prop("disabled", false);
-  $("form[id*='edit']").find("input:text, button:submit").prop('disabled', true);
+  //$("form[id*='edit']").find("input:text, button").prop("disabled", true);
+  $("#category-header").find(".caret-toggle, input:text, button, .delete-btn, .nav-link").prop("disabled", true).addClass("disabled");
 });

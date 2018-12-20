@@ -50,3 +50,53 @@ summary {
 .card-body {
   background-color: white;
 }
+
+.btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.form-rounded {
+  border-radius: 1rem !important;
+}
+
+input{
+  border: none !important;
+  background-color: transparent;
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+  outline: none;
+}
+
+.fa-toggle-on, .fa-toggle-off{
+  //color: gray;
+  //margin: 0;
+  //background-color: transparent;
+}
+
+.input-group {
+  border: 1px gray solid;
+  border-radius: 1rem;
+  //background: #e9ecef !important;
+  //opacity: 1 !important;
+  // padding: 10px;
+}
+
+.bg-disabled {
+  background: #e9ecef !important;
+}
+
+//might be irrelevant
+.nested-btn {
+  //background-color: red !important;
+  padding: 1px !important;
+  //height: 20px !important;
+}
+
+.caret-toggle {
+  width: 12px;
+}

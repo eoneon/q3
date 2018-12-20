@@ -1,9 +1,7 @@
-<%= render "fields/forms/field_forms", fieldable: fieldable %>
 <% if fieldable.present? && fieldable.field_groups.any? %>
-  <!-- <div id="<%#= dyno_id(n1: klass_name(fieldable), k1: fieldable, n2: 'field', tag: 'index') %>"> -->
   <div id="<%= dom_ref(fieldable, 'field-index') %>">
     <% fieldable.field_groups.order(:sort).each do |field_group| %>
-      <%= render "fields/field", fieldable: fieldable, field_group: field_group %>
+      <%= render "fields/show", fieldable: fieldable, field_group: field_group %>
     <% end %>
   </div>
 <% end %>

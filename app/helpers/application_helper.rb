@@ -24,6 +24,10 @@ module ApplicationHelper
     end
   end
 
+  def dom_cond(str, *tags)
+    include_any?(str.split('-'), tags)
+  end
+
   def handle_option_by_type(optns, n)
     if optns.class == Array
       optns[n]
