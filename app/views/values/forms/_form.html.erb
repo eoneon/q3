@@ -1,19 +1,12 @@
 <%= form_with model: value, url: [field, value], id: form_id do |f| %>
-  <div class="form my-2">
+  <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
-    <div class="collapse <%= dom_attr(form_id, 'show', 'name', 'new') %>">
+    <% if dom_cond(form_id, 'name', 'new') %>
       <div class="form-row align-items-center">
-        <div class="col">
-          <%= f.text_field :name, placeholder: "enter value name", class: "form-control form-control-sm edit-text py-0", readonly: false %>
-        </div>
-
-        <button class="btn btn-sm badge badge-primary submit-btn" type="submit">
-          Submit
-        </button>
+        <%= render "values/forms/input_group", value: value, f: f %>
       </div>
-    </div>
-    <div class="collapse <%= dom_attr(form_id, 'show', 'properties') %>">
+    <% elsif dom_cond(form_id, 'properties') %>
       <%= render "values/forms/fields_for", value: value, f: f %>
-    </div>
+    <% end %>
   </div>
 <% end %>

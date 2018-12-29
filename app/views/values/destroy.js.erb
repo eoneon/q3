@@ -1,1 +1,2 @@
-$("#<%= dyno_id(n1: 'value', k1: @value, tag: 'index-item') %>").hide(); 
+// $("#<%#= dyno_id(n1: 'value', k1: @value, tag: 'index-item') %>").hide();
+$("#<%= dom_ref(@value, 'index-item') %>").hide(); 

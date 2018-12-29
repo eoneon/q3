@@ -1,24 +1,14 @@
-<div class="row align-items-center">
-  <div class="col-auto">
-    <h5 class="mb-0">
-      <a id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-properties', k2: value, tag: 'edit-collapse') %>" role="button" data-toggle="collapse" href="#<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-properties', k2: value, tag: 'edit') %>" aria-expanded="false">
-      </a>
-    </h5>
-  </div>
-
+<small class="ml-5 py-0 form-text text-muted input-label">Edit Value</small>
+<!-- <%#= dom_ref(value, 'header') %> -->
+<div class="row justify-content-between align-items-center bg-light" id="">
+  <button class="caret-toggle btn btn-lg bg-transparent mr-3 px-3 border py-0" id="" data-toggle="collapse" data-target="#<%= dom_ref(field_group, value, 'edit-properties') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
   <div class="col">
-    <div id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-name', k2: value, tag: 'edit-form') %>">
-      <%= render "values/forms/form", field: field_group.field, value: value, form_id: dyno_id(n1: 'field_group', k1: field_group, n2: 'value-name', k2: value, tag: 'edit-form-id') %>
+    <div id="<%= dom_ref(field_group, value, 'name-edit') %>">
+      <%= render "values/forms/form", field: field_group.field, value: value, form_id: dom_ref(field_group, value, 'name-edit-form-id') %>
     </div>
   </div>
 
-  <div class="col-auto border">
-    <button class="btn btn-sm btn-light float-right" type="button" onclick="toggleEditForm('<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value-name', k2: value, tag: 'edit-form-id') %>')">
-      Edit
-    </button>
-  </div>
-
-  <div class="col-auto">
-    <a href="<%= field_value_path([field_group.field, value]) %>" data-method="delete" data-remote="true" data-confirm="Are you sure?" class="btn btn-md btn-light my-0 py-0 text-danger" role="button"><span>&times;</span></a>
+  <div class="col-1 border align-item-center">
+    <a href="<%= field_value_path([field_group.field, value]) %>" data-method="delete" data-path="" data-remote="true" data-confirm="Are you sure?" class="delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" role="button"><%= (fa_icon "times") %></a>
   </div>
 </div>

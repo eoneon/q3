@@ -1,96 +1,22 @@
 $("#category-show").html("<%= j render 'categories/show', category: @category %>");
-configShow("#category-show");
-//$("#category-show .input-label").first().toggleClass("text-light text-muted");
-//$("#category-show .caret-toggle").first().prop("disabled", false).find("i").toggleClass("fa-caret-right fa-caret-down");
-// $("#category-show .nav-link").first().removeClass("disabled").addClass("text-info").attr("href", "#");
-// $("#category-show .card-body").first().toggleClass("show");
-// $("#category-show a[data-method='delete']").first().attr("href", "<%= category_path(@category) %>");
-//$("#category-delete-btn").attr("href", "<%#= category_path(@category) %>"); .find("a[data-method='delete']")
-//$(".toggle-input-access").prop("disabled", false);
+configCategory("#category-edit");
 
-//enableHeaderBts("#category-show");
-//disableInputs("#category-show form");
-
-$(".caret-toggle").click(function(){
-  $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
-});
-
-$(".toggle-input-access").click(function(){
-  var form = $(this).closest(".form");
-  toggleInputAccess(form);
-  getDeleteBtn(form).toggleClass("disabled");
-});
-
-$(".toggle-sibling").on("show.bs.collapse", function(){
-  var target = $(this).attr("id");
-  $(this).closest(".card-header").find(".input-label").text(toggleInputLabel(target));
-  var delete_btn = getDeleteBtn("#" + target);
-  $('a[href="#'+target+'"]').prop("disabled", true).addClass("disabled").siblings().prop("disabled", false).removeClass("disabled");
-  target.includes("edit") ? $(delete_btn).addClass("show") : $(delete_btn).removeClass("show")
-});
-
-$(".toggle-sibling").on("hidden.bs.collapse", function(){
-  var form = $(this).find("form");
-  if ($(form).find(".toggle-input-access i").hasClass("fa-toggle-on")) {
-    toggleInputAccess(form);
-    getDeleteBtn(form).removeClass("show");
-  }
-});
-
-function configShow(show) {
-  var form = $(show).find("form");
-  disableInputs(form);
-  enableHeaderBts(show);
-  $(".toggle-input-access").prop("disabled", false);
+function configCategory(target){
+  configShow(target);
+  getDeleteBtn(target).attr("href", "<%= category_path(@category) %>");
 }
 
-function toggleInputAccess(form) {
-  $(form).find(".toggle-input-access i").toggleClass("fa-toggle-on fa-toggle-off");
-  $(form).find("div.input-group").toggleClass("bg-white bg-disabled");
-  getInputs(form).each(function(i, input){
-    $(input).prop("disabled") == false ? $(input).prop("disabled", true).addClass("disabled") : $(input).prop("disabled", false).removeClass("disabled");
-  });
-}
-
-function getDeleteBtn(target) {
-  return $(target).closest(".card-header").find("a[data-method='delete']");
-}
-
-function enableHeaderBts(show) {
-  var header = $(show).find(".card-header").first();
-  $(header).find(".input-label").toggleClass("text-light text-muted");
-  $(header).find(".caret-toggle").prop("disabled", false).find("i").toggleClass("fa-caret-right fa-caret-down");
-  $(header).find(".nav-link").removeClass("disabled").addClass("text-info").attr("href", "#");
-  $(header).find("a[data-method='delete']").attr("href", "<%= category_path(@category) %>");
-  $(show).find(".card-body").first().toggleClass("show");
-}
-
-function disableInputs(form) {
-  getInputs(form).prop("disabled", true).addClass("disabled");
-}
-
-function getInputs(form) {
-  var custom = $("input:radio[value='custom']:checked").closest(".col").find("input:text");
-  return $(form).find("input:text, select, button:submit").not(custom);
-}
-
-function toggleInputLabel(target) {
-  if (target.includes("edit")) {
-    return "Edit Category";
-  } else if (target.includes("new")) {
-    return "New Field";
-  } else {
-    return "Add Field";
-  }
-}
-//not using yet
-// function toggleHref(a) {
-//   var path = $(a).attr("data-path");
-//   $(a).prop("href") == path ? $(a).prop("href", "") : $(a).prop("href", path);
+//unecessary: deletion just returns category to defaults
+// function deconfigShow(show) {
+//   var form = $(show).find("form");
+//   disableToggleInput(form);
+//   getCaret(form).prop("disabled", true).find("i").addClass("fa-caret-right").removeClass("fa-caret-down");
+//   getLabel(form).toggleClass("text-light text-muted");
+//   getDropdownBtn(form).addClass("disabled").removeClass("text-info").attr("href", "");
+//   getDeleteBtn(form).addClass("disabled").attr("href", "");
+//   disableInputs(form);
 // }
-
-//not using at all
-// $(".toggle-display").click(toggleElement);
-// function toggleElement() {
-//   $(this).closest("div[id*='header']").find(".toggle-sibling").toggleClass("show");
+//
+// function disableInputs(form) {
+//   getInputs(form).prop("disabled", true).addClass("disabled");
 // }

@@ -1,2 +1,2 @@
-$("#<%= dyno_id(n1: 'field_group', k1: @field_group, n2: 'value', tag: 'index') %>").append("<%= j render 'values/value', field_group: @field_group, field: @field, value: @value %>");
-$("#<%= dyno_id(n1: 'field_group', k1: @field_group, n2: 'value', tag: 'new-form') %>").html("<%= j render 'values/forms/form', field: @field, value: Value.new, form_id: dyno_id(n1: 'field_group', k1: @field_group, n2: 'value', tag: 'new-form-id') %>");
+$("#<%= dom_ref(@field_group, 'value-index') %>").append("<%= j render 'values/show', field_group: @field_group, field: @field, value: @value %>");
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'values/forms/form', field: @field, value: Value.new, form_id: @form_id %>");

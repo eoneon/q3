@@ -1,5 +1,3 @@
-<div class="card card-body py-2 mb-2 bg-light">
-  <div id="<%= dyno_id(n1: 'field_group', k1: field_group, n2: 'value', tag: 'new-form') %>">
-    <%= render "values/forms/form", field: field_group.field, value: Value.new, form_id: dyno_id(n1: 'field_group', k1: field_group, n2: 'value', tag: 'new-form-id')  %>
-  </div>
+<div id="<%= dom_ref(field_group, 'value-new') %>">
+  <%= render "values/forms/form", field: field_group.field, value: Value.new, form_id: dom_ref(field_group, 'value-new-form-id')  %>
 </div>

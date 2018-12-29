@@ -1,16 +1,32 @@
+<small class="ml-5 my-0 py-0 form-text text-muted input-label">Edit Field</small>
 <div class="row justify-content-between align-items-center bg-light" id="<%= dom_ref(field_group, 'header') %>">
-  <%= render 'field_groups/sort_btn_group', fieldable: fieldable, field_group: field_group %>
+  <button class="caret-toggle btn btn-lg bg-transparent pl-2 border py-0" id="" data-toggle="collapse" data-target="#<%= dom_ref(field_group, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
 
-  <div class="col-auto">
-    <h5 class="mb-0">
-      <%= render 'fields/header/collapse', field_group: field_group %>
-    </h5>
+  <ul class="nav ml-3 mr-0">
+    <li class="nav-item-dropdown">
+      <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" id="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></a>
+      <%= render "fields/header/dropdown_menu", field_group: field_group %>
+    </li>
+  </ul>
+
+  <div class="col" id="<%= dom_ref(field_group, 'accordion') %>">
+    <div class="collapse show toggle-sibling" id="<%= dom_ref(field_group, 'edit') %>" data-label="Edit Field" data-parent="#<%= dom_ref(field_group, 'accordion') %>">
+      <%= render "fields/forms/form", fieldable: fieldable, field: field_group.field, form_id: dom_ref(field_group, 'edit-form-id') %>
+    </div>
+
+    <div class="collapse toggle-sibling" id="<%= dom_ref(field_group, 'value-new') %>" data-label="New Value" data-parent="#<%= dom_ref(field_group, 'accordion') %>">
+      <%= render "values/forms/form", field: field_group.field, value: Value.new, form_id: dom_ref(field_group, 'value-new-form-id')  %>
+    </div>
   </div>
 
-  <div class="col">
-    <div class="card border border-danger bg-light">
-      <div class="card-body py-0">
-        <%= render "fields/forms/edit", fieldable: fieldable, field_group: field_group  %>
+  <div class="col-1" id="">
+    <div class="row align-items-center">
+      <div class="col mx-2 p-0">
+        <%= render "field_groups/sort_btn_group", fieldable: fieldable, field_group: field_group %>
+      </div>
+      <div class="col p-0">
+        <%= render "fields/header/delete_menu", fieldable: fieldable, field_group: field_group %>
+      </div>
     </div>
   </div>
 </div>

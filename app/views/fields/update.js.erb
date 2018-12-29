@@ -1,2 +1,1 @@
-$("#<%= dyno_id(n1: 'field_group', k1: @fieldable.field_groups.first, n2: 'field', tag: 'display') %>").text("<%= @field.name %>");
-$("#<%= dyno_id(n1: 'field_group', k1: @fieldable.field_groups.first, n2: 'field', tag: 'edit-form') %>").html("<%= j render 'fields/form', fieldable: @fieldable, field: @field, form_id: dyno_id(n1: 'field_group', k1: @fieldable.field_groups.first, n2: 'field', tag: 'edit-form-id') %>");
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'fields/forms/form', fieldable: @fieldable, field: @field, form_id: @form_id %>");

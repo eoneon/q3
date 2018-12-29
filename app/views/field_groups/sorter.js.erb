@@ -1,1 +1,1 @@
-$("#<%= dyno_id(n1: klass_name(@fieldable), k1: @fieldable, n2: 'field', tag: 'index') %>").html('<%= j render "fields/index", fieldable: @fieldable %>');
+$("#<%= dom_ref(@fieldable, 'field-index') %>").html('<%= j render "fields/index", fieldable: @fieldable %>');

@@ -17,6 +17,7 @@ class CategoriesController < ApplicationController
     @categories = Category.all.order(sort: 'asc')
 
     if @category.save
+      @form_id = params[:form_id]
       respond_to do |format|
         format.js
       end

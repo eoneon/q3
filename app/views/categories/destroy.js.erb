@@ -1,5 +1,2 @@
 $("#category-tab-index").html("<%= j render 'categories/tabs', categories: @categories %>");
 $("#category-show").html("<%= j render 'categories/show', category: nil %>");
-$("#category-edit-form-id").find("input:text").prop("readonly", true);
-$("#category-edit-form-id").find("button[type='submit']").prop("disabled", true);
-$("#category-delete-btn").addClass("disabled");
