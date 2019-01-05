@@ -1,7 +1,5 @@
 <% if fieldable.present? && fieldable.field_groups.any? %>
-  <div id="<%= dom_ref(fieldable, 'field-index') %>">
-    <% fieldable.field_groups.order(:sort).each do |field_group| %>
-      <%= render "fields/show", fieldable: fieldable, field_group: field_group %>
-    <% end %>
-  </div>
+  <% fieldable.field_groups.order(:sort).each do |field_group| %>
+    <%= render "fields/show", fieldable: fieldable, field_group: field_group %>
+  <% end %>
 <% end %>

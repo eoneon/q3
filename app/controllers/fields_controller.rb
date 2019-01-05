@@ -46,6 +46,7 @@ class FieldsController < ApplicationController
     field = Field.find(params[:id])
     @field_group = field.field_groups.first
     sort = @field_group.sort
+    @dom_ref = params[:dom_ref]
 
     if field.destroy
       reset_sort(@fieldable, sort)
@@ -53,8 +54,6 @@ class FieldsController < ApplicationController
       respond_to do |format|
         format.js
       end
-
-    else
     end
   end
 

@@ -1,9 +1,0 @@
-<%= form_with model: element_group, url: [elementable, element_group], id: form_id do |f| %>
-  <div class="form">
-    <%= f.collection_select :element_kind_id, ElementKind.all, :id, :name, {prompt: "- select element type name -"}, class: "form-control" %>
-      <button class="btn btn-sm badge badge-primary float-right" type="submit">
-        Submit
-      </button>
-    </div>
-  </div>
-<% end %>

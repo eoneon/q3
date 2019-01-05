@@ -1,4 +1,5 @@
 $("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'categories/forms/form', category: Category.new, form_id: @form_id %>");
+enableNewInputs("#category-new");
 $("#category-tab-index").html("<%= j render 'categories/tabs', categories: @categories %>");
 $(".list-group-item").removeClass("active");
 $("#<%= dom_ref(@category, 'tab-item') %>").addClass("active");

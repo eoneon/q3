@@ -11,10 +11,10 @@
   def create
     @field = Field.find(params[:field_id])
     @value = @field.values.build(value_params)
+    @form_id = params[:form_id]
+    @field_group = FieldGroup.where(field_id: params[:field_id]).first  #@field.field_group
 
     if @value.save
-      @field_group = @field.field_groups.first
-
       respond_to do |format|
         format.js
       end

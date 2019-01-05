@@ -1,0 +1,9 @@
+<ul class="nav">
+  <li class="nav-item-dropdown delete-item <%= dom_ref(element_group, 'delete-item') %>">
+    <a class="nav-link dropdown delete-btn btn btn-sm btn-transparent text-danger p-0 disabled" id="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "times") %></a>
+    <div class="dropdown-menu">
+      <%= link_to 'Remove Element-Kind', [element_group.elementable, element_group],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+      <%= link_to 'Delete Element-Kind', [element_group.elementable, element_group.element_kind],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+    </div>
+  </li>
+</ul>

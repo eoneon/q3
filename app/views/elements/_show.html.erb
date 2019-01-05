@@ -1,0 +1,11 @@
+<div class="card border border-dark" id="<%= dom_ref(element, 'show') %>">
+  <div class="card-header pt-0 pb-3 border">
+    <%= render "elements/header/header", element_group: element_group, element: element %>
+  </div>
+
+  <div class="card-body p-2 collapse" id="<%= dom_ref(element, 'body') %>" data-parent="#<%= dom_ref(element_group.element_kind, 'element-index') %>">
+    <div id="<%= dom_ref(element, 'field-index') %>">
+      <%= render "fields/index", fieldable: element %>
+    </div>
+  </div>
+</div>

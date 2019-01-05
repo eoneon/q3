@@ -1,0 +1,9 @@
+<div class="card border border-dark" id="<%= dom_ref(element_group, 'show') %>">
+  <div class="card-header pt-0 pb-3 border">
+    <%= render "element_kinds/header/header", elementable: elementable, element_group: element_group %>
+  </div>
+
+  <div class="card-body p-2 collapse" id="<%= dom_ref(element_group, 'body') %>" data-parent="#<%= dom_ref(elementable, 'element_kind-index') %>">
+    <%= render "elements/index", element_group: element_group, element_kind: element_group.element_kind %>
+  </div>
+</div>

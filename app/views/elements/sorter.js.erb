@@ -1,1 +1,2 @@
-$("#<%= dynamic_id(name: 'collection', klass: @element_kind, child_klass: 'elements') %>").html("<%= j render 'elements/container/body', element_kind: @element_kind %>");
+//$("#<%#= dom_ref(@element_kind, 'element-index') %>").html("<%#= j render 'elements/index', element_kind: @element_kind, element_group: @element_group %>");
+$("#<%= @dom_ref %>").html("<%= j render 'elements/index', element_kind: @element_kind, element_group: @element_group %>");

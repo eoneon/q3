@@ -3,10 +3,10 @@ class ElementKindsController < ApplicationController
     @elementable = set_parent
     @element_kind = ElementKind.new(element_kind_params)
     @elementable.element_kinds << @element_kind
+    @form_id = params[:form_id]
+    @element_group = @element_kind.element_groups.first
 
     if @element_kind.save
-      @element_group = @element_kind.element_groups.first
-
       respond_to do |format|
         format.js
       end
@@ -17,6 +17,7 @@ class ElementKindsController < ApplicationController
     @elementable = set_parent
     @element_kind = ElementKind.find(params[:id])
     @element_kind.assign_attributes(element_kind_params)
+    @form_id = params[:form_id]
 
     if @element_kind.save
       respond_to do |format|

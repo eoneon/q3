@@ -1,2 +1,3 @@
-$("#<%= dynamic_id(name: 'collection', klass: @element_kind, child_klass: 'element') %>").append('<%= j render "elements/element", element_kind: @element_kind, element: @element %>');
-$("#<%= dynamic_id(name: 'form-new-render', klass: @element_kind, child_klass: 'element') %>").html("<%= j render 'elements/forms/form', element_kind: @element_kind, element: Element.new, form_id: dynamic_id(name: 'form-new', klass: @element_kind, child_klass: 'element') %>");
+$("#<%= dom_ref(@element_kind, 'element-index') %>").append('<%= j render "elements/show", element_group: @element_group, element: @element %>');
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'elements/forms/form', element_kind: @element_kind, element: Element.new, form_id: @form_id %>");
+toggleFormOnCreate('#<%= @form_id %>');

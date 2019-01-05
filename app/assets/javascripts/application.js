@@ -17,18 +17,17 @@
 //= require_tree .
 
 $(document).ready(function(){
-  $("#category-new").find("input:text, button:submit").prop("disabled", false);
+  enableNewInputs("#category-new");
 
   $("body").on("click", ".caret-toggle", function(){
     $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
   });
 
-  $("body").on("click", ".toggle-input-access", function(){
-    var form = $(this).closest(".form");
-    toggleInputAndDelete(form);
+  $("body").on("show.bs.collapse", ".card-body", function(){
+    $(this).closest("div[id*='show']").siblings().find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
   });
 
-  $("body").on("click", ".submit-btn", function(){
+  $("body").on("click", ".toggle-input-access", function(){
     var form = $(this).closest(".form");
     toggleInputAndDelete(form);
   });
@@ -40,6 +39,7 @@ $(document).ready(function(){
     }
   });
 
+  //compare with below
   $("body").on("show.bs.collapse", ".toggle-sibling", function(){
     var sib_id = $(this).attr("id");
     var label = $(this).attr("data-label");
@@ -54,6 +54,18 @@ $(document).ready(function(){
 });
 
 //combined functions
+function toggleFormOnCreate(form) {
+  if ($.inArray('edit', form.split('-')) == -1){
+    var ref_sibling = getCurrentToggleSib(form);
+    var ref_id = $(ref_sibling).attr("id");
+    var target_id = getEditSib(ref_id).attr("id");
+    toggleSibForms(ref_sibling, ref_id);
+    showDisabledDeleteBtn(form);
+    resetDropdownOptions(target_id);
+    resetInputLabel(target_id);
+    toggleCaretDownBodyShow(target_id);
+  }
+}
 function configShow(form) {
   enableToggleInput(form);
   getCaret(form).prop("disabled", false).find("i").toggleClass("fa-caret-right fa-caret-down");
@@ -74,16 +86,51 @@ function toggleInputAccess(form) {
   });
 }
 
-//binary #1
+//combo functions
 function enableToggleInput(form) {
   getInputAccessBtn(form).prop("disabled", false);
 }
 function disableToggleInput(form) {
   getInputAccessBtn(form).prop("disabled", true);
 }
+function enableNewInputs(form) {
+  $(form).find("input:text, button:submit").prop("disabled", false);
+}
+function enableCustomInputs() {
+  $("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
+}
+function resetInputLabel(target_id){
+  var new_label = $("#"+target_id).attr("data-label");
+  return getLabel("#"+target_id).text(new_label);
+}
+function resetDropdownOptions(id){
+  return $('a[href="#'+id+'"]').prop("disabled", true).addClass("disabled").siblings().prop("disabled", false).removeClass("disabled");
+}
+function toggleInputAccessIcon(form) {
+  return getInputAccessIcon(form).toggleClass("fa-toggle-on fa-toggle-off");
+}
+function toggleSibCarets(card){
+  return $(card).siblings().find("i").hasClass("fa-caret-down").first().toggleClass("fa-caret-down fa-caret-right");
+}
+function toggleSibForms(ref_sibling, ref_id){
+  return $(ref_sibling).add(getEditSib(ref_id)).toggleClass("show");
+}
+function toggleCaretDownBodyShow(target){
+  var caret = getCaretIcon("#"+target);
+  if ($(caret).hasClass("fa-caret-right")){
+    $(caret).toggleClass("fa-caret-right fa-caret-down");
+    toggleCardBody("#"+target);
+  }
+}
+function toggleCardBody(target){
+  getBody(target).toggleClass("show");
+}
+function showDisabledDeleteBtn(form){
+  return getDeleteBtn(form).addClass("disabled").find("i").addClass("fa-times");
+}
 
-//header functions: target == ".form" (usually)
-//$(form).closest(".card-header").find(target)
+//getter functions
+//$(form).closest(".card-header").find(target) -> header functions: target == ".form" (usually)
 function getHeader(target) {
   return $(target).closest(".card-header").first();
 }
@@ -99,19 +146,28 @@ function getLabel(target) {
 function getDropdownIcon(target) {
   getDropdownBtn(target).find("i");
 }
+function getDropdownBtn(target) {
+  return getHeader(target).find(".nav-link").first();
+  //return getHeader(target).find("a.nav-link.i.fa-ellipsis-v").first();
+}
 function getDeleteBtn(target) {
   return getHeader(target).find("a.delete-btn");
 }
 function getDeleteIcon(target) {
   return getDeleteBtn(target).find("i");
 }
-function getDropdownBtn(target) {
-  return getHeader(target).find(".nav-link").first();
-}
 function getBody(target) {
   return getHeader(target).next(".card-body");
 }
-
+function getCard(target){
+  return $(target).closest("div[id*='show']");
+}
+function getEditSib(id){
+  return $("#"+id).siblings(".toggle-sibling[id*='edit']");
+}
+function getCurrentToggleSib(form){
+  return $(form).closest(".toggle-sibling");
+}
 //form functions
 function getInputAccessBtn(form) {
   return $(form).find(".toggle-input-access");
@@ -119,15 +175,10 @@ function getInputAccessBtn(form) {
 function getInputAccessIcon(form) {
   return getInputAccessBtn(form).find("i");
 }
-function toggleInputAccessIcon(form) {
-  return getInputAccessIcon(form).toggleClass("fa-toggle-on fa-toggle-off");
-}
+
 function getInputGroupDiv(form) {
   return $(form).find("div.input-group");
 }
 function getInputs(form) {
   return $(form).find("input:text, select, button:submit");
-}
-function enableCustomInputs() {
-  $("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
 }

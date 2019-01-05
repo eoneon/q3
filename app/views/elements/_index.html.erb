@@ -1,0 +1,7 @@
+<% if element_kind.present? && element_kind.elements.any? %>
+  <div id="<%= dom_ref(element_kind, 'element-index') %>">
+    <% element_kind.sorted_elements.each do |element| %>
+      <%= render "elements/show", element_group: element_group, element: element %>
+    <% end %>
+  </div>
+<% end %>

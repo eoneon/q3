@@ -1,9 +1,13 @@
 <ul class="nav">
-  <li class="nav-item-dropdown delete-item <%= dom_ref(field_group, 'delete-item') %>">
+  <li class="nav-item-dropdown delete-item">
     <a class="nav-link dropdown delete-btn btn btn-sm btn-transparent text-danger p-0 disabled" id="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "times") %></a>
     <div class="dropdown-menu">
-      <%= link_to 'Remove Field', [field_group.fieldable, field_group],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
-      <%= link_to 'Delete Field', [field_group.fieldable, field_group.field],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+      <%= link_to 'Remove Field', polymorphic_path([field_group.fieldable, field_group], dom_ref: dom_ref(field_group, 'show')), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
+      <%= link_to 'Delete Field', polymorphic_path([field_group.fieldable, field_group], dom_ref: dom_ref(field_group, 'show')), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
     </div>
   </li>
 </ul>
+<!-- dom_ref: dom_ref(field_group, 'show') -->
+<!-- polymorphic_path([field_group.fieldable, field_group]) -->
+<!-- <%#= dom_ref(field_group, 'delete-item') %> -->
+<!-- [field_group.fieldable, field_group] -->

@@ -1,1 +1,1 @@
-$("#<%= dynamic_id(name: 'list-item', klass: @elementable, child_klass: @element_group) %>").hide();
+$("#<%= dom_ref(@element_group, 'show') %>").hide();

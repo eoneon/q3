@@ -2,19 +2,19 @@ class FieldGroupsController < ApplicationController
   def create
     @fieldable = set_parent
     @field_group = @fieldable.field_groups.build(field_group_params)
+    @form_id = params[:form_id]
 
     if @field_group.save
-      @form_id = params[:form_id]
       respond_to do |format|
         format.js
       end
-    else
     end
   end
 
   def sort_up
     @fieldable = set_parent
     swap_sort(@fieldable, -1)
+    @dom_ref = params[:dom_ref]
 
     respond_to do |format|
       format.js {render file: "/field_groups/sorter.js.erb"}
@@ -24,6 +24,7 @@ class FieldGroupsController < ApplicationController
   def sort_down
     @fieldable = set_parent
     swap_sort(@fieldable, 1)
+    @dom_ref = params[:dom_ref]
 
     respond_to do |format|
       format.js {render file: "/field_groups/sorter.js.erb"}
@@ -34,6 +35,7 @@ class FieldGroupsController < ApplicationController
     @fieldable = set_parent
     @field_group = FieldGroup.find(params[:id])
     sort = @field_group.sort
+    @dom_ref = params[:dom_ref]
 
     if @field_group.destroy
       reset_sort(@fieldable, sort)
@@ -41,7 +43,6 @@ class FieldGroupsController < ApplicationController
       respond_to do |format|
         format.js {render file: "/fields/destroy.js.erb"}
       end
-    else
     end
   end
 

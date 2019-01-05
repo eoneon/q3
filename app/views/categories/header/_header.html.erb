@@ -1,12 +1,9 @@
 <small class="ml-5 my-0 py-0 form-text text-light input-label">Edit Medium</small>
- <!-- id="category-header" -->
 <div class="row justify-content-between align-items-center bg-light">
-   <!-- id="category-caret-toggle" -->
   <button class="caret-toggle btn btn-lg bg-transparent pl-2 border py-0" data-toggle="collapse" data-target="#category-body" type="button" aria-expanded="false" disabled><%= (fa_icon "caret-right") %></button>
 
   <ul class="nav ml-3 mr-0">
     <li class="nav-item-dropdown">
-      <!-- id="category-nav-link" -->
       <a class="nav-link dropdown bg-transparent m-0 p-0 border disabled" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></a>
       <%= render "categories/header/dropdown_menu" %>
     </li>
@@ -25,7 +22,7 @@
       <%= render 'field_groups/forms/form', fieldable: category, field_group: FieldGroup.new, form_id: 'category-field_group-add-form-id' %>
     </div>
   </div>
-   <!-- id="category-delete" -->
+   
   <div class="col-1 border">
     <a id="category-delete-btn" href="" data-method="delete" data-path="" data-remote="true" data-confirm="Are you sure?" class="btn btn-sm btn-transparent text-danger delete-btn disabled" role="button"><%= (fa_icon "times") %></a>
   </div>

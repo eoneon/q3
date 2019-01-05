@@ -24,6 +24,10 @@ module ApplicationHelper
     end
   end
 
+  def dom_exclude(str, optn, tag)
+    optn if str.split('-').exclude?(tag)
+  end
+
   def dom_cond(str, *tags)
     include_any?(str.split('-'), tags)
   end
