@@ -15,9 +15,9 @@ class CategoriesController < ApplicationController
   def create
     @category = Category.new(category_params)
     @categories = Category.all.order(sort: 'asc')
+    @form_id = params[:form_id]
 
     if @category.save
-      @form_id = params[:form_id]
       respond_to do |format|
         format.js
       end
@@ -43,7 +43,7 @@ class CategoriesController < ApplicationController
 
     if category.destroy
       @categories = Category.all.order(sort: 'asc')
-      @category = @categories.first
+      #@category = @categories.first
 
       respond_to do |format|
         format.js

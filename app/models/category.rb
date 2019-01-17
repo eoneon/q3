@@ -1,10 +1,10 @@
 class Category < ApplicationRecord
   include Importable
 
-  has_many :field_groups, as: :fieldable
+  has_many :field_groups, as: :fieldable, dependent: :destroy
   has_many :fields, through: :field_groups
 
-  has_many :element_groups, as: :elementable
+  has_many :element_groups, as: :elementable, dependent: :destroy
   has_many :element_kinds, through: :element_groups
 
   has_many :item_types, dependent: :destroy
@@ -12,6 +12,10 @@ class Category < ApplicationRecord
 
   def sorted_field_groups
     self.field_groups.order(:sort)
+  end
+
+  def sorted_element_groups
+    self.element_groups.order(:sort)
   end
 
   #before_create :set_sort

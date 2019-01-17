@@ -1,19 +1,11 @@
-<div class="card border border-dark">
-  <div class="card-header pt-0 pb-3">
+<div class="card border">
+  <div class="card-header pt-0">
     <%= render "categories/header/header", category: category %>
   </div>
 
-  <div class="card-body collapse  border border-primary p-0" id="category-body">
-    <div class="card card-body p-3" id="">
-      <div id="<%= dom_ref(category, 'field-index') %>">
-        <%= render "fields/index", fieldable: category %>
-      </div>
-    </div>
-
-    <div class="card card-body p-0" id="">
-      <div id="<%= dom_ref(category, 'element_kind-index') %>">
-        <%= render "element_kinds/index", elementable: category %>
-      </div>
+  <div class="card-body p-1 collapse border" id="category-body">
+    <div id="<%= dom_ref(category, 'element_kind-index') %>">
+      <%= render "element_kinds/index", elementable: category %>
     </div>
   </div>
 </div>

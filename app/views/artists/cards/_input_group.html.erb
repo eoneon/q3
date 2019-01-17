@@ -1,0 +1,4 @@
+<div class="input-group input-group-sm align-items-center <%= dom_attr(form_id, ['bg-white', 'bg-disabled'], 'show') %>">
+  <button class="btn btn-sm rounded-circle bg-transparent" type="button" data-toggle="collapse" data-target="#artist-form" aria-expanded="false"><%= (fa_icon "edit") %></button>
+  <%= f.collection_select :id, Artist.ordered_artists, :id, :last_first, {prompt: "- select artist -"}, class: "form-control form-control-sm border-0 mx-2", onchange: 'javascript: $(this).trigger("submit.rails")' %>
+</div>

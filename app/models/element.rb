@@ -1,5 +1,5 @@
 class Element < ApplicationRecord
-  has_many :field_groups, as: :fieldable
+  has_many :field_groups, as: :fieldable, dependent: :destroy
   has_many :fields, through: :field_groups
 
   belongs_to :element_kind

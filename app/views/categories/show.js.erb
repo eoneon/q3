@@ -1,4 +1,7 @@
 $("#category-show").html("<%= j render 'categories/show', category: @category %>");
+$("#category-element_kind-new").html("<%= j render 'element_kinds/forms/form', elementable: @category, element_kind: ElementKind.new, form_id: 'category-element_kind-new-form-id' %>");
+$("#category-element_group-add").html("<%= j render 'element_groups/forms/form', elementable: @category, element_group: ElementGroup.new, form_id: 'category-element_group-add-form-id' %>");
+
 configCategory("#category-edit");
 
 function configCategory(target){

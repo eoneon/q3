@@ -28,10 +28,6 @@ module ApplicationHelper
     optn if str.split('-').exclude?(tag)
   end
 
-  def dom_cond(str, *tags)
-    include_any?(str.split('-'), tags)
-  end
-
   def handle_option_by_type(optns, n)
     if optns.class == Array
       optns[n]
@@ -40,15 +36,29 @@ module ApplicationHelper
     end
   end
 
+  def dom_cond(str, *tags)
+    include_any?(str.split('-'), tags)
+  end
+
+  def check_cond(str, cond, *tags)
+    public_send('include_' + cond + '?', str.split('-'), tags)
+  end
+
   def include_any?(arr_x, arr_y)
     arr_x.any? {|x| arr_y.include?(x)}
+  end
+
+  def include_all?(arr_x, arr_y)
+    arr_x.all? {|x| arr_y.include?(x)}
+  end
+
+  def include_none?(arr_x, arr_y)
+    arr_x.all? {|x| arr_y.exclude?(x)}
   end
 
   def include_pat?(str, pat)
     str.index(/#{pat}/)
   end
-
-
 
   ####end
   def dyno_id(args={})
@@ -70,7 +80,7 @@ module ApplicationHelper
   end
 
   def klass_and_id(klass)
-    [klass_name(klass), klass.id].join('-')
+    [klass_name(klass), klass.id].join('-') if klass.present? && klass.id.present?
   end
 
   def klass_with_id(klass)

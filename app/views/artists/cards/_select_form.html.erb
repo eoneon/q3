@@ -1,0 +1,7 @@
+<%= form_with url: search_artists_path, method: :get, id: form_id do |f| %>
+  <div class="form">
+    <%= hidden_field_tag :form_id, form_id %>
+    <%= render "artists/cards/input_group", f: f, form_id: form_id %>
+  </div>
+<% end %>
+<!-- model: artist, url: artist_path, method: :get, id: form_id -->

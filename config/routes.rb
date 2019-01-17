@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :field_groups
+  resources :item_types, only: [:index]
   resources :categories do
     resources :fields
     resources :field_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
@@ -67,7 +68,7 @@ Rails.application.routes.draw do
       end
     end
     collection do
-      post :import
+      get :search
     end
 
     member do

@@ -1,2 +1,2 @@
-//$("#<%#= dynamic_id(name: 'form-edit-render', klass: @element_kind, child_klass: @element) %>").html("<%#= j render 'elements/forms/form', element_kind: @element_kind, element: @element, form_id: dynamic_id(name: 'form-edit', klass: @element_kind, child_klass: @element) %>");
 $("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'elements/forms/form', element_kind: @element_kind, element: @element, form_id: @form_id %>");
+getDeleteBtn("#<%= @form_id %>").toggleClass("disabled");

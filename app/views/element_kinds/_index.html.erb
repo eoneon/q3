@@ -1,5 +1,6 @@
 <% if elementable.present? && elementable.element_groups.any? %>
-  <% elementable.element_groups.order(:sort).each do |element_group| %>
+  <%# elementable.element_groups.order(:sort).each do |element_group| %>
+  <% elementable.sorted_element_groups.each do |element_group| %>
     <%= render "element_kinds/show", elementable: elementable, element_group: element_group %>
   <% end %>
 <% end %>

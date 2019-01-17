@@ -1,0 +1,7 @@
+<div id="item_type-index">
+  <% artist.item_types.each do |item_type| %>
+    <a class="list-group-item list-group-item-action py-1" id="<%= dom_ref(item_type, 'tab-item') %>" href="<%= artist_item_type_path(artist, item_type) %>" data-remote="true" data-toggle="list">
+      <%= item_type.name %>
+    </a>
+  <% end %>
+</div>

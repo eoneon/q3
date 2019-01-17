@@ -51,6 +51,18 @@ $(document).ready(function(){
       getDeleteIcon("#"+sib_id).removeClass("fa-times");
     }
   });
+
+  $("body").on("show.bs.collapse", "#artist-form", function(){
+    var form = $("#artist-show-form-id");
+    $(form).find(".input-group").toggleClass("bg-white bg-disabled");
+    $(form).find("select").prop("disabled", true);
+  });
+
+  $("body").on("hide.bs.collapse", "#artist-form", function(){
+    var form = $("#artist-show-form-id");
+    $(form).find(".input-group").toggleClass("bg-white bg-disabled");
+    $(form).find("select").prop("disabled", false);
+  });
 });
 
 //combined functions
@@ -128,7 +140,12 @@ function toggleCardBody(target){
 function showDisabledDeleteBtn(form){
   return getDeleteBtn(form).addClass("disabled").find("i").addClass("fa-times");
 }
-
+function addOption(form, id, name){
+  $(form).find("option:last").after("<option value='"+id+"'>"+name+"</option>");
+}
+function removeOption(form, id){
+  $(form).find("option[value='"+id+"']").hide();
+}
 //getter functions
 //$(form).closest(".card-header").find(target) -> header functions: target == ".form" (usually)
 function getHeader(target) {

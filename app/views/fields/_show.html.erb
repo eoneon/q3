@@ -3,7 +3,8 @@
     <%= render "fields/header/header", fieldable: fieldable, field_group: field_group %>
   </div>
 
-  <div class="card-body p-2 collapse" id="<%= dom_ref(field_group, 'body') %>" data-parent="#<%= dom_ref(fieldable, 'field-index') %>">
+  <div class="card-body p-1 collapse" id="<%= dom_ref(field_group, 'body') %>" data-parent="#<%= dom_ref(fieldable, 'body') %>">
+    <div id="<%= dom_ref(field_group.field, 'value-index') %>">
     <%= render "values/index", field_group: field_group, field: field_group.field %>
   </div>
 </div>

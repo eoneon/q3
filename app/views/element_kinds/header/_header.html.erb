@@ -1,10 +1,10 @@
 <small class="ml-5 my-0 py-0 form-text text-muted input-label">Edit Element Kind</small>
-<div class="row justify-content-between align-items-center bg-light" id="">
-  <button class="caret-toggle btn btn-lg bg-transparent pl-2 border py-0" id="" data-toggle="collapse" data-target="#<%= dom_ref(element_group, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
+<div class="row justify-content-between align-items-center bg-light">
+  <button class="caret-toggle btn btn-lg bg-transparent pl-2 border py-0" data-toggle="collapse" data-target="#<%= dom_ref(element_group, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
 
   <ul class="nav ml-3 mr-0">
     <li class="nav-item-dropdown">
-      <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" id="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></a>
+      <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></a>
       <%= render "element_kinds/header/dropdown_menu", element_group: element_group %>
     </li>
   </ul>
@@ -19,7 +19,7 @@
     </div>
   </div>
 
-  <div class="col-1" id="">
+  <div class="col-1">
     <div class="row align-items-center">
       <div class="col mx-2 p-0">
         <%= render "element_groups/header/sorter", elementable: elementable, element_group: element_group %>

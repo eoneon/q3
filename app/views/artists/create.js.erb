@@ -1,11 +1,4 @@
-$("#artist-name-aside-update").html("<%= j render 'artists/aside/display', artist: @artist %>");
-$("#artist-dropdown-aside-update").html("<%= j render 'artists/aside/dropdown', artists: @artists, artist: @artist %>");
-$("#artist-nav-menu-aside-update").html("<%= j render 'artists/aside/nav_menu', artist: @artist %>");
-$("#artist-edit-aside-update").html("<%= j render 'artists/forms/form', artist: @artist, form_id: 'artist-edit-aside-form-id' %>");
-$("#artist-new-aside-update").html("<%= j render 'artists/forms/form', artist: Artist.new, form_id: 'artist-new-aside-form-id' %>");
-$("#item_type-new-tabs-update").html("<%= j render 'item_types/forms/form', artist: @artist, item_type: ItemType.new, form_id: 'item_type-new-tabs-form-id' %>");
-$("#item_type-display-tabs-update").html("<%= j render 'artists/tabs/display', artist: @artist %>");
-$("#item_type-tab-body-update").html("<%= j render 'artists/aside/tabs', artist: @artist %>");
-<% if @artist.present? %>
-  $("#item_type-dropdown-toggle-new-update").removeClass("disabled")
-<% end %>
+$("#artist-show").html('<%= j render "artists/cards/select_form", form_id: "artist-show-form-id" %>').find("option[value='<%= @artist.id %>']").attr("selected", true);
+$("#artist-form").html('<%= j render "artists/cards/form", artist: @artist, form_id: "artist-edit-form-id" %>').toggleClass("show");
+$("#item_type-new").html('<%= j render "item_types/forms/form", artist: @artist, item_type: ItemType.new, form_id: "item_type-new-form-id" %>').find(":text, :submit").prop("disabled", false);
+$("#item_type-new").find(".input-group").toggleClass("bg-white bg-disabled");

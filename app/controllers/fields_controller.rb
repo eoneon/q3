@@ -1,18 +1,11 @@
 class FieldsController < ApplicationController
   def index
     @fields = Field.all
-
-    respond_to do |format|
-      format.html
-      format.csv { send_data @fields.to_csv, filename: "Fields.csv"}
-      format.xls { send_data @fields.to_csv(col_sep: "\t") }
-    end
   end
 
   def create
     @fieldable = set_parent
-    @field = Field.new(field_params)
-
+    @field = @fieldable.fields.build(field_params)
     @fieldable.fields << @field
 
     if @field.save
@@ -20,11 +13,8 @@ class FieldsController < ApplicationController
       @form_id = params[:form_id]
 
       respond_to do |format|
-        format.html
         format.js
       end
-
-    else
     end
   end
 

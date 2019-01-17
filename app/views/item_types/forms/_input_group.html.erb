@@ -1,0 +1,7 @@
+<div class="input-group input-group-sm align-items-center bg-disabled">
+  <% if dom_cond(form_id, 'edit') %>
+    <button class="btn btn-sm rounded-circle bg-transparent <%= dom_attr(form_id, 'toggle-input-access', 'edit') %>" type="button" id="" disabled><%= (fa_icon "toggle-off") %></button>
+  <% end %>
+  <%= f.text_field :name, placeholder: dom_attr(form_id, ['enter item-type name','select an item-type from tab panel'], 'new'), class: "form-control ml-2", disabled: true %>
+  <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit" disabled><%= (fa_icon "plus-circle") %></button>
+</div>

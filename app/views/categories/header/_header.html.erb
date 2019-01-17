@@ -14,15 +14,15 @@
       <%= render "categories/forms/form", category: category, form_id: 'category-edit-form-id' %>
     </div>
 
-    <div class="collapse toggle-sibling" id="category-field-new" data-label="New Field" data-parent="#category-accordion">
-      <%= render "fields/forms/form", fieldable: category, field: Field.new, form_id: 'category-field-new-form-id' %>
+    <div class="collapse toggle-sibling" id="category-element_kind-new" data-label="New Element Kind" data-parent="#category-accordion">
+      <%#= render "element_kinds/forms/form", elementable: category, element_kind: ElementKind.new, form_id: 'element_kind-new-form-id' %>
     </div>
 
-    <div class="collapse toggle-sibling" id="category-field_group-add" data-label="Add Field" data-parent="#category-accordion">
-      <%= render 'field_groups/forms/form', fieldable: category, field_group: FieldGroup.new, form_id: 'category-field_group-add-form-id' %>
+    <div class="collapse toggle-sibling" id="category-element_group-add" data-label="Add Element Kind" data-parent="#category-accordion">
+      <%#= render 'element_groups/forms/form', elementable: category, element_group: ElementGroup.new, form_id: 'element_group-add-form-id' %>
     </div>
   </div>
-   
+
   <div class="col-1 border">
     <a id="category-delete-btn" href="" data-method="delete" data-path="" data-remote="true" data-confirm="Are you sure?" class="btn btn-sm btn-transparent text-danger delete-btn disabled" role="button"><%= (fa_icon "times") %></a>
   </div>

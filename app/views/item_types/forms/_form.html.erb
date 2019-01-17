@@ -1,10 +1,16 @@
 <%= form_with model: item_type, url: [artist, item_type], id: form_id do |f| %>
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
-    <% if form_id == 'category-add-form' %>
-      <%= render "item_types/forms/add_category", item_type: item_type, f: f %>
-    <% else %>
-      <%= render "item_types/forms/edit_item_type", item_type: item_type, f: f %>
+    <% if dom_cond(form_id, 'new') %>
+    <div class="form-row align-items-center">
+      <%= render "item_types/forms/input_group", form_id: form_id, f: f %>
+    </div>
+    <% elsif dom_cond(form_id, 'add') %>
+      <!-- add_category -->
+      <%= render "item_types/forms/input_group_category", item_type: item_type, f: f %>
+    <% elsif dom_cond(form_id, 'properties') %>
+      <!-- edit_item_type -->
+      <%= render "item_types/forms/input_group_properties", item_type: item_type, f: f %>
     <% end %>
   </div>
 <% end %>

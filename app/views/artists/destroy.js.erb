@@ -1,8 +1,14 @@
-$("#item_type-show").hide();
-$("#artist-name-aside-update").html("<%= j render 'artists/aside/display', artist: nil %>");
-$("#artist-dropdown-aside-update").html("<%= j render 'artists/aside/dropdown', artists: @artists %>");
-$("#artist-nav-menu-aside-update").html("<%= j render 'artists/aside/nav_menu', artist: @artist %>");
-$("#artist-edit-aside-update").hide();
-$("#item_type-display-tabs-update").html("<%= j render 'artists/tabs/display', artist: nil %>");
-$("#item_type-dropdown-toggle-new-update").addClass("disabled")
-$("#item_type-tab-body-update").html("<%= j render 'artists/aside/tabs', artist: nil %>");
+//$("#item_type-show").hide();
+//$("#artist-name-aside-update").html("<%#= j render 'artists/aside/display', artist: nil %>");
+//$("#artist-dropdown-aside-update").html("<%#= j render 'artists/aside/dropdown', artists: @artists %>");
+//$("#artist-nav-menu-aside-update").html("<%#= j render 'artists/aside/nav_menu', artist: @artist %>");
+//$("#artist-edit-aside-update").hide();
+//$("#item_type-display-tabs-update").html("<%#= j render 'artists/tabs/display', artist: nil %>");
+//$("#item_type-dropdown-toggle-new-update").addClass("disabled")
+//$("#item_type-tab-body-update").html("<%#= j render 'artists/aside/tabs', artist: nil %>");
+
+//$("#item_type-show").hide();
+$("#artist-show-form-id").html('<%= j render "artists/cards/select_form", form_id: @form_id %>').find("option[value='<%= @artist.id %>']").remove();
+$("#artist-form").html('<%= j render "artists/cards/form", artist: Artist.new, form_id: "artist-new-form-id" %>');
+$("#item_type-new").html('<%= j render "item_types/forms/form", artist: @artist, item_type: ItemType.new, form_id: "item_type-new-form-id" %>').find(":text, :submit").prop("disabled", true);
+$("#item_type-index").remove();

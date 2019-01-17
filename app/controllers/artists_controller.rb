@@ -8,23 +8,24 @@ class ArtistsController < ApplicationController
     end
   end
 
-  def show
-    @artists = Artist.ordered_artists
-    @artist = Artist.find(params[:id])
+  def search
+    #@artists = Artist.ordered_artists
+    @artist = params[:id].present? ? Artist.find(params[:id]) : nil
+    @form_id = params[:form_id]
 
     respond_to do |format|
-      format.js
+      format.js {render file: "/artists/show.js.erb"}
     end
   end
 
   def create
     @artist = Artist.new(artist_params)
+    #@artists = Artist.ordered_artists
+    @form_id = params[:form_id]
 
     if @artist.save
-      @artists = Artist.ordered_artists
-
       respond_to do |format|
-        format.js #{render file: "/artists/update.js.erb"}
+        format.js
       end
     end
   end
@@ -32,12 +33,12 @@ class ArtistsController < ApplicationController
   def update
     @artist = Artist.find(params[:id])
     @artist.assign_attributes(artist_params)
+    #@artists = Artist.ordered_artists
+    @form_id = params[:form_id]
 
     if @artist.save
-      @artists = Artist.ordered_artists
-
       respond_to do |format|
-        format.js
+        format.js {render file: "/artists/create.js.erb"}
       end
     end
   end

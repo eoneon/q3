@@ -1,0 +1,9 @@
+<div class="card-header">
+  <div id="artist-show">
+    <%= render "artists/cards/select_form", form_id: 'artist-show-form-id' %>
+  </div>
+</div>
+
+<div class="card-body collapse bg-light p-0" id="artist-form">
+  <%= render "artists/cards/form", artist: Artist.new, form_id: 'artist-new-form-id' %>
+</div>

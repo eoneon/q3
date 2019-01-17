@@ -3,9 +3,7 @@
     <%= hidden_field_tag :form_id, form_id %>
     <% %w[first_name last_name years].each do |field| %>
       <%= f.fields_for :properties, OpenStruct.new(artist.properties) do |ff| %>
-        <div class="field">
-          <%= ff.text_field field, placeholder: field, class: "form-control" %>
-        </div>
+        <%= ff.text_field field, placeholder: field, class: "form-control" %>
       <% end %>
     <% end %>
     <%= f.number_field :admin_id, placeholder: "artist-id", class: "form-control" %>
