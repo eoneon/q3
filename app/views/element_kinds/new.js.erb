@@ -1,0 +1,33 @@
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'element_kinds/forms/new', element_kind: ElementKind.new, form_id: @form_id %>");
+
+var show_id = "#<%= dom_ref(@element_kind, 'show') %>";
+var tab_item_partial = $("<%= j render 'element_kinds/tab', element_kind: @element_kind %>").addClass("active");
+var show_partial = "<%= j render 'element_kinds/show', element_kind: @element_kind %>";
+
+refreshCreate(show_id, tab_item_partial, show_partial);
+
+function refreshCreate(show_id, tab_item_partial, show_partial){
+  var id_arr = show_id.split('-'); //need to do this in separate call
+  var resource_id = id_arr.splice(0,1); //#=> ["#element_kind"]
+  var tab_index_id = resource_id.push('tab-index') && resource_id; //otherwise returns...2: length #=>["#element_kind", "tab-index"]
+  //resource_id.splice(2, 'tab-index'); //updates arr: param(2) - take first two arr items; param(1) - remove 1 item after offset 2; instead of returning 'removed item' ('show'), return new arr
+  var tab_index_id = tab_index_id.join('-');
+  //console.log(tab_index_id);
+  $(tab_index_id).find('.list-group-item').removeClass("active");
+  $(tab_index_id).append(tab_item_partial);
+  $(resource_id.join(' ')).html(show_partial);
+}
+
+
+//refreshTabs(dom_ref, tab);
+
+//function refreshTabs(dom_ref, tab) {
+//   var id_arr = show_id.split('-');
+//   if ($(show_id).length == 0) {
+//     $(id_arr.splice(0,1).join(' ')).html(show_partial);
+//   } else {
+//     $(show_id).remove();
+//     id_arr.splice(2, 1, 'tab-item') && show_id;
+//     $(show_id.join('-')).removeClass("active");
+//   }
+// }

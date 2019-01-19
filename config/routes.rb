@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :element_kinds
   resources :field_groups
   resources :item_types, only: [:index]
   resources :categories do

@@ -1,0 +1,16 @@
+<div class="row justify-content-center">
+  <h1>Element Kinds: <%= @element_kinds.count %></h1>
+</div>
+<hr>
+
+<div class="row">
+  <div class="col-4">
+    <%= render 'element_kinds/aside', element_kinds: @element_kinds %>
+  </div>
+
+  <div class="col-8">
+    <div id="element_kind">
+      <%#= render "element_kinds/show", element_kind: @element_kind %>
+    </div>
+  </div>
+</div>

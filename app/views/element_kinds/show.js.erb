@@ -1,0 +1,16 @@
+var show_id = "#<%= dom_ref(@element_kind, 'show') %>";
+var show_partial = "<%= j render 'element_kinds/show', element_kind: @element_kind %>";
+
+toggleShowView(show_id, show_partial);
+
+function toggleShowView(show_id, show_partial) {
+  var id_arr = show_id.split('-');
+  if ($(show_id).length == 0) {
+    //#element_kind vs #element_kind-#-show
+    $(id_arr.splice(0,1).join(' ')).html(show_partial);
+  } else {
+    $(show_id).remove();
+    id_arr.splice(2,1, 'tab-item');
+    $(id_arr.join('-')).removeClass("active");
+  }
+}

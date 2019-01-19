@@ -1,4 +1,1 @@
-$("#<%= dom_ref(@elementable, 'element_kind-index') %>").append('<%= j render "element_kinds/show", elementable: @elementable, element_group: @element_group %>');
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'element_kinds/forms/form', elementable: @elementable, element_kind: ElementKind.new, form_id: @form_id %>");
-addOption('#category-element_group-add', '<%= @element_kind.id %>', '<%= @element_kind.name %>');
-toggleFormOnCreate('#<%= @form_id %>');
+//$("#element_kind-show").html("<%#= j render 'element_kinds/show', element_kind: @element_kind %>");
