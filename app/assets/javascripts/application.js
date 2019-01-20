@@ -97,7 +97,22 @@ function toggleInputAccess(form) {
     $(input).prop("disabled") == false ? $(input).prop("disabled", true) : $(input).prop("disabled", false)
   });
 }
-
+function toggleShowView(show_id, show_partial) {
+  var id_arr = show_id.split('-');
+  if ($(show_id).length == 0) {
+    $(id_arr.splice(0,1).join(' ')).html(show_partial);
+  } else {
+    $(show_id).remove();
+    id_arr.splice(2,1, 'tab-item');
+    $(id_arr.join('-')).removeClass("active");
+  }
+}
+function refreshCreate(show_id, tab_item_partial, show_partial){
+  var tab_index_id = show_id.concat('-', 'tab-index');
+  $(tab_index_id).find('.list-group-item').removeClass("active");
+  $(tab_index_id).append(tab_item_partial);
+  $(show_id).html(show_partial);
+}
 //combo functions
 function enableToggleInput(form) {
   getInputAccessBtn(form).prop("disabled", false);
