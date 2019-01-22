@@ -1,0 +1,5 @@
+<% if dom_cond(form_id, 'disabled', 'edit') %>
+  <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit" disabled><%= (fa_icon "plus-circle") %></button>
+<% else %>
+  <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit"><%= (fa_icon "plus-circle") %></button>
+<% end %>

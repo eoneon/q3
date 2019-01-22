@@ -21,7 +21,7 @@ class ElementKindsController < ApplicationController
 
     if @element_kind.save
       @element_group = @element_kind.element_groups.first if @elementable.present?
-      @element_kinds = ElementKind.all
+      #@element_kinds = ElementKind.all
       @form_id = params[:form_id]
 
       respond_to do |format|
@@ -39,7 +39,6 @@ class ElementKindsController < ApplicationController
     if @element_kind.save
       respond_to do |format|
         format.js
-        format.html
       end
     end
   end

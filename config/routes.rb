@@ -1,7 +1,32 @@
 Rails.application.routes.draw do
-  resources :element_kinds
-  resources :field_groups
+  resources :element_kinds do
+    resources :fields, only: [:update, :create]
+    resources :field_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
+  resources :fields do
+    resources :values, only: [:update, :create]
+    resources :value_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
+  resources :values do
+    collection do
+      post :import
+    end
+  end
+
+  #resources :field_groups
+
   resources :item_types, only: [:index]
+
   resources :categories do
     resources :fields
     resources :field_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
@@ -29,38 +54,27 @@ Rails.application.routes.draw do
   end
   #/=categories
 
-  resources :elements do
-    member do
-      post :sort_up, :sort_down
-    end
-    resources :field_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
-      member do
-        post :sort_up, :sort_down
-      end
-    end
-    resources :fields
-  end
+  # resources :elements do
+  #   member do
+  #     post :sort_up, :sort_down
+  #   end
+  #   resources :field_groups, only: [:create, :update, :sort_up, :sort_down, :destroy] do
+  #     member do
+  #       post :sort_up, :sort_down
+  #     end
+  #   end
+  #   resources :fields
+  # end
 
-  resources :fields do
-    resources :values, except: [:index]
-    collection do
-      post :import
-    end
-  end
 
-  resources :values do
-    collection do
-      post :import
-    end
-  end
 
-  resources :element_kinds, only: [] do
-    resources :elements, only: [:create, :update, :sort_up, :sort_down, :destroy] do
-      member do
-        post :sort_up, :sort_down
-      end
-    end
-  end
+  # resources :element_kinds, only: [] do
+  #   resources :elements, only: [:create, :update, :sort_up, :sort_down, :destroy] do
+  #     member do
+  #       post :sort_up, :sort_down
+  #     end
+  #   end
+  # end
 
   resources :artists do
     resources :item_types, only: [:create, :update, :show, :sort_up, :sort_down, :destroy] do

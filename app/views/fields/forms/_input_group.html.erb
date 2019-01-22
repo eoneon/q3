@@ -1,6 +1,7 @@
-<div class="input-group input-group-sm align-items-center bg-disabled">
-  <button class="btn btn-sm rounded-circle bg-transparent toggle-input-access" type="button" id="<%= new_dom_ref(form_id, 'form', 'toggle-btn') %>"><%= (fa_icon "toggle-off") %></button>
-  <%= f.text_field :name, placeholder: "enter field name", class: "form-control ml-2", disabled: true %>
-  <%= f.select :field_type, options_for_select(%w[select_field text_field number_field text_area check_box], selected: field.field_type), {prompt: "- select field type -"}, {class: "form-control border-0", disabled: true} %>
-  <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit" disabled><%= (fa_icon "plus-circle") %></button>
+<div class="input-group input-group-sm align-items-center <%= dom_attr(form_id, ['bg-white', 'bg-disabled'], 'new') %>">
+  <%= hidden_field_tag :form_id, form_id %>
+  <%= render "fields/forms/toggle_btn", form_id: form_id %>
+  <%= f.text_field :name, placeholder: "enter field name", class: "form-control ml-2", disabled: dom_attr(form_id, [false, true], 'new') %>
+  <%= f.select :field_type, options_for_select(%w[select_field text_field number_field text_area check_box], selected: field.field_type), {prompt: "- select field type -"}, {class: "form-control border-0", disabled: dom_attr(form_id, [false, true], 'new')} %>
+  <%= render "fields/forms/submit", form_id: form_id %>
 </div>

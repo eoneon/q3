@@ -1,0 +1,13 @@
+<div class="card bg-light mb-3 p-2" id="field-new">
+  <%= render "fields/forms/form", field: Field.new, url: Field.new, form_id: 'field-new-form-id' %>
+</div>
+
+<div class="card align-items-center bg-light m-0 p-0">
+  <div class="card-body bg-light m-0 p-1">
+    <span>Fields</span>
+  </div>
+</div>
+
+<div class="list-group" id="field-tab-index" role="tablist">
+  <%= render "fields/tabs", fields: @fields %>
+</div>

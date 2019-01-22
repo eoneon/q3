@@ -1,8 +1,8 @@
 class Value < ApplicationRecord
-  belongs_to :field
+  # belongs_to :field
 
   has_many :value_groups, dependent: :destroy
-  has_many :items, through: :value_groups
+  has_many :fields, through: :value_groups
 
   before_create :set_properties
   before_update :reset_properties

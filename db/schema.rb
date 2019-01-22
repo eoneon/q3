@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190116013917) do
+ActiveRecord::Schema.define(version: 20190122020400) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -151,6 +151,8 @@ ActiveRecord::Schema.define(version: 20190116013917) do
     t.bigint "value_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "field_id"
+    t.index ["field_id"], name: "index_value_groups_on_field_id"
     t.index ["item_id"], name: "index_value_groups_on_item_id"
     t.index ["value_id"], name: "index_value_groups_on_value_id"
   end
@@ -172,6 +174,7 @@ ActiveRecord::Schema.define(version: 20190116013917) do
   add_foreign_key "items", "artists"
   add_foreign_key "items", "categories"
   add_foreign_key "value_groups", "\"values\"", column: "value_id"
+  add_foreign_key "value_groups", "fields"
   add_foreign_key "value_groups", "items"
   add_foreign_key "values", "fields"
 end

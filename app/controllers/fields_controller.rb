@@ -3,17 +3,28 @@ class FieldsController < ApplicationController
     @fields = Field.all
   end
 
+  def show
+    @field = Field.find(params[:id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
   def create
     @fieldable = set_parent
-    @field = @fieldable.fields.build(field_params)
-    @fieldable.fields << @field
+    if @fieldable.present?
+      @field = @fieldable.fields.build(field_params)
+      @fieldable.fields << @field
+    else
+      @field = Field.new(field_params)
+    end
 
     if @field.save
-      @field_group = @field.field_groups.first
+      #@field_group = @field.field_groups.first
       @form_id = params[:form_id]
 
       respond_to do |format|
-        format.js
+        format.js {render file: "/fields/new.js.erb"}
       end
     end
   end
