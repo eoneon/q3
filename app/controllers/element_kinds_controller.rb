@@ -20,7 +20,7 @@ class ElementKindsController < ApplicationController
     end
 
     if @element_kind.save
-      @element_group = @element_kind.element_groups.first if @elementable.present?
+      #@element_group = @element_kind.element_groups.first if @elementable.present?
       #@element_kinds = ElementKind.all
       @form_id = params[:form_id]
 
@@ -31,12 +31,12 @@ class ElementKindsController < ApplicationController
   end
 
   def update
-    @elementable = set_parent
+    #@elementable = set_parent
     @element_kind = ElementKind.find(params[:id])
     @element_kind.assign_attributes(element_kind_params)
-    @form_id = params[:form_id]
 
     if @element_kind.save
+      @form_id = params[:form_id]
       respond_to do |format|
         format.js
       end

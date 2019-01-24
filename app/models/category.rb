@@ -29,7 +29,7 @@ class Category < ApplicationRecord
   #   Category.all.order(:sort)
   # end
 
-  def categorizable_types
-    ['Dimension', 'Certificate']
-  end
+  # def categorizable_types
+  #   ['Dimension', 'Certificate']
+  # end
 end

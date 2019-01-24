@@ -1,11 +1,9 @@
-<div id="<%= dom_ref(value, 'show') %>">
-  <div class="card border border-dark">
-    <div class="card-header pt-0 pb-3">
-      <%= render "values/header/header", field_group: field_group, value: value %>
-    </div>
+<div class="card mb-1 border border-dark" id="<%= dom_ref(value, 'show') %>">
+  <div class="card-header pt-0 pb-3">
+    <%= render "values/header/header", field: field, value: value %>
+  </div>
 
-    <div class="card-body collapse bg-light border border-dark m-2 pt-0" id="<%= dom_ref(field_group, value, 'edit-properties') %>" data-parent="#<%= dom_ref(field_group, 'value-index') %>">
-      <%= render "values/forms/form", field: field_group.field, value: value, form_id: dom_ref(field_group, value, 'edit-properties-form-id') %>
-    </div>
+  <div class="card-body collapse bg-light border border-dark m-2 pt-0" id="<%= dom_ref(value, 'edit-properties') %>" data-parent="#<%= dom_ref(field, 'value-index') %>">
+    <%= render "values/forms/form", field: field, value: value, form_id: dom_ref(value, 'edit-properties-form-id') %>
   </div>
 </div>

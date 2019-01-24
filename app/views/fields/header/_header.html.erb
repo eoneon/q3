@@ -14,9 +14,9 @@
       <%= render "fields/forms/form", field: field, url: field, form_id: dom_ref(field, 'edit-form-id') %>
     </div>
 
-    <!-- <div class="collapse toggle-sibling" id="<%#= dom_ref(field, 'value-new') %>" data-label="New Value" data-parent="#<%#= dom_ref(field, 'accordion') %>">
+    <div class="collapse toggle-sibling" id="<%#= dom_ref(field, 'value-new') %>" data-label="New Value" data-parent="#<%= dom_ref(field, 'accordion') %>">
       <%#= render "values/forms/form", field: field, value: Value.new, form_id: dom_ref(field, 'value-new-form-id')  %>
-    </div> -->
+    </div>
   </div>
 
   <div class="col-1">

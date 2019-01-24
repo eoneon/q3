@@ -1,10 +1,10 @@
 class ValueGroupsController < ApplicationController
   def create
-    @field = Field.find(params[:field_id]) value_
+    @field = Field.find(params[:field_id])
     @value_group = @field.value_groups.build(value_group_params)
-    @form_id = params[:form_id]
 
     if @value_group.save
+      @form_id = params[:form_id]
       respond_to do |format|
         format.js
       end
@@ -12,7 +12,7 @@ class ValueGroupsController < ApplicationController
   end
 
   def sort_up
-    @field = set_parent
+    @field = Field.find(params[:field_id])
     swap_sort(@field, -1)
     @dom_ref = params[:dom_ref]
 
@@ -22,23 +22,23 @@ class ValueGroupsController < ApplicationController
   end
 
   def sort_down
-    @field = set_parent
+    @field = Field.find(params[:field_id])
     swap_sort(@field, 1)
-    @dom_ref = params[:dom_ref]
 
     respond_to do |format|
+      @dom_ref = params[:dom_ref]
       format.js {render file: "/value_groups/sorter.js.erb"}
     end
   end
 
   def destroy
-    @field = set_parent
-    @value_group = Field.find(params[:id])
+    @field = Field.find(params[:field_id]) 
+    @value_group = ValueGroup.find(params[:id])
     sort = @value_group.sort
-    @dom_ref = params[:dom_ref]
 
     if @value_group.destroy
       reset_sort(@field, sort)
+      @dom_ref = params[:dom_ref]
 
       respond_to do |format|
         format.js

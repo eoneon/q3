@@ -14,10 +14,12 @@
       <%= render "element_kinds/forms/form", element_kind: element_kind, url: element_kind, form_id: dom_ref(element_kind, 'edit-form-id') %>
     </div>
 
-    <!-- this is going to change to field-new
-    <div class="collapse toggle-sibling" id="<%#= dom_ref(element_kind, 'element-new') %>" data-label="New Element" data-parent="#<%#= dom_ref(element_kind, 'accordion') %>">
-      <%#= render "elements/forms/form", element_kind: element_kind.element_kind, element: Element.new, form_id: dom_ref(element_kind, 'element-new-form-id')  %>
-    </div> -->
+    <div class="collapse toggle-sibling" id="<%= dom_ref(element_kind, 'field-new') %>" data-label="New Field" data-parent="#<%= dom_ref(element_kind, 'accordion') %>">
+      <%= render "fields/forms/form", fieldable: element_kind, field: Field.new, url: polymorphic_url([element_kind, :poly_fields]), form_id: dom_ref(element_kind, 'field-new-form-id') %>
+    </div>
+    <div class="collapse toggle-sibling" id="<%= dom_ref(element_kind, 'field_group-add') %>" data-label="Add Field" data-parent="#<%= dom_ref(element_kind, 'accordion') %>">
+      <%= render 'field_groups/forms/form', fieldable: element_kind, field_group: FieldGroup.new, form_id: dom_ref(element_kind, 'field_group-add-form-id') %>
+    </div>
   </div>
 
   <div class="col-1">

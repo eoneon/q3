@@ -1,20 +1,16 @@
  class ValuesController < ApplicationController
   def index
     @values = Value.all
-    respond_to do |format|
-      format.html
-      format.csv { send_data @values.to_csv }
-      #format.xls { send_data @values.to_csv(col_sep: "\t") }
-    end
   end
 
   def create
+    #@value = Value.new(value_params)
     @field = Field.find(params[:field_id])
     @value = @field.values.build(value_params)
-    @form_id = params[:form_id]
-    @field_group = FieldGroup.where(field_id: params[:field_id]).first  #@field.field_group
+    @field.values << @value
 
     if @value.save
+      @form_id = params[:form_id]
       respond_to do |format|
         format.js
       end
@@ -22,13 +18,12 @@
   end
 
   def update
-    field = Field.find(params[:field_id])
+    #@field = Field.find(params[:field_id])
     @value = Value.find(params[:id])
     @value.assign_attributes(value_params)
-    @form_id = params[:form_id]
 
     if @value.save
-      @field_group = field.field_groups.first
+      @form_id = params[:form_id]
       respond_to do |format|
         if @form_id.split("-").include?("properties")
           format.js {render file: "/values/properties_update.js.erb"}
@@ -41,10 +36,9 @@
 
   def destroy
     @value = Value.find(params[:id])
-    field = @value.field
 
     if @value.destroy
-      @field_group = field.field_groups.first
+      @dom_ref = params[:dom_ref]
       respond_to do |format|
         format.js
       end

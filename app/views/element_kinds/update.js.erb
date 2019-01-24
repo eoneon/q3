@@ -1,0 +1,4 @@
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'element_kinds/forms/form', element_kind: @element_kind, url: @element_kind, form_id: @form_id %>");
+$("#<%= dom_ref(@element_kind, 'tab-item') %>").text("<%= @element_kind.name %>");
+enableToggleInput("#<%= @form_id %>");
+getDeleteBtn("#<%= @form_id %>").toggleClass("disabled");

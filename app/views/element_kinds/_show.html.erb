@@ -3,9 +3,9 @@
     <%= render "element_kinds/header/header", element_kind: element_kind %>
   </div>
 
-  <div class="card-body p-1 collapse" id="<%= dom_ref(element_kind, 'body') %>">
-    <!-- <div id="<%#= dom_ref(element_kind, 'field-index') %>">
-      <%#= render "elements/index", element_kind: element_kind %>
-    </div> -->
+  <div class="card-body p-2 collapse" id="<%= dom_ref(element_kind, 'body') %>">
+    <div id="<%= dom_ref(element_kind, 'field-index') %>">
+      <%= render "fields/poly_fields/index", fieldable: element_kind %>
+    </div>
   </div>
 </div>

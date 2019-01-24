@@ -11,18 +11,10 @@ class FieldsController < ApplicationController
   end
 
   def create
-    @fieldable = set_parent
-    if @fieldable.present?
-      @field = @fieldable.fields.build(field_params)
-      @fieldable.fields << @field
-    else
-      @field = Field.new(field_params)
-    end
+    @field = Field.new(field_params)
 
     if @field.save
-      #@field_group = @field.field_groups.first
       @form_id = params[:form_id]
-
       respond_to do |format|
         format.js {render file: "/fields/new.js.erb"}
       end
@@ -30,7 +22,6 @@ class FieldsController < ApplicationController
   end
 
   def update
-    @fieldable = set_parent
     @field = Field.find(params[:id])
     @field.assign_attributes(field_params)
 
@@ -43,15 +34,14 @@ class FieldsController < ApplicationController
   end
 
   def destroy
-    @fieldable = set_parent
-    field = Field.find(params[:id])
-    @field_group = field.field_groups.first
-    sort = @field_group.sort
-    @dom_ref = params[:dom_ref]
+    #@fieldable = set_parent
+    @field = Field.find(params[:id])
+    #@field_group = field.field_groups.first
+    #sort = @field_group.sort
 
-    if field.destroy
-      reset_sort(@fieldable, sort)
 
+    if @field.destroy
+      @dom_ref = params[:dom_ref]
       respond_to do |format|
         format.js
       end

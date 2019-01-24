@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :element_kinds do
-    resources :fields, only: [:update, :create]
+    resources :poly_fields, only: [:update, :create]
     resources :field_groups, only: [:create, :destroy] do
       member do
         post :sort_up, :sort_down
@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :fields do
-    resources :values, only: [:update, :create]
+    resources :values, except: [:index]
     resources :value_groups, only: [:create, :destroy] do
       member do
         post :sort_up, :sort_down
@@ -22,8 +22,6 @@ Rails.application.routes.draw do
       post :import
     end
   end
-
-  #resources :field_groups
 
   resources :item_types, only: [:index]
 

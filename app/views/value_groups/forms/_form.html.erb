@@ -1,0 +1,8 @@
+<%= form_with model: value_group, url: [field, value_group], id: form_id do |f| %> 
+  <div class="form">
+    <%= hidden_field_tag :form_id, form_id %>
+    <div class="form-row align-items-center">
+      <%= render "value_groups/forms/input_group", f: f, form_id: form_id %>
+    </div>
+  </div>
+<% end %>
