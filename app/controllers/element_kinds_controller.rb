@@ -11,19 +11,10 @@ class ElementKindsController < ApplicationController
   end
 
   def create
-    @elementable = set_parent
-    if @elementable.present?
-      @element_kind = @elementable.element_kinds.build(element_kind_params)
-      @elementable.element_kinds << @element_kind
-    else
-      @element_kind = ElementKind.new(element_kind_params)
-    end
+    @element_kind = ElementKind.new(element_kind_params)
 
     if @element_kind.save
-      #@element_group = @element_kind.element_groups.first if @elementable.present?
-      #@element_kinds = ElementKind.all
       @form_id = params[:form_id]
-
       respond_to do |format|
         format.js {render file: "/element_kinds/new.js.erb"}
       end
@@ -31,7 +22,6 @@ class ElementKindsController < ApplicationController
   end
 
   def update
-    #@elementable = set_parent
     @element_kind = ElementKind.find(params[:id])
     @element_kind.assign_attributes(element_kind_params)
 
@@ -44,15 +34,9 @@ class ElementKindsController < ApplicationController
   end
 
   def destroy
-    @elementable = set_parent
     @element_kind = ElementKind.find(params[:id])
 
-    @element_group = element_kind.element_groups.first
-    sort = @element_group.sort #if @element_group.present?
-
-    if element_kind.destroy
-      reset_sort(@elementable, sort) #if @element_group.present?
-
+    if @element_kind.destroy
       respond_to do |format|
         format.js
       end

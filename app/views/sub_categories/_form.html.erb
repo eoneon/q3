@@ -1,9 +1,0 @@
-<%= form_for [fieldable, sub_category], id: form_id, remote: true do |f| %>
-<div class="form">
-  <%= hidden_field_tag "sub_category[categorizable_type]", categorizable %>
-    <%= f.collection_select :categorizable_id, konstant(categorizable).all, :id, :name, {prompt: "- select #{klass_name(categorizable)} -"}, class: "form-control" %>
-    <button class="btn btn-sm badge badge-primary float-right" type="submit">
-      Submit
-    </button>
-  </div>
-<% end %>

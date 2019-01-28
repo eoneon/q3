@@ -1,11 +1,12 @@
-<div class="card mb-1 border border-dark" id="<%= dom_ref(field, 'show') %>">
+<div class="card mb-1 border border-dark" id="<%= dom_ref(field_group, 'show') %>">
   <div class="card-header pt-0 pb-3 border">
-    <%= render "fields/poly_fields/header", fieldable: fieldable, field: field %>
+    <%= render "fields/poly_fields/header", fieldable: fieldable, field_group: field_group, field: field %>
   </div>
 
-  <div class="card-body p-1 collapse" id="<%= dom_ref(field, 'body') %>" data-parent="#<%= dom_ref(fieldable, 'body') %>">
-    <div id="<%= dom_ref(field, 'value-index') %>">
+  <div class="card-body p-1 collapse" id="<%= dom_ref(field_group, 'body') %>">
+    <div class="<%= dom_ref(field, 'value-index') %>">
       <%= render "values/index", field: field %>
     </div>
   </div>
 </div>
+ <!-- data-parent="#<%#= dom_ref(fieldable, 'body') %>" -->

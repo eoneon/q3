@@ -1,9 +1,0 @@
-<div class="dropdown float-right">
-  <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-    Options
-  </button>
-  <div class="dropdown-menu">
-    <a class="dropdown-item" data-toggle="collapse" href="#value-<%= value.id %>-form">Edit Value!</a>
-    <%= link_to 'Delete Value', [field, value],  method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "dropdown-item" %>
-  </div>
-</div>

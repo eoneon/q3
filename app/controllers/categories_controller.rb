@@ -1,7 +1,6 @@
 class CategoriesController < ApplicationController
   def index
-    @categories = Category.all.order(sort: 'asc')
-    #@category = @categories.first
+    @categories = Category.all
   end
 
   def show
@@ -13,7 +12,6 @@ class CategoriesController < ApplicationController
 
   def create
     @category = Category.new(category_params)
-    @categories = Category.all.order(sort: 'asc')
 
     if @category.save
       @form_id = params[:form_id]
@@ -29,8 +27,6 @@ class CategoriesController < ApplicationController
 
     if @category.save
       @form_id = params[:form_id]
-      #@categories = Category.all.order(sort: 'asc')
-
       respond_to do |format|
         format.js
       end
@@ -38,12 +34,9 @@ class CategoriesController < ApplicationController
   end
 
   def destroy
-    category = Category.find(params[:id])
+    @category = Category.find(params[:id])
 
-    if category.destroy
-      @categories = Category.all.order(sort: 'asc')
-      #@category = @categories.first
-
+    if @category.destroy
       respond_to do |format|
         format.js
       end

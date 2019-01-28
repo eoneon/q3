@@ -1,5 +1,5 @@
 <% if element_kind.present? && element_kind.elements.any? %>
   <% element_kind.sorted_elements.each do |element| %>
-    <%= render "elements/show", element_group: element_group, element: element %>
+    <%= render "elements/show", element_kind: element_kind, element: element %>
   <% end %>
 <% end %>

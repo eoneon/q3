@@ -1,3 +1,3 @@
-$("#<%= dom_ref(@elementable, 'element_kind-index') %>").append('<%= j render "element_kinds/show", elementable: @elementable, element_group: @element_group %>');
 $("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'element_groups/forms/form', elementable: @elementable, element_group: ElementGroup.new, form_id: @form_id %>");
+$("#<%= dom_ref(@elementable, 'element_kind-index') %>").html('<%= j render "element_kinds/poly_element_kinds/index", elementable: @elementable  %>');
 toggleFormOnCreate('#<%= @form_id %>');

@@ -1,7 +1,5 @@
 <div class="dropdown-menu">
   <a class="dropdown-item disabled" data-toggle="collapse" href="#category-edit">Edit Category</a>
-  <!-- <a class="dropdown-item" data-toggle="collapse" href="#category-field-new">New Field</a>
-  <a class="dropdown-item" data-toggle="collapse" href="#category-field_group-add">Add Field</a> -->
-  <a class="dropdown-item" data-toggle="collapse" href="#category-element_kind-new">New Element Kind</a>
-  <a class="dropdown-item" data-toggle="collapse" href="#category-element_group-add">Add Element Kind</a>
+  <a class="dropdown-item" data-toggle="collapse" href="#<%= dom_ref(category, 'element_kind-new') %>">New Element Kind</a>
+  <a class="dropdown-item" data-toggle="collapse" href="#<%= dom_ref(category, 'element_group-add') %>">Add Element Kind</a>
 </div>

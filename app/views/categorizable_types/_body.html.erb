@@ -1,8 +1,0 @@
-<div class="card-body p-3">
-  <span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: klass_name(categorizable_type), child_klass: nil) %></span>
-  <div id="<%= dynamic_id(name: 'collection', klass: klass_name(categorizable_type), child_klass: nil) %>">
-    <% category.sorted_subcategories(categorizable_type).each do |sub_category| %>
-      <%= render "categorizables/categorizable", category: category, sub_category: sub_category %>
-    <% end %>
-  </div>
-</div>

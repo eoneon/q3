@@ -4,7 +4,7 @@
 
   <ul class="nav ml-3 mr-0">
     <li class="nav-item-dropdown">
-      <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" id="" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></a>
+      <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></a>
       <%= render "fields/header/dropdown_menu", field: field %>
     </li>
   </ul>
@@ -14,8 +14,12 @@
       <%= render "fields/forms/form", field: field, url: field, form_id: dom_ref(field, 'edit-form-id') %>
     </div>
 
-    <div class="collapse toggle-sibling" id="<%#= dom_ref(field, 'value-new') %>" data-label="New Value" data-parent="#<%= dom_ref(field, 'accordion') %>">
-      <%#= render "values/forms/form", field: field, value: Value.new, form_id: dom_ref(field, 'value-new-form-id')  %>
+    <div class="collapse toggle-sibling" id="<%= dom_ref(field, 'value-new') %>" data-label="New Value" data-parent="#<%= dom_ref(field, 'accordion') %>">
+      <%= render "values/forms/form", field: field, value: Value.new, form_id: dom_ref(field, 'value-new-form-id')  %>
+    </div>
+
+    <div class="collapse toggle-sibling" id="<%= dom_ref(field, 'value_group-add') %>" data-label="Add Value" data-parent="#<%= dom_ref(field, 'accordion') %>">
+      <%= render "value_groups/forms/form", field: field, value_group: ValueGroup.new, form_id: dom_ref(field, 'value_group-add-form-id') %>
     </div>
   </div>
 
@@ -25,7 +29,6 @@
         <%#= render "fields/sort_btn_group", fieldable: fieldable, field: field %>
       </div>
       <div class="col p-0">
-        <%#= render "fields/header/delete_menu", fieldable: fieldable, field: field %>
         <%= link_to (fa_icon "times"), field_path(field), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
       </div>
     </div>

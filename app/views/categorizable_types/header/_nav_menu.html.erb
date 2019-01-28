@@ -1,9 +1,0 @@
-<ul class="nav">
-  <li class="nav-item-dropdown">
-    <a class="nav-link dropdown font-weight-light text-muted px-2" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "bars") %></a>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-new-target', klass: category, child_klass: klass_name(categorizable_type)) %>">New <%= categorizable_type %></a>
-      <a class="dropdown-item" data-toggle="collapse" href="#<%= dynamic_id(name: 'form-add-target', klass: category, child_klass: klass_name(categorizable_type)) %>">Add Existing <%= categorizable_type %></a>
-    </div>
-  </li>
-</ul>

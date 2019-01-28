@@ -1,25 +1,4 @@
-$("#category-show").html("<%= j render 'categories/show', category: @category %>");
-$("#category-element_kind-new").html("<%= j render 'element_kinds/forms/form', elementable: @category, element_kind: ElementKind.new, form_id: 'category-element_kind-new-form-id' %>");
-$("#category-element_group-add").html("<%= j render 'element_groups/forms/form', elementable: @category, element_group: ElementGroup.new, form_id: 'category-element_group-add-form-id' %>");
+var show_id = "#<%= dom_ref(@category, 'show') %>";
+var show_partial = "<%= j render 'categories/show', category: @category %>";
 
-configCategory("#category-edit");
-
-function configCategory(target){
-  configShow(target);
-  getDeleteBtn(target).attr("href", "<%= category_path(@category) %>");
-}
-
-//unecessary: deletion just returns category to defaults
-// function deconfigShow(show) {
-//   var form = $(show).find("form");
-//   disableToggleInput(form);
-//   getCaret(form).prop("disabled", true).find("i").addClass("fa-caret-right").removeClass("fa-caret-down");
-//   getLabel(form).toggleClass("text-light text-muted");
-//   getDropdownBtn(form).addClass("disabled").removeClass("text-info").attr("href", "");
-//   getDeleteBtn(form).addClass("disabled").attr("href", "");
-//   disableInputs(form);
-// }
-//
-// function disableInputs(form) {
-//   getInputs(form).prop("disabled", true).addClass("disabled");
-// }
+toggleShowView(show_id, show_partial);

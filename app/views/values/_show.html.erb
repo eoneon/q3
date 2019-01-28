@@ -3,7 +3,8 @@
     <%= render "values/header/header", field: field, value: value %>
   </div>
 
-  <div class="card-body collapse bg-light border border-dark m-2 pt-0" id="<%= dom_ref(value, 'edit-properties') %>" data-parent="#<%= dom_ref(field, 'value-index') %>">
+  <div class="card-body collapse bg-light border border-dark m-2 pt-0" id="<%= dom_ref(value, 'edit-properties') %>">
     <%= render "values/forms/form", field: field, value: value, form_id: dom_ref(value, 'edit-properties-form-id') %>
   </div>
 </div>
+ <!-- data-parent="#<%#= dom_ref(field, 'value-index') %>" -->

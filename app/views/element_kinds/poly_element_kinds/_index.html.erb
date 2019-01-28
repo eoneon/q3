@@ -1,0 +1,5 @@
+<% if elementable.present? && elementable.element_groups.any? %>
+  <% elementable.element_groups.order(:sort).each do |element_group| %>
+    <%= render "element_kinds/poly_element_kinds/show", elementable: elementable, element_group: element_group, element_kind: element_group.element_kind %>
+  <% end %>
+<% end %>

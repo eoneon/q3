@@ -11,11 +11,11 @@
 
   <div class="col" id="<%= dom_ref(element, 'accordion') %>">
     <div class="collapse show toggle-sibling" id="<%= dom_ref(element, 'edit') %>" data-label="Edit Element" data-parent="#<%= dom_ref(element, 'accordion') %>">
-      <%= render "elements/forms/form", element_kind: element.element_kind, element: element, form_id: dom_ref(element, 'edit-form-id') %>
+      <%= render "elements/forms/form", element_kind: element_kind, element: element, form_id: dom_ref(element, 'edit-form-id') %>
     </div>
 
     <div class="collapse toggle-sibling" id="<%= dom_ref(element, 'field-new') %>" data-label="New Field" data-parent="#<%= dom_ref(element, 'accordion') %>">
-      <%= render "fields/forms/form", fieldable: element, field: Field.new, form_id: dom_ref(element, 'field-new-form-id') %>
+      <%= render "fields/forms/form", fieldable: element, field: Field.new, url: polymorphic_url([element, :poly_fields]), form_id: dom_ref(element, 'field-new-form-id') %>
     </div>
 
     <div class="collapse toggle-sibling" id="<%= dom_ref(element, 'field_group-add') %>" data-label="Add Field" data-parent="#<%= dom_ref(element, 'accordion') %>">
@@ -26,10 +26,10 @@
   <div class="col-1">
     <div class="row align-items-center">
       <div class="col mx-2 p-0">
-        <%= render "elements/header/sorter", element_kind: element.element_kind, element: element %>
+        <%= render "elements/header/sorter", element_kind: element_kind, element: element %>
       </div>
       <div class="col p-0">
-        <%= link_to (fa_icon "times"), [element.element_kind, element], method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-transparent text-danger delete-btn px-0 disabled" %>
+        <%= link_to (fa_icon "times"), [element_kind, element], method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm btn-transparent text-danger delete-btn px-0 disabled" %>
       </div>
     </div>
   </div>

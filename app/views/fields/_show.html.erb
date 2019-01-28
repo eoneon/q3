@@ -3,9 +3,9 @@
     <%= render "fields/header/header", field: field %>
   </div>
 
-  <div class="card-body p-1 collapse" id="<%= dom_ref(field, 'body') %>" data-parent="#<%#= dom_ref(fieldable, 'body') %>">
-    <div id="<%= dom_ref(field, 'value-index') %>">
-      <%#= render "values/index", field: field %>
+  <div class="card-body p-1 collapse" id="<%= dom_ref(field, 'body') %>">
+    <div class="<%= dom_ref(field, 'value-index') %>">
+      <%= render "values/index", field: field %>
     </div>
   </div>
 </div>

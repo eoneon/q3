@@ -1,2 +1,1 @@
-$("#<%= dom_ref(@dom_ref) %>").html('<%= j render "fields/index", fieldable: @fieldable %>');
-//$(".<%#= dom_ref(@fieldable, sorter) %>").html('<%#= j render "field_groups/sorter", fieldable: @fieldable %>');
+$(".<%= dom_ref(@field, 'value-index') %>").html('<%= j render "value/index", field: @field %>');

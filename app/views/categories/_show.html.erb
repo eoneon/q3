@@ -1,11 +1,11 @@
-<div class="card border">
+<div class="card border m-1 border-dark" id="<%= dom_ref(category, 'show') %>">
   <div class="card-header pt-0">
     <%= render "categories/header/header", category: category %>
   </div>
 
-  <div class="card-body p-1 collapse border" id="category-body">
+  <div class="card-body p-2 collapse show" id="<%= dom_ref(category, 'body') %>">
     <div id="<%= dom_ref(category, 'element_kind-index') %>">
-      <%= render "element_kinds/index", elementable: category %>
+      <%= render "element_kinds/poly_element_kinds/index", elementable: category %>
     </div>
   </div>
 </div>

@@ -1,0 +1,4 @@
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'element_kinds/forms/form', elementable: @elementable, element_kind: ElementKind.new, url: polymorphic_url([@elementable, :poly_element_kinds]), form_id: @form_id %>");
+$("#<%= dom_ref(@elementable, 'field-index') %>").html('<%= j render "element_kinds/poly_element_kinds/index", elementable: @elementable %>');
+toggleFormOnCreate('#<%= @form_id %>');
+addOption("#<%= dom_ref(@elementable, 'field_group-add') %>", '<%= @field.id %>', '<%= @field.name %>');

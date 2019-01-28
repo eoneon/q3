@@ -17,14 +17,17 @@
 //= require_tree .
 
 $(document).ready(function(){
-  enableNewInputs("#category-new");
+  //enableNewInputs("#category-new");
 
   $("body").on("click", ".caret-toggle", function(){
     $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
   });
 
   $("body").on("show.bs.collapse", ".card-body", function(){
-    $(this).closest("div[id*='show']").siblings().find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
+    var card_sibs = $(this).closest("div[id*='show']").siblings();
+    $(card_sibs).find(".card-body").removeClass("show");
+    $(card_sibs).find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
+    //$(this).closest("div[id*='show']").siblings().find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
   });
 
   $("body").on("click", ".toggle-input-access", function(){

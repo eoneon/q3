@@ -2,11 +2,10 @@ class ElementsController < ApplicationController
   def create
     @element_kind = ElementKind.find(params[:element_kind_id])
     @element = @element_kind.elements.build(element_params)
-    @form_id = params[:form_id]
-    #@element_kind.elements << @element
+    @element_kind.elements << @element
 
     if @element.save
-      @element_group = @element_kind.element_groups.first
+      @form_id = params[:form_id]
       respond_to do |format|
         format.js
       end

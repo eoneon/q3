@@ -1,2 +1,2 @@
-$("#category-tab-index").html("<%= j render 'categories/tabs', categories: @categories %>");
-$("#category-show").html("<%= j render 'categories/show', category: nil %>");
+$("#<%= dom_ref(@category, 'tab-item') %>").remove(); 
+$("#<%= dom_ref(@category, 'show') %>").remove();
