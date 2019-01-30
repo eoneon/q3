@@ -6,10 +6,17 @@ Rails.application.routes.draw do
         post :sort_up, :sort_down
       end
     end
+    resources :element_joins, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+    resources :elements, only: [:update, :destroy]
   end
-  
+
   resources :element_kinds do
-    resources :elements, only: [:create, :update, :destroy] do
+    resources :elements, only: [:create, :update, :destroy]
+    resources :element_joins, only: [:create, :destroy] do
       member do
         post :sort_up, :sort_down
       end

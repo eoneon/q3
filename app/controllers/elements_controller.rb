@@ -1,8 +1,12 @@
 class ElementsController < ApplicationController
   def create
-    @element_kind = ElementKind.find(params[:element_kind_id])
-    @element = @element_kind.elements.build(element_params)
-    @element_kind.elements << @element
+    # @element_kind = ElementKind.find(params[:element_kind_id])
+    # @element = @element_kind.elements.build(element_params)
+    # @element_kind.elements << @element
+
+    @poly_element = set_parent
+    @element = @poly_element.elements.build(element_params)
+    @poly_element.elements << @element
 
     if @element.save
       @form_id = params[:form_id]
@@ -13,7 +17,12 @@ class ElementsController < ApplicationController
   end
 
   def update
-    @element_kind = ElementKind.find(params[:element_kind_id])
+    # @element_kind = ElementKind.find(params[:element_kind_id])
+    # @element = Element.find(params[:id])
+    # @element.assign_attributes(element_params)
+    # @form_id = params[:form_id]
+
+    @poly_element = set_parent
     @element = Element.find(params[:id])
     @element.assign_attributes(element_params)
     @form_id = params[:form_id]
@@ -54,7 +63,7 @@ class ElementsController < ApplicationController
 
     if @element.destroy
       respond_to do |format|
-        format.js
+        format.js 
       end
     end
   end

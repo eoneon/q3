@@ -1,0 +1,2 @@
+$("#<%= dom_ref(@poly_element, 'element-index') %>").html('<%= j render "elements/poly_elements/index", poly_element: @poly_element  %>');
+$("#<%= dom_ref(@poly_element, 'element_join-add-form-id') %>").html("<%= j render 'element_joins/forms/form', poly_element: @poly_element, element_join: ElementJoin.new, form_id: dom_ref(@poly_element, 'element_join-add-form-id') %>");

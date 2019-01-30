@@ -15,7 +15,7 @@
     </div>
 
     <div class="collapse toggle-sibling" id="<%= dom_ref(element_kind, 'element-new') %>" data-label="New Element" data-parent="#<%= dom_ref(element_kind, 'accordion') %>">
-      <%= render "elements/forms/form", element_kind: element_kind, element: Element.new, form_id: dom_ref(element_kind, 'element-new-form-id') %>
+      <%= render "elements/forms/form", poly_element: element_kind, element: Element.new, form_id: dom_ref(element_kind, 'element-new-form-id') %>
     </div>
 
     <!-- <div class="collapse toggle-sibling" id="<%#= dom_ref(element_kind, 'field-new') %>" data-label="New Field" data-parent="#<%#= dom_ref(element_kind, 'accordion') %>">
@@ -34,7 +34,7 @@
       </div>
       <div class="col p-0">
         <!-- <%#= link_to (fa_icon "times"), field_value_path(field_group.field, value, dom_ref: dom_ref(field_group, 'show')), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %> -->
-        <%= link_to (fa_icon "times"), element_kind_path(element_kind), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
+        <%= link_to (fa_icon "times"), element_kind, method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
       </div>
     </div>
   </div>

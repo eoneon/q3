@@ -1,3 +1,3 @@
-<% ElementKind.all.order(:kind).each do |element_kind| %>
+<% ElementKind.all.each do |element_kind| %>
   <%= render "element_kinds/tab", element_kind: element_kind %>
 <% end %>

@@ -1,5 +1,7 @@
 class Category < ApplicationRecord
-  include Importable
+  #include Importable
+  has_many :element_joins, as: :poly_element, dependent: :destroy
+  has_many :elements, through: :element_joins
 
   has_many :field_groups, as: :fieldable, dependent: :destroy
   has_many :fields, through: :field_groups

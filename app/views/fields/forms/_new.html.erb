@@ -1,3 +1,12 @@
-<div id="category-field-new-form">
-  <%= render "fields/forms/form", fieldable: fieldable, field: Field.new, form_id: dom_ref(fieldable, 'field-new-form-id') %>
-</div>
+<%= form_with model: field, url: field, id: form_id do |f| %>
+  <div class="form">
+    <%= hidden_field_tag :form_id, form_id %>
+    <div class="form-row align-items-center">
+      <div class="input-group input-group-sm align-items-center bg-white">
+        <%= f.text_field :name, placeholder: "enter field name", class: "form-control ml-2" %>
+        <%= f.select :field_type, options_for_select(%w[select_field text_field number_field text_area check_box], selected: field.field_type), {prompt: "- select field type -"}, {class: "form-control border-0"} %>
+        <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit"><%= (fa_icon "plus-circle") %></button>
+      </div>
+    </div>
+  </div>
+<% end %>

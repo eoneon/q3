@@ -14,12 +14,16 @@
       <%= render "categories/forms/form", category: category, form_id: dom_ref(category, 'edit-form-id') %>
     </div>
 
-    <div class="collapse toggle-sibling" id="<%= dom_ref(category, 'element_kind-new') %>" data-label="New Element Kind" data-parent="#<%= dom_ref(category, 'accordion') %>">
-      <%= render "element_kinds/forms/form", elementable: category, element_kind: ElementKind.new, url: polymorphic_url([category, :poly_element_kinds]), form_id: dom_ref(category, 'element_kind-new-form-id') %>
+    <!-- <div class="collapse toggle-sibling" id="<%#= dom_ref(category, 'element_kind-new') %>" data-label="New Element Kind" data-parent="#<%#= dom_ref(category, 'accordion') %>">
+      <%#= render "element_kinds/forms/form", elementable: category, element_kind: ElementKind.new, url: polymorphic_url([category, :poly_element_kinds]), form_id: dom_ref(category, 'element_kind-new-form-id') %>
     </div>
 
-    <div class="collapse toggle-sibling" id="<%= dom_ref(category, 'element_group-add') %>" data-label="Add Element Kind" data-parent="#<%= dom_ref(category, 'accordion') %>">
-      <%= render 'element_groups/forms/form', elementable: category, element_group: ElementGroup.new, form_id: dom_ref(category, 'element_group-add-form-id') %>
+    <div class="collapse toggle-sibling" id="<%#= dom_ref(category, 'element_group-add') %>" data-label="Add Element Kind" data-parent="#<%#= dom_ref(category, 'accordion') %>">
+      <%#= render 'element_groups/forms/form', elementable: category, element_group: ElementGroup.new, form_id: dom_ref(category, 'element_group-add-form-id') %>
+    </div> -->
+
+    <div class="collapse toggle-sibling" id="<%= dom_ref(category, 'element_join-add') %>" data-label="Add Element" data-parent="#<%= dom_ref(category, 'accordion') %>">
+      <%= render 'element_joins/forms/form', poly_element: category, element_join: ElementJoin.new, form_id: dom_ref(category, 'element_join-add-form-id') %>
     </div>
   </div>
 

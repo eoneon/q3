@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190124175329) do
+ActiveRecord::Schema.define(version: 20190130021915) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,9 +56,19 @@ ActiveRecord::Schema.define(version: 20190124175329) do
     t.index ["elementable_type", "elementable_id"], name: "index_element_groups_on_elementable_type_and_elementable_id"
   end
 
+  create_table "element_joins", force: :cascade do |t|
+    t.bigint "element_id"
+    t.string "poly_element_type"
+    t.bigint "poly_element_id"
+    t.integer "sort"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["element_id"], name: "index_element_joins_on_element_id"
+    t.index ["poly_element_type", "poly_element_id"], name: "index_element_joins_on_poly_element_type_and_poly_element_id"
+  end
+
   create_table "element_kinds", force: :cascade do |t|
     t.string "name"
-    t.string "kind"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -67,10 +77,8 @@ ActiveRecord::Schema.define(version: 20190124175329) do
     t.string "name"
     t.string "kind"
     t.integer "sort"
-    t.bigint "element_kind_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["element_kind_id"], name: "index_elements_on_element_kind_id"
   end
 
   create_table "field_groups", force: :cascade do |t|
@@ -161,14 +169,11 @@ ActiveRecord::Schema.define(version: 20190124175329) do
   create_table "values", force: :cascade do |t|
     t.string "name"
     t.hstore "properties"
-    t.bigint "field_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["field_id"], name: "index_values_on_field_id"
     t.index ["properties"], name: "index_values_on_properties", using: :gist
   end
 
-  add_foreign_key "elements", "element_kinds"
   add_foreign_key "field_groups", "fields"
   add_foreign_key "invoices", "suppliers"
   add_foreign_key "item_types", "artists"
@@ -177,5 +182,4 @@ ActiveRecord::Schema.define(version: 20190124175329) do
   add_foreign_key "value_groups", "\"values\"", column: "value_id"
   add_foreign_key "value_groups", "fields"
   add_foreign_key "value_groups", "items"
-  add_foreign_key "values", "fields"
 end

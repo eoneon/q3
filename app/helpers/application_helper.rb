@@ -1,4 +1,9 @@
 module ApplicationHelper
+  def exclusive_vl(parent_obj, child_obj, other_obj)
+    id_set = parent_obj.public_send(kollection_name(child_obj)).map{|obj| obj.public_send(kollection_name(other_obj)).first}
+    konstant(other_obj).where.not(id: id_set)
+  end
+
   def dom_ref(*obj_ref)
     obj_ref.compact.map {|i| format_ref(i)}.join('-')
   end
