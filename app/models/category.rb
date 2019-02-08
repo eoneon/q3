@@ -1,5 +1,6 @@
 class Category < ApplicationRecord
-  #include Importable
+  include Importable
+
   has_many :element_joins, as: :poly_element, dependent: :destroy
   has_many :elements, through: :element_joins
 
@@ -12,12 +13,21 @@ class Category < ApplicationRecord
   has_many :item_types, dependent: :destroy
   has_many :items
 
+  validates :name,
+            presence: true,
+            uniqueness: { case_sensitive: false },
+            length: { minimum: 3, maximum: 254 }
+
   def sorted_field_groups
     self.field_groups.order(:sort)
   end
 
   def sorted_element_groups
     self.element_groups.order(:sort)
+  end
+
+  def sorted_element_joins
+    self.element_joins.order(:sort)
   end
 
   #before_create :set_sort

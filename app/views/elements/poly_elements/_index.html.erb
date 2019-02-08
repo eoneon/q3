@@ -1,5 +1,5 @@
 <% if poly_element.present? && poly_element.element_joins.any? %>
-  <% poly_element.sorted_element_joins.each do |element_join| %>
-    <%= render "elements/poly_elements/show", poly_element: poly_element, element: element_join.element %>
+  <% poly_element.element_joins.order(:sort).each do |element_join| %>
+    <%= render "elements/poly_elements/show", poly_element: poly_element, element_join: element_join %>
   <% end %>
 <% end %>

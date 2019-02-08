@@ -1,5 +1,5 @@
 <%= f.fields_for :properties, OpenStruct.new(value.properties) do |ff| %>
-  <% %w(tagline description attribute).each do |k| %>
+  <% %w(title body attribute).each do |k| %>
     <div class="form-row align-items-center">
       <div class="col radio-group">
         <span class="m-0 p-0"><small><%= "#{k} value" %></small></span>
@@ -18,7 +18,7 @@
             <%= ff.radio_button k, 'custom', class: 'form-check-input', onchange: 'javascript: $(this).trigger("submit.rails")' %>
             <%= ff.label 'custom', class: 'form-check-label' %>
           </div>
-          <%= ff.text_field "#{k}_value", placeholder: "#{k} value", class: 'form-control form-control-sm', disabled: true %>
+          <%= ff.text_field "#{k}_value", placeholder: "#{k} value", class: 'form-control form-control-sm', onchange: 'javascript: $(this).trigger("submit.rails")', disabled: true %>
         </div>
       </div>
     </div>

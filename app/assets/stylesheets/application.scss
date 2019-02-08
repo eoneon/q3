@@ -100,3 +100,10 @@ button:focus {
 .caret-toggle {
   width: 12px;
 }
+
+.file-upload > input{
+   display: none;
+}
+.file-upload > label{
+  cursor:pointer;
+}

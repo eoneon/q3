@@ -1,6 +1,12 @@
 class FieldsController < ApplicationController
   def index
     @fields = Field.all
+
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='fields.xlsx'"}
+      format.csv { send_data @fields.to_csv }
+      format.html
+    end
   end
 
   def show

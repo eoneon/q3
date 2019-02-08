@@ -1,4 +1,14 @@
 class ElementsController < ApplicationController
+  def index
+    @elements = Element.all
+
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='elements.xlsx'"}
+      format.csv { send_data @elements.to_csv }
+      format.html
+    end
+  end
+
   def create
     # @element_kind = ElementKind.find(params[:element_kind_id])
     # @element = @element_kind.elements.build(element_params)
@@ -35,10 +45,10 @@ class ElementsController < ApplicationController
   end
 
   def sort_up
-    @element_kind = set_parent
-    swap_sort(@element_kind, -1)
+    @poly_element = set_parent
+    swap_sort(@poly_element, -1)
     @dom_ref = params[:dom_ref]
-    @element_group = @element_kind.element_groups.first
+    @element_join = @poly_element.element_joins.first
 
     respond_to do |format|
       format.js {render file: "/elements/sorter.js.erb"}
@@ -46,10 +56,10 @@ class ElementsController < ApplicationController
   end
 
   def sort_down
-    @element_kind = set_parent
-    swap_sort(@element_kind, 1)
+    @poly_element = set_parent
+    swap_sort(@poly_element, 1)
     @dom_ref = params[:dom_ref]
-    @element_group = @element_kind.element_groups.first
+    @element_join = @poly_element.element_joins.first
 
     respond_to do |format|
       format.js {render file: "/elements/sorter.js.erb"}
@@ -59,13 +69,18 @@ class ElementsController < ApplicationController
   def destroy
     @element_kind = ElementKind.find(params[:element_kind_id])
     @element = Element.find(params[:id])
-    @element_group = @element_kind.element_groups.first
+    @element_join = @element_kind.element_joins.first
 
     if @element.destroy
       respond_to do |format|
-        format.js 
+        format.js
       end
     end
+  end
+
+  def import
+    Element.import(params[:file])
+    redirect_to elements_path, notice: 'Elements imported.'
   end
 
   private

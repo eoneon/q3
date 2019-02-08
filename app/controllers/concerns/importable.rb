@@ -1,5 +1,4 @@
-require 'active_support/concern'
-
+#require 'active_support/concern'
 module Importable
   extend ActiveSupport::Concern
 
@@ -21,15 +20,6 @@ module Importable
         record = find_by(id: row["id"]) || new
         record.attributes = row.to_hash
         record.save!
-      end
-    end
-
-    def open_spreadsheet(file)
-      case File.extname(file.original_filename)
-      when ".csv" then Csv.new(file.path, nil, :ignore)
-      when ".xls" then Excel.new(file.path, nil, :ignore)
-      when ".xlsx" then Excelx.new(file.path, nil, :ignore)
-      else raise "Unknown file type: #{file.original_filename}"
       end
     end
   end

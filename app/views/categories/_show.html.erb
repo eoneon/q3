@@ -4,11 +4,11 @@
   </div>
 
   <div class="card-body p-2 collapse show" id="<%= dom_ref(category, 'body') %>">
-    <!-- <div id="<%#= dom_ref(category, 'element_kind-index') %>">
-      <%#= render "element_kinds/poly_element_kinds/index", elementable: category %>
-    </div> -->
     <div id="<%= dom_ref(category, 'element-index') %>">
       <%= render "elements/poly_elements/index", poly_element: category %>
+    </div>
+    <div id="<%= dom_ref(category, 'element_kind-index') %>">
+      <%= render "element_kinds/poly_element_kinds/index", elementable: category %>
     </div>
   </div>
 </div>

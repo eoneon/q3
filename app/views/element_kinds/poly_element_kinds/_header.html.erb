@@ -18,9 +18,9 @@
       <%= render "elements/forms/form", element_kind: element_kind, element: Element.new, form_id: dom_ref(element_kind, 'element-new-form-id') %>
     </div>
 
-    <!-- <div class="collapse toggle-sibling" id="<%#= dom_ref(element_group, 'element_group-add') %>" data-label="Add Element" data-parent="#<%#= dom_ref(element_group, 'accordion') %>">
-      <%#= render "element_groups/forms/form", elementable: elementable, element_group: ElementGroup.new, form_id: dom_ref(element_kind, 'element_group-add-form-id') %>
-    </div> -->
+    <div class="collapse toggle-sibling" id="<%= dom_ref(element_group, 'element_join-add') %>" data-label="Add Element" data-parent="#<%= dom_ref(element_group, 'accordion') %>">
+      <%= render 'element_joins/forms/form', poly_element: element_kind, element_join: ElementJoin.new, form_id: dom_ref(element_kind, 'element_join-add-form-id') %>
+    </div>
   </div>
 
   <div class="col-1">

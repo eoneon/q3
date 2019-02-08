@@ -1,6 +1,7 @@
 <div class="card bg-light mb-3 p-2" id="category-new">
   <%= render "categories/forms/new", category: Category.new, form_id: "category-new-form-id" %>
 </div>
+<%= render "categories/import", url: import_categories_path %>
 
 <div class="card align-items-center bg-light m-0 p-0">
   <div class="card-body bg-light m-0 p-1">

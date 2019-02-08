@@ -1,11 +1,16 @@
 class Value < ApplicationRecord
-  # belongs_to :field
+  include Importable
 
   has_many :value_groups, dependent: :destroy
   has_many :fields, through: :value_groups
 
   before_create :set_properties
-  before_update :reset_properties
+  #before_update :reset_properties
+
+  validates :name,
+            presence: true,
+            #uniqueness: { case_sensitive: false },
+            length: { minimum: 2, maximum: 254 }
 
   def set_properties
     self.properties["title_value"] = name
@@ -15,10 +20,12 @@ class Value < ApplicationRecord
 
   def reset_properties
     %w(title body attribute).each do |k|
-      if properties[k] == 'none' || (properties[k] == 'custom' && properties["#{k}_value"] == name)
+      if properties.nil? || properties["#{k}_value"] == name
+        self.properties["#{k}_value"] = name
+      elsif properties[k] == 'none' || (properties[k] == 'custom' && properties["#{k}_value"] == name)
         properties["#{k}_value"] = ""
-      elsif properties[k] == name
-        properties["#{k}_value"] = name
+      # elsif properties[k] == name
+      #   properties["#{k}_value"] = name
       end
     end
   end

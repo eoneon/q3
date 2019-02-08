@@ -1,6 +1,12 @@
 class CategoriesController < ApplicationController
   def index
     @categories = Category.all
+
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='categories.xlsx'"}
+      format.csv { send_data @categories.to_csv }
+      format.html
+    end
   end
 
   def show

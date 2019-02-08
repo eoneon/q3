@@ -1,5 +1,6 @@
 class ElementKind < ApplicationRecord
-  #has_many :elements, dependent: :destroy
+  include Importable
+
   has_many :element_joins, as: :poly_element, dependent: :destroy
   has_many :elements, through: :element_joins
 
@@ -9,6 +10,11 @@ class ElementKind < ApplicationRecord
   has_many :field_groups, as: :fieldable, dependent: :destroy
   has_many :fields, through: :field_groups
 
+  validates :name,
+            presence: true,
+            uniqueness: { case_sensitive: false },
+            length: { minimum: 3, maximum: 254 }
+            
   def self.sorted_element_kinds
     ElementKind.all.order(:kind)
   end

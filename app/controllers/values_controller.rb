@@ -1,10 +1,15 @@
  class ValuesController < ApplicationController
   def index
     @values = Value.all
+
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='values.xlsx'"}
+      format.csv { send_data @values.to_csv }
+      format.html
+    end
   end
 
   def create
-    #@value = Value.new(value_params)
     @field = Field.find(params[:field_id])
     @value = @field.values.build(value_params)
     @field.values << @value
@@ -18,7 +23,7 @@
   end
 
   def update
-    #@field = Field.find(params[:field_id])
+    @field = Field.find(params[:field_id])
     @value = Value.find(params[:id])
     @value.assign_attributes(value_params)
 

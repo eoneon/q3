@@ -1,6 +1,12 @@
 class ElementKindsController < ApplicationController
   def index
     @element_kinds = ElementKind.all
+
+    respond_to do |format|
+      format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='element_kinds.xlsx'"}
+      format.csv { send_data @element_kinds.to_csv }
+      format.html
+    end
   end
 
   def show
@@ -41,6 +47,11 @@ class ElementKindsController < ApplicationController
         format.js
       end
     end
+  end
+
+  def import
+    ElementKind.import(params[:file])
+    redirect_to element_kinds_path, notice: 'Element-Kinds imported.'
   end
 
   private

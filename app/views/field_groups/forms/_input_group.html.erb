@@ -1,5 +1,5 @@
 <div class="input-group input-group-sm align-items-center bg-disabled">
   <button class="btn btn-sm rounded-circle bg-transparent toggle-input-access" type="button"><%= (fa_icon "toggle-off") %></button>
-  <%= f.collection_select :field_id, Field.all, :id, :name, {prompt: "- select field -"}, {class: "form-control border-0 ml-2", disabled: true} %>
+  <%= f.collection_select :field_id, filtered_vl(fieldable, 'field'), :id, :name, {prompt: "- select field -"}, {class: "form-control border-0 ml-2", disabled: true} %>
   <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit" disabled><%= (fa_icon "plus-circle") %></button>
 </div>

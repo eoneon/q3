@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
   resources :categories do
+    collection do
+      post :import
+    end
     resources :poly_element_kinds, only: [:update, :create]
     resources :element_groups, only: [:create, :destroy] do
       member do
@@ -15,6 +18,9 @@ Rails.application.routes.draw do
   end
 
   resources :element_kinds do
+    collection do
+      post :import
+    end
     resources :elements, only: [:create, :update, :destroy]
     resources :element_joins, only: [:create, :destroy] do
       member do
@@ -30,6 +36,9 @@ Rails.application.routes.draw do
   end
 
   resources :fields do
+    collection do
+      post :import
+    end
     resources :values, except: [:index]
     resources :value_groups, only: [:create, :destroy] do
       member do
@@ -38,7 +47,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :elements, only: [] do
+  resources :elements, only: [:index, :destroy] do
+    collection do
+      post :import
+    end
     resources :poly_fields, only: [:update, :create]
     resources :field_groups, only: [:create, :destroy] do
       member do
@@ -46,6 +58,13 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  resources :values, only: [:index, :destroy] do
+    collection do
+      post :import
+    end
+  end
+
   resources :artists
   resources :suppliers
   # resources :artists do

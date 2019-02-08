@@ -1,5 +1,10 @@
 module ApplicationHelper
-  def exclusive_vl(parent_obj, child_obj, other_obj)
+  def filtered_vl(parent_obj, child_obj)
+    set = parent_obj.public_send(kollection_name(child_obj)).pluck(:name).uniq
+    konstant(child_obj).where.not(name: set)
+  end
+
+  def filtered_thru_vl(parent_obj, child_obj, other_obj)
     id_set = parent_obj.public_send(kollection_name(child_obj)).map{|obj| obj.public_send(kollection_name(other_obj)).first}
     konstant(other_obj).where.not(id: id_set)
   end

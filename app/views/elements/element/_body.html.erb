@@ -1,6 +1,0 @@
-<span class="collapse dynamic-id"><%= dynamic_id(name: 'collection', klass: element_kind, child_klass: 'element') %></span>
-<div id="<%= dynamic_id(name: 'collection', klass: element_kind, child_klass: 'element') %>">
-  <% element_kind.elements.order(:sort) do |element| %>
-    <%= render "elements/element", element_kind: element_kind, element: element %>
-  <% end %>
-</div>

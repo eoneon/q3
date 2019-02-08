@@ -10,12 +10,16 @@
   </ul>
 
   <div class="col" id="<%= dom_ref(element_kind, 'accordion') %>">
-    <div class="collapse show toggle-sibling" id="<%= dom_ref(element_kind, 'edit') %>" data-label="Edit Element Kind" data-parent="#<%= dom_ref(element_kind, 'accordion') %>">
+    <div class="collapse show toggle-sibling" id="<%= dom_ref(element_kind, 'edit') %>" data-label="Edit Element Kind: <%= element_kind.name %>" data-parent="#<%= dom_ref(element_kind, 'accordion') %>">
       <%= render "element_kinds/forms/form", element_kind: element_kind, url: element_kind, form_id: dom_ref(element_kind, 'edit-form-id') %>
     </div>
 
-    <div class="collapse toggle-sibling" id="<%= dom_ref(element_kind, 'element-new') %>" data-label="New Element" data-parent="#<%= dom_ref(element_kind, 'accordion') %>">
+    <div class="collapse toggle-sibling" id="<%= dom_ref(element_kind, 'element-new') %>" data-label="New Element for: <%= element_kind.name %>" data-parent="#<%= dom_ref(element_kind, 'accordion') %>">
       <%= render "elements/forms/form", poly_element: element_kind, element: Element.new, form_id: dom_ref(element_kind, 'element-new-form-id') %>
+    </div>
+
+    <div class="collapse toggle-sibling" id="<%= dom_ref(element_kind, 'element_join-add') %>" data-label="Add Element for: <%= element_kind.name %>" data-parent="#<%= dom_ref(element_kind, 'accordion') %>">
+      <%= render 'element_joins/forms/form', poly_element: element_kind, element_join: ElementJoin.new, form_id: dom_ref(element_kind, 'element_join-add-form-id') %>
     </div>
 
     <!-- <div class="collapse toggle-sibling" id="<%#= dom_ref(element_kind, 'field-new') %>" data-label="New Field" data-parent="#<%#= dom_ref(element_kind, 'accordion') %>">
