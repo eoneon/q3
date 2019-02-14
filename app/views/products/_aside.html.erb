@@ -1,0 +1,14 @@
+<div class="card bg-light mb-3 p-2" id="product-new">
+  <%= render "products/forms/new", product: Product.new, form_id: "product-new-form-id" %>
+</div>
+<%= render "products/import", url: import_products_path %>
+
+<div class="card align-items-center bg-light m-0 p-0">
+  <div class="card-body bg-light m-0 p-1">
+    <span>Products</span>
+  </div>
+</div>
+
+<div class="list-group" id="product-tab-index" role="tablist">
+  <%= render "products/tabs", products: products %>
+</div>

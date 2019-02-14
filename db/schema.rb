@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190130021915) do
+ActiveRecord::Schema.define(version: 20190213221714) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,14 @@ ActiveRecord::Schema.define(version: 20190130021915) do
     t.string "name"
     t.string "fields"
     t.integer "sort"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "category_kinds", force: :cascade do |t|
+    t.string "name"
+    t.integer "sort"
+    t.hstore "tags"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -108,6 +116,18 @@ ActiveRecord::Schema.define(version: 20190130021915) do
     t.index ["supplier_id"], name: "index_invoices_on_supplier_id"
   end
 
+  create_table "item_groups", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "sort"
+    t.string "origin_type"
+    t.bigint "origin_id"
+    t.string "target_type"
+    t.bigint "target_id"
+    t.index ["origin_type", "origin_id"], name: "index_item_groups_on_origin_type_and_origin_id"
+    t.index ["target_type", "target_id"], name: "index_item_groups_on_target_type_and_target_id"
+  end
+
   create_table "item_types", force: :cascade do |t|
     t.integer "sort"
     t.hstore "properties"
@@ -135,6 +155,14 @@ ActiveRecord::Schema.define(version: 20190130021915) do
     t.index ["category_id"], name: "index_items_on_category_id"
     t.index ["invoice_id"], name: "index_items_on_invoice_id"
     t.index ["properties"], name: "index_items_on_properties", using: :gist
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string "name"
+    t.integer "sort"
+    t.hstore "tags"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "sub_categories", force: :cascade do |t|

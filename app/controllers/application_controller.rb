@@ -3,8 +3,27 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def set_origin
+    get_obj(params)
+  end
+
+  def set_target
+    get_obj(params[:item_group])
+  end
+
+  def get_obj(param_key)
+    poly_klasses = %w[product category artist element element_kind]
+    if poly_klass = poly_klasses.detect { |pk| param_key[:"#{pk}_id"].present? }
+      poly_klass.camelize.constantize.find param_key[:"#{poly_klass}_id"]
+    end
+  end
+
+  def build_join(origin_obj, target_obj)
+    origin_obj.public_send(target_obj.class.name.underscore.pluralize) << target_obj
+  end
+
   def set_parent
-    parent_klasses = %w[category artist element element_kind]
+    parent_klasses = %w[product category artist element element_kind]
     if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
       klass.camelize.constantize.find params[:"#{klass}_id"]
     end

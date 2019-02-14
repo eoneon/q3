@@ -1,0 +1,6 @@
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'products/forms/new', product: Product.new, form_id: @form_id %>");
+var show_id = "#product";
+var tab_item_partial = $("<%= j render 'products/tab', product: @product %>").addClass("active");
+var show_partial = "<%= j render 'products/show', product: @product %>";
+
+refreshCreate(show_id, tab_item_partial, show_partial);

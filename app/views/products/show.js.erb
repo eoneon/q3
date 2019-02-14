@@ -1,0 +1,4 @@
+var show_id = "#<%= dom_ref(@product, 'show') %>";
+var show_partial = "<%= j render 'products/show', product: @product %>";
+
+toggleShowView(show_id, show_partial);

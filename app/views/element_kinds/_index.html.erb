@@ -1,5 +1,10 @@
-<% if elementable.present? && elementable.element_groups.any? %>
-  <% elementable.sorted_element_groups.each do |element_group| %>
-    <%= render "element_kinds/poly_fields/show", elementable: elementable, element_group: element_group, element_kind: element_group.element_kind %>
+<%# if elementable.present? && elementable.element_groups.any? %>
+<% if elementable.present? && elementable.item_groups.any? %>
+  <%# elementable.sorted_element_groups.each do |element_group| %>
+  <% elementable.sorted_item_groups.each do |item_group| %>
+    <%#= item_group.element_kind.name %>
+    <%= item_group.right_item.name %>
+    <%#= render "element_kinds/poly_fields/show", elementable: elementable, element_group: element_group, element_kind: element_group.element_kind %>
+    <%#= render "element_kinds/poly_fields/show", elementable: elementable, element_group: item_group, element_kind: item_group.item_group.right_item %>
   <% end %>
 <% end %>

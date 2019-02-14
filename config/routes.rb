@@ -1,4 +1,13 @@
 Rails.application.routes.draw do
+  resources :products do
+    collection do
+      post :import
+    end
+    resources :item_groups, only: [:create, :destroy]
+    resources :category_kinds, except: [:index]
+    resources :poly_element_kinds, except: [:index]
+  end
+
   resources :categories do
     collection do
       post :import

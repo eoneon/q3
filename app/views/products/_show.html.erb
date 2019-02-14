@@ -1,0 +1,14 @@
+<div class="card border m-1 border-dark" id="<%= dom_ref(product, 'show') %>">
+  <div class="card-header pt-0">
+    <%= render "products/header/header", product: product %>
+  </div>
+
+  <div class="card-body p-2 collapse show" id="<%= dom_ref(product, 'body') %>">
+    <!-- <div id="<%#= dom_ref(product, 'category_kind-index') %>">
+      <%#= render "category_kinds/index", left_side: product %>
+    </div> -->
+    <div id="<%= dom_ref(product, 'element_kind-index') %>">
+      <%= render "element_kinds/poly_element_kinds/index", elementable: product %>
+    </div>
+  </div>
+</div>

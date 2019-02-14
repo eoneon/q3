@@ -1,0 +1,32 @@
+<small class="ml-5 my-0 py-0 form-text text-muted input-label">Edit Art Product</small>
+<div class="row justify-content-between align-items-center bg-light">
+  <button class="caret-toggle btn btn-lg bg-transparent pl-2 border py-0" data-toggle="collapse" data-target="#<%= dom_ref(product, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-down") %></button>
+
+  <ul class="nav ml-3 mr-0">
+    <li class="nav-item-dropdown">
+      <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><%= (fa_icon "ellipsis-v") %></a>
+      <%= render "products/header/dropdown_menu", product: product %>
+    </li>
+  </ul>
+
+  <div class="col" id="<%= dom_ref(product, 'accordion') %>">
+    <div class="collapse show toggle-sibling" id="product-edit" data-label="Edit Art Product" data-parent="#<%= dom_ref(product, 'accordion') %>">
+      <%= render "products/forms/form", product: product, form_id: dom_ref(product, 'edit-form-id') %>
+    </div>
+
+    <div class="collapse toggle-sibling" id="<%= dom_ref(product, 'item_group-add') %>" data-label="Add Category Kind" data-parent="#<%= dom_ref(product, 'accordion') %>">
+      <%= render 'item_groups/forms/form', origin: product, item_group: ItemGroup.new, form_id: dom_ref(product, 'item_group-add-form-id') %>
+    </div>
+  </div>
+
+  <div class="col-1">
+    <div class="row align-items-center">
+      <div class="col mx-2 p-0">
+        <%#= render "item_kinds/header/sorter", itemable: itemable, item_kind: item_kind %>
+      </div>
+      <div class="col p-0">
+        <%#= link_to (fa_icon "times"), product_path(product), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
+      </div>
+    </div>
+  </div>
+</div>
