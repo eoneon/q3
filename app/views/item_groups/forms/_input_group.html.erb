@@ -1,6 +1,5 @@
 <div class="input-group input-group-sm align-items-center bg-disabled">
   <button class="btn btn-sm rounded-circle bg-transparent toggle-input-access" type="button"><%= (fa_icon "toggle-off") %></button>
-  <%#= f.collection_select :right_item_id, filtered_vl(left_item, 'element_kind'), :id, :name, {prompt: "- select element-kind name -"}, class: "form-control border-0 ml-2", disabled: true %>
-  <%= f.collection_select :element_kind_id, ElementKind.all, :id, :name, {prompt: "- select element-kind name -"}, class: "form-control border-0 ml-2", disabled: true %>
+  <%= f.collection_select snake_to_fk(target), konstant(target).all, :id, :name, {prompt: "- select element-kind name -"}, class: "form-control border-0 ml-2", disabled: true %>
   <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit" disabled><%= (fa_icon "plus-circle") %></button>
 </div>

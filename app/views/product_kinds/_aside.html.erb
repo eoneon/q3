@@ -1,0 +1,14 @@
+<div class="card bg-light mb-3 p-2" id='<%= "#{obj_to_snake(origins.first)}-new" %>'>
+  <%= render "product_kinds/forms/new", origin: konstant('product_kind').new, form_id: "#{obj_to_snake(origins.first)}-new-form-id" %>
+</div>
+<%= render "product_kinds/import", url: import_product_parts_path %>
+
+<div class="card align-items-center bg-light m-0 p-0">
+  <div class="card-body bg-light m-0 p-1">
+    <span><%= obj_to_cap_hyph_str(origins.first).pluralize %></span>
+  </div>
+</div>
+
+<div class="list-group" id='<%= "#{obj_to_snake(origins.first)}-tab-index" %>' role="tablist">
+  <%= render "product_kinds/tabs", origins: origins %>
+</div>

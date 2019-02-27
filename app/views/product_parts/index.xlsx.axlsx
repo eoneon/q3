@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Product-Parts") do |sheet|
+  # Create the header row
+  sheet.add_row ["name", "id"]
+  # Create entries for each item
+  @product_parts.each do |product_part|
+    sheet.add_row [product_part.id, product_part.type, product_part.name]
+  end
+end

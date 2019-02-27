@@ -12,22 +12,24 @@ class ApplicationController < ActionController::Base
   end
 
   def get_obj(param_key)
-    poly_klasses = %w[product category artist element element_kind]
+    poly_klasses = %w[product_kind medium material sub_medium edition signature certificate mounting dimension product category artist element element_kind]
     if poly_klass = poly_klasses.detect { |pk| param_key[:"#{pk}_id"].present? }
       poly_klass.camelize.constantize.find param_key[:"#{poly_klass}_id"]
     end
   end
 
-  def build_join(origin_obj, target_obj)
-    origin_obj.public_send(target_obj.class.name.underscore.pluralize) << target_obj
+  def obj_kollection(origin_obj, target_obj)
+    origin_obj.public_send(target_obj.class.name.underscore.pluralize)
   end
 
-  def set_parent
-    parent_klasses = %w[product category artist element element_kind]
-    if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
-      klass.camelize.constantize.find params[:"#{klass}_id"]
-    end
+  def build_join(origin_obj, target_obj)
+    obj_kollection(origin_obj, target_obj) << target_obj
+    #origin_obj.item_groups.first.update(origin_type: origin_obj.type)
   end
+
+  # def kill_join(origin_obj, target_obj)
+  #   obj_kollection(origin_obj, target_obj).destroy(target_obj)
+  # end
 
   def target_klass
     params[:controller].singularize.camelize.constantize
@@ -52,4 +54,11 @@ class ApplicationController < ActionController::Base
       sort_obj.update(sort: sort_obj.sort - 1)
     end
   end
+
+  # def set_parent
+  #   parent_klasses = %w[product category artist element element_kind]
+  #   if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
+  #     klass.camelize.constantize.find params[:"#{klass}_id"]
+  #   end
+  # end
 end

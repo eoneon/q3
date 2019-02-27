@@ -12,34 +12,36 @@ class ItemGroupsController < ApplicationController
     end
   end
 
-  # def sort_up
-  #   @left_item = set_parent
-  #   swap_sort(@left_item, -1)
-  #   @dom_ref = params[:dom_ref]
-  #
-  #   respond_to do |format|
-  #     format.js {render file: "/item_groups/sorter.js.erb"}
-  #   end
-  # end
-  #
-  # def sort_down
-  #   @left_item = set_parent
-  #   swap_sort(@left_item, 1)
-  #   @dom_ref = params[:dom_ref]
-  #
-  #   respond_to do |format|
-  #     format.js {render file: "/item_groups/sorter.js.erb"}
-  #   end
-  # end
+  def sort_up
+    item_group = ItemGroup.find(params[:id])
+    @origin = item_group.origin
+    @target = item_group.target
+    swap_sort(@origin, -1)
+
+    respond_to do |format|
+      format.js {render file: "/item_groups/sorter.js.erb"}
+    end
+  end
+
+  def sort_down
+    item_group = ItemGroup.find(params[:id])
+    @origin = item_group.origin
+    @target = item_group.target
+    swap_sort(@origin, 1)
+
+    respond_to do |format|
+      format.js {render file: "/item_groups/sorter.js.erb"}
+    end
+  end
 
   def destroy
-    @left_item = set_parent
-    @item_group = ElementGroup.find(params[:id])
-    sort = @item_group.sort
-    @dom_ref = params[:dom_ref]
+    item_group = ItemGroup.find(params[:id])
+    @origin = item_group.origin
+    @target = item_group.target
+    sort = item_group.sort
 
-    if @item_group.destroy
-      reset_sort(@left_item, sort)
+    if item_group.destroy
+      reset_sort(@origin, sort)
 
       respond_to do |format|
         format.js

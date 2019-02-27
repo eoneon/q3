@@ -8,6 +8,59 @@ Rails.application.routes.draw do
     resources :poly_element_kinds, except: [:index]
   end
 
+  resources :product_parts, only: [:index] do
+    collection do
+      post :import
+    end
+  end
+
+  resources :product_kinds do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+    resources :media, only: [:create, :destroy]
+    resources :signatures, only: [:create, :destroy]
+    resources :certificates, only: [:create, :destroy]
+    collection do
+      post :import
+    end
+  end
+
+  resources :media, only: [] do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+    resources :materials, only: [:create, :destroy]
+  end
+
+  resources :materials, only: [] do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
+  resources :signatures, only: [] do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
+  resources :certificates, only: [] do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
   resources :categories do
     collection do
       post :import

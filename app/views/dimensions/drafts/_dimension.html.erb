@@ -1,9 +1,0 @@
-<div class="media">
-  <div class="media-body">
-    <tr>
-    <td><%= dimension.id %></td>
-    <td><%= link_to dimension.name, dimension_path(dimension) %></td>
-    <td><%= link_to 'Edit', edit_dimension_path(dimension), class: "btn btn-primary btn-xs" %> <%= link_to 'Delete', dimension,  method: :delete, class: 'btn btn-danger btn-xs', data: {confirm: "Are you sure?"} %></td>
-    </tr>
- </div>
-</div>

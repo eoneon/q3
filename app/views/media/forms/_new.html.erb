@@ -1,0 +1,11 @@
+<%= form_with model: element_kind, url: element_kind, id: form_id do |f| %>
+  <div class="form">
+    <%= hidden_field_tag :form_id, form_id %>
+    <div class="form-row align-items-center">
+      <div class="input-group input-group-sm align-items-center bg-white">
+        <%= f.text_field :name, placeholder: "enter element-kind name", class: "form-control ml-2" %>
+        <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit"><%= (fa_icon "plus-circle") %></button>
+      </div>
+    </div>
+  </div>
+<% end %>

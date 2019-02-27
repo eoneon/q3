@@ -1,0 +1,6 @@
+<div class="dropdown-menu">
+  <a class="dropdown-item disabled" data-toggle="collapse" href='#<%= "#{obj_to_snake(origin)}-edit" %>'>Edit <%= obj_to_cap_hyph_str(origin) %></a>
+  <% origin_assocs(origin).each do |target| %>
+    <a class="dropdown-item" data-toggle="collapse" href="#<%= dom_ref(target, 'item_group-add') %>">Add <%= obj_to_cap_hyph_str(target) %></a>
+  <% end %>
+</div>

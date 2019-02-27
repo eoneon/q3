@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+<h1>Product-Parts</h1> product_parts
+
+<p>
+  <%= link_to 'Excel', product_parts_path(format: :xlsx), class: 'btn btn-sm badge badge-primary' %>
+  <%= link_to 'CSV', product_parts_path(format: 'csv'), class: 'btn btn-sm badge badge-primary' %>
+</p>
+<p>
+  <%= render "categories/import", url: import_product_parts_path %>
+</p>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>id</th>
+      <th>type</th>
+      <th>name</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @product_parts.each do |product_part| %>
+      <tr>
+        <td><%= product_part.id %></td>
+        <td><%= product_part.type %></td>
+        <td><%= product_part.name %></td>
+        <td><%#= link_to 'Delete', product_part, method: :delete, remote: true, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  <tbody>
+</table>

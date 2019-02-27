@@ -71,22 +71,73 @@ module ApplicationHelper
   end
 
   ####end
-  def dyno_id(args={})
-    arr = [:n1, :k1, :n2, :k2, :tag].keep_if {|k| args.has_key?(k)}
-    arr.map {|k| format_id_args(args, k)}.join('-')
-  end
-
-  def format_id_args(args, k)
-    [:k1, :k2].include?(k) ? klass_id(args[k]) : args[k]
-  end
+  # def dyno_id(args={})
+  #   arr = [:n1, :k1, :n2, :k2, :tag].keep_if {|k| args.has_key?(k)}
+  #   arr.map {|k| format_id_args(args, k)}.join('-')
+  # end
+  #
+  # def format_id_args(args, k)
+  #   [:k1, :k2].include?(k) ? klass_id(args[k]) : args[k]
+  # end
 
   def klass_id(klass)
     klass.id if klass.present?
   end
 
+  #single_snake
   def klass_name(klass)
-    #klass.class == String ? klass.downcase.singularize : klass.class.name.underscore
-    klass.class.name.underscore if klass.present?
+    if klass.class == String
+      klass.downcase.singularize
+    elsif klass.class == Array
+      klass.first.class.name.underscore
+    else
+      klass.class.name.underscore
+    end
+  end
+
+  def obj_to_snake(obj)
+    if obj.class == String
+      str_to_snake(obj)
+    else
+      klass_to_snake(obj)
+    end
+  end
+
+  def snake_to_fk(obj)
+    obj_to_snake(obj) + '_id'
+  end
+
+  def klass_to_snake(obj)
+    obj.class.name.underscore
+  end
+
+  def obj_to_hyph_str(obj)
+    obj_to_snake(obj).split('_').join('-')
+  end
+
+  def obj_to_cap_hyph_str(obj)
+    obj_to_snake(obj).split('_').map {|i| i.capitalize}.join('-')
+  end
+
+  def str_to_snake(obj)
+    obj.downcase.singularize
+  end
+
+  def str_to_kollection(obj)
+    str_to_snake(obj).plularize
+  end
+
+  def str_to_camel(obj)
+    str_to_snake(obj).camelize
+  end
+
+  def str_to_konstant(obj)
+    str_to_camel(obj).constantize
+  end
+
+  def upper_single(klass)
+    klass_name = klass_name(klass)
+    klass_name.pluralize.split('_').join(' ').upcase
   end
 
   def klass_and_id(klass)
@@ -101,8 +152,34 @@ module ApplicationHelper
     args.join("-")
   end
 
-  def konstant(klass)
-    klass.class == String ? klass.camelize.constantize : klass.class.name.constantize
+  def konstant(obj)
+    if obj.class == String
+      str_to_konstant(obj)
+    else
+      obj.class.name.constantize
+    end
+  end
+
+  def origin_assocs(origin, *parent)
+    names_of_has_many_assocs(origin, *parent) & super_subklasses(origin)
+    #names_of_has_many_assocs(origin) &
+  end
+
+  def names_of_has_many_assocs(origin, *parent)
+    #=>["item_groups", "products", "media", "signatures", "certificates"]
+    assocs = konstant(origin).reflect_on_all_associations(:has_many)
+    if parent.present?
+      assocs.map {|a| a.name.to_s} - parent
+    else
+      assocs.map {|a| a.name.to_s} 
+    end
+  end
+
+  def super_subklasses(origin)
+    #=>["media", "product_kinds", "materials"]
+    #sub_types = ProductPart.all.each.pluck(:type).uniq.map {|k| kollection_name(k) unless k == "ProductKind"}
+    sub_types = origin.class.superclass.where.not(type: origin.type).pluck(:type).uniq.map {|k| kollection_name(k)}
+    sub_types.map {|k| kollection_name(k)}
   end
   ###
 
@@ -111,7 +188,7 @@ module ApplicationHelper
   # end
 
   def kollection_name(klass)
-    klass.class == String ? klass.downcase.pluralize : klass.class.name.underscore.pluralize
+    klass.class == String ? klass.underscore.pluralize : klass.class.name.underscore.pluralize
   end
 
   # def klass_with_id(klass)
