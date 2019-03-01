@@ -17,12 +17,11 @@
 //= require_tree .
 
 $(document).ready(function(){
-  //enableNewInputs("#category-new");
-
   $("body").on("click", ".caret-toggle", function(){
     $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
   });
 
+  //toggle siblings: show/hide
   $("body").on("show.bs.collapse", ".card-body", function(){
     var card_sibs = $(this).closest("div[id*='show']").siblings();
     $(card_sibs).find(".card-body").removeClass("show");
@@ -30,6 +29,7 @@ $(document).ready(function(){
     //$(this).closest("div[id*='show']").siblings().find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
   });
 
+  //
   $("body").on("click", ".toggle-input-access", function(){
     var form = $(this).closest(".form");
     toggleInputAndDelete(form);
@@ -75,6 +75,7 @@ function toggleFormOnCreate(form) {
     var ref_id = $(ref_sibling).attr("id");
     var target_id = getEditSib(ref_id).attr("id");
     toggleSibForms(ref_sibling, ref_id);
+    getEditSib(ref_id).addClass('show')
     showDisabledDeleteBtn(form);
     resetDropdownOptions(target_id);
     resetInputLabel(target_id);
@@ -123,9 +124,9 @@ function enableToggleInput(form) {
 function disableToggleInput(form) {
   getInputAccessBtn(form).prop("disabled", true);
 }
-function enableNewInputs(form) {
-  $(form).find("input:text, button:submit").prop("disabled", false);
-}
+// function enableNewInputs(form) {
+//   $(form).find("input:text, button:submit").prop("disabled", false);
+// }
 function enableCustomInputs() {
   $("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
 }
@@ -143,7 +144,9 @@ function toggleSibCarets(card){
   return $(card).siblings().find("i").hasClass("fa-caret-down").first().toggleClass("fa-caret-down fa-caret-right");
 }
 function toggleSibForms(ref_sibling, ref_id){
-  return $(ref_sibling).add(getEditSib(ref_id)).toggleClass("show");
+  //return $(ref_sibling).add(getEditSib(ref_id)).toggleClass("show");
+  //return $(ref_sibling).removeClass("show");
+  return $(ref_sibling).siblings().removeClass("show");
 }
 function toggleCaretDownBodyShow(target){
   var caret = getCaretIcon("#"+target);
@@ -198,7 +201,7 @@ function getCard(target){
   return $(target).closest("div[id*='show']");
 }
 function getEditSib(id){
-  return $("#"+id).siblings(".toggle-sibling[id*='edit']");
+  return $("#"+id).siblings(".toggle-sibling[id$='edit']");
 }
 function getCurrentToggleSib(form){
   return $(form).closest(".toggle-sibling");

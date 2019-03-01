@@ -10,13 +10,13 @@
   </ul>
 
   <div class="col" id="<%= dom_ref(origin, 'accordion') %>">
-    <div class="collapse show toggle-sibling" id='<%= "#{obj_to_snake(origin)}-edit" %>' data-label="Edit <%= obj_to_cap_hyph_str(origin) %>" data-parent="#<%= dom_ref(origin, 'accordion') %>">
+    <div class="collapse show toggle-sibling" id="<%= dom_ref(origin, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(origin) %>" data-parent="#<%= dom_ref(origin, 'accordion') %>">
       <%= render "product_kinds/forms/form", origin: origin, form_id: dom_ref(origin, 'edit-form-id') %>
     </div>
 
     <% origin_assocs(origin).each do |target| %>
-      <div class="collapse toggle-sibling" id="<%= dom_ref(target, 'item_group-add') %>" data-label="Add <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(origin, 'accordion') %>">
-        <%= render 'item_groups/forms/form', origin: origin, target: target, item_group: ItemGroup.new, form_id: dom_ref(origin, 'item_group-add-form-id') %>
+      <div class="collapse toggle-sibling" id='<%= dom_ref(origin, "#{target}-item_group-add") %>' data-label="Add <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(origin, 'accordion') %>">
+        <%= render 'item_groups/forms/form', origin: origin, target: target, item_group: ItemGroup.new, form_id: dom_ref(origin, "#{target}-item_group-add-form-id") %>
       </div>
     <% end %>
   </div>

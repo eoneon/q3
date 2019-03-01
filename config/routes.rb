@@ -4,7 +4,7 @@ Rails.application.routes.draw do
       post :import
     end
     resources :item_groups, only: [:create, :destroy]
-    resources :category_kinds, except: [:index]
+    #resources :category_kinds, except: [:index]
     resources :poly_element_kinds, except: [:index]
   end
 
@@ -35,6 +35,8 @@ Rails.application.routes.draw do
       end
     end
     resources :materials, only: [:create, :destroy]
+    resources :sub_media, only: [:create, :destroy]
+    resources :editions, only: [:create, :destroy]
   end
 
   resources :materials, only: [] do
@@ -43,6 +45,8 @@ Rails.application.routes.draw do
         post :sort_up, :sort_down
       end
     end
+    resources :dimensions, only: [:create, :destroy]
+    resources :mountings, only: [:create, :destroy]
   end
 
   resources :signatures, only: [] do
@@ -54,6 +58,39 @@ Rails.application.routes.draw do
   end
 
   resources :certificates, only: [] do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
+  resources :sub_media, only: [] do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
+  resources :editions, only: [] do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
+  resources :mountings, only: [] do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+    resources :dimensions, only: [:create, :destroy]
+  end
+
+  resources :dimensions, only: [] do
     resources :item_groups, only: [:create, :destroy] do
       member do
         post :sort_up, :sort_down
