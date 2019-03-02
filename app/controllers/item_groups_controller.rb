@@ -3,8 +3,11 @@ class ItemGroupsController < ApplicationController
     @origin = set_origin
     @target = set_target
 
-    if build_join(@origin, @target)
-      @form_id = params[:form_id]
+    @form_id = params[:form_id]
+
+    #if build_join(@origin, @target)
+    if @origin.public_send(@target.class.name.underscore.pluralize) << @target
+      #@item_group = ItemGroup.find(params[:item_group_id])
 
       respond_to do |format|
         format.js

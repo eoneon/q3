@@ -1,5 +1,5 @@
-<div class="card border m-1 border-dark" id="<%= dom_ref(origin, 'show') %>">
-  <div class="card-header pt-0">
+<div class="card border m-1 border-dark <%= dom_ref(origin, 'card') %>" id="<%= dom_ref(origin, 'show') %>">
+  <div class="card-header <%= dom_ref(origin, 'header') %> pt-0">
     <%= render "product_kinds/header/header", origin: origin %>
   </div>
 

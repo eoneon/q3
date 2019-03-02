@@ -1,6 +1,6 @@
-<div class="card mb-1 border border-dark" id="<%= dom_ref(item_group, 'show') %>">
-  <div class="card-header pt-0 pb-3 border">
-    <%= render "media/header", origin: origin, target: target, item_group: item_group %>
+<div class="card mb-1 border border-dark <%= dom_ref(target, 'card') %>" id="<%= dom_ref(item_group, 'show') %>">
+  <div class="card-header <%= dom_ref(target, 'header') %> pt-0 pb-3 border">
+    <%= render "media/header/header", origin: origin, target: target, item_group: item_group %>
   </div>
 
   <div class="card-body p-1 collapse" id="<%= dom_ref(item_group, 'body') %>">

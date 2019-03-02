@@ -1,3 +1,6 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'item_groups/forms/form', origin: @origin, target: @target, item_group: ItemGroup.new, form_id: @form_id %>");
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%#= j render 'item_groups/forms/form', origin: @origin, target: @target, item_group: ItemGroup.new, form_id: @form_id %>");
 $('#<%= dom_ref(@origin, "#{obj_to_snake(@target)}-index") %>').html('<%= j render "media/index", origin: @origin, target: obj_to_snake(@target) %>');
-//toggleFormOnCreate('#<%= @form_id %>');
+toggleFormOnCreate('#<%= @form_id %>');
+//$(".<%#= dom_ref(@origin, 'header') %>").html('<%#= j render "#{kollection_name(@origin)}/header/header", origin: @origin, target: @target, item_group: @item_group %>');
+//$('#<%#= dom_ref(@origin, "#{obj_to_snake(@target)}-index") %>').html('<%#= j render "media/index", origin: @origin, target: obj_to_snake(@target) %>');
+//$("#<%#= dom_ref(@origin, 'card') %>").html('<%#= j render "#{kollection_name(@origin)}/show", origin: @origin %>');

@@ -26,7 +26,6 @@ $(document).ready(function(){
     var card_sibs = $(this).closest("div[id*='show']").siblings();
     $(card_sibs).find(".card-body").removeClass("show");
     $(card_sibs).find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
-    //$(this).closest("div[id*='show']").siblings().find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
   });
 
   //
@@ -74,8 +73,9 @@ function toggleFormOnCreate(form) {
     var ref_sibling = getCurrentToggleSib(form);
     var ref_id = $(ref_sibling).attr("id");
     var target_id = getEditSib(ref_id).attr("id");
-    toggleSibForms(ref_sibling, ref_id);
-    getEditSib(ref_id).addClass('show')
+    getCurrentToggleSib(form).removeClass('show');
+    //toggleSibForms(ref_sibling, ref_id);
+    getEditSib(ref_id).addClass('show');
     showDisabledDeleteBtn(form);
     resetDropdownOptions(target_id);
     resetInputLabel(target_id);
