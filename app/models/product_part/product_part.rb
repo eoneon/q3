@@ -12,9 +12,4 @@ class ProductPart < ApplicationRecord
   # def self.descendants
   #   ObjectSpace.each_object(Class).select { |klass| klass < self }
   # end
-
-  #def self.kids
-    #ObjectSpace.each_object(Class).select { |o| o < MainClass }.tap { |siblings| siblings.reject! { |klass| siblings.any? { |k| klass < k } } }
-    #self.all.each.pluck(:type).uniq
-  #end
 end

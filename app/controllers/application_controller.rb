@@ -24,14 +24,9 @@ class ApplicationController < ActionController::Base
 
   def build_join(origin_obj, target_obj)
     obj_kollection(origin_obj, target_obj) << target_obj
-    #origin_obj.item_groups.first.update(origin_type: origin_obj.type)
   end
 
-  # def kill_join(origin_obj, target_obj)
-  #   obj_kollection(origin_obj, target_obj).destroy(target_obj)
-  # end
-
-  def target_klass
+  def controller_klass
     params[:controller].singularize.camelize.constantize
   end
 
@@ -39,25 +34,26 @@ class ApplicationController < ActionController::Base
     params[:controller]
   end
 
-  def swap_sort(parent, pos)
-    sort_obj = target_klass.find(params[:id])
+  def swap_sort(origin_obj, pos)
+    sort_obj = controller_klass.find(params[:id])
     sort = sort_obj.sort
     sort2 = pos == -1 ? sort - 1 : sort + 1
 
-    sort_obj2 = parent.public_send(target_method).where(sort: sort2)
+    sort_obj2 = origin_obj.public_send(target_method).where(sort: sort2, target_type: sort_obj.target_type)
     sort_obj2.update(sort: sort)
     sort_obj.update(sort: sort2)
   end
 
-  def reset_sort(parent, sort)
-    parent.public_send(target_method).where("sort > ?", sort).each do |sort_obj|
+  def reset_sort(origin_obj, sort, type)
+    grouped_by_type = origin_obj.grouped_subklass(type)
+    grouped_by_type.where("sort > ?", sort).each do |sort_obj|
       sort_obj.update(sort: sort_obj.sort - 1)
     end
   end
 
-  # def set_parent
-  #   parent_klasses = %w[product category artist element element_kind]
-  #   if klass = parent_klasses.detect { |pk| params[:"#{pk}_id"].present? }
+  # def set_origin_obj
+  #   origin_obj_klasses = %w[product category artist element element_kind]
+  #   if klass = origin_obj_klasses.detect { |pk| params[:"#{pk}_id"].present? }
   #     klass.camelize.constantize.find params[:"#{klass}_id"]
   #   end
   # end

@@ -2,11 +2,10 @@ class ItemGroupsController < ApplicationController
   def create
     @origin = set_origin
     @target = set_target
-
     @form_id = params[:form_id]
 
-    #if build_join(@origin, @target)
-    if @origin.public_send(@target.class.name.underscore.pluralize) << @target
+    if build_join(@origin, @target)
+    #if @origin.public_send(@target.class.name.underscore.pluralize) << @target
       #@item_group = ItemGroup.find(params[:item_group_id])
 
       respond_to do |format|
@@ -42,9 +41,10 @@ class ItemGroupsController < ApplicationController
     @origin = item_group.origin
     @target = item_group.target
     sort = item_group.sort
+    type = item_group.target_type
 
     if item_group.destroy
-      reset_sort(@origin, sort)
+      reset_sort(@origin, sort, type)
 
       respond_to do |format|
         format.js
