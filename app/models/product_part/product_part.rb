@@ -1,12 +1,21 @@
 class ProductPart < ApplicationRecord
   include Importable
-
-  def sorted_item_groups
-    self.item_groups.order(:sort)
-  end
+  include Sti
 
   def grouped_subklass(target)
     self.item_groups.where(target_type: target).order(:sort)
+  end
+
+  def field_subklass
+    self.class.name.camelize + 'Field'
+  end
+
+  # def field_kollection
+  #   self.public_send(field_kollection_name.pluralize)
+  # end
+
+  def self.subklass_list
+    ["Medium", "Material", "SubMedium", "Edition", "Dimension", "Mounting", "Signature", "Certificate"]
   end
 
   # def self.descendants

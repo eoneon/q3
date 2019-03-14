@@ -1,0 +1,3 @@
+//$("#<%#= dom_ref(@product_part, 'tab-item') %>").remove();
+$("<%= dom_ref('#product_part', @product_part.id, 'tab-item') %>").remove();
+$("<%= dom_ref('#product_part', @product_part.id, 'show') %>").remove();

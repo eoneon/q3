@@ -1,0 +1,2 @@
+class EditionFieldsController < ApplicationController
+end

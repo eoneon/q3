@@ -1,0 +1,2 @@
+module CertificateFieldsHelper
+end

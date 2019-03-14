@@ -1,0 +1,2 @@
+class SubMeiumFieldsController < ApplicationController
+end

@@ -1,0 +1,14 @@
+<div class="card bg-light mb-3 p-2" id="product_part-new">
+  <%= render "product_parts/forms/new", product_part: ProductPart.new, form_id: "product_part-new-form-id" %>
+</div>
+<%= render "product_kinds/import", url: import_product_parts_path %>
+
+<div class="card align-items-center bg-light m-0 p-0">
+  <div class="card-body bg-light m-0 p-1">
+    <span>Product-Parts</span>
+  </div>
+</div>
+
+<div class="list-group" id='<%= "product_part-tab-index" %>' role="tablist">
+  <%= render "product_parts/tabs", product_parts: product_parts %>
+</div>

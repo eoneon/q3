@@ -1,14 +1,11 @@
 Rails.application.routes.draw do
-  resources :products do
+  resources :product_parts do
     collection do
       post :import
     end
-    resources :item_groups, only: [:create, :destroy]
-    #resources :category_kinds, except: [:index]
-    resources :poly_element_kinds, except: [:index]
   end
 
-  resources :product_parts, only: [:index] do
+  resources :item_fields do
     collection do
       post :import
     end
@@ -23,8 +20,31 @@ Rails.application.routes.draw do
     resources :media, only: [:create, :destroy]
     resources :signatures, only: [:create, :destroy]
     resources :certificates, only: [:create, :destroy]
+    resources :product_kind_fields, only: [:create, :destroy]
     collection do
       post :import
+    end
+  end
+
+  resources :products do
+    collection do
+      post :import
+    end
+    resources :item_groups, only: [:create, :destroy]
+    resources :poly_element_kinds, except: [:index]
+  end
+
+  resources :product_parts do
+    collection do
+      post :import
+    end
+  end
+
+  resources :product_kind_fields do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
     end
   end
 
@@ -193,5 +213,14 @@ Rails.application.routes.draw do
   #   resources :values, except: [:index]
   # end
 
-  root to: 'element_kinds#index'
+  # resources :media, controller: 'product_parts', type: 'Medium'
+  # resources :media, controller: 'product_parts', type: 'Material'
+  # resources :media, controller: 'product_parts', type: 'Dimension'
+  # resources :media, controller: 'product_parts', type: 'Edition'
+  # resources :media, controller: 'product_parts', type: 'SubMedium'
+  # resources :media, controller: 'product_parts', type: 'Mounting'
+  # resources :media, controller: 'product_parts', type: 'Signature'
+  # resources :media, controller: 'product_parts', type: 'Certificate'
+
+  root to: 'product_kinds#index'
 end

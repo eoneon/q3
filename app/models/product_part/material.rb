@@ -6,6 +6,8 @@ class Material < ProductPart
   has_many :dimensions, through: :item_groups, source: :target, source_type: "Dimension"
   has_many :mountings, through: :item_groups, source: :target, source_type: "Mounting"
 
+  has_many :material_fields, through: :item_groups, source: :target, source_type: "MaterialField"
+
   after_initialize do
     self.type = 'Material'
   end

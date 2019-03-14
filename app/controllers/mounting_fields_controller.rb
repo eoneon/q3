@@ -1,0 +1,2 @@
+class MountingFieldsController < ApplicationController
+end

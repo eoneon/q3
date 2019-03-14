@@ -5,6 +5,8 @@ class Medium < ProductPart
   has_many :sub_media, through: :item_groups, source: :target, source_type: "SubMedium"
   has_many :editions, through: :item_groups, source: :target, source_type: "Edition"
 
+  has_many :medium_fields, through: :item_groups, source: :target, source_type: "MediumField"
+
   after_initialize do
     self.type = 'Medium'
   end

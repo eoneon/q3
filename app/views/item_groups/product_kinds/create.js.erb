@@ -1,0 +1,4 @@
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'item_groups/forms/form', origin: @origin, target: @target, item_group: ItemGroup.new, form_id: @form_id %>");
+$('#<%= dom_ref(@origin, "#{to_snake(@target)}-index") %>').html('<%= j render "media/index", origin: @origin, target: to_snake(@target) %>');
+alert("<%= @thing %>");
+toggleFormOnCreate('#<%= @form_id %>');

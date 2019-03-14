@@ -11,8 +11,15 @@ class ApplicationController < ActionController::Base
     get_obj(params[:item_group])
   end
 
+  # def klass_list
+  #   keys = params[:form_id].split('-')
+  #   [keys[0], keys[2]]
+  # end
+
   def get_obj(param_key)
-    poly_klasses = %w[product_kind medium material sub_medium edition signature certificate mounting dimension product category artist element element_kind]
+    #poly_klasses = klass_list
+    poly_klasses = ItemGroup.model_list('product_part', 'item_field')
+    #poly_klasses = %w[product_kind product_kind_field medium material sub_medium edition signature certificate mounting dimension product category artist element element_kind]
     if poly_klass = poly_klasses.detect { |pk| param_key[:"#{pk}_id"].present? }
       poly_klass.camelize.constantize.find param_key[:"#{poly_klass}_id"]
     end
@@ -49,6 +56,10 @@ class ApplicationController < ActionController::Base
     grouped_by_type.where("sort > ?", sort).each do |sort_obj|
       sort_obj.update(sort: sort_obj.sort - 1)
     end
+  end
+
+  def index_partial
+    request.referrer.split('/')[-1]
   end
 
   # def set_origin_obj

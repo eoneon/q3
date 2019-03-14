@@ -1,0 +1,2 @@
+class MediumFieldsController < ApplicationController
+end

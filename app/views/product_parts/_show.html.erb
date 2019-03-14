@@ -1,0 +1,11 @@
+<div class="card border m-1 border-dark <%= dom_ref(product_part, 'card') %>" id="<%= dom_ref('product_part', product_part.id, 'show') %>">
+  <div class="card-header <%= dom_ref(product_part, 'header') %> pt-0">
+    <%= render "product_parts/header/header", product_part: product_part %>
+  </div>
+
+  <div class="card-body p-2 collapse show" id="<%= dom_ref(product_part, 'body') %>">
+    <div id='<%= dom_ref(product_part, "#{to_snake(product_part.field_subklass)}-index") %>'>
+      <%= render "item_fields/index", origin: product_part %>
+    </div>
+  </div>
+</div>

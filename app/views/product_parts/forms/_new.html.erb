@@ -1,0 +1,12 @@
+<%= form_with model: product_part, url: product_part, id: form_id do |f| %>
+  <div class="form">
+    <%= hidden_field_tag :form_id, form_id %>
+    <div class="form-row align-items-center">
+      <div class="input-group input-group-sm align-items-center bg-white">
+        <%= f.select :type, options_for_select(ProductPart.subklass_list), {prompt: "- select type -"}, {class: "form-control border-0 ml-2"} %>
+        <%= f.text_field :name, placeholder: "enter name", class: "form-control" %>
+        <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit"><%= (fa_icon "plus-circle") %></button>
+      </div>
+    </div>
+  </div>
+<% end %>

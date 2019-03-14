@@ -5,11 +5,8 @@ class ItemGroupsController < ApplicationController
     @form_id = params[:form_id]
 
     if build_join(@origin, @target)
-    #if @origin.public_send(@target.class.name.underscore.pluralize) << @target
-      #@item_group = ItemGroup.find(params[:item_group_id])
-
       respond_to do |format|
-        format.js
+        format.js {render file: "/item_groups/#{index_partial}/create.js.erb"}
       end
     end
   end
@@ -47,7 +44,7 @@ class ItemGroupsController < ApplicationController
       reset_sort(@origin, sort, type)
 
       respond_to do |format|
-        format.js
+        format.js {render file: "/item_groups/#{index_partial}/destroy.js.erb"}
       end
     end
   end

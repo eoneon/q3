@@ -11,7 +11,7 @@
 
   <div class="col" id="<%= dom_ref(item_group, 'accordion') %>">
     <div class="collapse show toggle-sibling" id="<%= dom_ref(target, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
-      <%= render "media/forms/form", target: target, url: [origin, target],  form_id: dom_ref(target, 'edit-form-id') %>
+      <%= render "media/forms/form", target: target, url: [origin, target], form_id: dom_ref(target, 'edit-form-id') %>
     </div>
 
     <% origin_assocs(target, kollection_name(origin)).each do |sub_target| %>
@@ -23,10 +23,10 @@
 
   <div class="col-1">
     <div class="row align-items-center">
-      <div class="col mx-2 p-0">
+      <div class="col-1 mx-2 p-0">
         <%= render "item_groups/sort_btn_group", origin: origin, item_group: item_group %>
       </div>
-      <div class="col p-0">
+      <div class="col-1 ml-1">
         <%= link_to (fa_icon "times"), polymorphic_path([target, item_group]), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
       </div>
     </div>

@@ -1,0 +1,14 @@
+<div class="card bg-light mb-3 p-2" id="item_field-new">
+  <%= render "item_fields/forms/new", item_field: ItemField.new, form_id: "item_field-new-form-id" %>
+</div>
+<%= render "product_kinds/import", url: import_item_fields_path %>
+
+<div class="card align-items-center bg-light m-0 p-0">
+  <div class="card-body bg-light m-0 p-1">
+    <span>Item-Fields</span>
+  </div>
+</div>
+
+<div class="list-group" id='<%= "item_field-tab-index" %>' role="tablist">
+  <%= render "item_fields/tabs", item_fields: item_fields %>
+</div>

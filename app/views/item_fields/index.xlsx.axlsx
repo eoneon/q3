@@ -1,0 +1,10 @@
+wb = xlsx_package.workbook
+
+wb.add_worksheet(name: "Item-Fields") do |sheet|
+  # Create the header row
+  sheet.add_row ["name", "id"]
+  # Create entries for each item
+  @item_fields.each do |item_field|
+    sheet.add_row [item_field.id, item_field.type, item_field.field_name, item_field.field_type]
+  end
+end

@@ -13,10 +13,10 @@
         <span>
           <%= render "layouts/nav_menu" %>
         </span>
-        <a href="<%= categories_path %>" class="nav-link text-white">
+        <!-- <a href="<%#= categories_path %>" class="nav-link text-white">
           Categories
-        </a>
-        <a href="<%= products_path %>" class="nav-link text-white">
+        </a> -->
+        <a href="<%#= products_path %>" class="nav-link text-white">
           Products
         </a>
         <a href="<%= product_parts_path %>" class="nav-link text-white">
@@ -24,6 +24,9 @@
         </a>
         <a href="<%= product_kinds_path %>" class="nav-link text-white">
           Products-Kinds
+        </a>
+        <a href="<%= item_fields_path %>" class="nav-link text-white">
+          Item-Fields
         </a>
         <a href="<%= element_kinds_path %>" class="nav-link text-white">
           Element-Kinds
@@ -40,9 +43,9 @@
         <a href="<%= artists_path %>" class="nav-link text-white">
           Artists
         </a>
-        <a href="<%= suppliers_path %>" class="nav-link text-white">
+        <!-- <a href="<%#= suppliers_path %>" class="nav-link text-white">
           Suppliers
-        </a>
+        </a> -->
       </nav>
       <%= yield %>
     </div>

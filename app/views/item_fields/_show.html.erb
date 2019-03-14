@@ -1,0 +1,13 @@
+<div class="card border m-1 border-dark <%= dom_ref(target, 'card') %>" id="<%= dom_ref(item_group, 'show') %>">
+  <div class="card-header <%= dom_ref(target, 'header') %> pt-0">
+    <%= render "item_fields/header/header", origin: origin, target: target, item_group: item_group %>
+  </div>
+
+  <div class="card-body p-2 collapse" id="<%= dom_ref(item_group, 'body') %>">
+    <!-- <%# origin_assocs(origin).each do |target| %>
+      <div id='<%#= dom_ref(origin, "#{obj_to_snake(target)}-index") %>'>
+        <%#= render "media/index", origin: origin, target: target %>
+      </div>
+    <%# end %> -->
+  </div>
+</div>

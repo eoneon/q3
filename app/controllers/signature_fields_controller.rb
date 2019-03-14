@@ -1,0 +1,2 @@
+class SignatureFieldsController < ApplicationController
+end

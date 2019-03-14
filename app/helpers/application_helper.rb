@@ -14,7 +14,7 @@ module ApplicationHelper
   end
 
   def format_ref(i)
-    i.class == String ? i : klass_and_id(i)
+    i.class == String || i.class == Fixnum ? i : klass_and_id(i)
   end
 
   def new_dom_ref(str, pat, pat2)
@@ -94,6 +94,20 @@ module ApplicationHelper
       klass.class.name.underscore
     end
   end
+  #new
+  def to_snake(obj)
+    convert_to_str_by_obj_klass(obj) if obj.present?
+  end
+  #new
+  def convert_to_str_by_obj_klass(obj)
+    if obj.class == String
+      obj.underscore
+    elsif obj.class == Array
+      obj.first.class.name.underscore
+    else
+      obj.class.name.underscore
+    end
+  end
 
   def obj_to_snake(obj)
     if obj.class == String
@@ -160,6 +174,19 @@ module ApplicationHelper
     end
   end
 
+  def name_param(target)
+    if obj_to_snake(target).split('_')[-1] == 'field'
+      :field_name
+    else
+      :name
+    end
+  end
+
+  def origin_field_assocs(origin)
+    ItemField.where(type: origin.type + 'Field').pluck(:type).uniq.map {|k| to_snake(k)}
+    #sub_types.map {|k| kollection_name(k)}
+  end
+
   def origin_assocs(origin, *parent)
     names_of_has_many_assocs(origin, *parent) & super_subklasses(origin)
     #names_of_has_many_assocs(origin) &
@@ -171,7 +198,7 @@ module ApplicationHelper
     if parent.present?
       assocs.map {|a| a.name.to_s} - parent
     else
-      assocs.map {|a| a.name.to_s} 
+      assocs.map {|a| a.name.to_s}
     end
   end
 

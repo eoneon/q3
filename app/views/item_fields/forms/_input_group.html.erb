@@ -1,0 +1,9 @@
+<div class="input-group input-group-sm align-items-center <%= dom_attr(form_id, ['bg-white', 'bg-disabled'], 'new') %>">
+  <% if dom_cond(form_id, 'edit') %>
+    <button class="btn btn-sm rounded-circle bg-transparent <%= dom_attr(form_id, 'toggle-input-access', 'edit') %>" type="button" id="<%= new_dom_ref(form_id, 'form', 'btn') %>"><%= (fa_icon "toggle-off") %></button>
+  <% end %>
+  <%= f.select :type, options_for_select(ItemField.subklass_list, selected: target.type), {prompt: "- select type -"}, {class: "form-control border-0", disabled: true} %>
+  <%= f.select :field_type, options_for_select(ItemField.field_type_list, selected: target.field_type), {prompt: "- select field-type -"}, {class: "form-control border-0", disabled: true} %>
+  <%= f.text_field :field_name, placeholder: "enter field-name", class: "form-control", disabled: true %>
+  <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit" disabled><%= (fa_icon "plus-circle") %></button>
+</div>

@@ -1,29 +1,17 @@
-<p id="notice"><%= notice %></p>
-<h1>Product-Parts</h1> product_parts
+<div class="row justify-content-center">
+  <h1>Product-Parts</h1>
+  <%#= ItemGroup.model_list('product_part', 'item_field') %>
+  <p id="notice"><%= notice %></p>
+</div>
+<hr>
 
-<p>
-  <%= link_to 'Excel', product_parts_path(format: :xlsx), class: 'btn btn-sm badge badge-primary' %>
-  <%= link_to 'CSV', product_parts_path(format: 'csv'), class: 'btn btn-sm badge badge-primary' %>
-</p>
-<p>
-  <%= render "categories/import", url: import_product_parts_path %>
-</p>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th>id</th>
-      <th>type</th>
-      <th>name</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @product_parts.each do |product_part| %>
-      <tr>
-        <td><%= product_part.id %></td>
-        <td><%= product_part.type %></td>
-        <td><%= product_part.name %></td>
-        <td><%#= link_to 'Delete', product_part, method: :delete, remote: true, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  <tbody>
-</table>
+<div class="row">
+  <div class="col-5">
+    <%= render 'product_parts/aside', product_parts: @product_parts %>
+  </div>
+
+  <div class="col-7">
+    <div id="product_part">
+    </div>
+  </div>
+</div>
