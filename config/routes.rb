@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :product_parts do
+    resources :item_fields, only: [:update]
     collection do
       post :import
     end
@@ -17,10 +18,10 @@ Rails.application.routes.draw do
         post :sort_up, :sort_down
       end
     end
-    resources :media, only: [:create, :destroy]
+    resources :media, only: [:create, :update, :destroy]
     resources :signatures, only: [:create, :destroy]
     resources :certificates, only: [:create, :destroy]
-    resources :product_kind_fields, only: [:create, :destroy]
+    resources :product_kind_fields, only: [:create, :update, :destroy]
     collection do
       post :import
     end

@@ -58,7 +58,7 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def index_partial
+  def partial_param
     request.referrer.split('/')[-1]
   end
 

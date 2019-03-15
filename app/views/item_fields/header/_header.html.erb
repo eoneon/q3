@@ -11,7 +11,8 @@
 
   <div class="col" id="<%= dom_ref(item_group, 'accordion') %>">
     <div class="collapse show toggle-sibling" id="<%= dom_ref(target, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
-      <%= render "item_fields/forms/form", target: target, url: [origin, target], form_id: dom_ref(target, 'edit-form-id') %>
+      <%#= render "item_fields/forms/form", target: target, url: [origin, target], form_id: dom_ref(target, 'edit-form-id') %>
+      <%= render "item_fields/forms/form", item_field: target, url: product_part_item_field_path(target), form_id: dom_ref(target, 'edit-form-id') %>
     </div>
 
     <!-- <%# item_field_assocs(item_field).each do |target| %>
