@@ -1,6 +1,6 @@
 <div class="row justify-content-center">
   <h1>Product-Parts</h1>
-  <%#= ItemGroup.model_list('product_part', 'item_field') %>
+  <%#= self_join_assocs(@product_parts.first) %>
   <p id="notice"><%= notice %></p>
 </div>
 <hr>

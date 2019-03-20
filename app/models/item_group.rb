@@ -8,11 +8,15 @@ class ItemGroup < ApplicationRecord
     self.sort = origin.grouped_subklass(target_type).count == 0 ? 1 : origin.grouped_subklass(target_type).count + 1
   end
 
-  def self.model_list(*model_names)
-    subklasses = []
-    model_names.each do |model_name|
-      subklasses << Dir.glob("#{Rails.root}/app/models/#{model_name}/*.rb").map{|x| x.split("/").last.split(".").first}
+  def self.subklass_list(*model_dir)
+    self.dir_list(*model_dir).map {|dir_name| dir_name.classify}
+  end
+
+  def self.dir_list(*model_dir)
+    dir_names = []
+    model_dir.each do |dir_name|
+      dir_names << Dir.glob("#{Rails.root}/app/models/#{dir_name}/*.rb").map{|x| x.split("/").last.split(".").first}
     end
-    subklasses.flatten
+    dir_names.flatten
   end
 end

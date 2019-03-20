@@ -95,15 +95,15 @@ module ApplicationHelper
     end
   end
   #new
-  def to_snake(obj)
-    convert_to_str_by_obj_klass(obj) if obj.present?
-  end
+  # def to_snake(obj)
+  #   convert_to_str_by_obj_klass(obj) if obj.present?
+  # end
   #new
   def convert_to_str_by_obj_klass(obj)
     if obj.class == String
-      obj.underscore
+      obj.underscore.singularize
     elsif obj.class == Array
-      obj.first.class.name.underscore
+      obj.first.class.name.underscore.singularize
     else
       obj.class.name.underscore
     end

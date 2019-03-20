@@ -7,11 +7,19 @@ Rails.application.routes.draw do
   end
 
   resources :item_fields do
+    resources :item_values, only: [:update]
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
     collection do
       post :import
     end
   end
 
+  resources :item_values
+  
   resources :product_kinds do
     resources :item_groups, only: [:create, :destroy] do
       member do
@@ -35,11 +43,11 @@ Rails.application.routes.draw do
     resources :poly_element_kinds, except: [:index]
   end
 
-  resources :product_parts do
-    collection do
-      post :import
-    end
-  end
+  # resources :product_parts do
+  #   collection do
+  #     post :import
+  #   end
+  # end
 
   resources :product_kind_fields do
     resources :item_groups, only: [:create, :destroy] do

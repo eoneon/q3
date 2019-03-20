@@ -11,42 +11,22 @@ class ApplicationController < ActionController::Base
     get_obj(params[:item_group])
   end
 
-  # def klass_list
-  #   keys = params[:form_id].split('-')
-  #   [keys[0], keys[2]]
-  # end
-
   def get_obj(param_key)
-    #poly_klasses = klass_list
-    poly_klasses = ItemGroup.model_list('product_part', 'item_field')
-    #poly_klasses = %w[product_kind product_kind_field medium material sub_medium edition signature certificate mounting dimension product category artist element element_kind]
-    if poly_klass = poly_klasses.detect { |pk| param_key[:"#{pk}_id"].present? }
-      poly_klass.camelize.constantize.find param_key[:"#{poly_klass}_id"]
+    if poly_klass = helpers.sti_sibs(:product_part, :item_field).detect { |pk| param_key[:"#{pk}_id"].present? }
+      helpers.to_konstant(poly_klass).find param_key[:"#{poly_klass}_id"]
     end
   end
 
-  def obj_kollection(origin_obj, target_obj)
-    origin_obj.public_send(target_obj.class.name.underscore.pluralize)
-  end
-
   def build_join(origin_obj, target_obj)
-    obj_kollection(origin_obj, target_obj) << target_obj
-  end
-
-  def controller_klass
-    params[:controller].singularize.camelize.constantize
-  end
-
-  def target_method
-    params[:controller]
+    origin_obj.public_send(helpers.to_kollection_name(target_obj)) << target_obj
   end
 
   def swap_sort(origin_obj, pos)
-    sort_obj = controller_klass.find(params[:id])
+    sort_obj = ItemGroup.find(params[:id])
     sort = sort_obj.sort
     sort2 = pos == -1 ? sort - 1 : sort + 1
 
-    sort_obj2 = origin_obj.public_send(target_method).where(sort: sort2, target_type: sort_obj.target_type)
+    sort_obj2 = origin_obj.item_groups.where(sort: sort2, target_type: sort_obj.target_type)
     sort_obj2.update(sort: sort)
     sort_obj.update(sort: sort2)
   end
@@ -61,11 +41,4 @@ class ApplicationController < ActionController::Base
   def partial_param
     request.referrer.split('/')[-1]
   end
-
-  # def set_origin_obj
-  #   origin_obj_klasses = %w[product category artist element element_kind]
-  #   if klass = origin_obj_klasses.detect { |pk| params[:"#{pk}_id"].present? }
-  #     klass.camelize.constantize.find params[:"#{klass}_id"]
-  #   end
-  # end
 end
