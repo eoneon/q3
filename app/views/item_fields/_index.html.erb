@@ -1,5 +1,5 @@
-<% if origin.present? && origin.grouped_subklass('ProductKindField').any? %>
-  <% origin.grouped_subklass(origin.field_subklass).each do |item_group| %>
+<% if origin.present? && origin.sti_item_groups(origin.sti_field_type).any? %>
+  <% origin.sti_item_groups(origin.sti_field_type).each do |item_group| %>
     <%= render "item_fields/show", origin: origin, target: item_group.target, item_group: item_group  %>
   <% end %>
 <% end %>

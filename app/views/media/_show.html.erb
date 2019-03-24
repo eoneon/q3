@@ -4,8 +4,8 @@
   </div>
 
   <div class="card-body p-1 collapse" id="<%= dom_ref(item_group, 'body') %>">
-    <% origin_assocs(target, kollection_name(origin)).each do |sub_target| %>
-      <div id='<%= dom_ref(target, "#{obj_to_snake(sub_target)}-index") %>'>
+    <% self_join_assocs(target, origin).each do |sub_target| %>
+      <div id='<%= dom_ref(target, "#{to_snake(sub_target)}-index") %>'>
         <%= render "media/index", origin: target, target: sub_target %>
       </div>
     <% end %>

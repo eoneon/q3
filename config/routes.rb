@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   resources :product_parts do
     resources :item_fields, only: [:update]
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
     collection do
       post :import
     end
@@ -18,8 +23,12 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :item_values
-  
+  resources :item_values do
+    collection do
+      post :import
+    end
+  end
+
   resources :product_kinds do
     resources :item_groups, only: [:create, :destroy] do
       member do

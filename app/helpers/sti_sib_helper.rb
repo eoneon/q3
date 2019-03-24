@@ -3,12 +3,8 @@ module StiSibHelper
     dir_list(folder_names)
   end
 
-  def sti_sibs_to_classified(*folder_names)
+  def sti_sibs_classified(*folder_names)
     dir_list(folder_names).map {|folder_name| folder_name.classify}
-  end
-
-  def sti_sibs_to_fk(*folder_names)
-    dir_list(folder_names).map {|folder_name| to_fk(folder_name).to_sym}
   end
 
   def dir_list(folder_names)

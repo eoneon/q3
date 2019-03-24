@@ -1,0 +1,8 @@
+<div class="col-md-2">
+  <%#= f.label item_field.field_name %><br>
+  <%# if parent.properties.present? && parent.properties[item_field.field_name].present? %>
+    <%#= f.select item_field.field_name, options_for_select(value_list(parent, item_field.field_name), parent.properties[item_field.field_name] ), {:include_blank => true}  %>
+  <%# else %>
+    <%#= f.select item_field.field_name, options_for_select(value_list(parent, item_field.field_name)), {:include_blank => true}  %>
+  <%# end %>
+</div>

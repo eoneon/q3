@@ -1,5 +1,5 @@
-<div class="card bg-light mb-3 p-2" id='<%= "#{obj_to_snake(origins.first)}-new" %>'>
-  <%= render "product_kinds/forms/new", origin: konstant('product_kind').new, form_id: "#{obj_to_snake(origins.first)}-new-form-id" %>
+<div class="card bg-light mb-3 p-2" id='<%= "#{to_snake(origins.first)}-new" %>'>
+  <%= render "product_kinds/forms/new", origin: to_konstant('product_kind').new, form_id: "#{to_snake(origins.first)}-new-form-id" %>
 </div>
 <%= render "product_kinds/import", url: import_product_parts_path %>
 
@@ -9,6 +9,6 @@
   </div>
 </div>
 
-<div class="list-group" id='<%= "#{obj_to_snake(origins.first)}-tab-index" %>' role="tablist">
+<div class="list-group" id='<%= "#{to_snake(origins.first)}-tab-index" %>' role="tablist">
   <%= render "product_kinds/tabs", origins: origins %>
 </div>

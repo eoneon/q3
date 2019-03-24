@@ -1,4 +1,5 @@
-<%= form_with model: item_group, url: [origin, item_group], id: form_id do |f| %>
+<%#= form_with model: item_group, url: [origin, item_group], id: form_id do |f| %>
+<%= form_with model: ItemGroup.new, url: url, id: form_id do |f| %>
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
     <div class="form-row align-items-center">

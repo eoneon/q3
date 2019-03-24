@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def get_obj(param_key)
-    if poly_klass = helpers.sti_sibs(:product_part, :item_field).detect { |pk| param_key[:"#{pk}_id"].present? }
+    if poly_klass = helpers.sti_sibs(:product_part, :item_field, :item_value).detect { |pk| param_key[:"#{pk}_id"].present? }
       helpers.to_konstant(poly_klass).find param_key[:"#{poly_klass}_id"]
     end
   end

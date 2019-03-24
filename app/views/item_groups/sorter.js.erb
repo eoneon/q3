@@ -1,1 +1,1 @@
-$('#<%= dom_ref(@origin, "#{obj_to_snake(@target)}-index") %>').html('<%= j render "media/index", origin: @origin, target: obj_to_snake(@target) %>');
+$('#<%= dom_ref(@origin, "#{to_snake(@target)}-index") %>').html('<%= j render "media/index", origin: @origin, target: to_snake(@target) %>');

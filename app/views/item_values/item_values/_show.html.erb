@@ -1,0 +1,11 @@
+<div class="card border m-1 border-dark <%= dom_ref(item_value, 'card') %>" id="<%= dom_ref('item_value', item_value.id, 'show') %>">
+  <div class="card-header <%= dom_ref(item_value, 'header') %> pt-0">
+    <%= render "item_values/header/header", item_value: item_value %>
+  </div>
+
+  <div class="card-body p-2 collapse show" id="<%= dom_ref(item_value, 'body') %>">
+    <div id='<%#= dom_ref(item_value, "#{to_snake(item_value.sti_field_type)}-index") %>'>
+      <%#= render "item_fields/index", origin: item_value %>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,6 @@
   <% end %>
   <%= f.text_field :field_name, placeholder: "enter field-name", class: "form-control", disabled: true %>
   <%= f.select :field_type, options_for_select(ItemField.field_type_list, selected: item_field.field_type), {prompt: "- select field-type -"}, {class: "form-control border-0", disabled: true} %>
-  <%= f.select :type, options_for_select(ItemField.subklass_list, selected: item_field.type), {prompt: "- select type -"}, {class: "form-control border-0", disabled: true} %>
+  <%= f.select :type, options_for_select(sti_sibs(:item_field), selected: item_field.type), {prompt: "- select type -"}, {class: "form-control border-0", disabled: true} %>
   <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit" disabled><%= (fa_icon "plus-circle") %></button>
 </div>

@@ -14,9 +14,9 @@
       <%= render "product_kinds/forms/form", origin: origin, form_id: dom_ref(origin, 'edit-form-id') %>
     </div>
 
-    <% origin_assocs(origin).each do |target| %>
+    <% self_join_assocs(origin).each do |target| %>
       <div class="collapse toggle-sibling" id='<%= dom_ref(origin, "#{target}-item_group-add") %>' data-label="Add <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(origin, 'accordion') %>">
-        <%= render 'item_groups/forms/form', origin: origin, target: target, item_group: ItemGroup.new, form_id: dom_ref(origin, "#{target}-item_group-add-form-id") %>
+        <%= render 'item_groups/forms/form', origin: origin, target: target, url: product_kind_item_groups_path(origin, ItemGroup.new), form_id: dom_ref(origin, "#{target}-item_group-add-form-id") %>
       </div>
     <% end %>
   </div>

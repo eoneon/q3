@@ -14,11 +14,9 @@
       <%= render "item_fields/forms/form", item_field: item_field, url: item_field_path(item_field), form_id: dom_ref(item_field, 'edit-form-id') %>
     </div>
 
-    <!-- <%# item_field_assocs(item_field).each do |target| %>
-      <div class="collapse toggle-sibling" id='<%#= dom_ref(item_field, "#{target}-item_group-add") %>' data-label="Add <%#= obj_to_cap_hyph_str(target) %>" data-parent="#<%#= dom_ref(item_field, 'accordion') %>">
-        <%#= render 'item_groups/forms/form', item_field: item_field, target: target, item_group: ItemGroup.new, form_id: dom_ref(item_field, "#{target}-item_group-add-form-id") %>
-      </div>
-    <%# end %> -->
+    <div class="collapse toggle-sibling" id='<%= dom_ref(item_field, "#{to_snake(item_field.sti_value_type)}-item_group-add") %>' data-label="Add <%= obj_to_cap_hyph_str(item_field.sti_value_type) %>" data-parent="#<%= dom_ref(item_field, 'accordion') %>">
+      <%= render 'item_groups/forms/form', origin: item_field, url: item_field_item_groups_path(item_field, ItemGroup.new), target: to_snake(item_field.sti_value_type), form_id: dom_ref(item_field, "#{to_snake(item_field.sti_value_type)}-item_group-add-form-id") %>
+    </div>
   </div>
 
   <div class="col-1">
