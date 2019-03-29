@@ -10,13 +10,13 @@
   </ul>
 
   <div class="col" id="<%= dom_ref(item_group, 'accordion') %>">
-    <div class="collapse show toggle-sibling" id="<%= dom_ref(target, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
-      <%= render "media/forms/form", target: target, url: [origin, target], form_id: dom_ref(target, 'edit-form-id') %>
+    <div class="collapse show toggle-sibling" id="<%= dom_ref(origin, target, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
+      <%= render "media/forms/form", target: target, url: product_part_sub_part_path(origin, target), form_id: dom_ref(origin, target, 'edit-form-id') %>
     </div>
 
     <% self_join_assocs(target, origin).each do |sub_target| %>
       <div class="collapse toggle-sibling" id='<%= dom_ref(target, "#{sub_target}-item_group-add") %>' data-label="Add <%= obj_to_cap_hyph_str(sub_target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
-        <%= render 'item_groups/forms/form', origin: target, target: sub_target, item_group: ItemGroup.new, form_id: dom_ref(target, 'item_group-add-form-id') %>
+        <%= render 'item_groups/forms/form', origin: target, target: sub_target, url: product_part_item_groups_path(target, ItemGroup.new), form_id: dom_ref(target, "#{sub_target}-item_group-add-form-id") %>
       </div>
     <% end %>
   </div>

@@ -12,8 +12,7 @@ class ItemFieldsController < ApplicationController
   def show
     @item_field = ItemField.find(params[:id])
     respond_to do |format|
-      #format.js
-      format.js {render file: "/item_fields/#{partial_param}/show.js.erb"}
+      format.js {render file: "/item_fields/#{partial_name}/show.js.erb"}
     end
   end
 
@@ -23,8 +22,7 @@ class ItemFieldsController < ApplicationController
     if @item_field.save
       @form_id = params[:form_id]
       respond_to do |format|
-        #format.js
-        format.js {render file: "/item_fields/#{partial_param}/create.js.erb"}
+        format.js {render file: "/item_fields/#{partial_name}/create.js.erb"}
       end
     end
   end
@@ -36,8 +34,7 @@ class ItemFieldsController < ApplicationController
     if @item_field.save
       @form_id = params[:form_id]
       respond_to do |format|
-        #format.js
-        format.js {render file: "/item_fields/#{partial_param}/update.js.erb"}
+        format.js {render file: "/item_fields/#{partial_name}/update.js.erb"}
       end
     end
   end
@@ -47,8 +44,7 @@ class ItemFieldsController < ApplicationController
 
     if @item_field.destroy
       respond_to do |format|
-        #format.js
-        format.js {render file: "/item_fields/#{partial_param}/destroy.js.erb"}
+        format.js {render file: "/item_fields/#{partial_name}/destroy.js.erb"}
       end
     end
   end

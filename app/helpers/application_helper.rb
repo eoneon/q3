@@ -11,7 +11,8 @@ module ApplicationHelper
   end
 
   def to_fk(obj)
-    to_snake(obj) + '_id'
+    fk = to_snake(obj) + '_id'
+    fk.to_sym
   end
 
   def to_classify(obj)

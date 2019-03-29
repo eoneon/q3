@@ -7,6 +7,10 @@ module StiSelfJoinHelper
     child_subklasses.flatten
   end
 
+  def obj_assocs(obj)
+    to_konstant(obj).reflect_on_all_associations(:has_many).map{|a| to_snake(a.name)}
+  end
+
   def shared_superklass(obj1, obj2)
     to_super_klass_name(obj1) == to_super_klass_name(obj2)
   end

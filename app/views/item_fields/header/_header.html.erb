@@ -10,16 +10,13 @@
   </ul>
 
   <div class="col" id="<%= dom_ref(item_group, 'accordion') %>">
-    <div class="collapse show toggle-sibling" id="<%= dom_ref(target, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
-      <%#= render "item_fields/forms/form", target: target, url: [origin, target], form_id: dom_ref(target, 'edit-form-id') %>
-      <%= render "item_fields/forms/form", item_field: target, url: product_part_item_field_path(target), form_id: dom_ref(target, 'edit-form-id') %>
+    <div class="collapse show toggle-sibling" id="<%= dom_ref(origin, target, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
+      <%= render "item_fields/forms/form", item_field: target, url: product_part_item_field_path(origin, target), form_id: dom_ref(origin, target, 'edit-form-id') %>
     </div>
 
-    <!-- <%# item_field_assocs(item_field).each do |target| %>
-      <div class="collapse toggle-sibling" id='<%#= dom_ref(item_field, "#{target}-item_group-add") %>' data-label="Add <%#= obj_to_cap_hyph_str(target) %>" data-parent="#<%#= dom_ref(item_field, 'accordion') %>">
-        <%#= render 'item_groups/forms/form', item_field: item_field, target: target, item_group: ItemGroup.new, form_id: dom_ref(item_field, "#{target}-item_group-add-form-id") %>
-      </div>
-    <%# end %> -->
+    <div class="collapse toggle-sibling" id='<%= dom_ref(target, "#{to_snake(target.sti_value_type)}-item_group-add") %>' data-label="Add <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
+      <%= render 'item_groups/forms/form', target: target, url: item_field_item_groups_path(target, ItemGroup.new), form_id: dom_ref(target, "#{to_snake(target.sti_value_type)}-item_group-add-form-id") %>
+    </div>
   </div>
 
   <div class="col-1">
@@ -28,7 +25,7 @@
         <%= render "item_groups/sort_btn_group", origin: origin, item_group: item_group %>
       </div>
       <div class="col p-0">
-        <%= link_to (fa_icon "times"), polymorphic_path([target, item_group]), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
+        <%= link_to (fa_icon "times"), item_field_item_group_path(target, item_group), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
       </div>
     </div>
   </div>

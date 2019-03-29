@@ -1,6 +1,4 @@
 <div class="dropdown-menu">
-  <a class="dropdown-item disabled" data-toggle="collapse" href='#<%= dom_ref(target, "edit") %>'>Edit <%= obj_to_cap_hyph_str(target) %></a>
-  <!-- <%# item_field_assocs(item_field).each do |target| %>
-    <a class="dropdown-item" data-toggle="collapse" href='#<%#= dom_ref(item_field, "#{target}-item_group-add") %>'>Add <%#= obj_to_cap_hyph_str(target) %></a>
-  <%# end %> -->
+  <a class="dropdown-item disabled" data-toggle="collapse" href='#<%= dom_ref(origin, target, "edit") %>'>Edit <%= obj_to_cap_hyph_str(target) %></a>
+  <a class="dropdown-item" data-toggle="collapse" href='#<%= dom_ref(target, "#{to_snake(target.sti_value_type)}-item_group-add") %>'>Add <%= obj_to_cap_hyph_str(target.sti_value_type) %></a>
 </div>
