@@ -8,7 +8,7 @@ class Material < ProductPart
 
   has_many :material_fields, through: :item_groups, source: :target, source_type: "MaterialField"
 
-  after_initialize do
-    self.type = 'Material'
-  end
+  # after_initialize do
+  #   self.type = 'Material'
+  # end
 end

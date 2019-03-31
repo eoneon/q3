@@ -12,7 +12,8 @@ class ItemFieldsController < ApplicationController
   def show
     @item_field = ItemField.find(params[:id])
     respond_to do |format|
-      format.js {render file: "/item_fields/#{partial_name}/show.js.erb"}
+      #format.js {render file: "/item_fields/#{partial_name}/show.js.erb"}
+      format.js {render file: "/#{render_filepath}/show.js.erb"}
     end
   end
 
@@ -22,7 +23,8 @@ class ItemFieldsController < ApplicationController
     if @item_field.save
       @form_id = params[:form_id]
       respond_to do |format|
-        format.js {render file: "/item_fields/#{partial_name}/create.js.erb"}
+        #format.js {render file: "/item_fields/#{partial_name}/create.js.erb"}
+        format.js {render file: "/#{render_filepath}/create.js.erb"}
       end
     end
   end
@@ -34,7 +36,8 @@ class ItemFieldsController < ApplicationController
     if @item_field.save
       @form_id = params[:form_id]
       respond_to do |format|
-        format.js {render file: "/item_fields/#{partial_name}/update.js.erb"}
+        #format.js {render file: "/item_fields/#{partial_name}/update.js.erb"}
+        format.js {render file: "/#{render_filepath}/update.js.erb"}
       end
     end
   end
@@ -44,7 +47,8 @@ class ItemFieldsController < ApplicationController
 
     if @item_field.destroy
       respond_to do |format|
-        format.js {render file: "/item_fields/#{partial_name}/destroy.js.erb"}
+        #format.js {render file: "/item_fields/#{partial_name}/destroy.js.erb"}
+        format.js {render file: "/#{render_filepath}/destroy.js.erb"}
       end
     end
   end
@@ -57,7 +61,8 @@ class ItemFieldsController < ApplicationController
   private
 
   def item_field_params
-    obj_key = params[:form_id].split('-')[0].to_sym
-    params.require(obj_key).permit!
+    # obj_key = params[:form_id].split('-')[0].to_sym
+    # params.require(obj_key).permit!
+    params.require(:"#{sti_params}").permit!
   end
 end

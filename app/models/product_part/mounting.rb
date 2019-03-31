@@ -5,7 +5,7 @@ class Mounting < ProductPart
 
   has_many :mounting_fields, through: :item_groups, source: :target, source_type: "MountingField"
 
-  after_initialize do
-    self.type = 'Mounting'
-  end
+  # after_initialize do
+  #   self.type = 'Mounting'
+  # end
 end

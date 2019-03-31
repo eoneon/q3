@@ -1,0 +1,1 @@
+$('#<%= dom_ref(@origin, "#{to_snake(@origin.sti_value_type)}-index") %>').html('<%= j render "item_fields/index", origin: @origin %>');

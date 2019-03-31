@@ -7,7 +7,7 @@ class Medium < ProductPart
 
   has_many :medium_fields, through: :item_groups, source: :target, source_type: "MediumField"
 
-  after_initialize do
-    self.type = 'Medium'
-  end
+  # after_initialize do
+  #   self.type = 'Medium'
+  # end
 end

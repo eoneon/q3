@@ -1,1 +1,1 @@
-$('#<%= dom_ref(@origin, "#{to_snake(@origin.sti_field_type)}-index") %>').html('<%= j render "item_fields/index", origin: @origin %>');
+$('#<%= dom_ref(@origin, "#{to_snake(@target)}-index") %>').html('<%= j render "media/index", origin: @origin, target: to_snake(@target) %>');

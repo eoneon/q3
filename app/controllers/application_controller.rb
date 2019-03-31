@@ -3,39 +3,25 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # def origin_key
+  #  ['product_part', 'item_field', 'item_value'].detect {|fk| params[:"#{fk}_id"].present?}
+  # end
+
   # def set_origin
-  #   get_obj(params)
+  #   helpers.to_konstant(origin_param).find(params[super_fk])
+  # end
+
+  # def set_target
+  #   target_fk = helpers.to_fk(target_param)
+  #   helpers.to_konstant(target_param).find(params[:item_group][target_fk])
   # end
   #
-  # def set_target
-  #   get_obj(params[:item_group])
+  # def origin_param
+  #   dom_ref[0] if permitted_sti_types.include?(dom_ref[0])
   # end
-  def origin_key
-   ['product_part', 'item_field', 'item_value'].detect {|fk| params[:"#{fk}_id"].present?}
-  end
-
-  def set_origin
-    helpers.to_konstant(origin_param).find(params[super_fk])
-  end
-
-  def set_target
-    target_fk = helpers.to_fk(target_param)
-    helpers.to_konstant(target_param).find(params[:item_group][target_fk])
-  end
-
-  def origin_param
-    dom_ref[0] if permitted_sti_types.include?(dom_ref[0])
-  end
-
-  def target_param
-    dom_ref[2] if permitted_sti_types.include?(dom_ref[2])
-  end
-
-  #kill
-  # def get_obj(param_key)
-  #   if poly_klass = permitted_sti_types.detect { |pk| param_key[:"#{pk}_id"].present? }
-  #     helpers.to_konstant(poly_klass).find param_key[:"#{poly_klass}_id"]
-  #   end
+  #
+  # def target_param
+  #   dom_ref[2] if permitted_sti_types.include?(dom_ref[2])
   # end
 
   def build_join(origin_obj, target_obj)
@@ -81,12 +67,53 @@ class ApplicationController < ActionController::Base
     params[:form_id].split('-')
   end
 
-  def partial_name
-    #helpers.to_super_klass_name(@target).underscore.pluralize
-    params[:controller]
+  # def partial_name
+  #   params[:controller]
+  # end
+  #
+  # def controller_name
+  #   params[:controller]
+  # end
+  #new
+  def set_origin
+    helpers.to_konstant(origin_key).find(params[:"#{origin_key}_id"])
   end
 
-  def controller_name
-    params[:controller]
+  def set_target
+    helpers.to_konstant(target_key).find(params[:item_group][:"#{target_key}_id"])
+  end
+
+  def origin_key
+    ['product_part', 'item_field', 'item_value'].detect {|sti| params[:"#{sti}_id"].present?}
+  end
+
+  def target_key
+    helpers.obj_assocs(@origin).detect {|sti| params[:item_group][:"#{sti}_id"].present?}
+  end
+
+  def render_filepath
+    [params[:controller], partial_param].reject {|i| i.nil?}.join('/')
+  end
+
+  def partialize(obj)
+    helpers.to_super_klass_name(obj).underscore.pluralize
+  end
+
+  def partial_param
+    if params[:controller] == 'item_groups'
+      partialize(@target)
+    elsif origin_key.present?# @origin = set_origin
+      partialize(@origin)
+    # else
+    #   nil
+    end
+  end
+
+  def sti_params
+    helpers.sti_sibs(superklass_name.to_sym).detect {|sti| params[:"#{sti}"].present?}
+  end
+
+  def superklass_name
+   params[:controller].singularize
   end
 end

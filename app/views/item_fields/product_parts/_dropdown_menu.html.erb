@@ -1,0 +1,4 @@
+<div class="dropdown-menu">
+  <a class="dropdown-item disabled" data-toggle="collapse" href='#<%= dom_ref(origin, target, "edit") %>'>Edit <%= obj_to_cap_hyph_str(target) %></a>
+  <a class="dropdown-item" data-toggle="collapse" href='#<%= dom_ref(target, "#{to_snake(origin.sti_field_type)}-item_group-add") %>'>Add <%= obj_to_cap_hyph_str(origin.sti_field_type) %></a>
+</div>

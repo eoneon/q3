@@ -4,7 +4,7 @@ class Signature < ProductPart
 
   has_many :signature_fields, through: :item_groups, source: :target, source_type: "SignatureField"
 
-  after_initialize do
-    self.type = 'Signature'
-  end
+  # after_initialize do
+  #   self.type = 'Signature'
+  # end
 end
