@@ -5,7 +5,7 @@
 
   <div class="card-body p-2 collapse show" id="<%= dom_ref(item_field, 'body') %>">
     <div id='<%= dom_ref(item_field, "#{to_snake(item_field.sti_value_type)}-index") %>'>
-      <%= render "item_values/index", origin: item_field %>
+      <%= render "item_values/item_fields/index", origin: item_field %>
     </div>
   </div>
 </div>

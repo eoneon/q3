@@ -1,6 +1,6 @@
 class ProductPartsController < ApplicationController
   def index
-    @product_parts = ProductPart.all
+    @product_parts = ProductPart.all.order(:type)
 
     respond_to do |format|
       format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='product_parts.xlsx'"}
@@ -55,7 +55,7 @@ class ProductPartsController < ApplicationController
   end
 
   private
-  
+
   def product_part_params
     obj_key = params[:form_id].split('-')[0].to_sym
     params.require(obj_key).permit!

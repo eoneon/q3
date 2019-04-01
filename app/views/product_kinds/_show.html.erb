@@ -1,12 +1,12 @@
-<div class="card border m-1 border-dark <%= dom_ref(origin, 'card') %>" id="<%= dom_ref(origin, 'show') %>">
-  <div class="card-header <%= dom_ref(origin, 'header') %> pt-0">
-    <%= render "product_kinds/header/header", origin: origin %>
+<div class="card border m-1 border-dark <%= dom_ref(product_kind, 'card') %>" id="<%= dom_ref(product_kind, 'show') %>">
+  <div class="card-header <%= dom_ref(product_kind, 'header') %> pt-0">
+    <%= render "product_kinds/header/header", product_kind: product_kind %>
   </div>
 
-  <div class="card-body p-2 collapse show" id="<%= dom_ref(origin, 'body') %>">
-    <% self_join_assocs(origin).each do |target| %>
-      <div id='<%= dom_ref(origin, "#{to_snake(target)}-index") %>'>
-        <%= render "media/index", origin: origin, target: target %>
+  <div class="card-body p-2 collapse show" id="<%= dom_ref(product_kind, 'body') %>">
+    <% self_join_assocs(product_kind).each do |target| %>
+      <div id='<%= dom_ref(product_kind, "#{to_snake(target)}-index") %>'>
+        <%= render "media/index", origin: product_kind, target: target %>
       </div>
     <% end %>
   </div>

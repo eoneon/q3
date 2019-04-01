@@ -1,6 +1,6 @@
 class ItemValuesController < ApplicationController
   def index
-    @item_values = ItemValue.all
+    @item_values = ItemValue.all.order(:type)
 
     respond_to do |format|
       format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='item_values.xlsx'"}
@@ -12,7 +12,7 @@ class ItemValuesController < ApplicationController
   def show
     @item_value = ItemValue.find(params[:id])
     respond_to do |format|
-      format.js {render file: "/item_values/#{partial_param}/show.js.erb"}
+      format.js {render file: "/#{render_filepath}/show.js.erb"}
     end
   end
 
@@ -22,7 +22,7 @@ class ItemValuesController < ApplicationController
     if @item_value.save
       @form_id = params[:form_id]
       respond_to do |format|
-        format.js {render file: "/item_values/#{partial_param}/create.js.erb"}
+        format.js {render file: "/#{render_filepath}/create.js.erb"}
       end
     end
   end
@@ -34,7 +34,7 @@ class ItemValuesController < ApplicationController
     if @item_value.save
       @form_id = params[:form_id]
       respond_to do |format|
-        format.js {render file: "/item_values/#{partial_param}/update.js.erb"}
+        format.js {render file: "/#{render_filepath}/update.js.erb"}
       end
     end
   end
@@ -44,20 +44,19 @@ class ItemValuesController < ApplicationController
 
     if @item_value.destroy
       respond_to do |format|
-        format.js {render file: "/item_values/#{partial_param}/destroy.js.erb"}
+        format.js {render file: "/#{render_filepath}/destroy.js.erb"}
       end
     end
   end
 
   def import
     ItemValue.import(params[:file])
-    redirect_to item_values_path, notice: 'Item-Fields imported.'
+    redirect_to item_values_path, notice: 'Item-Values imported.'
   end
 
   private
 
   def item_value_params
-    obj_key = params[:form_id].split('-')[0].to_sym
-    params.require(obj_key).permit!
+    params.require(:"#{sti_params}").permit!
   end
 end

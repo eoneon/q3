@@ -15,7 +15,7 @@
     </div>
 
     <div class="collapse toggle-sibling" id='<%= dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-item_group-add") %>' data-label="Add <%= obj_to_cap_hyph_str(product_part.sti_field_type) %>" data-parent="#<%= dom_ref(product_part, 'accordion') %>">
-      <%= render 'item_groups/forms/form', origin: product_part, url: product_part_item_groups_path(product_part, ItemGroup.new), target: to_snake(product_part.sti_field_type), item_group: ItemGroup.new, form_id: dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-item_group-add-form-id") %>
+      <%= render 'item_groups/forms/form', origin: product_part, target: to_snake(product_part.sti_field_type), url: product_part_item_groups_path(product_part, ItemGroup.new), form_id: dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-item_group-add-form-id") %>
     </div>
   </div>
 

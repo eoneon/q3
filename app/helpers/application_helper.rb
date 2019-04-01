@@ -123,11 +123,16 @@ module ApplicationHelper
     end
   end
 
-  #removed methods: guides for grouping collections
-  def filtered_vl(parent_obj, child_obj)
-    set = parent_obj.public_send(to_kollection_name(child_obj)).pluck(:name).uniq
-    to_konstant(child_obj).where.not(name: set)
+  def uniq_vl(parent_obj, child_obj, attr_param)
+    set = parent_obj.public_send(to_kollection_name(child_obj)).pluck(:"#{attr_param}").uniq
+    to_konstant(child_obj).where.not("#{attr_param}": set)
   end
+
+  #removed methods: guides for grouping collections
+  # def filtered_vl(parent_obj, child_obj)
+  #   set = parent_obj.public_send(to_kollection_name(child_obj)).pluck(:name).uniq
+  #   to_konstant(child_obj).where.not(name: set)
+  # end
 
   def filtered_thru_vl(parent_obj, child_obj, other_obj)
     id_set = parent_obj.public_send(to_kollection_name(child_obj)).map{|obj| obj.public_send(to_kollection_name(other_obj)).first}

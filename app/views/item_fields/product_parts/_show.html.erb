@@ -4,10 +4,8 @@
   </div>
 
   <div class="card-body p-2 collapse" id="<%= dom_ref(item_group, 'body') %>">
-    <!-- <%# origin_assocs(origin).each do |target| %>
-      <div id='<%#= dom_ref(origin, "#{obj_to_snake(target)}-index") %>'>
-        <%#= render "media/index", origin: origin, target: target %>
-      </div>
-    <%# end %> -->
+    <div id='<%= dom_ref(origin, "#{to_snake(target.sti_value_type)}-index") %>'>
+      <%= render "item_values/item_fields/index", origin: target %>
+    </div>
   </div>
 </div>

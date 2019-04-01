@@ -13,18 +13,11 @@
     <div class="collapse show toggle-sibling" id="<%= dom_ref(item_value, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(item_value) %>" data-parent="#<%= dom_ref(item_value, 'accordion') %>">
       <%= render "item_values/forms/form", item_value: item_value, url: item_value_path(item_value), form_id: dom_ref(item_value, 'edit-form-id') %>
     </div>
-
-    <!-- <%# item_value_assocs(item_value).each do |target| %>
-      <div class="collapse toggle-sibling" id='<%#= dom_ref(item_value, "#{target}-item_group-add") %>' data-label="Add <%#= obj_to_cap_hyph_str(target) %>" data-parent="#<%#= dom_ref(item_value, 'accordion') %>">
-        <%#= render 'item_groups/forms/form', item_value: item_value, target: target, item_group: ItemGroup.new, form_id: dom_ref(item_value, "#{target}-item_group-add-form-id") %>
-      </div>
-    <%# end %> -->
   </div>
 
   <div class="col-1">
     <div class="row align-items-center">
       <div class="col mx-2 p-0">
-        <%#= render "item_groups/sort_btn_group", origin: origin, item_group: item_group %>
       </div>
       <div class="col p-0">
         <%= link_to (fa_icon "times"), item_value_path(item_value), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>

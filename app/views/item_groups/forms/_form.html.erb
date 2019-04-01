@@ -2,7 +2,7 @@
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
     <div class="form-row align-items-center">
-      <%= render "item_groups/forms/input_group", f: f, target: target, form_id: form_id %>
+      <%= render "item_groups/forms/input_group", f: f, origin: origin, target: target, form_id: form_id %>
     </div>
   </div>
 <% end %>
