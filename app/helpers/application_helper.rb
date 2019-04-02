@@ -123,9 +123,9 @@ module ApplicationHelper
     end
   end
 
-  def uniq_vl(parent_obj, child_obj, attr_param)
-    set = parent_obj.public_send(to_kollection_name(child_obj)).pluck(:"#{attr_param}").uniq
-    to_konstant(child_obj).where.not("#{attr_param}": set)
+  def uniq_vl(parent_obj, kollection_name, text_method)
+    set = parent_obj.public_send(to_kollection_name(kollection_name)).pluck(:"#{text_method}").uniq
+    to_konstant(kollection_name).where.not("#{text_method}": set)
   end
 
   #removed methods: guides for grouping collections

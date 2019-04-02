@@ -36,7 +36,11 @@ class ApplicationController < ActionController::Base
   end
 
   def sti_params
-    helpers.sti_sibs(superklass_name.to_sym).detect {|sti| params[:"#{sti}"].present?}
+    if subklass_name = helpers.sti_sibs(superklass_name.to_sym).detect {|sti| params[:"#{sti}"].present?}
+      subklass_name
+    else
+      superklass_name
+    end
   end
 
   def superklass_name
