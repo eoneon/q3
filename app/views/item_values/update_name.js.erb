@@ -1,0 +1,8 @@
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'item_values/forms/form', item_value: @item_value, url: item_value_path(@item_value), form_id: @form_id %>");
+$("#<%= new_dom_ref(@form_id, 'name', 'properties-edit') %>").html("<%= j render 'item_values/forms/form', item_value: @item_value, url: item_value_path(@item_value), form_id: new_dom_ref(@form_id, 'name', 'properties-edit-form-id') %>");
+
+<% if dom_opt(@form_id, {name: 'fields_for'}) %>
+  $("<%= dom_ref('#item_value', @item_value.id, 'tab-item') %>").text("<%= @item_value.name %>");
+  enableToggleInput("#<%= @form_id %>");
+  getDeleteBtn("#<%= @form_id %>").toggleClass("disabled");
+<% end %>

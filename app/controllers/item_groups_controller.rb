@@ -6,7 +6,6 @@ class ItemGroupsController < ApplicationController
 
     if build_join(@origin, @target)
       respond_to do |format|
-        #format.js {render file: "/item_groups/#{partial_name}/create.js.erb"}render_filepath
         format.js {render file: "/#{render_filepath}/create.js.erb"}
       end
     end

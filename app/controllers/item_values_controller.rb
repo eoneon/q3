@@ -34,7 +34,7 @@ class ItemValuesController < ApplicationController
     if @item_value.save
       @form_id = params[:form_id]
       respond_to do |format|
-        format.js {render file: "/#{render_filepath}/update.js.erb"}
+        format.js {render file: "/#{render_filepath}/#{update_partial}.js.erb"}
       end
     end
   end
@@ -57,6 +57,18 @@ class ItemValuesController < ApplicationController
   private
 
   def item_value_params
+    # if params[:action] == 'update'
+    #   params[:"#{sti_params}"][:properties] = ItemValue.set_text_param_values(params[:"#{sti_params}"][:properties], @item_value.name)
+    # end
     params.require(:"#{sti_params}").permit!
+  end
+
+  def update_item_value_params
+    #properties_params = item_value_params[:properties]
+    ItemValue.set_text_param_values(properties_params, @item_value.name)
+  end
+
+  def update_partial
+    helpers.dom_opt(@form_id, {properties: 'update_properties'}, 'update_name')
   end
 end

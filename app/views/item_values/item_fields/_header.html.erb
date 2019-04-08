@@ -5,13 +5,13 @@
   <ul class="nav ml-3 mr-0">
     <li class="nav-item-dropdown">
       <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><%= (fa_icon "ellipsis-v") %></a>
-      <%= render "item_values/dropdown_menu", item_value: item_value %>
+      <%= render "item_values/dropdown_menu", item_field: item_field, item_value: item_value %>
     </li>
   </ul>
 
   <div class="col" id="<%= dom_ref(item_value, 'accordion') %>">
-    <div class="collapse show toggle-sibling" id="<%= dom_ref(item_value, 'name-edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(item_value) %>" data-parent="#<%= dom_ref(item_value, 'accordion') %>">
-      <%= render "item_values/forms/form", item_value: item_value, url: item_value_path(item_value), form_id: dom_ref(item_value, 'name-edit-form-id') %>
+    <div class="collapse show toggle-sibling" id="<%= dom_ref(item_field, item_value, 'name-edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(item_value) %>" data-parent="#<%= dom_ref(item_value, 'accordion') %>">
+      <%= render "item_values/forms/form", item_value: item_value, url: item_field_item_value_path(item_field, item_value), form_id: dom_ref(item_field, item_value, 'name-edit-form-id') %>
     </div>
   </div>
 
@@ -20,7 +20,7 @@
       <div class="col mx-2 p-0">
       </div>
       <div class="col p-0">
-        <%= link_to (fa_icon "times"), item_value_path(item_value), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
+        <%#= link_to (fa_icon "times"), item_value_item_group_path(item_value, item_group), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
       </div>
     </div>
   </div>

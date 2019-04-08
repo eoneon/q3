@@ -34,6 +34,11 @@ $(document).ready(function(){
     toggleInputAndDelete(form);
   });
 
+  // $("body").on("click", ".custom_value", function(){
+  //   var form = $(this).closest(".form");
+  //
+  // });
+
   $("body").on("hidden.bs.collapse", ".toggle-sibling", function(){
     var form = $(this).find(".form");
     if (getInputAccessIcon(form).hasClass("fa-toggle-on")) {

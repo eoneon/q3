@@ -1,8 +1,6 @@
-<%= form_with model: item_value, url: item_value_path(item_value), id: form_id do |f| %>
+<%= form_with model: item_value, url: url, id: form_id do |f| %>
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
-    <div class="form-row align-items-center">
-      <%= render "item_values/forms/input_group", f: f, item_value: item_value, form_id: form_id %>
-    </div>
+    <%= render "item_values/forms/#{dom_opt(form_id, {properties: 'fields_for'}, 'input_group')}", f: f, item_value: item_value, form_id: form_id %>
   </div>
 <% end %>

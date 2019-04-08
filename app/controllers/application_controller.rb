@@ -23,16 +23,19 @@ class ApplicationController < ActionController::Base
     [params[:controller], partial_param].reject {|i| i.nil?}.join('/')
   end
 
-  def partialize(obj)
-    helpers.to_super_klass_name(obj).underscore.pluralize
-  end
-
   def partial_param
     if params[:controller] == 'item_groups'
       partialize(@target)
-    elsif origin_key.present?
+    elsif @origin.present?
       partialize(@origin)
+    elsif origin_key.present?
+      @origin = set_origin
+      origin_key.pluralize
     end
+  end
+
+  def partialize(obj)
+    helpers.to_super_klass_name(obj).underscore.pluralize
   end
 
   def sti_params

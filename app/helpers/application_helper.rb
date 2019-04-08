@@ -71,6 +71,14 @@ module ApplicationHelper
     str.index(/#{pat}/)
   end
 
+  def dom_opt(ref, opts={}, *alt_v)
+    if v = opts.detect {|k,v| v if ref.split('-').include?(k.to_s)}
+      v[-1]
+    elsif alt_v.any?
+      alt_v[0]
+    end
+  end
+
   #array and string parsing methods for rendering conditional dom elements
   def dom_attr(str, optns, *tags)
     if include_any?(str.split('-'), tags)

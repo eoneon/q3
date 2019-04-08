@@ -14,7 +14,7 @@ class SubPartsController < ApplicationController
   # end
 
   def update
-    @product_part = helpers.to_konstant(origin_param).find(params[:product_part_id])
+    @product_part = set_origin
     @sub_part = helpers.to_konstant(target_param).find(params[:id])
     @sub_part.assign_attributes(sub_part_params)
 
@@ -30,5 +30,9 @@ class SubPartsController < ApplicationController
 
   def sub_part_params
     params.require(:"#{target_param}").permit!
+  end
+
+  def target_param
+    helpers.obj_assocs(@product_part).detect {|sti| params[:"#{sti}"].present?}
   end
 end

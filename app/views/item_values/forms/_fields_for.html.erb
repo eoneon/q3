@@ -1,0 +1,13 @@
+<%= f.fields_for :properties, OpenStruct.new(item_value.properties) do |ff| %>
+  <div class="form-row align-items-center">
+    <% item_value.text_keys.each do |k| %>
+      <legend class="col-form-label-sm col pt-2 pr-0 mr-0"><%= "#{k}:" %></legend>
+      <% item_value.checkbox_params.each do |param_set| %>
+        <%= render "item_values/forms/form_row", ff: ff, k: k, param_set: param_set %>
+      <% end %>
+      <div class="col-5">
+        <%= ff.text_field "#{k}_value", placeholder: "enter custom #{k}", class: 'form-control form-control-sm custom_input', onchange: 'javascript: $(this).trigger("submit.rails")' %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
