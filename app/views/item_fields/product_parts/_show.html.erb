@@ -4,7 +4,7 @@
   </div>
 
   <div class="card-body p-2 collapse" id="<%= dom_ref(item_group, 'body') %>">
-    <div id='<%= dom_ref(origin, "#{to_snake(target.sti_value_type)}-index") %>'>
+    <div id='<%= dom_ref(target, "#{to_snake(target.sti_value_type)}-index") %>'>
       <%= render "item_values/item_fields/index", origin: target %>
     </div>
   </div>

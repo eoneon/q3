@@ -14,7 +14,7 @@ class ItemValue < ApplicationRecord
   end
 
   def checkbox_params
-    [[name, 'use default'], ['omit', 'omit'], ['custom', 'custom']]
+    [[name, 'default'], ['omit', 'omit'], ['custom', 'custom']]
   end
 
   def reset_text_values

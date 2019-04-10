@@ -5,8 +5,4 @@ class ProductKind < ProductPart
   has_many :media, through: :item_groups, source: :target, source_type: "Medium"
   has_many :signatures, through: :item_groups, source: :target, source_type: "Signature"
   has_many :certificates, through: :item_groups, source: :target, source_type: "Certificate"
-
-  # after_initialize do
-  #   self.type = 'ProductKind'
-  # end
 end

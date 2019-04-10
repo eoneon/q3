@@ -54,6 +54,10 @@ module ApplicationHelper
     parent_obj.public_send(to_kollection_name(child_obj))
   end
 
+  def to_relation(parent_obj, child_obj)
+    parent_obj.public_send(to_snake(child_obj))
+  end
+
   #array and string parsing and comparison methods
   def include_any?(arr_x, arr_y)
     arr_x.any? {|x| arr_y.include?(x)}
@@ -120,6 +124,10 @@ module ApplicationHelper
   def upper_single(klass)
     klass_name = to_snake(klass)
     klass_name.pluralize.split('_').join(' ').upcase
+  end
+
+  def card_title(origin, target)
+    "#{origin.name} #{obj_to_hyph_str(target).pluralize}"
   end
 
   #used only inside dynamic form used by both: product_part/item_field?

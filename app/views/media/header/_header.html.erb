@@ -27,7 +27,7 @@
         <%= render "item_groups/sort_btn_group", origin: origin, item_group: item_group %>
       </div>
       <div class="col-1 ml-1">
-        <%= link_to (fa_icon "times"), polymorphic_path([target, item_group]), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
+        <%= link_to (fa_icon "times"), product_part_path(item_group), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
       </div>
     </div>
   </div>

@@ -1,5 +1,6 @@
-<% if origin.present? && origin.item_groups.any? && origin.sti_item_groups(target).any? %>
-  <% origin.sti_item_groups(target).each do |item_group| %>
+<% if origin_sti_item_groups = origin_sti_item_groups?(origin, target) %>
+  <h6 class="card-title py-0 my-0"><%= card_title(origin, target) %></h6>
+  <% origin_sti_item_groups.each do |item_group| %>
     <%= render "media/show", origin: origin, target: item_group.target, item_group: item_group  %>
   <% end %>
 <% end %>

@@ -24,7 +24,7 @@
   <div class="col-1">
     <div class="row align-items-center">
       <div class="col mx-2 p-0">
-        <%#= render "product_kinds/header/sorter", product_kind: product_kind, item_kind: item_kind %>
+        <%#= render "product_kinds/header/sorter", origin: product_kind, item_kind: item_kind %>
       </div>
       <div class="col p-0">
         <%= link_to (fa_icon "times"), product_part_path(product_kind), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
