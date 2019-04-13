@@ -1,4 +1,4 @@
-<small class="ml-5 my-0 py-0 form-text text-muted input-label">Edit Art Product</small>
+<!-- <small class="ml-5 my-0 py-0 form-text text-muted input-label">Edit Art Product</small> -->
 <div class="row justify-content-between align-items-center bg-light">
   <button class="caret-toggle btn btn-lg bg-transparent pl-2 border py-0" data-toggle="collapse" data-target="#<%= dom_ref(product, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-down") %></button>
 
@@ -10,11 +10,11 @@
   </ul>
 
   <div class="col" id="<%= dom_ref(product, 'accordion') %>">
-    <div class="collapse show toggle-sibling" id="product-edit" data-label="Edit Art Product" data-parent="#<%= dom_ref(product, 'accordion') %>">
-      <%= render "products/forms/form", product: product, form_id: dom_ref(product, 'edit-form-id') %>
-    </div>
+    <%# <div class="collapse show toggle-sibling" id="product-edit" data-label="Edit Art Product" data-parent="#<%#= dom_ref(product, 'accordion') %>">
+      <%#= render "products/forms/form", product: product, form_id: dom_ref(product, 'edit-form-id') %>
+    </div> %>
 
-    <div class="collapse toggle-sibling" id="<%= dom_ref(product, 'item_group-add') %>" data-label="Add Category Kind" data-parent="#<%= dom_ref(product, 'accordion') %>">
+    <div class="collapse toggle-sibling" id="<%= dom_ref(product, 'item_group-add') %>" data-label="Add Product Kind" data-parent="#<%= dom_ref(product, 'accordion') %>">
       <%= render 'item_groups/forms/form', origin: product, item_group: ItemGroup.new, form_id: dom_ref(product, 'item_group-add-form-id') %>
     </div>
   </div>

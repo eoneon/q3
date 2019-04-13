@@ -1,5 +1,0 @@
-// $("#<%#= dom_ref(@element_kind, 'element-index') %>").html('<%#= j render "elements/index", element_kind: @element_kind, element: @element %>');
-// $("#<%#= new_dom_ref(@form_id, 'form', nil) %>").html("<%#= j render 'elements/forms/form', element_kind: @element_kind, element: Element.new, form_id: @form_id %>");
-$("#<%= dom_ref(@poly_element, 'element-index') %>").html('<%= j render "elements/poly_elements/index", poly_element: @poly_element %>');
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'elements/forms/form', poly_element: @poly_element, element: Element.new, form_id: @form_id %>");
-toggleFormOnCreate('#<%= @form_id %>');

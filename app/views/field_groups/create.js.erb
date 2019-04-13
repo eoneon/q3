@@ -1,5 +1,0 @@
-$("#<%= dom_ref(@fieldable, 'field-index') %>").html('<%= j render "fields/poly_fields/index", fieldable: @fieldable %>');
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'field_groups/forms/form', fieldable: @fieldable, field_group: FieldGroup.new, form_id: @form_id %>");
-toggleFormOnCreate('#<%= @form_id %>');
-
-//$(this).closest("div[id*='show']").siblings().find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");

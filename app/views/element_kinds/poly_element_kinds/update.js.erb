@@ -1,2 +1,0 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'fields/forms/form', fieldable: @fieldable, field: @field, url: polymorphic_url([@fieldable, :poly, @field]), form_id: @form_id %>");
-getDeleteBtn("#<%= @form_id %>").toggleClass("disabled");

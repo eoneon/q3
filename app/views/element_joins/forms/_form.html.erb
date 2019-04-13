@@ -1,8 +1,0 @@
-<%= form_with model: element_join, url: [poly_element, element_join], id: form_id do |f| %>
-  <div class="form">
-    <%= hidden_field_tag :form_id, form_id %>
-    <div class="form-row align-items-center">
-      <%= render "element_joins/forms/input_group", f: f, poly_element: poly_element, form_id: form_id %>
-    </div>
-  </div>
-<% end %>

@@ -1,3 +1,0 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'values/forms/form', field: @field, value: Value.new, form_id: @form_id %>");
-$(".<%= dom_ref(@field, 'value-index') %>").html('<%= j render "values/index", field: @field %>');
-toggleFormOnCreate('#<%= @form_id %>');

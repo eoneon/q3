@@ -1,8 +1,0 @@
-<%= form_with model: element, url: [poly_element, element], id: form_id do |f| %>
-  <div class="form">
-    <%= hidden_field_tag :form_id, form_id %>
-    <div class="form-row align-items-center">
-      <%= render "elements/forms/input_group", element: element, f: f, form_id: form_id %>
-    </div>
-  </div>
-<% end %>

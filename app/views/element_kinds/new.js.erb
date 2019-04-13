@@ -1,7 +1,0 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'element_kinds/forms/new', element_kind: ElementKind.new, form_id: @form_id %>");
-
-var show_id = "#element_kind";
-var tab_item_partial = $("<%= j render 'element_kinds/tab', element_kind: @element_kind %>").addClass("active");
-var show_partial = "<%= j render 'element_kinds/show', element_kind: @element_kind %>";
-
-refreshCreate(show_id, tab_item_partial, show_partial);

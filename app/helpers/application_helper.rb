@@ -54,8 +54,8 @@ module ApplicationHelper
     parent_obj.public_send(to_kollection_name(child_obj))
   end
 
-  def to_relation(parent_obj, child_obj)
-    parent_obj.public_send(to_snake(child_obj))
+  def relation_any?(parent_obj, child_obj)
+    to_kollection(parent_obj, child_obj).first if parent_obj.public_send(to_snake(child_obj))
   end
 
   #array and string parsing and comparison methods

@@ -1,5 +1,2 @@
-<div style="font-size: 0.5rem;"><%= link_to_if item_group.sort.present? && item_group.sort > 1, (fa_icon "chevron-up"), sort_up_product_part_item_group_path(item_group), method: :post, remote: true %></div>
-<div style="font-size: 0.5rem;"><%= link_to_unless item_group.sort.nil? || origin.sti_item_groups(item_group.target_type).last == item_group, (fa_icon "chevron-down"), sort_down_product_part_item_group_path(item_group), method: :post, remote: true %></div>
-
-<!-- polymorphic_path([origin, item_group], action: 'sort_up', dom_ref: dom_ref(origin, 'index'))
-polymorphic_path([origin, item_group], action: 'sort_down', dom_ref: dom_ref(origin, 'index'))-->
+<div style="font-size: 0.5rem;"><%= link_to_if item_group.sort.present? && item_group.sort > 1, (fa_icon "chevron-up"), sort_up_product_part_item_group_path(origin, item_group), method: :post, remote: true %></div>
+<div style="font-size: 0.5rem;"><%= link_to_unless item_group.sort.nil? || origin.sti_item_groups(item_group.target_type).last == item_group, (fa_icon "chevron-down"), sort_down_product_part_item_group_path(origin, item_group), method: :post, remote: true %></div>

@@ -1,4 +1,0 @@
-$("#<%= dom_ref(@fieldable, 'field-index') %>").append('<%= j render "fields/show", fieldable: @fieldable, field_group: @field_group %>');
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'fields/forms/form', fieldable: @fieldable, field: Field.new, form_id: @form_id %>");
-addOption("#<%= dom_ref(@fieldable, 'field_group-add') %>", '<%= @field.id %>', '<%= @field.name %>');
-toggleFormOnCreate('#<%= @form_id %>');

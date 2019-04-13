@@ -1,3 +1,0 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'element_joins/forms/form', poly_element: @poly_element, element_join: ElementJoin.new, form_id: @form_id %>");
-$("#<%= dom_ref(@poly_element, 'element-index') %>").html('<%= j render "elements/poly_elements/index", poly_element: @poly_element  %>');
-toggleFormOnCreate('#<%= @form_id %>');

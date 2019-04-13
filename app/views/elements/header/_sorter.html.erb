@@ -1,4 +1,0 @@
-<div class="btn-group-vertical btn-group-sm border-left border-right px-1" role="group">
-  <div style="font-size: 0.5rem;"><%= link_to_if element.sort.present? && element.sort > 1, (fa_icon "chevron-up"), sort_up_element_kind_element_path(element_kind, element, dom_ref: dom_ref(element_kind, 'element-index')), method: :post, remote: true %></div>
-  <div style="font-size: 0.5rem;"><%= link_to_unless element.sort.nil? || element_kind.sorted_elements.last == element, (fa_icon "chevron-down"), sort_down_element_kind_element_path(element_kind, element, dom_ref: dom_ref(element_kind, 'element-index')), method: :post, remote: true %></div>
-</div>
