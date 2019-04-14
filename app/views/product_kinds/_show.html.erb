@@ -6,7 +6,7 @@
   <div class="card-body p-2 collapse show" id="<%= dom_ref(product_kind, 'body') %>">
     <% self_join_assocs(product_kind).each do |target| %>
       <div id='<%= dom_ref(product_kind, "#{to_snake(target)}-index") %>'>
-        <%= render "media/index", origin: product_kind, target: target %>
+        <%= render "sub_parts/index", origin: product_kind, target: target %>
       </div>
     <% end %>
   </div>

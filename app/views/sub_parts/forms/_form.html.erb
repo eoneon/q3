@@ -1,7 +1,7 @@
 <%= form_with model: target, url: url, id: form_id do |f| %>
   <div class="form">
     <div class="form-row align-items-center">
-      <%= render "media/forms/input_group", f: f, target: target, form_id: form_id %>
+      <%= render "sub_parts/forms/input_group", f: f, target: target, form_id: form_id %>
     </div>
   </div>
 <% end %>

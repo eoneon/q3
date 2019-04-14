@@ -1,2 +1,0 @@
-class MediumFieldsController < ApplicationController
-end

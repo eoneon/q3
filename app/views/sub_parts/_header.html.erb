@@ -5,13 +5,13 @@
   <ul class="nav ml-3 mr-0">
     <li class="nav-item-dropdown">
       <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></a>
-      <%= render "media/header/dropdown_menu", origin: origin, target: target %>
+      <%= render "sub_parts/dropdown_menu", origin: origin, target: target %>
     </li>
   </ul>
 
   <div class="col" id="<%= dom_ref(item_group, 'accordion') %>">
     <div class="collapse show toggle-sibling" id="<%= dom_ref(origin, target, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
-      <%= render "media/forms/form", target: target, url: product_part_sub_part_path(origin, target), form_id: dom_ref(origin, target, 'edit-form-id') %>
+      <%= render "sub_parts/forms/form", target: target, url: product_part_sub_part_path(origin, target), form_id: dom_ref(origin, target, 'edit-form-id') %>
     </div>
 
     <% self_join_assocs(target, origin).each do |sub_target| %>
@@ -31,4 +31,3 @@
       </div>
     </div>
   </div>
-</div>

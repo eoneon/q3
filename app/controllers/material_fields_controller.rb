@@ -1,2 +1,0 @@
-class MaterialFieldsController < ApplicationController
-end

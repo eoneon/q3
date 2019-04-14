@@ -1,2 +1,0 @@
-class DimensionFieldsController < ApplicationController
-end
