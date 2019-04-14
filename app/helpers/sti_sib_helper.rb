@@ -7,6 +7,20 @@ module StiSibHelper
     dir_list(folder_names).map {|folder_name| folder_name.classify}
   end
 
+  def abbrv_sti_sibs(*folder_names)
+    #sti_name = sti_name.split('_')
+    #dir_list(folder_names).map {|folder_name| abbrv_sti_key[folder_name.to_sym] if abbrv_sti_key.has_key?(folder_name.to_sym)}
+    dir_list(folder_names).map {|folder_name| [abbrv_sti(folder_name), folder_name.classify]}
+  end
+
+  def abbrv_sti(folder_name)
+    abbrv_sti_key.has_key?(folder_name.to_sym) ? abbrv_sti_key[folder_name.to_sym] : folder_name
+  end
+
+  def abbrv_sti_key
+    {medium: 'Med', product_kind: 'PrdKd', material: 'Matrl', certificate: 'Cert', edition: 'Ed', dimension: 'Dim', mounting: 'Mount', signature: 'Sig', sub_medium: 'Sub-Med'}
+  end
+
   def dir_list(folder_names)
     model_dirs = to_model_dirs(folder_names) #=>["models/product_part"]
     model_names = []
