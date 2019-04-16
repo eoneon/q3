@@ -2,7 +2,13 @@
   <% if dom_cond(form_id, 'edit') %>
     <button class="btn btn-sm rounded-circle bg-transparent <%= dom_attr(form_id, 'toggle-input-access', 'edit') %>" type="button" id="<%= new_dom_ref(form_id, 'form', 'btn') %>"><%= (fa_icon "toggle-off") %></button>
   <% end %>
-  <%= f.text_field :name, placeholder: "enter product-part name", class: "form-control ml-2", disabled: true %>
-  <%= f.select :type, options_for_select(abbrv_sti_sibs(:product_part), selected: product_part.type), {prompt: "- select product-part type -"}, {class: "form-control border-0", disabled: true} %>
+  <div class="col">
+    <%= f.text_field :name, placeholder: "enter product-part name", class: "form-control ml-2", disabled: true %>
+  </div>
+  <div class="col-auto">
+    <%= f.select :type, options_for_select(abbrv_sti_sibs(:product_part), selected: product_part.type), {prompt: "- select product-part type -"}, {class: "form-control border-0", disabled: true} %>
+  </div>
+  <button class="btn btn-sm bg-transparent rounded-circle category-check <%= cond_attr(product_part.category, true, 'text-success', 'text-secondary') %>" type="button" disabled><%= (fa_icon "check-circle") %></button>
   <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit" disabled><%= (fa_icon "plus-circle") %></button>
+  <%= f.check_box :category, class: 'form-check-input collapse' %>
 </div>

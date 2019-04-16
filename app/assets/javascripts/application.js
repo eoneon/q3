@@ -59,6 +59,21 @@ $(document).ready(function(){
     }
   });
 
+  $("body").on("click", ".category-check", function(){
+    var form = $(this).closest(".form");
+    var category = getCheckInput(form);
+    if ($(category).prop("checked") == true){
+      $(category).prop("checked", false);
+    } else {
+      $(category).prop("checked", true);
+    }
+    $(form).submit();
+  });
+
+  function getCheckInput(form) {
+    return $(form).find("input:checkbox");
+  }
+
   $("body").on("show.bs.collapse", "#artist-form", function(){
     var form = $("#artist-show-form-id");
     $(form).find(".input-group").toggleClass("bg-white bg-disabled");
@@ -223,5 +238,8 @@ function getInputGroupDiv(form) {
   return $(form).find("div.input-group");
 }
 function getInputs(form) {
-  return $(form).find("input:text, select, button:submit");
+  return $(form).find("input:text, select, button:submit, button.category-check");
+}
+function getCheckInput(form) {
+  return $(form).find("input:checkbox[name=category]").val();
 }

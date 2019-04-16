@@ -83,6 +83,14 @@ module ApplicationHelper
     end
   end
 
+  def cond_attr(eval_test, rslt, *attrs)
+    if eval_test == rslt
+      attrs[0]
+    elsif attrs.count == 2
+      attrs[-1]
+    end
+  end
+
   #array and string parsing methods for rendering conditional dom elements
   def dom_attr(str, optns, *tags)
     if include_any?(str.split('-'), tags)
