@@ -14,7 +14,11 @@
       <%= render "sub_parts/forms/form", target: target, url: product_part_sub_part_path(origin, target), form_id: dom_ref(origin, target, 'edit-form-id') %>
     </div>
 
-    <% self_join_assocs(target, origin).each do |sub_target| %>
+    <div class="collapse toggle-sibling" id='<%= dom_ref(target, "#{to_snake(target.sti_field_type)}-item_group-add") %>' data-label="Add <%= obj_to_cap_hyph_str(target.sti_field_type) %>" data-parent="#<%= dom_ref(target, 'accordion') %>">
+      <%= render 'item_groups/forms/form', origin: target, target: to_snake(target.sti_field_type), url: product_part_item_groups_path(target, ItemGroup.new), form_id: dom_ref(target, "#{to_snake(target.sti_field_type)}-item_group-add-form-id") %>
+    </div>
+
+    <% self_join_assocs(target, :product_kind).each do |sub_target| %>
       <div class="collapse toggle-sibling" id='<%= dom_ref(target, "#{sub_target}-item_group-add") %>' data-label="Add <%= obj_to_cap_hyph_str(sub_target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
         <%= render 'item_groups/forms/form', origin: target, target: sub_target, url: product_part_item_groups_path(target, ItemGroup.new), form_id: dom_ref(target, "#{sub_target}-item_group-add-form-id") %>
       </div>
@@ -27,7 +31,7 @@
         <%= render "item_groups/sort_btn_group", origin: origin, item_group: item_group %>
       </div>
       <div class="col-1 ml-1">
-        <%= link_to (fa_icon "times"), product_part_path(item_group), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
+        <%= link_to (fa_icon "times"), product_part_item_group_path(target, item_group), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
       </div>
     </div>
   </div>

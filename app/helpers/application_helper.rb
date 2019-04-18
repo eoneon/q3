@@ -112,6 +112,16 @@ module ApplicationHelper
     end
   end
 
+  #replaces: dom_cond
+  def ref_include?(str, *tags)
+    include_any?(str.split('-'), tags)
+  end
+
+  #replaces: dom_exclude
+  def ref_exclude?(str, optn, tag)
+    optn if str.split('-').exclude?(tag)
+  end
+
   def dom_cond(str, *tags)
     include_any?(str.split('-'), tags)
   end
@@ -148,7 +158,7 @@ module ApplicationHelper
   end
 
   def uniq_vl(parent_obj, kollection_name, text_method)
-    set = parent_obj.public_send(to_kollection_name(kollection_name)).pluck(:"#{text_method}").uniq
+    set = parent_obj.public_send(to_kollection_name(kollection_name)).pluck(:"#{text_method}").uniq + [parent_obj.name]
     to_konstant(kollection_name).where.not("#{text_method}": set)
   end
 

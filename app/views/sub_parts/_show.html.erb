@@ -4,9 +4,12 @@
   </div>
 
   <div class="card-body p-1 collapse" id="<%= dom_ref(item_group, 'body') %>">
-    <% self_join_assocs(target, origin).each do |sub_target| %>
-      <div id='<%= dom_ref(target, "#{to_snake(sub_target)}-index") %>'>
-        <%= render "sub_parts/index", origin: target, target: sub_target %>
+    <div id='<%= dom_ref(target, "#{to_snake(target.sti_field_type)}-index") %>'>
+      <%= render "item_fields/product_parts/index", origin: target %>
+    </div>
+    <% self_join_assocs(target, :product_kind).each do |type| %>
+      <div id='<%= dom_ref(target, "#{to_snake(type)}-index") %>'>
+        <%= render "sub_parts/index", origin: target, type: type, origin_id: origin.id %>
       </div>
     <% end %>
   </div>

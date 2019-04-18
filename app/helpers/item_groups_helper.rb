@@ -11,8 +11,10 @@ module ItemGroupsHelper
     fields_any?(product_part) if parent_obj.to_kollection(product_part).any?
   end
 
-  def origin_sti_item_groups?(origin, target)
-    origin.sti_item_groups(target) if origin.present? && origin.item_groups.any? && origin.sti_item_groups(target).any?
+  def origin_sti_item_groups?(origin, type, *origin_id)
+    if origin.present? && origin.sti_item_groups(type).any? 
+      origin_id.any? ? origin.sti_item_groups(type).where.not(origin_id: origin_id) : origin.sti_item_groups(type)
+    end
   end
 
   def item_field_values(item_field)

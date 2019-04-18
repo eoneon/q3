@@ -1,4 +1,5 @@
 <% if product_part_fields = fields_any?(origin) %>
+<h6 class="card-title py-0 my-0"><%= card_title(origin, 'field') %></h6>
   <% product_part_fields.each do |item_group| %>
     <%= render "item_fields/product_parts/show", origin: origin, target: item_group.target, item_group: item_group  %>
   <% end %>

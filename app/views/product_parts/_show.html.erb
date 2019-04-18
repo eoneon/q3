@@ -7,5 +7,12 @@
     <div id='<%= dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-index") %>'>
       <%= render "item_fields/product_parts/index", origin: product_part %>
     </div>
+
+    <% self_join_assocs(product_part, :product_kind).each do |type| %>
+      <div id='<%= dom_ref(product_part, "#{to_snake(type)}-index") %>'>
+        <%= render "sub_parts/index", origin: product_part, type: type, origin_id: nil %>
+      </div>
+    <% end %>
+
   </div>
 </div>

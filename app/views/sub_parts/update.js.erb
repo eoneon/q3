@@ -1,2 +1,2 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'media/forms/form', target: @sub_part, url: product_part_sub_part_path(@product_part, @sub_part), form_id: @form_id %>");
+$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'sub_parts/forms/form', target: @sub_part, url: product_part_sub_part_path(@product_part, @sub_part), form_id: @form_id %>");
 getDeleteBtn("#<%= @form_id %>").toggleClass("disabled");
