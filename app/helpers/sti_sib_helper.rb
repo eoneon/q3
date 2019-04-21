@@ -7,9 +7,11 @@ module StiSibHelper
     dir_list(folder_names).map {|folder_name| folder_name.classify}
   end
 
+  def product_part_search_vl(*sti_superklass)
+    dir_list(sti_superklass).map {|subklass| ["show #{subklass}", subklass.classify]}.unshift(["show all product parts", nil])
+  end
+
   def abbrv_sti_sibs(*folder_names)
-    #sti_name = sti_name.split('_')
-    #dir_list(folder_names).map {|folder_name| abbrv_sti_key[folder_name.to_sym] if abbrv_sti_key.has_key?(folder_name.to_sym)}
     dir_list(folder_names).map {|folder_name| [abbrv_sti(folder_name), folder_name.classify]}
   end
 
