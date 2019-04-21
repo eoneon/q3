@@ -1,2 +1,2 @@
-alert("<%= @search.pluck(:name) %>");
-//alert("<%#= @search %>");
+$("#product_part-tab-index").html("<%= j render 'product_parts/tabs', product_parts: @product_parts %>");
+$("#product_part").children().remove();

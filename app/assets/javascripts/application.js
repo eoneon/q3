@@ -28,16 +28,10 @@ $(document).ready(function(){
     $(card_sibs).find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
   });
 
-  //
   $("body").on("click", ".toggle-input-access", function(){
     var form = $(this).closest(".form");
     toggleInputAndDelete(form);
   });
-
-  // $("body").on("click", ".custom_value", function(){
-  //   var form = $(this).closest(".form");
-  //
-  // });
 
   $("body").on("hidden.bs.collapse", ".toggle-sibling", function(){
     var form = $(this).find(".form");
@@ -121,6 +115,7 @@ function toggleInputAccess(form) {
     $(input).prop("disabled") == false ? $(input).prop("disabled", true) : $(input).prop("disabled", false)
   });
 }
+
 function toggleShowView(show_id, show_partial) {
   var id_arr = show_id.split('-');
   if ($(show_id).length == 0) {
@@ -131,6 +126,13 @@ function toggleShowView(show_id, show_partial) {
     $(id_arr.join('-')).removeClass("active");
   }
 }
+
+// function removeShowView(show_id) {
+//   var id_arr = show_id.split('-');
+//   if ($(show_id).length > 0) {
+//     $(show_id).remove();
+//   }
+// }
 function refreshCreate(show_id, tab_item_partial, show_partial){
   var tab_index_id = show_id.concat('-', 'tab-index');
   $(tab_index_id).find('.list-group-item').removeClass("active");

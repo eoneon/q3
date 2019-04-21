@@ -1,7 +1,7 @@
 class SearchProductPartsController < ApplicationController
   def index
     where_clause = build_query
-    @search =
+    @product_parts =
 
     if where_clause.count == 0
       ProductPart.all
@@ -15,7 +15,7 @@ class SearchProductPartsController < ApplicationController
   end
 
   private
-  
+
   def build_query
     [:category, :type].map {|k| set_kv_pair(k)}.inject({}){|h, kv_pair| h.merge!(kv_pair)}
   end
