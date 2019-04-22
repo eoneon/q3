@@ -70,4 +70,56 @@ module StiSibHelper
   def valid_type?(model_name)
     sub_dirs.exclude?(model_name.to_sym)
   end
+
+  ###
+  def type_vl(*sti_superklass)
+    pps = ProductPart.all
+    cat_pps = pps.where(category: "1")
+
+    vl = [["all product parts", pps.ids]]
+    vl << ["all top-level product parts", cat_pps.ids]
+    vl2 = []
+    dir_list(sti_superklass).each do |type|
+      vl << type_any?(type, pps)
+      vl2 << cat_type_any?(type, cat_pps)
+    end
+    vl.compact + vl2.compact
+  end
+
+  def type_any?(type, pps)
+    sti = pps.where(type: type.classify)
+    ["show #{type.pluralize}", sti.ids] if sti.any?
+  end
+
+  def cat_type_any?(type, cat_pps)
+    sti = cat_pps.where(type: type.classify)
+    ["show top-level #{type.pluralize}", sti.ids] if sti.any?
+  end
+  # def type_vl(*sti_superklass)
+  #   types = []
+  #   dir_list(sti_superklass).each do |type|
+  #     types << type_any?(type)
+  #   end
+  #   types = types.compact #=> array of present types in db
+  #   category_types = category_types_vl(types).compact
+  #   types.unshift(["show all product parts", nil]) + (category_types)
+  # end
+  #
+  # def type_any?(type)
+  #   sti = ProductPart.where(type: type.classify)
+  #   ["show all #{type}", type.classify] if sti.any?
+  # end
+  #
+  # def category_types_vl(types_vl)
+  #   category_types = []
+  #   types_vl.each do |type_opt|
+  #     category_types << category_type_any?(type_opt[-1])
+  #   end
+  #   category_types.compact
+  # end
+  #
+  # def category_type_any?(type)
+  #   sti = ProductPart.where(type: type.classify, category: "1")
+  #   ["show top-level #{to_snake(type)}", type.classify] if sti.any?
+  # end
 end

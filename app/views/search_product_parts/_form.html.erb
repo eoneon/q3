@@ -2,18 +2,19 @@
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
     <div class="form-row align-items-center bg-white">
-      <!-- <div class="input-group input-group-sm align-items-center bg-white"> -->
-      <div class="input-group mb-3">
+      <div class="input-group align-items-center bg-white">
         <div class="input-group-prepend">
           <div class="input-group-text bg-transparent border-top-0 border-left-0 border-bottom-0">
-            <%= f.check_box :category, checked: true %>
+            <span><%= (fa_icon "search") %></span>
           </div>
         </div>
-        <%= f.select :type, options_for_select(product_part_search_vl(:product_part)), {}, {class: "form-control border-0 ml-2 pl-2"} %>
-        <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit"><%= (fa_icon "plus-circle") %></button>
+        <%= f.select :ids, options_for_select(type_vl(:product_part)), {}, {class: "form-control border-0 search-select"} %>
+        <div class="input-group-append">
+          <div class="input-group-text bg-transparent border-top-0 border-right-0 border-bottom-0">
+            <span> </span>
+          </div>
+        </div>
       </div>
-
     </div>
-
   </div>
 <% end %>

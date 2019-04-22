@@ -64,6 +64,11 @@ $(document).ready(function(){
     $(form).submit();
   });
 
+  $("body").on("change", ".search-select", function(){
+    var form = $(this).closest(".form");
+    $(form).submit();
+  });
+
   function getCheckInput(form) {
     return $(form).find("input:checkbox");
   }
