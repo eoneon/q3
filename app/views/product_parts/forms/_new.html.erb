@@ -7,9 +7,10 @@
           <%= f.text_field :name, placeholder: "enter name", class: "form-control" %>
         </div>
         <div class="col-auto">
-          <%= f.select :type, options_for_select(abbrv_sti_sibs(:product_part)), {prompt: "- select type -"}, {class: "form-control border-0 ml-2 pl-2"} %>
+          <%= f.select :type, options_for_select(abbrv_sti_sibs(:product_part)), {prompt: "- STI type -"}, {class: "form-control border-0 ml-2 pl-2"} %>
         </div>
         <%= f.check_box :category, checked: true, class: 'form-check-input collapse' %>
+        <%= f.check_box :display, checked: true, class: 'form-check-input collapse' %>
         <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit"><%= (fa_icon "plus-circle") %></button>
       </div>
     </div>

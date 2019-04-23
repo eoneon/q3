@@ -55,11 +55,22 @@ $(document).ready(function(){
 
   $("body").on("click", ".category-check", function(){
     var form = $(this).closest(".form");
-    var category = getCheckInput(form);
+    var category = $(form).find("input:checkbox.category"); //getCategoryInput(form);
     if ($(category).prop("checked") == true){
       $(category).prop("checked", false);
     } else {
       $(category).prop("checked", true);
+    }
+    $(form).submit();
+  });
+
+  $("body").on("click", ".display-check", function(){
+    var form = $(this).closest(".form");
+    var display = $(form).find("input:checkbox.display");
+    if ($(display).prop("checked") == true){
+      $(display).prop("checked", false);
+    } else {
+      $(display).prop("checked", true);
     }
     $(form).submit();
   });
@@ -69,9 +80,9 @@ $(document).ready(function(){
     $(form).submit();
   });
 
-  function getCheckInput(form) {
-    return $(form).find("input:checkbox");
-  }
+  // function getCategoryInput(form) {
+  //   return $(form).find("input:checkbox.category");
+  // }
 
   $("body").on("show.bs.collapse", "#artist-form", function(){
     var form = $("#artist-show-form-id");
@@ -245,7 +256,7 @@ function getInputGroupDiv(form) {
   return $(form).find("div.input-group");
 }
 function getInputs(form) {
-  return $(form).find("input:text, select, button:submit, button.category-check");
+  return $(form).find("input:text, select, button:submit, button.category-check, button.display-check");
 }
 function getCheckInput(form) {
   return $(form).find("input:checkbox[name=category]").val();

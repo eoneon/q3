@@ -1,6 +1,7 @@
 class SearchProductPartsController < ApplicationController
   def index
     ids = params[:product_part][:ids][1..-2].split(',')
+    # ids = params[:product_part][:ids]
     @product_parts = ProductPart.where(id: ids)
 
     # if where_clause.count == 0

@@ -1,10 +1,10 @@
 <%= form_with model: ProductPart.new, url: search_product_parts_path, method: :get, id: form_id do |f| %>
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
-    <div class="form-row align-items-center bg-white">
+    <div class="form-row align-items-center">
       <div class="input-group align-items-center bg-white">
         <div class="input-group-prepend">
-          <div class="input-group-text bg-transparent border-top-0 border-left-0 border-bottom-0">
+          <div class="input-group-text bg-transparent border-0 border-left-0 border-bottom-0">
             <span><%= (fa_icon "search") %></span>
           </div>
         </div>

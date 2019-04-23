@@ -95,6 +95,7 @@ module StiSibHelper
     sti = cat_pps.where(type: type.classify)
     ["show top-level #{type.pluralize}", sti.ids] if sti.any?
   end
+
   # def type_vl(*sti_superklass)
   #   types = []
   #   dir_list(sti_superklass).each do |type|
