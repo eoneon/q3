@@ -83,6 +83,16 @@ module ApplicationHelper
     end
   end
 
+  #replaces: obj_to_hyph_str(obj) upper_single(klass) upper_single(klass) and adds add'l combos + alias for to_snake
+  def to_txt(obj, opts={})
+    txt = to_snake(obj)
+    txt.capitalize! if opts.has_key?(:cap)
+    txt = txt.pluralize if opts.has_key?(:plur)
+    j = opts.has_key?(:j) ? opts[:j] : ''
+    txt = txt.split('_').join(j)
+    opts.has_key?(:up) ? txt.upcase : txt
+  end
+
   def cond_attr(eval_test, rslt, *attrs)
     if eval_test == rslt
       attrs[0]
@@ -134,11 +144,11 @@ module ApplicationHelper
   def obj_to_hyph_str(obj)
     to_snake(obj).split('_').join('-')
   end
-
+  #kill
   def obj_to_cap_hyph_str(obj)
     to_snake(obj).split('_').map {|i| i.capitalize}.join('-')
   end
-
+  #kill
   def upper_single(klass)
     klass_name = to_snake(klass)
     klass_name.pluralize.split('_').join(' ').upcase

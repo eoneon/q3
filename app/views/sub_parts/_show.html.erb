@@ -1,9 +1,9 @@
-<div class="card mb-1 border border-dark <%= dom_ref(target, 'card') %>" id="<%= dom_ref(item_group, 'show') %>">
+<div class="card border m-1 border-dark <%= dom_ref(target, 'card') %>" id="<%= dom_ref(item_group, 'show') %>">
   <div class="card-header <%= dom_ref(target, 'header') %> pt-0 pb-3 border">
     <%= render "sub_parts/header", origin: origin, target: target, item_group: item_group %>
   </div>
 
-  <div class="card-body p-1 collapse" id="<%= dom_ref(item_group, 'body') %>">
+  <div class="card-body p-2 collapse" id="<%= dom_ref(item_group, 'body') %>">
     <div id='<%= dom_ref(target, "#{to_snake(target.sti_field_type)}-index") %>'>
       <%= render "item_fields/product_parts/index", origin: target %>
     </div>
