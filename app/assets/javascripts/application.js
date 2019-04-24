@@ -80,6 +80,25 @@ $(document).ready(function(){
     $(form).submit();
   });
 
+  $("body").on("change keyup", ".text-input, .select-input", function(){
+    var form = $(this).closest(".form");
+    if ($(form).find(".text-input").val().length > 0 && $(form).find(".select-input").val().length > 0) {
+      $(form).find("button:submit").prop("disabled", false);
+    } else {
+      $(form).find("button:submit").prop("disabled", true);
+    }
+
+    // $(form).find(":input.new-input").each(function(i, input) {
+    //
+    //   return;
+    //   if ($(input).val().length > 0) {
+    //     $(form).find("button:submit").prop("disabled", true);
+    //     return;
+    //   }
+    // });
+    // $(form).find("button:submit").prop("disabled", false);
+  });
+
   // function getCategoryInput(form) {
   //   return $(form).find("input:checkbox.category");
   // }

@@ -20,7 +20,7 @@ module StiSibHelper
   end
 
   def abbrv_sti_key
-    {medium: 'Med', product_kind: 'PrdKd', material: 'Matrl', certificate: 'Cert', edition: 'Ed', dimension: 'Dim', mounting: 'Mount', signature: 'Sig', sub_medium: 'Sub-Med'}
+    {medium: 'Med', product_kind: 'PrdKd', material: 'Matrl', certificate: 'Cert', edition: 'Ed', dimension: 'Dim', mounting: 'Mount', signature: 'Sig', sub_medium: 'SubMd'}
   end
 
   def dir_list(folder_names)

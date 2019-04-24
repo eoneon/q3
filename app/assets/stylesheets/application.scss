@@ -77,13 +77,22 @@ button:focus {
   //margin: 0;
   //background-color: transparent;
 }
-
 .input-group {
   border: 1px gray solid;
+}
+.rounded-left-border {
+  //border: 1px gray solid;
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+}
+.rounded-right-border {
+  border: 1px gray solid;
+  border-top-right-radius: 1rem;
+  border-bottom-right-radius: 1rem;
+}
+.rounded-border {
+  border: 1px gray solid;
   border-radius: 1rem;
-  //background: #e9ecef !important;
-  //opacity: 1 !important;
-  // padding: 10px;
 }
 
 .bg-disabled {
