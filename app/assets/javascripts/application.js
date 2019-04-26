@@ -55,24 +55,26 @@ $(document).ready(function(){
 
   $("body").on("click", ".category-check", function(){
     var form = $(this).closest(".form");
-    var category = $(form).find("input:checkbox.category"); //getCategoryInput(form);
-    if ($(category).prop("checked") == true){
-      $(category).prop("checked", false);
-    } else {
-      $(category).prop("checked", true);
-    }
-    $(form).submit();
+    var check_box = $(form).find("input:checkbox.category");
+    checkBoxSubmit(form, check_box);
+    // if ($(category).prop("checked") == true){
+    //   $(category).prop("checked", false);
+    // } else {
+    //   $(category).prop("checked", true);
+    // }
+    // $(form).submit();
   });
 
   $("body").on("click", ".display-check", function(){
     var form = $(this).closest(".form");
-    var display = $(form).find("input:checkbox.display");
-    if ($(display).prop("checked") == true){
-      $(display).prop("checked", false);
-    } else {
-      $(display).prop("checked", true);
-    }
-    $(form).submit();
+    var check_box = $(form).find("input:checkbox.display");
+    checkBoxSubmit(form, check_box);
+    // if ($(display).prop("checked") == true){
+    //   $(display).prop("checked", false);
+    // } else {
+    //   $(display).prop("checked", true);
+    // }
+    // $(form).submit();
   });
 
   $("body").on("change", ".search-select", function(){
@@ -92,16 +94,6 @@ $(document).ready(function(){
     $(form).find("input:text.type-field").val($(a).attr("data-value"));
     enableSubmit(form);
     $(a).addClass("active").siblings().removeClass("active");
-    // var form = $(this).closest(".form");
-    //
-    // var type = $(this).attr("data-name");
-    // var value = $(this).attr("data-value");
-    //
-    // $(form).find("label.type-label").text(type);
-    // $(form).find("input:text.type-field").val(value);
-    //
-    // enableSubmit(form);
-    // $(this).addClass("active").siblings().removeClass("active");
   });
 
   $("body").on("click", ".reset-btn", function() {
@@ -126,6 +118,14 @@ function resetDropdown(form, a) {
   $(a).addClass("active").siblings().removeClass("active");
 }
 
+function checkBoxSubmit(form, check_box) {
+  if ($(check_box).prop("checked") == true){
+    $(check_box).prop("checked", false);
+  } else {
+    $(check_box).prop("checked", true);
+  }
+  $(form).submit();
+}
 //combined functions
 function toggleFormOnCreate(form) {
   if ($.inArray('edit', form.split('-')) == -1){
