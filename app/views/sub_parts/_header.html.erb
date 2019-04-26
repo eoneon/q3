@@ -1,5 +1,5 @@
 <small class="ml-5 my-0 py-0 form-text text-muted input-label">Edit <%= "#{obj_to_cap_hyph_str(target)} #{item_group.sort}" %></small>
-<div class="row justify-content-between align-items-center bg-light" id="<%= dom_ref(target, 'header') %>">
+<div class="row justify-content-between align-items-center bg-white" id="<%= dom_ref(target, 'header') %>">
   <button class="caret-toggle btn btn-lg bg-transparent pl-2 border py-0" data-toggle="collapse" data-target="#<%= dom_ref(item_group, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
 
   <ul class="nav ml-3 mr-0">
@@ -30,9 +30,8 @@
       <div class="col-1 mx-2 p-0">
         <%= render "item_groups/sort_btn_group", origin: origin, item_group: item_group %>
       </div>
-      <div class="col-1 ml-1">
+      <div class="col p-0">
         <%= link_to (fa_icon "times"), product_part_item_group_path(target, item_group), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
       </div>
     </div>
   </div>
-  <!-- col-1 ml-1 -->

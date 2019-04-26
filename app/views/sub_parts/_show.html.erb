@@ -1,5 +1,5 @@
-<div class="card border m-1 border-dark <%= dom_ref(target, 'card') %>" id="<%= dom_ref(item_group, 'show') %>">
-  <div class="card-header <%= dom_ref(target, 'header') %> pt-0 pb-3 border">
+<div class="card border m-0 border-dark" id="<%= dom_ref(item_group, 'show') %>">
+  <div class="card-header pt-0">
     <%= render "sub_parts/header", origin: origin, target: target, item_group: item_group %>
   </div>
 
@@ -14,3 +14,4 @@
     <% end %>
   </div>
 </div>
+ 

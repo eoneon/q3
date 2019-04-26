@@ -80,42 +80,45 @@ $(document).ready(function(){
     $(form).submit();
   });
 
-  $("body").on("change keyup", ".text-input, .select-input", function(){
+  $("body").on("change keyup", ".name-field, .type-field", function(){
     var form = $(this).closest(".form");
-    if ($(form).find(".text-input").val().length > 0 && $(form).find(".select-input").val().length > 0) {
-      $(form).find("button:submit").prop("disabled", false);
-    } else {
-      $(form).find("button:submit").prop("disabled", true);
-    }
+    enableSubmit(form);
+  });
 
-    // $(form).find(":input.new-input").each(function(i, input) {
-    //
-    //   return;
-    //   if ($(input).val().length > 0) {
-    //     $(form).find("button:submit").prop("disabled", true);
-    //     return;
-    //   }
-    // });
-    // $(form).find("button:submit").prop("disabled", false);
+  $("body").on("click", ".select-opt", function(){
+    var form = $(this).closest(".form");
+    var type = $(this).attr("data-name");
+    var value = $(this).attr("data-value");
+    $(form).find("button.type-btn").text(type);
+    $(form).find("input:text.type-field").val(value);
+    enableSubmit(form);
+    $(this).addClass("active").siblings().removeClass("active");
   });
 
   // function getCategoryInput(form) {
   //   return $(form).find("input:checkbox.category");
   // }
 
-  $("body").on("show.bs.collapse", "#artist-form", function(){
-    var form = $("#artist-show-form-id");
-    $(form).find(".input-group").toggleClass("bg-white bg-disabled");
-    $(form).find("select").prop("disabled", true);
-  });
+  // $("body").on("show.bs.collapse", "#artist-form", function(){
+  //   var form = $("#artist-show-form-id");
+  //   $(form).find(".input-group").toggleClass("bg-white bg-disabled");
+  //   $(form).find("select").prop("disabled", true);
+  // });
 
-  $("body").on("hide.bs.collapse", "#artist-form", function(){
-    var form = $("#artist-show-form-id");
-    $(form).find(".input-group").toggleClass("bg-white bg-disabled");
-    $(form).find("select").prop("disabled", false);
-  });
+//   $("body").on("hide.bs.collapse", "#artist-form", function(){
+//     var form = $("#artist-show-form-id");
+//     $(form).find(".input-group").toggleClass("bg-white bg-disabled");
+//     $(form).find("select").prop("disabled", false);
+//   });
 });
 
+function enableSubmit(form) {
+  if ($(form).find(".name-field").val().length > 0 && $(form).find(".type-field").val().length > 0) {
+    $(form).find("button:submit").prop("disabled", false);
+  } else {
+    $(form).find("button:submit").prop("disabled", true);
+  }
+}
 //combined functions
 function toggleFormOnCreate(form) {
   if ($.inArray('edit', form.split('-')) == -1){

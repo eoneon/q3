@@ -11,77 +11,48 @@
  * It is generally better to create a new file per style scope.
  */
 
- @import "bootstrap";
- @import "font-awesome";
-
- .hidden {
-   display: none;
- }
-
- .btn_width {
-    width: 45px;
-}
+@import "bootstrap";
+@import "font-awesome";
 
 body {
   padding-top: 65px;
 }
-
 summary {
   outline: none !important;
 }
-
-.mb-0 > a:after {
-  content: "\f0da";
-  font-family: 'FontAwesome';
-}
-
-.mb-0 > a[aria-expanded="true"]:after {
-  content: "\f0d7";
-}
-
 #nav-bar {
   background-color: #2A1121;
 }
 
-.obj-header {
-  background-color: #1F3944;
-}
+// .card {
+//   background-color: white;
+// }
 
-.card-body {
-  background-color: white;
+//form-elements
+.bg-disabled {
+  background: #e9ecef !important;
 }
+// .input-group {
+//   border: 1px gray solid;
+// }
+// input{
+//   border: none !important;
+//   background-color: transparent;
+// }
 
-.btn:focus {
-  outline: none !important;
-  box-shadow: none !important;
+//set width of bootstrap dropdown to length of longest selection
+.dropdown-menu {
+    min-width: 0px !important;
 }
-
-.form-rounded {
-  border-radius: 1rem !important;
+//secondary form-elements
+.select-input {
+  border-radius: 0 !important;
 }
-
-input{
-  border: none !important;
-  background-color: transparent;
-}
-
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-  outline: none;
-}
-
-.fa-toggle-on, .fa-toggle-off{
-  //color: gray;
-  //margin: 0;
-  //background-color: transparent;
-}
-.input-group {
+.rounded-border {
   border: 1px gray solid;
+  border-radius: 1rem;
 }
 .rounded-left-border {
-  //border: 1px gray solid;
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
 }
@@ -90,29 +61,38 @@ button:focus {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
-.rounded-border {
-  border: 1px gray solid;
-  border-radius: 1rem;
-}
 
-.bg-disabled {
-  background: #e9ecef !important;
-}
 
-//might be irrelevant
-.nested-btn {
-  //background-color: red !important;
-  padding: 1px !important;
-  //height: 20px !important;
-}
-
+//random elements
 .caret-toggle {
   width: 12px;
 }
+//remove blue active outline
+input:focus, select:focus, textarea:focus, button:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
 
-.file-upload > input{
-   display: none;
-}
-.file-upload > label{
-  cursor:pointer;
-}
+//might be irrelevant
+// .btn_width {
+//   width: 45px;
+// }
+// .obj-header {
+//   background-color: #1F3944;
+// }
+// .hidden {
+//   display: none;
+// }
+// .file-upload > input{
+//    display: none;
+// }
+// .file-upload > label{
+//   cursor:pointer;
+// }
+// .nested-btn {
+//   background-color: red !important;
+//   padding: 1px !important;
+// }
+// .form-rounded {
+//   border-radius: 1rem !important;
+// }

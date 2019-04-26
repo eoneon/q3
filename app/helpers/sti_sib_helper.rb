@@ -11,7 +11,7 @@ module StiSibHelper
     dir_list(sti_superklass).map {|subklass| ["show #{subklass}", subklass.classify]}.unshift(["show all product parts", nil])
   end
 
-  def abbrv_sti_sibs(*folder_names)
+  def sti_abbrv_vl(*folder_names)
     dir_list(folder_names).map {|folder_name| [abbrv_sti(folder_name), folder_name.classify]}
   end
 
@@ -20,7 +20,7 @@ module StiSibHelper
   end
 
   def abbrv_sti_key
-    {medium: 'Med', product_kind: 'PrdKd', material: 'Matrl', certificate: 'Cert', edition: 'Ed', dimension: 'Dim', mounting: 'Mount', signature: 'Sig', sub_medium: 'SubMd'}
+    {medium: 'Medium', product_kind: 'ProductKind', material: 'Matrial', certificate: 'Certificate', edition: 'Edition', dimension: 'Dimension', mounting: 'Mounting', signature: 'Signature', sub_medium: 'Submedium'}
   end
 
   def dir_list(folder_names)
