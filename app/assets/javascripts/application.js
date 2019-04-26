@@ -86,30 +86,31 @@ $(document).ready(function(){
   });
 
   $("body").on("click", ".select-opt", function(){
-    var form = $(this).closest(".form");
-    var type = $(this).attr("data-name");
-    var value = $(this).attr("data-value");
-    $(form).find("button.type-btn").text(type);
-    $(form).find("input:text.type-field").val(value);
+    var a = $(this);
+    var form = $(a).closest(".form");
+    $(form).find("label.type-label").text($(a).attr("data-name"));
+    $(form).find("input:text.type-field").val($(a).attr("data-value"));
     enableSubmit(form);
-    $(this).addClass("active").siblings().removeClass("active");
+    $(a).addClass("active").siblings().removeClass("active");
+    // var form = $(this).closest(".form");
+    //
+    // var type = $(this).attr("data-name");
+    // var value = $(this).attr("data-value");
+    //
+    // $(form).find("label.type-label").text(type);
+    // $(form).find("input:text.type-field").val(value);
+    //
+    // enableSubmit(form);
+    // $(this).addClass("active").siblings().removeClass("active");
   });
 
-  // function getCategoryInput(form) {
-  //   return $(form).find("input:checkbox.category");
-  // }
+  $("body").on("click", ".reset-btn", function() {
+    var form = $(this).closest(".form");
+    var a = $(form).find("a:first");
+    resetDropdown(form, a);
+    enableSubmit(form);
+  });
 
-  // $("body").on("show.bs.collapse", "#artist-form", function(){
-  //   var form = $("#artist-show-form-id");
-  //   $(form).find(".input-group").toggleClass("bg-white bg-disabled");
-  //   $(form).find("select").prop("disabled", true);
-  // });
-
-//   $("body").on("hide.bs.collapse", "#artist-form", function(){
-//     var form = $("#artist-show-form-id");
-//     $(form).find(".input-group").toggleClass("bg-white bg-disabled");
-//     $(form).find("select").prop("disabled", false);
-//   });
 });
 
 function enableSubmit(form) {
@@ -119,6 +120,12 @@ function enableSubmit(form) {
     $(form).find("button:submit").prop("disabled", true);
   }
 }
+function resetDropdown(form, a) {
+  $(form).find("label.type-label").text($(a).attr("data-name"));
+  $(form).find("input:text").val($(a).attr("data-value"));
+  $(a).addClass("active").siblings().removeClass("active");
+}
+
 //combined functions
 function toggleFormOnCreate(form) {
   if ($.inArray('edit', form.split('-')) == -1){
@@ -283,3 +290,19 @@ function getInputs(form) {
 function getCheckInput(form) {
   return $(form).find("input:checkbox[name=category]").val();
 }
+
+// function getCategoryInput(form) {
+//   return $(form).find("input:checkbox.category");
+// }
+
+// $("body").on("show.bs.collapse", "#artist-form", function(){
+//   var form = $("#artist-show-form-id");
+//   $(form).find(".input-group").toggleClass("bg-white bg-disabled");
+//   $(form).find("select").prop("disabled", true);
+// });
+
+//   $("body").on("hide.bs.collapse", "#artist-form", function(){
+//     var form = $("#artist-show-form-id");
+//     $(form).find(".input-group").toggleClass("bg-white bg-disabled");
+//     $(form).find("select").prop("disabled", false);
+//   });

@@ -41,12 +41,15 @@ summary {
 // }
 
 //set width of bootstrap dropdown to length of longest selection
-.dropdown-menu {
-    min-width: 0px !important;
+.type-label{
+  min-width: 115px !important;
 }
-//secondary form-elements
-.select-input {
+//counter bootstrap's default rounded corners for select inputs: not in use yet since moving to dropdown
+.squared-select-input {
   border-radius: 0 !important;
+}
+.input-border {
+  border: 1px gray solid;
 }
 .rounded-border {
   border: 1px gray solid;
@@ -61,7 +64,6 @@ summary {
   border-top-right-radius: 1rem;
   border-bottom-right-radius: 1rem;
 }
-
 
 //random elements
 .caret-toggle {
