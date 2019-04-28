@@ -1,15 +1,13 @@
 <%= form_with model: product_part, url: product_part, id: form_id do |f| %>
   <div class="form p-2">
     <%= hidden_field_tag :form_id, form_id %>
-    <%#= f.check_box :category, checked: true, class: 'collapse' %>
-    <%#= f.check_box :display_name, checked: true, class: 'collapse' %>
     <%= f.text_field :type, class: "collapse type-field" %>
     <div class="form-row align-items-center">
       <div class="input-group">
         <div class="input-group-prepend">
           <%= render "product_parts/forms/type_dropdown" %>
         </div>
-          <%= f.text_field :name, placeholder: "enter name", class: "form-control name-field" %>
+          <%= f.text_field :name, placeholder: "enter name", class: "form-control name-field border-secondary" %>
         <div class="input-group-append">
           <button class="btn btn-sm btn-primary" type="submit" disabled><%= (fa_icon "plus") %></button>
         </div>

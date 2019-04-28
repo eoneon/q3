@@ -24,22 +24,11 @@ summary {
   background-color: #2A1121;
 }
 
-// .card {
-//   background-color: white;
-// }
 
 //form-elements
 .bg-disabled {
   background: #e9ecef !important;
 }
-// .input-group {
-//   border: 1px gray solid;
-// }
-// input{
-//   border: none !important;
-//   background-color: transparent;
-// }
-
 //set width of bootstrap dropdown to length of longest selection
 .type-label{
   min-width: 115px !important;
@@ -48,8 +37,12 @@ summary {
 .squared-select-input {
   border-radius: 0 !important;
 }
+.border-light-gray {
+  border-color: #ced4da !important;
+}
+//borders
 .input-border {
-  border: 1px gray solid;
+  border: 1px solid;
 }
 .rounded-border {
   border: 1px gray solid;
@@ -60,12 +53,12 @@ summary {
   border-bottom-left-radius: 1rem;
 }
 .rounded-right-border {
-  border: 1px gray solid;
-  border-top-right-radius: 1rem;
-  border-bottom-right-radius: 1rem;
+  // border: 1px gray solid;
+  border-top-right-radius: 1rem !important;
+  border-bottom-right-radius: 1rem !important;
 }
 
-//random elements
+//button elements
 .caret-toggle {
   width: 12px;
 }
@@ -74,27 +67,19 @@ input:focus, select:focus, textarea:focus, button:focus {
   outline: none !important;
   box-shadow: none !important;
 }
-
-//might be irrelevant
-// .btn_width {
-//   width: 45px;
+// .card {
+//   background-color: white;
 // }
-// .obj-header {
-//   background-color: #1F3944;
+// .input-group {
+//   border: 1px gray solid;
 // }
-// .hidden {
-//   display: none;
+// input{
+//   border: none !important;
+//   background-color: transparent;
 // }
 // .file-upload > input{
 //    display: none;
 // }
 // .file-upload > label{
 //   cursor:pointer;
-// }
-// .nested-btn {
-//   background-color: red !important;
-//   padding: 1px !important;
-// }
-// .form-rounded {
-//   border-radius: 1rem !important;
 // }

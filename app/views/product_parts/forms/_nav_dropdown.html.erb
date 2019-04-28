@@ -1,0 +1,12 @@
+<ul class="nav">
+  <li class="nav-item-dropdown">
+    <a class="nav-link dropdown bg-disabled text-info input-border border-light-gray my-1 px-2" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><%= (fa_icon "ellipsis-v") %></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" data-toggle="collapse" href='#<%= dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-item_group-add") %>'>Add <%= obj_to_cap_hyph_str(product_part.sti_field_type) %></a>
+      <div class="dropdown-divider"></div>
+      <% self_join_assocs(product_part, :product_kind).each do |target| %>
+        <a class="dropdown-item" data-toggle="collapse" href='#<%= dom_ref(product_part, "#{target}-item_group-add") %>'>Add <%= obj_to_cap_hyph_str(target) %></a>
+      <% end %>
+    </div>
+  </li>
+</ul>
