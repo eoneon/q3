@@ -1,0 +1,5 @@
+<div class="dropdown-menu">
+  <% sti_abbrv_vl(:product_part).each do |opt| %>
+    <a class="dropdown-item select-opt" data-name="<%= opt[0] %>" data-value="<%= opt[-1] %>"><%= opt[0] %></a>
+  <% end %>
+</div>

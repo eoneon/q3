@@ -21,6 +21,16 @@ $(document).ready(function(){
     $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
   });
 
+  $("body").on("click", ".edit-btn", function(){
+    $(this).toggleClass("text-info text-secondary");
+    var form = $(this).closest(".form");
+    var inputs = $(form).find("input.name-field, button.caret-toggle, button.type-btn");
+    var type = $(form).find("input:hidden[name='type']").val();
+    $(form).find("span.type-label").text(type);
+    toggleDisable(inputs);
+    $(form).find(".input-group-append button").toggleClass("show");
+  });
+
   //toggle siblings: show/hide
   $("body").on("show.bs.collapse", ".card-body", function(){
     var card_sibs = $(this).closest("div[id*='show']").siblings();
@@ -57,24 +67,12 @@ $(document).ready(function(){
     var form = $(this).closest(".form");
     var check_box = $(form).find("input:checkbox.category");
     checkBoxSubmit(form, check_box);
-    // if ($(category).prop("checked") == true){
-    //   $(category).prop("checked", false);
-    // } else {
-    //   $(category).prop("checked", true);
-    // }
-    // $(form).submit();
   });
 
   $("body").on("click", ".display-check", function(){
     var form = $(this).closest(".form");
     var check_box = $(form).find("input:checkbox.display");
     checkBoxSubmit(form, check_box);
-    // if ($(display).prop("checked") == true){
-    //   $(display).prop("checked", false);
-    // } else {
-    //   $(display).prop("checked", true);
-    // }
-    // $(form).submit();
   });
 
   $("body").on("change", ".search-select", function(){
@@ -90,7 +88,8 @@ $(document).ready(function(){
   $("body").on("click", ".select-opt", function(){
     var a = $(this);
     var form = $(a).closest(".form");
-    $(form).find("label.type-label").text($(a).attr("data-name"));
+    //$(form).find("label.type-label").text($(a).attr("data-name"));
+    $(form).find(".type-label").text($(a).attr("data-name"));
     $(form).find("input:text.type-field").val($(a).attr("data-value"));
     enableSubmit(form);
     $(a).addClass("active").siblings().removeClass("active");
@@ -105,6 +104,16 @@ $(document).ready(function(){
 
 });
 
+//named functions
+function toggleDisable(input_set){
+  $(input_set).each(function(i, input){
+    if ($(input).attr("disabled") == "disabled") {
+      $(input).attr("disabled", false);
+    } else {
+      $(input).attr("disabled", true);
+    }
+  });
+}
 function enableSubmit(form) {
   if ($(form).find(".name-field").val().length > 0 && $(form).find(".type-field").val().length > 0) {
     $(form).find("button:submit").prop("disabled", false);
@@ -113,7 +122,7 @@ function enableSubmit(form) {
   }
 }
 function resetDropdown(form, a) {
-  $(form).find("label.type-label").text($(a).attr("data-name"));
+  $(form).find(".type-label").text($(a).attr("data-name"));
   $(form).find("input:text").val($(a).attr("data-value"));
   $(a).addClass("active").siblings().removeClass("active");
 }

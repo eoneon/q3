@@ -33,6 +33,9 @@ summary {
 .type-label{
   min-width: 115px !important;
 }
+.type-dropdown {
+  min-width: 125px !important;
+}
 //counter bootstrap's default rounded corners for select inputs: not in use yet since moving to dropdown
 .squared-select-input {
   border-radius: 0 !important;
@@ -49,8 +52,8 @@ summary {
   border-radius: 1rem;
 }
 .rounded-left-border {
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
+  border-top-left-radius: 1rem !important;
+  border-bottom-left-radius: 1rem !important;
 }
 .rounded-right-border {
   // border: 1px gray solid;

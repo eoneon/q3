@@ -1,12 +1,12 @@
 <div class="input-group">
   <div class="input-group-prepend input-border border-secondary">
-    <label class="input-group-text type-label bg-secondary font-weight-light text-white small">STI type</label>
+    <label class="input-group-text bg-secondary font-weight-light text-white small"><span class="type-label">STI type<span></label>
     <button class="btn btn-sm btn-secondary border-light text-sm font-weight-light reset-btn" type="button"><%= (fa_icon "repeat") %></button>
     <button class="btn btn-sm btn-secondary border-light dropdown-toggle type-btn" type="button" data-toggle="dropdown" aria-expanded="false"></button>
     <div class="dropdown-menu">
-      <a class="dropdown-item select-opt active" href="#" data-name="STI type" data-value="">-choose type-</a>
+      <a class="dropdown-item select-opt active" data-name="STI type" data-value="">-choose type-</a>
       <% sti_abbrv_vl(:product_part).each do |opt| %>
-        <a class="dropdown-item select-opt" href="#" data-name="<%= opt[0] %>" data-value="<%= opt[-1] %>"><%= opt[0] %></a>
+        <a class="dropdown-item select-opt" data-name="<%= opt[0] %>" data-value="<%= opt[-1] %>"><%= opt[0] %></a>
       <% end %>
     </div>
   </div>

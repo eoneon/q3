@@ -1,25 +1,34 @@
 <%= form_with model: product_part, url: product_part_path(product_part), id: form_id do |f| %>
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
+    <%= hidden_field_tag :type, product_part.type %>
     <div class="collapse">
       <%= f.check_box :display_name, class: 'display' %>
       <%= f.check_box :category, class: 'category' %>
+      <%= f.text_field :type, class: "type-field" %>
     </div>
     <div class="form-row align-items-center">
       <div class="input-group border-secondary input-border rounded-left rounded-right-border pr-1">
+
         <div class="input-group-prepend">
           <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" data-toggle="collapse" data-target="#<%= dom_ref(product_part, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-down") %></button>
-          <label class="input-group-text type-label border-right-0 font-weight-light text-secondary small my-1"><%= product_part.type %> </label>
-          <%= render "product_parts/forms/nav_dropdown", product_part: product_part %>
+          <div class="btn-group">
+
+            <button class="dropdown-toggle type-btn type-dropdown btn bg-disabled border-light-gray rounded-0 border-right-0 my-1 px-1 py-0" type="button" data-toggle="dropdown" aria-expanded="false" disabled><span class="type-label"><%= product_part.type %></span></button>
+            <%= render "product_parts/forms/edit_type_dropdown", product_part: product_part %>
+
+          </div>
+            <%= render "product_parts/forms/nav_dropdown", product_part: product_part %>
+          <button class="btn btn-sm bg-transparent border-light-gray text-secondary edit-btn my-1" type="button"><%= (fa_icon "edit") %></button>
         </div>
-        <%= f.text_field :name, placeholder: "enter product-part name", class: "form-control squared-border bg-light text-uppercase m-1 pl-2", disabled: true %>
+        <%= f.text_field :name, placeholder: "enter product-part name", class: "form-control squared-border bg-light text-uppercase my-1 pl-2 name-field", disabled: true %>
         <div class="input-group-append">
-          <button class="btn btn-sm bg-transparent border-light-gray text-sm font-weight-light edit-btn my-1" type="button"><%= (fa_icon "edit") %></button>
-          <button class="btn btn-sm bg-transparent border-light-gray font-weight-light category-check my-1 <%= cond_attr(product_part.category, true, 'text-success', 'text-secondary') %>" type="button"><%= (fa_icon "header") %></button>
-          <button class="btn btn-sm bg-transparent border-light-gray font-weight-light display-check my-1 pr-2 <%= cond_attr(product_part.display_name, true, 'text-success', 'text-secondary') %>" type="button"><%= (fa_icon "star") %></button>
-          <%= button_to product_part_path(product_part), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm bg-transparent border-light-gray rounded-right-border border-left-0 font-weight-light delete-btn my-1" do %>
-            <span> <%= (fa_icon "times") %></span>
+          <button class="collapse show btn btn-sm bg-transparent border-light-gray font-weight-light category-check my-1 <%= cond_attr(product_part.category, true, 'text-success', 'text-secondary') %>" type="button"><%= (fa_icon "header") %></button>
+          <button class="collapse show btn btn-sm bg-transparent border-light-gray font-weight-light display-check my-1 pr-2 <%= cond_attr(product_part.display_name, true, 'text-success', 'text-secondary') %>" type="button"><%= (fa_icon "star") %></button>
+          <%= button_to product_part_path(product_part), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "collapse show btn btn-sm bg-transparent border-light-gray rounded-right-border border-left-0 font-weight-light text-danger my-1" do %>
+            <span> <%= (fa_icon "minus-square") %></span>
           <% end %>
+          <button class="collapse btn btn-sm btn-primary rounded-right-border border-left-0 my-1" type="submit"><%= (fa_icon "plus") %></button>
         </div>
       </div>
     </div>
