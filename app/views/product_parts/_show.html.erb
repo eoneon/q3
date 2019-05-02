@@ -3,7 +3,15 @@
     <%= render "product_parts/header/header", product_part: product_part %>
   </div>
 
-  <div class="card-body p-2 collapse show" id="<%= dom_ref(product_part, 'body') %>">
+  <div class="card-body p-1 collapse show" id="<%= dom_ref(product_part, 'body') %>">
+    <div class="form-row align-items-center">
+      <div class="col-auto border ml-3">
+        <button class="btn btn-xs btn-secondary btn-outline-secondary mb-1 nav-toggle" type="button" data-toggle="collapse" href='.<%= dom_ref(product_part, "toggle-btn-group") %>'><%= (fa_icon "bars") %></button>
+      </div>
+      <%= render "product_parts/forms/nested_form_toggle", product_part: product_part %>
+      <%= render "product_parts/forms/nested_forms", product_part: product_part %>
+    </div>
+
     <div id='<%= dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-index") %>'>
       <%= render "item_fields/product_parts/index", origin: product_part %>
     </div>

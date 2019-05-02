@@ -2,13 +2,14 @@
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
     <%= hidden_field_tag :type, product_part.type %>
+    <%= hidden_field_tag :name, product_part.name %>
     <div class="collapse">
       <%= f.check_box :display_name, class: 'display' %>
       <%= f.check_box :category, class: 'category' %>
       <%= f.text_field :type, class: "type-field" %>
     </div>
     <div class="form-row align-items-center">
-      <div class="input-group border-secondary input-border rounded-left rounded-right-border pr-1">
+      <div class="input-group border-secondary input-border rounded-left rounded-right-border pr-1 mr-1">
 
         <div class="input-group-prepend">
           <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" data-toggle="collapse" data-target="#<%= dom_ref(product_part, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-down") %></button>
@@ -18,16 +19,13 @@
             <%= render "product_parts/forms/edit_type_dropdown", product_part: product_part %>
 
           </div>
-            <%= render "product_parts/forms/nav_dropdown", product_part: product_part %>
+            <%#= render "product_parts/forms/nav_dropdown", product_part: product_part %>
           <button class="btn btn-sm bg-transparent border-light-gray text-secondary edit-btn my-1" type="button"><%= (fa_icon "edit") %></button>
         </div>
         <%= f.text_field :name, placeholder: "enter product-part name", class: "form-control squared-border bg-light text-uppercase my-1 pl-2 name-field", disabled: true %>
         <div class="input-group-append">
           <button class="collapse show btn btn-sm bg-transparent border-light-gray font-weight-light category-check my-1 <%= cond_attr(product_part.category, true, 'text-success', 'text-secondary') %>" type="button"><%= (fa_icon "header") %></button>
-          <button class="collapse show btn btn-sm bg-transparent border-light-gray font-weight-light display-check my-1 pr-2 <%= cond_attr(product_part.display_name, true, 'text-success', 'text-secondary') %>" type="button"><%= (fa_icon "star") %></button>
-          <%= button_to product_part_path(product_part), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "collapse show btn btn-sm bg-transparent border-light-gray rounded-right-border border-left-0 font-weight-light text-danger my-1" do %>
-            <span> <%= (fa_icon "minus-square") %></span>
-          <% end %>
+          <button class="collapse show btn btn-sm bg-transparent rounded-right-border border-light-gray font-weight-light display-check my-1 pr-2 <%= cond_attr(product_part.display_name, true, 'text-success', 'text-secondary') %>" type="button"><%= (fa_icon "star") %></button>
           <button class="collapse btn btn-sm btn-primary rounded-right-border border-left-0 my-1" type="submit"><%= (fa_icon "plus") %></button>
         </div>
       </div>

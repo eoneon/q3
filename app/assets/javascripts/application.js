@@ -21,12 +21,23 @@ $(document).ready(function(){
     $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
   });
 
+  $("body").on("click", ".nav-toggle", function(){
+    $(this).closest(".card-body").find(".toggle-btn-group").animate({width: 'toggle'});
+  });
+  // $("body").on("click", ".submit-btn", function(){
+  //   var form = $(this).closest(".form");
+  //   $(form).submit();
+  // });
+
+  //toggle-edit-btn
   $("body").on("click", ".edit-btn", function(){
     $(this).toggleClass("text-info text-secondary");
     var form = $(this).closest(".form");
-    var inputs = $(form).find("input.name-field, button.caret-toggle, button.type-btn");
+    var inputs = $(form).find("input.name-field, button.caret-toggle, button.type-btn, button.delete-btn");
     var type = $(form).find("input:hidden[name='type']").val();
+    var name = $(form).find("input:hidden[name='name']").val();
     $(form).find("span.type-label").text(type);
+    $(form).find("input.name-field").val(name);
     toggleDisable(inputs);
     $(form).find(".input-group-append button").toggleClass("show");
   });
@@ -63,6 +74,7 @@ $(document).ready(function(){
     }
   });
 
+  //handler for submitting product_part form: on checkbox selection
   $("body").on("click", ".category-check", function(){
     var form = $(this).closest(".form");
     var check_box = $(form).find("input:checkbox.category");
@@ -75,11 +87,13 @@ $(document).ready(function(){
     checkBoxSubmit(form, check_box);
   });
 
+  //handler for submitting search form: on dropdown selection
   $("body").on("change", ".search-select", function(){
     var form = $(this).closest(".form");
     $(form).submit();
   });
 
+  //handler for enable/disable form with valid/present values
   $("body").on("change keyup", ".name-field, .type-field", function(){
     var form = $(this).closest(".form");
     enableSubmit(form);
@@ -135,6 +149,7 @@ function checkBoxSubmit(form, check_box) {
   }
   $(form).submit();
 }
+
 //combined functions
 function toggleFormOnCreate(form) {
   if ($.inArray('edit', form.split('-')) == -1){
