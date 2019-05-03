@@ -21,12 +21,15 @@ $(document).ready(function(){
     $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
   });
 
-  $("body").on("click", ".nav-toggle", function(){
-    $(this).closest(".card-body").find(".toggle-btn-group").animate({width: 'toggle'});
+  $("body").on("click", ".form-opt, .nav-toggle", function(){
+    var href = $(this).attr("href");
+    //$(this).closest(".col").removeClass("show"); //
+    $(this).closest(".col").animate({width: 'toggle'});
+    $(href).animate({width: 'toggle'}).addClass("show");
   });
-  // $("body").on("click", ".submit-btn", function(){
-  //   var form = $(this).closest(".form");
-  //   $(form).submit();
+
+  // $("body").on("click", ".nav-toggle", function(){
+  //   $(this).closest(".card-body").find(".toggle-btn-group").animate({width: 'toggle'});
   // });
 
   //toggle-edit-btn

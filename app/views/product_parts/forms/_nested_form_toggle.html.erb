@@ -1,20 +1,23 @@
-<div class="col-auto collapse ml-3 toggle-btn-group <%= dom_ref(product_part, 'toggle-btn-group') %>">
-  <div class="dropdown">
-    <button class="dropdown-toggle btn btn-xs btn-secondary btn-outline-secondary mb-1" type="button" data-toggle="dropdown" aria-expanded="false"><span class="">fields</span></button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" data-toggle="collapse" href='#<%= dom_ref(product_part, "#{to_txt(product_part.sti_field_type)}-item_group-add") %>'>add field</a>
-      <a class="dropdown-item" data-toggle="collapse" href='#<%= dom_ref(product_part, "#{to_txt(product_part.sti_field_type)}-new") %>'><span class="">create field</a>
+<!-- integrate field btn into each loop -->
+<div class="btn-toolbar" role="toolbar">
+  <!-- <div class="btn-group ml-3" role="group">
+    <div class="dropdown">
+      <button class="dropdown-toggle btn btn-xs btn-secondary btn-outline-secondary mb-1 mr-2" type="button" data-toggle="dropdown" aria-expanded="false">fields</button>
+      <div class="dropdown-menu">
+        <a class="dropdown-item form-opt" data-toggle="collapse" href='#<%#= dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-item_group-add") %>'>add field</a>
+        <a class="dropdown-item form-opt" data-toggle="collapse" href='#<%#= dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-new") %>'>create field</a>
+      </div>
+    </div> -->
+    <% self_join_assocs(product_part, :product_kind).unshift(to_snake(product_part.sti_field_type)).each do |target| %>
+    <div class="btn-group mr-2" role="group">
+      <div class="dropdown">
+        <button class="dropdown-toggle btn btn-xs btn-secondary btn-outline-secondary mb-1" type="button" data-toggle="dropdown" aria-expanded="false"><%= to_txt(target) %></button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item form-opt" data-toggle="collapse" href='#<%= dom_ref(product_part, "#{target}-item_group-add") %>'>add <%= to_txt(target) %></a>
+          <a class="dropdown-item form-opt" data-toggle="collapse" href='#<%= dom_ref(product_part, "#{target}-new") %>'>create <%= to_txt(target) %></a>
+        </div>
+      </div>
     </div>
+    <% end %>
   </div>
 </div>
-<% self_join_assocs(product_part, :product_kind).each do |target| %>
-<div class="col-auto collapse toggle-btn-group <%= dom_ref(product_part, 'toggle-btn-group') %>">
-  <div class="dropdown">
-    <button class="dropdown-toggle btn btn-xs btn-secondary btn-outline-secondary mb-1" type="button" data-toggle="dropdown" aria-expanded="false"><span class=""><%= to_txt(target) %></span></button>
-    <div class="dropdown-menu">
-      <a class="dropdown-item" data-toggle="collapse" href='#<%= dom_ref(product_part, "#{target}-item_group-add") %>'>add <%= to_txt(target) %></a>
-      <a class="dropdown-item" data-toggle="collapse" href='#<%= dom_ref(product_part, "#{target}-new") %>'><span class="">create <%= to_txt(target) %></a>
-    </div>
-  </div>
-</div>
-<% end %>
