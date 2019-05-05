@@ -1,6 +1,5 @@
 <%= form_with model: ItemGroup.new, url: url, id: form_id do |f| %>
   <div class="form">
-    <button class="btn btn-xs btn-secondary btn-outline-secondary mb-1 nav-toggle" type="button" data-toggle="collapse" href='#<%= dom_ref(origin, "toggle-btn-group") %>'><%= (fa_icon "times") %></button> 
     <%= hidden_field_tag :form_id, form_id %>
     <div class="form-row align-items-center">
       <%= render "item_groups/forms/input_group", f: f, origin: origin, target: target, form_id: form_id %>

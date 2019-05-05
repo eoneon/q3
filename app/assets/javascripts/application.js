@@ -21,16 +21,19 @@ $(document).ready(function(){
     $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
   });
 
-  $("body").on("click", ".form-opt, .nav-toggle", function(){
-    var href = $(this).attr("href");
-    //$(this).closest(".col").removeClass("show"); //
-    $(this).closest(".col").animate({width: 'toggle'});
-    $(href).animate({width: 'toggle'}).addClass("show");
+  $(document).on("click", function(e){
+    var toggle_form = $(".toggle-form.show").eq(0);
+    var target_form = $(e.target).closest(".toggle-parent").find(toggle_form);
+    if ($(toggle_form).length && !$(target_form).length) {
+      $(toggle_form).removeClass("show");
+      $(toggle_form).closest(".toggle-parent").find(".toggle-btn-group").addClass("show");
+    }
   });
 
-  // $("body").on("click", ".nav-toggle", function(){
-  //   $(this).closest(".card-body").find(".toggle-btn-group").animate({width: 'toggle'});
-  // });
+  $("body").on("click", ".form-opt, .nav-toggle", function(){
+    var href = $(this).attr("href");
+    $(this).closest(".col").removeClass("show"); 
+  });
 
   //toggle-edit-btn
   $("body").on("click", ".edit-btn", function(){

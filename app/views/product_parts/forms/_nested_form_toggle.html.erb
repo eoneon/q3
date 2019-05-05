@@ -1,14 +1,5 @@
-<!-- integrate field btn into each loop -->
 <div class="btn-toolbar" role="toolbar">
-  <!-- <div class="btn-group ml-3" role="group">
-    <div class="dropdown">
-      <button class="dropdown-toggle btn btn-xs btn-secondary btn-outline-secondary mb-1 mr-2" type="button" data-toggle="dropdown" aria-expanded="false">fields</button>
-      <div class="dropdown-menu">
-        <a class="dropdown-item form-opt" data-toggle="collapse" href='#<%#= dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-item_group-add") %>'>add field</a>
-        <a class="dropdown-item form-opt" data-toggle="collapse" href='#<%#= dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-new") %>'>create field</a>
-      </div>
-    </div> -->
-    <% self_join_assocs(product_part, :product_kind).unshift(to_snake(product_part.sti_field_type)).each do |target| %>
+  <% self_join_assocs(product_part, :product_kind).unshift(to_snake(product_part.sti_field_type)).each do |target| %>
     <div class="btn-group mr-2" role="group">
       <div class="dropdown">
         <button class="dropdown-toggle btn btn-xs btn-secondary btn-outline-secondary mb-1" type="button" data-toggle="dropdown" aria-expanded="false"><%= to_txt(target) %></button>
@@ -18,6 +9,5 @@
         </div>
       </div>
     </div>
-    <% end %>
-  </div>
+  <% end %>
 </div>
