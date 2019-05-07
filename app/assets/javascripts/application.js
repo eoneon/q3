@@ -17,104 +17,121 @@
 //= require_tree .
 
 $(document).ready(function(){
+  //TOGGLE CARET & SIBLING VIEWS
   $("body").on("click", ".caret-toggle", function(){
+    var form = $(this).closest(".form");
+    var card_show = $(this).closest("div[id*='show']"); //get closest card containing 'show' in id
+    var card_body = $(card_show).find(".card-body"); //find card_show's card-body
     $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
+    //$(card_body).toggleClass("show");
+    if (!$(card_body).hasClass("show")) {
+      collapseCaretSibs(card_show);
+      toggleEditState(form);
+    }
   });
 
+  //TOGGLE ACCESS: toggle-edit-btn state
+  $("body").on("click", ".edit-btn", function(){
+    var form = $(this).closest(".form");
+    toggleEditState(form);
+    var card_show = $(form).closest("div[id*='show']");
+    var card_body = $(card_show).find(".card-body");
+    if ($(card_body).hasClass("show")) {
+      $(form).find(".fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+      $(card_body).toggleClass("show");
+    }
+  });
+
+  //TOGGLE VIEW: hide item_group#add form upon background click
   $(document).on("click", function(e){
     var toggle_form = $(".toggle-form.show").eq(0);
-    var target_form = $(e.target).closest(".toggle-parent").find(toggle_form);
-    if ($(toggle_form).length && !$(target_form).length) {
-      $(toggle_form).removeClass("show");
-      $(toggle_form).closest(".toggle-parent").find(".toggle-btn-group").addClass("show");
+    var toggle_parent = $(e.target).closest(".toggle-parent");
+    if ($(toggle_form).length && !$(toggle_parent).find(toggle_form).length) {
+      var toggle_parent = $(toggle_form).closest(".toggle-parent");
+      toggleItemGroupCtrl(toggle_parent, toggle_form);
     }
   });
 
+  //TOGGLE VIEW: hide btn group upon selection
   $("body").on("click", ".form-opt, .nav-toggle", function(){
     var href = $(this).attr("href");
-    $(this).closest(".col").removeClass("show"); 
+    $(this).closest(".col").removeClass("show");
   });
 
-  //toggle-edit-btn
-  $("body").on("click", ".edit-btn", function(){
-    $(this).toggleClass("text-info text-secondary");
-    var form = $(this).closest(".form");
-    var inputs = $(form).find("input.name-field, button.caret-toggle, button.type-btn, button.delete-btn");
-    var type = $(form).find("input:hidden[name='type']").val();
-    var name = $(form).find("input:hidden[name='name']").val();
-    $(form).find("span.type-label").text(type);
-    $(form).find("input.name-field").val(name);
-    toggleDisable(inputs);
-    $(form).find(".input-group-append button").toggleClass("show");
-  });
+
+
+  //replaced
+  // $("body").on("click", ".caret-toggle", function(){
+  //   $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
+  // });
+  // $("body").on("click", ".edit-btn", function(){
+  //   $(this).toggleClass("text-info text-secondary");
+  //   var form = $(this).closest(".form");
+  //   var inputs = $(form).find("input.name-field, button.caret-toggle, button.type-btn, button.delete-btn");
+  //   var type = $(form).find("input:hidden[name='type']").val();
+  //   var name = $(form).find("input:hidden[name='name']").val();
+  //   $(form).find("span.type-label").text(type);
+  //   $(form).find("input.name-field").val(name);
+  //   toggleDisable(inputs);
+  //   $(form).find(".input-group-append button").toggleClass("show");
+  // });
 
   //toggle siblings: show/hide
-  $("body").on("show.bs.collapse", ".card-body", function(){
-    var card_sibs = $(this).closest("div[id*='show']").siblings();
-    $(card_sibs).find(".card-body").removeClass("show");
-    $(card_sibs).find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
-  });
+  // $("body").on("show.bs.collapse", ".card-body", function(){
+  //   var card_sibs = $(this).closest("div[id*='show']").siblings();
+  //   $(card_sibs).find(".card-body").removeClass("show");
+  //   $(card_sibs).find("button.caret-toggle").find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
+  // });
 
-  $("body").on("click", ".toggle-input-access", function(){
-    var form = $(this).closest(".form");
-    toggleInputAndDelete(form);
-  });
 
-  $("body").on("hidden.bs.collapse", ".toggle-sibling", function(){
-    var form = $(this).find(".form");
-    if (getInputAccessIcon(form).hasClass("fa-toggle-on")) {
-      toggleInputAndDelete(form);
-    }
-  });
+
+  // $("body").on("hidden.bs.collapse", ".toggle-sibling", function(){
+  //   var form = $(this).find(".form");
+  //   if (getInputAccessIcon(form).hasClass("fa-toggle-on")) {
+  //     toggleInputAndDelete(form);
+  //   }
+  // });
 
   //compare with below
-  $("body").on("show.bs.collapse", ".toggle-sibling", function(){
-    var sib_id = $(this).attr("id");
-    var label = $(this).attr("data-label");
-    getLabel("#"+sib_id).text(label);
-    $('a[href="#'+sib_id+'"]').prop("disabled", true).addClass("disabled").siblings().prop("disabled", false).removeClass("disabled");
-    if (sib_id.includes("edit")) {
-      getDeleteIcon("#"+sib_id).addClass("fa-times");
-    } else {
-      getDeleteIcon("#"+sib_id).removeClass("fa-times");
-    }
+  // $("body").on("show.bs.collapse", ".toggle-sibling", function(){
+  //   var sib_id = $(this).attr("id");
+  //   var label = $(this).attr("data-label");
+  //   getLabel("#"+sib_id).text(label);
+  //   $('a[href="#'+sib_id+'"]').prop("disabled", true).addClass("disabled").siblings().prop("disabled", false).removeClass("disabled");
+  //   if (sib_id.includes("edit")) {
+  //     getDeleteIcon("#"+sib_id).addClass("fa-times");
+  //   } else {
+  //     getDeleteIcon("#"+sib_id).removeClass("fa-times");
+  //   }
+  // });
+
+  //#SEARCH: handler for submitting search form: on dropdown selection
+  $("body").on("change", ".search-select", function(){
+    var form = $(this).closest(".form");
+    $(form).submit();
   });
 
-  //handler for submitting product_part form: on checkbox selection
+  //#CRUD EDIT: handler for submitting product_part form: on checkbox selection
   $("body").on("click", ".category-check", function(){
     var form = $(this).closest(".form");
     var check_box = $(form).find("input:checkbox.category");
     checkBoxSubmit(form, check_box);
   });
 
+  //#CRUD EDIT
   $("body").on("click", ".display-check", function(){
     var form = $(this).closest(".form");
     var check_box = $(form).find("input:checkbox.display");
     checkBoxSubmit(form, check_box);
   });
 
-  //handler for submitting search form: on dropdown selection
-  $("body").on("change", ".search-select", function(){
-    var form = $(this).closest(".form");
-    $(form).submit();
-  });
-
-  //handler for enable/disable form with valid/present values
+  //#CRUD EDIT handler for enable/disable form with valid/present values
   $("body").on("change keyup", ".name-field, .type-field", function(){
     var form = $(this).closest(".form");
     enableSubmit(form);
   });
 
-  $("body").on("click", ".select-opt", function(){
-    var a = $(this);
-    var form = $(a).closest(".form");
-    //$(form).find("label.type-label").text($(a).attr("data-name"));
-    $(form).find(".type-label").text($(a).attr("data-name"));
-    $(form).find("input:text.type-field").val($(a).attr("data-value"));
-    enableSubmit(form);
-    $(a).addClass("active").siblings().removeClass("active");
-  });
-
+  //FORM ACCESS: product_part#new
   $("body").on("click", ".reset-btn", function() {
     var form = $(this).closest(".form");
     var a = $(form).find("a:first");
@@ -122,37 +139,93 @@ $(document).ready(function(){
     enableSubmit(form);
   });
 
+  //FORM ACCESS: product_part#edit
+  $("body").on("click", ".select-opt", function(){
+    var a = $(this);
+    var form = $(a).closest(".form");
+    $(form).find(".type-label").text($(a).attr("data-name"));
+    $(form).find("input:text.type-field").val($(a).attr("data-value"));
+    enableSubmit(form);
+    $(a).addClass("active").siblings().removeClass("active");
+  });
+
+  //remove
+  $("body").on("click", ".toggle-input-access", function(){
+    var form = $(this).closest(".form");
+    toggleInputAndDelete(form);
+  });
+
 });
 
-//named functions
-function toggleDisable(input_set){
-  $(input_set).each(function(i, input){
-    if ($(input).attr("disabled") == "disabled") {
-      $(input).attr("disabled", false);
-    } else {
-      $(input).attr("disabled", true);
-    }
-  });
+//CARET TOGGLE STATE//
+function collapseCaretSibs(card_show) {
+  var card_sibs = $(card_show).siblings();
+  $(card_sibs).find(".card-body").removeClass("show");
+  $(card_sibs).find(".caret-toggle > i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
 }
-function enableSubmit(form) {
-  if ($(form).find(".name-field").val().length > 0 && $(form).find(".type-field").val().length > 0) {
-    $(form).find("button:submit").prop("disabled", false);
-  } else {
-    $(form).find("button:submit").prop("disabled", true);
-  }
-}
+
+//FORM ACCESS: named functions//
+
+//#NEW: clear :type/:name fields, reset data attrs and remove active class from a options
 function resetDropdown(form, a) {
   $(form).find(".type-label").text($(a).attr("data-name"));
   $(form).find("input:text").val($(a).attr("data-value"));
   $(a).addClass("active").siblings().removeClass("active");
 }
 
-function checkBoxSubmit(form, check_box) {
-  if ($(check_box).prop("checked") == true){
-    $(check_box).prop("checked", false);
+//#NEW/#EDIT: disable submit if invalid/missing :type/:name
+function enableSubmit(form) {
+  var access = $(form).find(".name-field").val().length  && $(form).find(".type-field").val().length ? false : true
+  $(form).find("button:submit").prop("disabled", access);
+}
+
+//#EDIT FORM access + collapse-state
+function toggleEditState(form) {
+  var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
+  $(form).find(".input-group-append button").toggleClass("show");
+  $(form).find('.edit-btn').toggleClass("text-info text-secondary");
+  setHiddenInputs(form);
+  toggleInputs(inputs);
+}
+
+//#EDIT FORM: replaces toggleDisable
+function toggleInputs(input_set){
+  $(input_set).each(function(i, input){
+    $(input).attr("disabled") == "disabled" ? $(input).attr("disabled", false) : $(input).attr("disabled", true)
+  });
+}
+
+//#EDIT FORM:
+function setHiddenInputs(form) {
+  var type = $(form).find("input:hidden[name='type']").val();
+  var name = $(form).find("input:hidden[name='name']").val();
+  $(form).find("span.type-label").text(type);
+  $(form).find("input.name-field").val(name);
+}
+
+//#ADD form: item_group: toggle-show btn-group when background clicked
+function toggleItemGroupCtrl(toggle_parent, toggle_form) {
+  $(toggle_parent).find(".toggle-btn-group").add(toggle_form).toggleClass("show");
+}
+
+//CRUD functions//
+
+//#SHOW: toggle insert/remove show card from index and reset tab-index
+function toggleShowView(show_id, show_partial) {
+  var id_arr = show_id.split('-');
+  if ($(show_id).length == 0) {
+    $(id_arr.splice(0,1).join(' ')).html(show_partial);
   } else {
-    $(check_box).prop("checked", true);
+    $(show_id).remove();
+    id_arr.splice(2,1, 'tab-item');
+    $(id_arr.join('-')).removeClass("active");
   }
+}
+
+//#UPDATE: translate product_part:category/display btn click to checkbox checked and form submission
+function checkBoxSubmit(form, check_box) {
+  var status = $(check_box).prop("checked") == true ? false : true
+  $(check_box).prop("checked", status);
   $(form).submit();
 }
 
@@ -191,17 +264,17 @@ function toggleInputAccess(form) {
   });
 }
 
-function toggleShowView(show_id, show_partial) {
-  var id_arr = show_id.split('-');
-  if ($(show_id).length == 0) {
-    $(id_arr.splice(0,1).join(' ')).html(show_partial);
-  } else {
-    $(show_id).remove();
-    id_arr.splice(2,1, 'tab-item');
-    $(id_arr.join('-')).removeClass("active");
-  }
-}
 
+//end new functions
+// function toggleDisable(input_set){
+//   $(input_set).each(function(i, input){
+//     if ($(input).attr("disabled") == "disabled") {
+//       $(input).attr("disabled", false);
+//     } else {
+//       $(input).attr("disabled", true);
+//     }
+//   });
+// }
 // function removeShowView(show_id) {
 //   var id_arr = show_id.split('-');
 //   if ($(show_id).length > 0) {
@@ -265,7 +338,19 @@ function removeOption(form, id){
   $(form).find("option[value='"+id+"']").hide();
 }
 //getter functions
-//$(form).closest(".card-header").find(target) -> header functions: target == ".form" (usually)
+function getInputs(form) {
+  return $(form).find("input:text, select, button:submit, button.category-check, button.display-check");
+}
+function getCheckInput(form) {
+  return $(form).find("input:checkbox[name=category]").val();
+}
+function getCard(target){
+  return $(target).closest("div[id*='show']");
+}
+
+
+
+//remove
 function getHeader(target) {
   return $(target).closest(".card-header").first();
 }
@@ -294,9 +379,7 @@ function getDeleteIcon(target) {
 function getBody(target) {
   return getHeader(target).next(".card-body");
 }
-function getCard(target){
-  return $(target).closest("div[id*='show']");
-}
+
 function getEditSib(id){
   return $("#"+id).siblings(".toggle-sibling[id$='edit']");
 }
@@ -314,12 +397,7 @@ function getInputAccessIcon(form) {
 function getInputGroupDiv(form) {
   return $(form).find("div.input-group");
 }
-function getInputs(form) {
-  return $(form).find("input:text, select, button:submit, button.category-check, button.display-check");
-}
-function getCheckInput(form) {
-  return $(form).find("input:checkbox[name=category]").val();
-}
+
 
 // function getCategoryInput(form) {
 //   return $(form).find("input:checkbox.category");
