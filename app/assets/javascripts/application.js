@@ -203,6 +203,12 @@ function setHiddenInputs(form) {
   $(form).find("input.name-field").val(name);
 }
 
+//#CRUD: ADD: after item_group#create, toggle-hide form, toggle-show btn-group
+function afterAdd(form_id) {
+  var toggle_parent = $(form_id).closest(".toggle-parent");
+  var toggle_form = $(form_id).closest(".toggle-form.show");
+  toggleItemGroupCtrl(toggle_parent, toggle_form);
+}
 //#ADD form: item_group: toggle-show btn-group when background clicked
 function toggleItemGroupCtrl(toggle_parent, toggle_form) {
   $(toggle_parent).find(".toggle-btn-group").add(toggle_form).toggleClass("show");
@@ -228,6 +234,16 @@ function checkBoxSubmit(form, check_box) {
   $(check_box).prop("checked", status);
   $(form).submit();
 }
+
+//#CREATE: toggle insert show card for created object, reset tab-index and add active class
+function refreshCreate(show_id, tab_item_partial, show_partial){
+  var tab_index_id = show_id.concat('-', 'tab-index');
+  $(tab_index_id).find('.list-group-item').removeClass("active");
+  $(tab_index_id).append(tab_item_partial);
+  $(show_id).html(show_partial);
+}
+
+//older functions//
 
 //combined functions
 function toggleFormOnCreate(form) {
@@ -281,12 +297,7 @@ function toggleInputAccess(form) {
 //     $(show_id).remove();
 //   }
 // }
-function refreshCreate(show_id, tab_item_partial, show_partial){
-  var tab_index_id = show_id.concat('-', 'tab-index');
-  $(tab_index_id).find('.list-group-item').removeClass("active");
-  $(tab_index_id).append(tab_item_partial);
-  $(show_id).html(show_partial);
-}
+
 //combo functions
 function enableToggleInput(form) {
   getInputAccessBtn(form).prop("disabled", false);

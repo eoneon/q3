@@ -6,7 +6,7 @@
     <!-- <button class="btn btn-sm rounded-circle bg-transparent toggle-input-access" type="button"><%#= (fa_icon "toggle-off") %></button> -->
     <%= f.collection_select to_fk(target), uniq_vl(origin, target, name_param(target)), :id, name_param(target), {prompt: "- select #{obj_to_hyph_str(target)} -"}, class: "form-control border-0" %>
     <div class="input-group-append">
-      <button class="btn btn-sm btn-primary rounded-right-border border-left-0" type="submit" disabled><%= (fa_icon "plus") %></button>
+      <button class="btn btn-sm btn-primary rounded-right-border border-left-0" type="submit"><%= (fa_icon "plus") %></button>
     </div>
   </div>
 </div>
