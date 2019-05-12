@@ -12,8 +12,8 @@ module ItemGroupsHelper
   end
 
   def origin_sti_item_groups?(origin, type, *origin_id)
-    if origin.present? && origin.sti_item_groups(type).any? 
-      origin_id.any? ? origin.sti_item_groups(type).where.not(origin_id: origin_id) : origin.sti_item_groups(type)
+    if origin.present? && origin.sti_item_groups(type).any?
+      origin.sti_item_groups(type).where.not(target_id: origin.id)
     end
   end
 

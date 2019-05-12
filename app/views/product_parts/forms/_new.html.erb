@@ -1,4 +1,4 @@
-<%= form_with model: product_part, url: product_part, id: form_id do |f| %>
+<%= form_with model: product_part, url: url, id: form_id do |f| %>
   <div class="form p-2">
     <%= hidden_field_tag :form_id, form_id %>
     <%= f.text_field :type, class: "collapse type-field" %>

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   end
 
   resources :product_parts do
-    resources :sub_parts, only: [:update]
+    resources :sub_parts, only: [:create, :update]
     resources :item_fields, only: [:update]
     resources :item_groups, only: [:create, :destroy] do
       member do

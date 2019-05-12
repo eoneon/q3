@@ -1,9 +1,8 @@
 <div class="col-10 ml-3">
   <div class="input-group input-group align-items-center bg-disabled">
     <div class="input-group-prepend">
-      <button class="btn btn-sm btn-danger btn-outline-secondary mb-1 nav-toggle" type="button" data-toggle="collapse" href='#<%= dom_ref(origin, "toggle-btn-group") %>'><%= (fa_icon "times") %></button>
+      <button class="btn btn-sm btn-danger btn-outline-secondary mb-1 close-form" type="button" data-toggle="collapse" href='#<%= dom_ref(origin, "toggle-btn-group") %>'><%= (fa_icon "times") %></button>
     </div>
-    <!-- <button class="btn btn-sm rounded-circle bg-transparent toggle-input-access" type="button"><%#= (fa_icon "toggle-off") %></button> -->
     <%= f.collection_select to_fk(target), uniq_vl(origin, target, name_param(target)), :id, name_param(target), {prompt: "- select #{obj_to_hyph_str(target)} -"}, class: "form-control border-0" %>
     <div class="input-group-append">
       <button class="btn btn-sm btn-primary rounded-right-border border-left-0" type="submit"><%= (fa_icon "plus") %></button>

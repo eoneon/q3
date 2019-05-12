@@ -1,18 +1,10 @@
-<%= form_with model: product_part, url: product_part_path(product_part), id: form_id do |f| %>
+<%= form_with model: product_part, url: url, id: form_id do |f| %>
   <div class="form">
-    <%= hidden_field_tag :form_id, form_id %>
-    <%= hidden_field_tag :type, product_part.type %>
-    <%= hidden_field_tag :name, product_part.name %>
-    <div class="collapse">
-      <%= f.check_box :display_name, class: 'display' %>
-      <%= f.check_box :category, class: 'category' %>
-      <%= f.text_field :type, class: "type-field" %>
-    </div>
+    <%= render "product_parts/forms/hidden_fields", f: f, form_id: form_id, product_part: product_part %>
     <div class="form-row align-items-center">
       <div class="input-group border-secondary input-border rounded-left rounded-right-border pr-1 mr-1">
-
         <div class="input-group-prepend">
-          <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" data-toggle="collapse" data-target="#<%= dom_ref(product_part, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-down") %></button>
+          <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" data-caret-status="0" data-toggle="collapse" data-target="#<%= dom_ref(target, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
           <div class="btn-group">
             <button class="dropdown-toggle type-btn type-dropdown btn bg-disabled border-light-gray rounded-0 border-right-0 my-1 px-1 py-0" type="button" data-toggle="dropdown" aria-expanded="false" disabled><span class="type-label"><%= product_part.type %></span></button>
             <%= render "product_parts/forms/edit_type_dropdown", product_part: product_part %>
