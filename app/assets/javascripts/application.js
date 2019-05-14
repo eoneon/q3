@@ -20,29 +20,49 @@ $(document).ready(function(){
 
   //TOGGLE CARET & SIBLING VIEWS
   $("body").on("click", ".caret-toggle", function(){
-    //var status = $(this).data("caret-status");
-    var card_body = $(this).data("target");
-    var form = $(this).closest(".form");
-    var show_card = $(card_body).closest("div[id*='show']");
-    $(this).find("i").toggleClass("fa-caret-right fa-caret-down");
-    var disabled = $(form).find(".name-field").prop("disabled");
-    if (!$(card_body).hasClass("show")) {
-      collapseCaretSibs(show_card);
-      if (disabled == false) {
-        toggleEditState(form);
-      }
+    var form = thisForm($(this));
+    var card_id = showCardId(form);
+    //var toggle_parent = toggleParent(card_id);
+    toggleCaret(form);
+    if (!$(card_id).find(".card-body").hasClass("show")) {
+      collapseCaretSibs(card_id);
+      toggleOffEditStateIf(form);
+      // if ($(form).find(".name-field").prop("disabled") == false) {
+      //   toggleEditState(form);
+      // }
+      // if ($(toggle_parent).hasClass("show")) {
+      //   $(toggle_parent).toggleClass("show");
+      // }
+      collapseToggleParentIf(card_id);
     }
   });
 
   //TOGGLE ACCESS: toggle-edit-btn state
   $("body").on("click", ".edit-btn", function(){
-    var form = $(this).closest(".form");
+    var form = thisForm($(this));
+    var card_id = showCardId(form);
+    var card_body = $(card_id).find(".card-body");
     toggleEditState(form);
-    var card_body = $(form).find(".caret-toggle").data("target");
     if ($(card_body).hasClass("show")) {
-      $(form).find(".fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+      toggleCaret(form);
       $(card_body).toggleClass("show");
     }
+  });
+
+  $("body").on("click", ".toggle-ctrl", function(){
+    var show_card_id = showCardId($(this));
+    var card_body = $(show_card_id).find(".card-body");
+    var toggle_parent = $(show_card_id).find(".card-header .toggle-parent");
+    var form = $(show_card_id).find(".form");
+    //var card_body_id = show_card_id.replace("show", "body");
+     if (!$(toggle_parent).hasClass("show")) {
+       if ($(card_body).hasClass("show")) {
+         $(form).find(".fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+         $(card_body).toggleClass("show");
+       } else if ($(form).find(".name-field").prop("disabled") == false) {
+         toggleEditState(form);
+       }
+     }
   });
 
   //TOGGLE VIEW: hide item_group#add form upon background click
@@ -115,11 +135,28 @@ $(document).ready(function(){
 
 });
 
+//traversal references
+function showCardId(ref) {
+  return '#'+$(ref).closest("div[id*='show']").attr("id"); //showCardId.replace("show", "body")
+}
+function thisForm(ref) {
+  return $(ref).closest(".form");
+}
+function toggleParent(ref) {
+  return $(ref).find(".card-header .toggle-parent");
+}
 //CARET TOGGLE STATE//
 function collapseCaretSibs(card_show) {
   var card_sibs = $(card_show).siblings();
   $(card_sibs).find(".card-body").removeClass("show");
   $(card_sibs).find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
+}
+function toggleCaret(ref) {
+  $(ref).find(".caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
+}
+
+function disabledStatus(ref, field) {
+  $(ref).find('.'+field).prop("disabled");
 }
 
 //FORM ACCESS: named functions//
@@ -138,6 +175,11 @@ function enableSubmit(form) {
 }
 
 //#EDIT FORM access + collapse-state
+function toggleOffEditStateIf(form){
+  if ($(form).find(".name-field").prop("disabled") == false) {
+     toggleEditState(form);
+   }
+}
 function toggleEditState(form) {
   var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
   $(form).find(".input-group-append button").toggleClass("show");
@@ -145,7 +187,11 @@ function toggleEditState(form) {
   setHiddenInputs(form);
   toggleInputs(inputs);
 }
-
+function collapseToggleParentIf(card_id) {
+  if ($(toggleParent(card_id)).hasClass("show")) {
+    $(toggleParent(card_id)).toggleClass("show");
+  }
+}
 //#EDIT FORM: replaces toggleDisable
 function toggleInputs(input_set){
   $(input_set).each(function(i, input){

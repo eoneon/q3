@@ -19,6 +19,7 @@ class SubPartsController < ApplicationController
     @sub_part.assign_attributes(sub_part_params)
 
     if @sub_part.save
+      #@product_parts = ProductPart.all #.order(:sort)
       @form_id = params[:form_id]
       respond_to do |format|
         format.js
