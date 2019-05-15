@@ -22,58 +22,34 @@ $(document).ready(function(){
   $("body").on("click", ".caret-toggle", function(){
     var form = thisForm($(this));
     var card_id = showCardId(form);
-    //var toggle_parent = toggleParent(card_id);
-    toggleCaret(form);
-    if (!$(card_id).find(".card-body").hasClass("show")) {
-      collapseCaretSibs(card_id);
-      toggleOffEditStateIf(form);
-      // if ($(form).find(".name-field").prop("disabled") == false) {
-      //   toggleEditState(form);
-      // }
-      // if ($(toggle_parent).hasClass("show")) {
-      //   $(toggle_parent).toggleClass("show");
-      // }
-      collapseToggleParentIf(card_id);
-    }
+    toggleCaretState(card_id, form);
+    checkEditState(card_id, form);
+    checkControlState(card_id);
   });
 
   //TOGGLE ACCESS: toggle-edit-btn state
   $("body").on("click", ".edit-btn", function(){
     var form = thisForm($(this));
     var card_id = showCardId(form);
-    var card_body = $(card_id).find(".card-body");
-    toggleEditState(form);
-    if ($(card_body).hasClass("show")) {
-      toggleCaret(form);
-      $(card_body).toggleClass("show");
-    }
+    toggleEditState(card_id, form);
+    checkBodyState(card_id);
+    checkControlState(card_id);
   });
 
+  //TOGGLE ACCESS: toggle-parent state
   $("body").on("click", ".toggle-ctrl", function(){
-    var show_card_id = showCardId($(this));
-    var card_body = $(show_card_id).find(".card-body");
-    var toggle_parent = $(show_card_id).find(".card-header .toggle-parent");
-    var form = $(show_card_id).find(".form");
-    //var card_body_id = show_card_id.replace("show", "body");
-     if (!$(toggle_parent).hasClass("show")) {
-       if ($(card_body).hasClass("show")) {
-         $(form).find(".fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
-         $(card_body).toggleClass("show");
-       } else if ($(form).find(".name-field").prop("disabled") == false) {
-         toggleEditState(form);
-       }
-     }
+    var form = thisForm($(this));
+    var card_id = showCardId($(this));
+    toggleControlState(card_id);
+    checkEditState(card_id, form);
+    checkBodyState(card_id);
   });
 
   //TOGGLE VIEW: hide item_group#add form upon background click
   $(document).on("click", function(e){
     var toggle_form = $(".toggle-form.show").eq(0);
     var toggle_parent = $(e.target).closest(".toggle-parent");
-    if ($(toggle_form).length && !$(toggle_parent).find(toggle_form).length) {
-      var toggle_parent = $(toggle_form).closest(".toggle-parent");
-      toggleItemGroupCtrl(toggle_parent, toggle_form);
-      $(toggle_form).find("select").val('');
-    }
+    collapseToggleFormIf(toggle_parent, toggle_form);
   });
 
   //TOGGLE VIEW: hide btn group upon selection
@@ -127,12 +103,6 @@ $(document).ready(function(){
     $(a).addClass("active").siblings().removeClass("active");
   });
 
-  //remove
-  // $("body").on("click", ".toggle-input-access", function(){
-  //   var form = $(this).closest(".form");
-  //   toggleInputAndDelete(form);
-  // });
-
 });
 
 //traversal references
@@ -145,20 +115,104 @@ function thisForm(ref) {
 function toggleParent(ref) {
   return $(ref).find(".card-header .toggle-parent");
 }
-//CARET TOGGLE STATE//
-function collapseCaretSibs(card_show) {
-  var card_sibs = $(card_show).siblings();
-  $(card_sibs).find(".card-body").removeClass("show");
-  $(card_sibs).find("i.fa-caret-down").toggleClass("fa-caret-down fa-caret-right");
+function caretToggle(ref){
+  return $(ref).find("button.caret-toggle");
 }
+
+//CARET TOGGLE STATE//
+function toggleCaretState(card_id, form) {
+  toggleCaret(form);
+  if ($(card_id).data("body-state") == 0) {
+    toggleCaretStateOn(card_id);
+    checkEditState(card_id, form);
+    checkControlState(card_id);
+  } else {
+    toggleCaretStateOff(card_id);
+  }
+}
+function toggleCaretStateOn(card_id) {
+  $(card_id).data("body-state", 1);
+  collapseCaretSibs(card_id);
+}
+function toggleCaretStateOff(card_id) {
+  $(card_id).data("body-state", 0);
+}
+function collapseCaretSibs(card_id) {
+  var card_sibs = $(card_id).siblings(".card");
+  $(card_sibs).find(".card-body").removeClass("show");
+  $(card_sibs).data("body-state", 0);
+  $(card_sibs).find(".card-header .caret-toggle i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+}
+
+//TEST STATE
+function checkBodyState(card_id) {
+  if ($(card_id).data("body-state") == 1) {
+    $(card_id).data("body-state", 0);
+    $(card_id).find(".card-header .caret-toggle i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+    $(card_id).find(".card-body").removeClass("show");
+  }
+}
+function checkEditState(card_id, form) {
+  if ($(card_id).data("edit-state") == 1) {
+    toggleEditState(card_id, form);
+  }
+}
+function checkControlState(card_id) {
+  if ($(card_id).data("control-state") == 1) {
+    $(card_id).find(".card-header .toggle-parent").toggleClass("show");
+    toggleControlState(card_id);
+  }
+}
+
+//TOGGLE
+function toggleControlState(card_id) {
+  if ($(card_id).data("control-state") == 1) {
+    $(card_id).data("control-state", 0);
+  } else {
+    $(card_id).data("control-state", 1);
+  }
+}
+
+function toggleEditState(card_id, form) {
+  var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
+  $(form).find(".input-group-append button").toggleClass("show");
+  $(form).find('.edit-btn').toggleClass("text-info text-secondary");
+  setHiddenInputs(form);
+  toggleInputs(inputs);
+  if ($(card_id).data("edit-state") == 0) {
+    $(card_id).data("edit-state", 1);
+  } else {
+    $(card_id).data("edit-state", 0);
+  }
+}
+
+// function collapseCaretStateIf(card_body, form) {
+//   if ($(card_body).hasClass("show")) {
+//     toggleCaret(form);
+//     $(card_body).toggleClass("show");
+//   }
+// }
 function toggleCaret(ref) {
   $(ref).find(".caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
 }
-
 function disabledStatus(ref, field) {
   $(ref).find('.'+field).prop("disabled");
 }
-
+// function ifCaretStateCollapsed(card_id, form) {
+//   if (!$(card_id).find(".card-body").hasClass("show")) {
+//     collapseCaretSibs(card_id);
+//     toggleOffEditStateIf(form);
+//     collapseToggleParentIf(card_id);
+//   }
+// }
+//background click
+function collapseToggleFormIf(toggle_parent, toggle_form) {
+  if ($(toggle_form).length && !$(toggle_parent).find(toggle_form).length) {
+    var toggle_parent = $(toggle_form).closest(".toggle-parent");
+    toggleItemGroupCtrl(toggle_parent, toggle_form);
+    $(toggle_form).find("select").val('');
+  }
+}
 //FORM ACCESS: named functions//
 
 //#NEW: clear :type/:name fields, reset data attrs and remove active class from a options
@@ -175,23 +229,17 @@ function enableSubmit(form) {
 }
 
 //#EDIT FORM access + collapse-state
-function toggleOffEditStateIf(form){
-  if ($(form).find(".name-field").prop("disabled") == false) {
-     toggleEditState(form);
-   }
-}
-function toggleEditState(form) {
-  var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
-  $(form).find(".input-group-append button").toggleClass("show");
-  $(form).find('.edit-btn').toggleClass("text-info text-secondary");
-  setHiddenInputs(form);
-  toggleInputs(inputs);
-}
-function collapseToggleParentIf(card_id) {
-  if ($(toggleParent(card_id)).hasClass("show")) {
-    $(toggleParent(card_id)).toggleClass("show");
-  }
-}
+// function toggleOffEditStateIf(form){
+//   if ($(form).find(".name-field").prop("disabled") == false) {
+//      toggleEditState(form);
+//    }
+// }
+
+// function collapseToggleParentIf(card_id) {
+//   if ($(toggleParent(card_id)).hasClass("show")) {
+//     $(toggleParent(card_id)).toggleClass("show");
+//   }
+// }
 //#EDIT FORM: replaces toggleDisable
 function toggleInputs(input_set){
   $(input_set).each(function(i, input){
@@ -247,104 +295,16 @@ function refreshCreate(show_id, tab_item_partial, show_partial){
   $(show_id).html(show_partial);
 }
 
-//older functions//
 
-//combined functions
-// function toggleFormOnCreate(form) {
-//   if ($.inArray('edit', form.split('-')) == -1){
-//     var ref_sibling = getCurrentToggleSib(form);
-//     var ref_id = $(ref_sibling).attr("id");
-//     var target_id = getEditSib(ref_id).attr("id");
-//     getCurrentToggleSib(form).removeClass('show');
-//     //toggleSibForms(ref_sibling, ref_id);
-//     getEditSib(ref_id).addClass('show');
-//     showDisabledDeleteBtn(form);
-//     resetDropdownOptions(target_id);
-//     resetInputLabel(target_id);
-//     toggleCaretDownBodyShow(target_id);
-//   }
-// }
-// function configShow(form) {
-//   enableToggleInput(form);
-//   getCaret(form).prop("disabled", false).find("i").toggleClass("fa-caret-right fa-caret-down");
-//   getLabel(form).toggleClass("text-light text-muted");
-//   getDropdownBtn(form).removeClass("disabled").addClass("text-info").attr("href", "#");
-//   enableCustomInputs();
-//   getBody(form).toggleClass("show");
-// }
-// function toggleInputAndDelete(form) {
-//   toggleInputAccess(form);
-//   getDeleteBtn(form).toggleClass("disabled");
-// }
-// function toggleInputAccess(form) {
-//   getInputAccessIcon(form).toggleClass("fa-toggle-on fa-toggle-off");
-//   getInputGroupDiv(form).toggleClass("bg-white bg-disabled");
-//   getInputs(form).each(function(i, input){
-//     $(input).prop("disabled") == false ? $(input).prop("disabled", true) : $(input).prop("disabled", false)
-//   });
-// }
-
-
-//end new functions
-// function toggleDisable(input_set){
-//   $(input_set).each(function(i, input){
-//     if ($(input).attr("disabled") == "disabled") {
-//       $(input).attr("disabled", false);
-//     } else {
-//       $(input).attr("disabled", true);
-//     }
-//   });
-// }
-// function removeShowView(show_id) {
-//   var id_arr = show_id.split('-');
-//   if ($(show_id).length > 0) {
-//     $(show_id).remove();
-//   }
-// }
-
-//combo functions
-// function enableToggleInput(form) {
-//   getInputAccessBtn(form).prop("disabled", false);
-// }
-// function disableToggleInput(form) {
-//   getInputAccessBtn(form).prop("disabled", true);
-// }
-// function enableNewInputs(form) {
-//   $(form).find("input:text, button:submit").prop("disabled", false);
-// }
 function enableCustomInputs() {
   $("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
 }
-// function resetInputLabel(target_id){
-//   var new_label = $("#"+target_id).attr("data-label");
-//   return getLabel("#"+target_id).text(new_label);
-// }
+//obsolete?
 function resetDropdownOptions(id){
   return $('a[href="#'+id+'"]').prop("disabled", true).addClass("disabled").siblings().prop("disabled", false).removeClass("disabled");
 }
-// function toggleInputAccessIcon(form) {
-//   return getInputAccessIcon(form).toggleClass("fa-toggle-on fa-toggle-off");
-// }
-// function toggleSibCarets(card){
-//   return $(card).siblings().find("i").hasClass("fa-caret-down").first().toggleClass("fa-caret-down fa-caret-right");
-// }
-function toggleSibForms(ref_sibling, ref_id){
-  //return $(ref_sibling).add(getEditSib(ref_id)).toggleClass("show");
-  //return $(ref_sibling).removeClass("show");
-  return $(ref_sibling).siblings().removeClass("show");
-}
-// function toggleCaretDownBodyShow(target){
-//   var caret = getCaretIcon("#"+target);
-//   if ($(caret).hasClass("fa-caret-right")){
-//     $(caret).toggleClass("fa-caret-right fa-caret-down");
-//     toggleCardBody("#"+target);
-//   }
-// }
-// function toggleCardBody(target){
-//   getBody(target).toggleClass("show");
-// }
-// function showDisabledDeleteBtn(form){
-//   return getDeleteBtn(form).addClass("disabled").find("i").addClass("fa-times");
+// function toggleSibForms(ref_sibling, ref_id){
+//   return $(ref_sibling).siblings().removeClass("show");
 // }
 function addOption(form, id, name){
   $(form).find("option:last").after("<option value='"+id+"'>"+name+"</option>");
@@ -359,60 +319,57 @@ function getInputs(form) {
 function getCheckInput(form) {
   return $(form).find("input:checkbox[name=category]").val();
 }
-function getCard(target){
-  return $(target).closest("div[id*='show']");
-}
-
-
+// function getCard(target){
+//   return $(target).closest("div[id*='show']");
+// }
 
 //remove
-function getHeader(target) {
-  return $(target).closest(".card-header").first();
-}
-function getCaret(target) {
-  return getHeader(target).find(".caret-toggle");
-}
-function getCaretIcon(target) {
-  return getCaret(target).find("i");
-}
-function getLabel(target) {
-  return getHeader(target).find(".input-label");
-}
-function getDropdownIcon(target) {
-  getDropdownBtn(target).find("i");
-}
-function getDropdownBtn(target) {
-  return getHeader(target).find(".nav-link").first();
-  //return getHeader(target).find("a.nav-link.i.fa-ellipsis-v").first();
-}
-function getDeleteBtn(target) {
-  return getHeader(target).find("a.delete-btn");
-}
-function getDeleteIcon(target) {
-  return getDeleteBtn(target).find("i");
-}
-function getBody(target) {
-  return getHeader(target).next(".card-body");
-}
+// function getHeader(target) {
+//   return $(target).closest(".card-header").first();
+// }
+// function getCaret(target) {
+//   return getHeader(target).find(".caret-toggle");
+// }
+// function getCaretIcon(target) {
+//   return getCaret(target).find("i");
+// }
+// function getLabel(target) {
+//   return getHeader(target).find(".input-label");
+// }
+// function getDropdownIcon(target) {
+//   getDropdownBtn(target).find("i");
+// }
+// function getDropdownBtn(target) {
+//   return getHeader(target).find(".nav-link").first();
+//   //return getHeader(target).find("a.nav-link.i.fa-ellipsis-v").first();
+// }
+// function getDeleteBtn(target) {
+//   return getHeader(target).find("a.delete-btn");
+// }
+// function getDeleteIcon(target) {
+//   return getDeleteBtn(target).find("i");
+// }
+// function getBody(target) {
+//   return getHeader(target).next(".card-body");
+// }
 
-function getEditSib(id){
-  return $("#"+id).siblings(".toggle-sibling[id$='edit']");
-}
-function getCurrentToggleSib(form){
-  return $(form).closest(".toggle-sibling");
-}
-//form functions
-function getInputAccessBtn(form) {
-  return $(form).find(".toggle-input-access");
-}
-function getInputAccessIcon(form) {
-  return getInputAccessBtn(form).find("i");
-}
+// function getEditSib(id){
+//   return $("#"+id).siblings(".toggle-sibling[id$='edit']");
+// }
+// function getCurrentToggleSib(form){
+//   return $(form).closest(".toggle-sibling");
+// }
+// //form functions
+// function getInputAccessBtn(form) {
+//   return $(form).find(".toggle-input-access");
+// }
+// function getInputAccessIcon(form) {
+//   return getInputAccessBtn(form).find("i");
+// }
 //sub_parts/create.js
 function getInputGroupDiv(form) {
   return $(form).find("div.input-group");
 }
-
 
 // function getCategoryInput(form) {
 //   return $(form).find("input:checkbox.category");

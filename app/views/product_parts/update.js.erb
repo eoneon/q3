@@ -1,3 +1,4 @@
 $("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'product_parts/forms/form', product_part: @product_part, url: product_part_path(@product_part), target: @product_part, form_id: @form_id %>");
-//$("#product_part-tab-index").html("<%#= render 'product_parts/tabs', product_parts: @product_parts %>");
-//$("<%#= dom_ref('#product_part', @product_part.id, 'tab-item') %>").addClass("active");
+var tab_item = $("<%= dom_ref('#product_part', @product_part.id, 'tab-item') %>");
+$(tab_item).find(".item-type").text("<%= @product_part.type %>");
+$(tab_item).find(".item-name").text("<%= @product_part.name %>");
