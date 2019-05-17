@@ -4,14 +4,6 @@
   </div>
 
   <div class="card-body collapse p-1" id="<%= dom_ref(item_group, 'body') %>">
-
-    <div class="form-row pl-2 align-items-center toggle-parent" id="<%= dom_ref(item_group, 'toggle-parent') %>">
-      <div class="col collapse show toggle-btn-group" id="<%= dom_ref(item_group, "toggle-btn-group") %>">
-        <%= render "product_parts/forms/nested_form_toggle", product_part: target %>
-      </div>
-      <%= render "product_parts/forms/nested_forms", product_part: target %>
-    </div>
-
     <div id='<%= dom_ref(target, "#{to_snake(target.sti_field_type)}-index") %>'>
       <%#= render "item_fields/product_parts/index", origin: target %>
     </div>
