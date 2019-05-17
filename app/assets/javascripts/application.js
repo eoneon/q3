@@ -18,6 +18,18 @@
 
 $(document).ready(function(){
 
+  $("body").on("click", "#tab-index a.list-group-item", function(e){
+    var item_id = '#'+$(this).attr("id");
+    var item_card_id = item_id.replace("tab-item", "show");
+    var show_card = $('#show-card > .card');
+    if ($(show_card).length && '#'+$(show_card).attr('id') == item_card_id){
+      e.stopPropagation();
+      e.preventDefault();
+      $(item_card_id).remove();
+      $(item_id).removeClass("active");
+    }
+  });
+
   //TOGGLE CARET & SIBLING VIEWS
   $("body").on("click", ".caret-toggle", function(){
     var form = thisForm($(this));
@@ -186,25 +198,12 @@ function toggleEditState(card_id, form) {
   }
 }
 
-// function collapseCaretStateIf(card_body, form) {
-//   if ($(card_body).hasClass("show")) {
-//     toggleCaret(form);
-//     $(card_body).toggleClass("show");
-//   }
-// }
 function toggleCaret(ref) {
   $(ref).find(".caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
 }
 function disabledStatus(ref, field) {
   $(ref).find('.'+field).prop("disabled");
 }
-// function ifCaretStateCollapsed(card_id, form) {
-//   if (!$(card_id).find(".card-body").hasClass("show")) {
-//     collapseCaretSibs(card_id);
-//     toggleOffEditStateIf(form);
-//     collapseToggleParentIf(card_id);
-//   }
-// }
 //background click
 function collapseToggleFormIf(toggle_parent, toggle_form) {
   if ($(toggle_form).length && !$(toggle_parent).find(toggle_form).length) {
@@ -228,18 +227,6 @@ function enableSubmit(form) {
   $(form).find("button:submit").prop("disabled", access);
 }
 
-//#EDIT FORM access + collapse-state
-// function toggleOffEditStateIf(form){
-//   if ($(form).find(".name-field").prop("disabled") == false) {
-//      toggleEditState(form);
-//    }
-// }
-
-// function collapseToggleParentIf(card_id) {
-//   if ($(toggleParent(card_id)).hasClass("show")) {
-//     $(toggleParent(card_id)).toggleClass("show");
-//   }
-// }
 //#EDIT FORM: replaces toggleDisable
 function toggleInputs(input_set){
   $(input_set).each(function(i, input){
@@ -273,10 +260,10 @@ function toggleShowView(show_id, show_partial) {
   var id_arr = show_id.split('-');
   if ($(show_id).length == 0) {
     $(id_arr.splice(0,1).join(' ')).html(show_partial);
-  } else {
-    $(show_id).remove();
-    id_arr.splice(2,1, 'tab-item');
-    $(id_arr.join('-')).removeClass("active");
+  // } else {
+  //   $(show_id).remove();
+  //   id_arr.splice(2,1, 'tab-item');
+  //   $(id_arr.join('-')).removeClass("active");
   }
 }
 
@@ -295,7 +282,6 @@ function refreshCreate(show_id, tab_item_partial, show_partial){
   $(show_id).html(show_partial);
 }
 
-
 function enableCustomInputs() {
   $("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
 }
@@ -303,9 +289,7 @@ function enableCustomInputs() {
 function resetDropdownOptions(id){
   return $('a[href="#'+id+'"]').prop("disabled", true).addClass("disabled").siblings().prop("disabled", false).removeClass("disabled");
 }
-// function toggleSibForms(ref_sibling, ref_id){
-//   return $(ref_sibling).siblings().removeClass("show");
-// }
+
 function addOption(form, id, name){
   $(form).find("option:last").after("<option value='"+id+"'>"+name+"</option>");
 }
@@ -319,53 +303,7 @@ function getInputs(form) {
 function getCheckInput(form) {
   return $(form).find("input:checkbox[name=category]").val();
 }
-// function getCard(target){
-//   return $(target).closest("div[id*='show']");
-// }
 
-//remove
-// function getHeader(target) {
-//   return $(target).closest(".card-header").first();
-// }
-// function getCaret(target) {
-//   return getHeader(target).find(".caret-toggle");
-// }
-// function getCaretIcon(target) {
-//   return getCaret(target).find("i");
-// }
-// function getLabel(target) {
-//   return getHeader(target).find(".input-label");
-// }
-// function getDropdownIcon(target) {
-//   getDropdownBtn(target).find("i");
-// }
-// function getDropdownBtn(target) {
-//   return getHeader(target).find(".nav-link").first();
-//   //return getHeader(target).find("a.nav-link.i.fa-ellipsis-v").first();
-// }
-// function getDeleteBtn(target) {
-//   return getHeader(target).find("a.delete-btn");
-// }
-// function getDeleteIcon(target) {
-//   return getDeleteBtn(target).find("i");
-// }
-// function getBody(target) {
-//   return getHeader(target).next(".card-body");
-// }
-
-// function getEditSib(id){
-//   return $("#"+id).siblings(".toggle-sibling[id$='edit']");
-// }
-// function getCurrentToggleSib(form){
-//   return $(form).closest(".toggle-sibling");
-// }
-// //form functions
-// function getInputAccessBtn(form) {
-//   return $(form).find(".toggle-input-access");
-// }
-// function getInputAccessIcon(form) {
-//   return getInputAccessBtn(form).find("i");
-// }
 //sub_parts/create.js
 function getInputGroupDiv(form) {
   return $(form).find("div.input-group");
@@ -374,15 +312,3 @@ function getInputGroupDiv(form) {
 // function getCategoryInput(form) {
 //   return $(form).find("input:checkbox.category");
 // }
-
-// $("body").on("show.bs.collapse", "#artist-form", function(){
-//   var form = $("#artist-show-form-id");
-//   $(form).find(".input-group").toggleClass("bg-white bg-disabled");
-//   $(form).find("select").prop("disabled", true);
-// });
-
-//   $("body").on("hide.bs.collapse", "#artist-form", function(){
-//     var form = $("#artist-show-form-id");
-//     $(form).find(".input-group").toggleClass("bg-white bg-disabled");
-//     $(form).find("select").prop("disabled", false);
-//   });

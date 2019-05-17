@@ -1,5 +1,5 @@
 $("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'product_parts/forms/new', product_part: ProductPart.new, url: ProductPart.new, form_id: @form_id %>");
-var show_id = "#product_part";
+var show_id = "#show-card";
 var tab_item_partial = $("<%= j render 'product_parts/tab', product_part: @product_part %>").addClass("active");
 var show_partial = "<%= j render 'product_parts/show', product_part: @product_part %>";
 refreshCreate(show_id, tab_item_partial, show_partial);
