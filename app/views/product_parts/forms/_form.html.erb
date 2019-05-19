@@ -4,12 +4,12 @@
     <div class="form-row align-items-center">
       <div class="input-group border-secondary input-border rounded-left rounded-right-border pr-1 mr-1">
         <div class="input-group-prepend">
-          <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" data-caret-state="0" data-toggle="collapse" data-target="#<%= dom_ref(target, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
+          <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" data-toggle="collapse" data-target="#<%= dom_ref(target, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
           <div class="btn-group">
             <button class="dropdown-toggle type-btn type-dropdown btn bg-disabled border-light-gray rounded-0 border-right-0 my-1 px-1 py-0" type="button" data-toggle="dropdown" aria-expanded="false" disabled><span class="type-label"><%= product_part.type %></span></button>
             <%= render "product_parts/forms/edit_type_dropdown", product_part: product_part %>
           </div>
-          <button class="btn btn-sm bg-transparent border-light-gray text-secondary edit-btn my-1" data-edit-state="0" type="button"><%= (fa_icon "edit") %></button>
+          <button class="btn btn-sm bg-transparent border-light-gray text-secondary edit-btn my-1" type="button"><%= (fa_icon "edit") %></button>
         </div>
         <%= f.text_field :name, placeholder: "enter product-part name", class: "form-control squared-border bg-light text-uppercase my-1 pl-2 name-field", disabled: true %>
         <div class="input-group-append">

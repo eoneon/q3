@@ -17,7 +17,7 @@
 //= require_tree .
 
 $(document).ready(function(){
-
+  //show
   $("body").on("click", "#tab-index a.list-group-item", function(e){
     var item_id = '#'+$(this).attr("id");
     var item_card_id = item_id.replace("tab-item", "show");
@@ -32,11 +32,14 @@ $(document).ready(function(){
 
   //TOGGLE CARET & SIBLING VIEWS
   $("body").on("click", ".caret-toggle", function(){
+    var target = $(this);
     var form = thisForm($(this));
-    var card_id = showCardId(form);
+    var card_id = showCardId($(this));
+
     toggleCaretState(card_id, form);
     checkEditState(card_id, form);
     checkControlState(card_id);
+    //console.log($(target).hasClass("caret-toggle"));
   });
 
   //TOGGLE ACCESS: toggle-edit-btn state
@@ -55,6 +58,7 @@ $(document).ready(function(){
     toggleControlState(card_id);
     checkEditState(card_id, form);
     checkBodyState(card_id);
+    console.log(card_id);
   });
 
   //TOGGLE VIEW: hide item_group#add form upon background click
@@ -134,6 +138,7 @@ function caretToggle(ref){
 //CARET TOGGLE STATE//
 function toggleCaretState(card_id, form) {
   toggleCaret(form);
+  //$(card_id).find(".card-header .caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
   if ($(card_id).data("body-state") == 0) {
     toggleCaretStateOn(card_id);
     checkEditState(card_id, form);
@@ -144,17 +149,29 @@ function toggleCaretState(card_id, form) {
 }
 function toggleCaretStateOn(card_id) {
   $(card_id).data("body-state", 1);
+  //$(card_id).find(".card-header").filter(".caret-toggle i.fa-caret-right").toggleClass("fa-caret-right fa-caret-down");
   collapseCaretSibs(card_id);
+  //collapseCaretSib(card_id);
 }
 function toggleCaretStateOff(card_id) {
   $(card_id).data("body-state", 0);
+  //$(card_id).find(".card-header").filter(".caret-toggle i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
 }
 function collapseCaretSibs(card_id) {
-  var card_sibs = $(card_id).siblings(".card");
-  $(card_sibs).find(".card-body").removeClass("show");
+  var card_sibs = $(card_id).siblings("div[id*='show'].card");
+  $(card_sibs).find(".card-body.show").removeClass("show");
   $(card_sibs).data("body-state", 0);
-  $(card_sibs).find(".card-header .caret-toggle i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+  $(card_sibs).find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
 }
+// function collapseCaretSib(card_id) {
+//   //var card_sib = $(card_id).siblings("div[id*='show']").filter('[data-body-state="1"]');
+//   var card_sib = $(card_id).siblings('[data-body-state="1"]');
+//   if ($(card_sib).length) {
+//     $(card_sib).data("body-state", 0);
+//     $(card_sib).find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+//     $(card_sib).find(".card-body").removeClass("show");
+//   }
+// }
 
 //TEST STATE
 function checkBodyState(card_id) {
@@ -171,7 +188,8 @@ function checkEditState(card_id, form) {
 }
 function checkControlState(card_id) {
   if ($(card_id).data("control-state") == 1) {
-    $(card_id).find(".card-header .toggle-parent").toggleClass("show");
+    $(card_id).find(".card-header .toggle-form.show").removeClass("show");
+    $(card_id).find(".card-header .toggle-parent.show").removeClass("show");
     toggleControlState(card_id);
   }
 }
@@ -186,6 +204,7 @@ function toggleControlState(card_id) {
 }
 
 function toggleEditState(card_id, form) {
+  //var form = $(card_id).find(".card-header .form");
   var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
   $(form).find(".input-group-append button").toggleClass("show");
   $(form).find('.edit-btn').toggleClass("text-info text-secondary");
@@ -204,7 +223,8 @@ function toggleCaret(ref) {
 function disabledStatus(ref, field) {
   $(ref).find('.'+field).prop("disabled");
 }
-//background click
+
+//background click: afterBackgroundClick
 function collapseToggleFormIf(toggle_parent, toggle_form) {
   if ($(toggle_form).length && !$(toggle_parent).find(toggle_form).length) {
     var toggle_parent = $(toggle_form).closest(".toggle-parent");
@@ -242,6 +262,16 @@ function setHiddenInputs(form) {
   $(form).find("input.name-field").val(name);
 }
 
+function afterNestedCreate(card_id) {
+  //var card_id = showCardId(form);
+  //checkControlState(card_id);
+  $(card_id).find(".card-header").find(".toggle-parent.show, .toggle-form.show").removeClass("show");
+  $(card_id).find(".form .caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
+  //toggleCaret(form);
+  $(card_id).data("body-state", 1);
+  $(card_id).data("control-state", 1);
+  $(card_id).find(".card-body").addClass("show");
+}
 //#CRUD: ADD: after item_group#create, toggle-hide form, toggle-show btn-group
 function afterAdd(form_id) {
   var toggle_parent = $(form_id).closest(".toggle-parent");

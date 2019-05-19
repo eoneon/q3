@@ -1,3 +1,7 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'product_parts/forms/new', product_part: ProductPart.new, url: product_part_sub_parts_path(@product_part), form_id: @form_id %>");
+$("#<%= dom_ref(@form_id) %>").html("<%= j render 'product_parts/forms/new', product_part: ProductPart.new, url: product_part_sub_parts_path(@product_part), form_id: @form_id %>");
+//$("#<%#= new_dom_ref(@form_id, 'form', nil) %>").html("<%#= j render 'product_parts/forms/new', product_part: ProductPart.new, url: product_part_sub_parts_path(@product_part), form_id: @form_id %>");
 $('#<%= dom_ref(@product_part, "#{to_snake(@sub_part)}-index") %>').html('<%= j render "sub_parts/index", origin: @product_part, type: to_snake(@sub_part) %>');
-afterAdd('#<%= @form_id %>');
+var form_id = $("#<%= dom_ref(@form_id) %>");
+var card_id = showCardId(form_id);
+afterNestedCreate(card_id);
+$("#tab-index").append("<%= j render 'product_parts/tab', product_part: @sub_part %>");
