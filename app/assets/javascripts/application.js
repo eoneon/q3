@@ -35,11 +35,13 @@ $(document).ready(function(){
     var target = $(this);
     var form = thisForm($(this));
     var card_id = showCardId($(this));
+    var obj_id = '#'+$(target).attr("id").split("-").slice(0,2).join("-");
+    var action = $(target).attr("id").split("-").slice(2).join("-");
 
     toggleCaretState(card_id, form);
     checkEditState(card_id, form);
     checkControlState(card_id);
-    //console.log($(target).hasClass("caret-toggle"));
+    console.log($(obj_id + '-' + action));
   });
 
   //TOGGLE ACCESS: toggle-edit-btn state
@@ -52,13 +54,13 @@ $(document).ready(function(){
   });
 
   //TOGGLE ACCESS: toggle-parent state
-  $("body").on("click", ".toggle-ctrl", function(){
+  $("body").on("click", ".control-toggle", function(){
     var form = thisForm($(this));
     var card_id = showCardId($(this));
     toggleControlState(card_id);
     checkEditState(card_id, form);
     checkBodyState(card_id);
-    console.log(card_id);
+    //console.log(card_id);
   });
 
   //TOGGLE VIEW: hide item_group#add form upon background click
