@@ -17,51 +17,62 @@
 //= require_tree .
 
 $(document).ready(function(){
-  //show
-  $("body").on("click", "#tab-index a.list-group-item", function(e){
-    var item_id = '#'+$(this).attr("id");
-    var item_card_id = item_id.replace("tab-item", "show");
-    var show_card = $('#show-card > .card');
-    if ($(show_card).length && '#'+$(show_card).attr('id') == item_card_id){
-      e.stopPropagation();
-      e.preventDefault();
-      $(item_card_id).remove();
-      $(item_id).removeClass("active");
-    }
-  });
 
   //TOGGLE CARET & SIBLING VIEWS
-  $("body").on("click", ".caret-toggle", function(){
-    var target = $(this);
-    var form = thisForm($(this));
-    var card_id = showCardId($(this));
-    var obj_id = '#'+$(target).attr("id").split("-").slice(0,2).join("-");
-    var action = $(target).attr("id").split("-").slice(2).join("-");
+  $("body").on("click", ".caret-toggle, .edit-toggle, .control-toggle", function(){
+    var obj_id = objId($(this));
+    var card_obj = {
+      obj_id: obj_id,
+      toggle_action: toggleAction($(this)),
+      parent_card: $(obj_id+'-'+'show'),
+      caret_toggle: $(obj_id+'-'+'caret-toggle'),
+      edit_toggle: $(obj_id+'-'+'edit-toggle'),
+      control_toggle: $(obj_id+'-'+'control-toggle')};
+    detectToggleAction(card_obj);
+    //console.log(hsh);
 
-    toggleCaretState(card_id, form);
-    checkEditState(card_id, form);
-    checkControlState(card_id);
-    console.log($(obj_id + '-' + action));
+    // if (action == 'caret-toggle') {
+    //   toggleBodyState(obj_id, action);
+    //   if (editState(obj_id)) toggleEdit(obj_id);
+    // } else if (action == 'edit-toggle'){
+    //   toggleEditState(obj_id);
+    //   if (bodyState(obj_id)) bodyStateOff(obj_id);
+    // } else if (action == 'control-toggle'){
+    //   toggleControlState(obj_id, action); //console.log(action);
+    // }
   });
+
+  // $("body").on("click", ".caret-toggle", function(){
+  //   var obj_id = objId($(this));
+  //   var action = toggleAction($(this));
+  //
+  //   toggleBodyState(obj_id, action);
+  //   // toggleCaretState(card_id, form);
+  //   // if (editState(obj_id) == true) {
+  //   //   toggleEdit(obj_id);
+  //   // }
+  //   // checkControlState(card_id);
+  //   //console.log($(obj_id + '-' + action));
+  // });
 
   //TOGGLE ACCESS: toggle-edit-btn state
-  $("body").on("click", ".edit-btn", function(){
-    var form = thisForm($(this));
-    var card_id = showCardId(form);
-    toggleEditState(card_id, form);
-    checkBodyState(card_id);
-    checkControlState(card_id);
-  });
+  // $("body").on("click", ".edit-btn", function(){
+  //   var form = thisForm($(this));
+  //   var card_id = showCardId(form);
+  //   toggleEditState(card_id, form);
+  //   checkBodyState(card_id);
+  //   checkControlState(card_id);
+  // });
 
   //TOGGLE ACCESS: toggle-parent state
-  $("body").on("click", ".control-toggle", function(){
-    var form = thisForm($(this));
-    var card_id = showCardId($(this));
-    toggleControlState(card_id);
-    checkEditState(card_id, form);
-    checkBodyState(card_id);
-    //console.log(card_id);
-  });
+  // $("body").on("click", ".control-toggle", function(){
+  //   var form = thisForm($(this));
+  //   var card_id = showCardId($(this));
+  //   toggleControlState(card_id);
+  //   checkEditState(card_id, form);
+  //   checkBodyState(card_id);
+  //   //console.log(card_id);
+  // });
 
   //TOGGLE VIEW: hide item_group#add form upon background click
   $(document).on("click", function(e){
@@ -81,6 +92,19 @@ $(document).ready(function(){
   $("body").on("change", ".search-select", function(){
     var form = $(this).closest(".form");
     $(form).submit();
+  });
+
+  //#CRUD SHOW
+  $("body").on("click", "#tab-index a.list-group-item", function(e){
+    var item_id = '#'+$(this).attr("id");
+    var item_card_id = item_id.replace("tab-item", "show");
+    var show_card = $('#show-card > .card');
+    if ($(show_card).length && '#'+$(show_card).attr('id') == item_card_id){
+      e.stopPropagation();
+      e.preventDefault();
+      $(item_card_id).remove();
+      $(item_id).removeClass("active");
+    }
   });
 
   //#CRUD EDIT: handler for submitting product_part form: on checkbox selection
@@ -123,7 +147,85 @@ $(document).ready(function(){
 
 });
 
+function objId(target) {
+  return '#'+$(target).attr("id").split("-").slice(0,2).join("-");
+}
+function toggleAction(target) {
+  return $(target).attr("id").split("-").slice(2).join("-");
+}
 //traversal references
+function detectToggleAction(card_obj) {
+  if (card_obj.toggle_action == 'caret-toggle') {
+	  toggleBodyState(card_obj);
+  } else if (card_obj.toggle_action == 'edit-toggle') {
+    toggleEditState(card_obj);
+  } else if (card_obj.toggle_action == 'control-toggle') {
+    toggleControlState(card_obj);
+  }
+}
+function toggleBodyState(card_obj) {
+  if (card_obj.caret_toggle.find("i").hasClass("fa-caret-right")) {
+    bodyStateOn(card_obj);
+  } else {
+    bodyStateOff(card_obj);
+  }
+}
+
+function bodyStateOn(card_obj) {
+  card_obj.caret_toggle.find("i").toggleClass("fa-caret-right fa-caret-down");
+  //console.log("bodyStateOn")
+  //if (action == "create") $(obj_id+'-body').addClass("show");
+  //(card_obj.edit_toggle.find("i").hasClass("text-info"))
+  //console.log(card_obj.edit_toggle.hasClass("text-info")); //toggleEdit(card_obj);
+  //if (card_obj.edit_toggle.hasClass("text-info")) toggleEdit(card_obj);
+  if (editState(card_obj)) toggleEdit(card_obj);
+  collapseSibCardBody(card_obj.obj_id);
+  //if (controlState(obj_id)) toggleControl(obj_id);
+}
+
+function bodyStateOff(card_obj) {
+  card_obj.caret_toggle.find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+  if (card_obj.toggle_action != "caret-toggle") card_obj.parent_card.find(".card-body").removeClass("show");
+  //$(card_obj.parent_card).find(".card-body.show")).removeClass("show");
+}
+function collapseSibCardBody(obj_id) {
+  var sib_card = $(obj_id+'-show').siblings("div[id*='show']").has(".card-body.show");
+  if ($(sib_card).length) {
+    $(sib_card).find(".card-body").removeClass("show");
+    $(sib_card).find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+  }
+}
+function bodyState(card_obj) {
+  return card_obj.parent_card.find(".card-body").hasClass("show");
+}
+function editState(card_obj) {
+  return card_obj.edit_toggle.find("span").hasClass("text-info");
+  //console.log($(obj_id+'-edit-toggle').find("i").hasClass("text-info"));
+}
+function controlState(card_obj) {
+  $(obj_id+'-toggle-parent').hasClass("show");
+}
+
+function toggleEditState(card_obj) {
+  toggleEdit(card_obj);
+  if (bodyState(card_obj)) bodyStateOff(card_obj);
+  //if (controlState(obj_id)) controlStateOff(obj_id+'-toggle-parent');
+}
+
+function toggleEdit(card_obj) {
+  //var edit_toggle = $(card_obj.edit_toggle);
+  var form = card_obj.edit_toggle.closest(".form"); //thisForm(edit_toggle);
+  //console.log(form);
+  var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
+  $(form).find(".input-group-append button").toggleClass("show");
+  card_obj.edit_toggle.find("span").toggleClass("text-info text-secondary");
+  setHiddenInputs(form);
+  toggleInputs(inputs);
+}
+//end new
+
+
+
 function showCardId(ref) {
   return '#'+$(ref).closest("div[id*='show']").attr("id"); //showCardId.replace("show", "body")
 }
@@ -176,25 +278,25 @@ function collapseCaretSibs(card_id) {
 // }
 
 //TEST STATE
-function checkBodyState(card_id) {
-  if ($(card_id).data("body-state") == 1) {
-    $(card_id).data("body-state", 0);
-    $(card_id).find(".card-header .caret-toggle i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
-    $(card_id).find(".card-body").removeClass("show");
-  }
-}
-function checkEditState(card_id, form) {
-  if ($(card_id).data("edit-state") == 1) {
-    toggleEditState(card_id, form);
-  }
-}
-function checkControlState(card_id) {
-  if ($(card_id).data("control-state") == 1) {
-    $(card_id).find(".card-header .toggle-form.show").removeClass("show");
-    $(card_id).find(".card-header .toggle-parent.show").removeClass("show");
-    toggleControlState(card_id);
-  }
-}
+// function checkBodyState(card_id) {
+//   if ($(card_id).data("body-state") == 1) {
+//     $(card_id).data("body-state", 0);
+//     $(card_id).find(".card-header .caret-toggle i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+//     $(card_id).find(".card-body").removeClass("show");
+//   }
+// }
+// function checkEditState(card_id, form) {
+//   if ($(card_id).data("edit-state") == 1) {
+//     toggleEditState(card_id, form);
+//   }
+// }
+// function checkControlState(card_id) {
+//   if ($(card_id).data("control-state") == 1) {
+//     $(card_id).find(".card-header .toggle-form.show").removeClass("show");
+//     $(card_id).find(".card-header .toggle-parent.show").removeClass("show");
+//     toggleControlState(card_id);
+//   }
+// }
 
 //TOGGLE
 function toggleControlState(card_id) {
@@ -205,19 +307,19 @@ function toggleControlState(card_id) {
   }
 }
 
-function toggleEditState(card_id, form) {
-  //var form = $(card_id).find(".card-header .form");
-  var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
-  $(form).find(".input-group-append button").toggleClass("show");
-  $(form).find('.edit-btn').toggleClass("text-info text-secondary");
-  setHiddenInputs(form);
-  toggleInputs(inputs);
-  if ($(card_id).data("edit-state") == 0) {
-    $(card_id).data("edit-state", 1);
-  } else {
-    $(card_id).data("edit-state", 0);
-  }
-}
+// function toggleEditState(card_id, form) {
+//   //var form = $(card_id).find(".card-header .form");
+//   var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
+//   $(form).find(".input-group-append button").toggleClass("show");
+//   $(form).find('.edit-btn').toggleClass("text-info text-secondary");
+//   setHiddenInputs(form);
+//   toggleInputs(inputs);
+//   if ($(card_id).data("edit-state") == 0) {
+//     $(card_id).data("edit-state", 1);
+//   } else {
+//     $(card_id).data("edit-state", 0);
+//   }
+// }
 
 function toggleCaret(ref) {
   $(ref).find(".caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
