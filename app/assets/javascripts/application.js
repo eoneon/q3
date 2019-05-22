@@ -104,6 +104,13 @@ function objId(target) {
 function toggleAction(target) {
   return $(target).attr("id").split("-").slice(2).join("-");
 }
+function showCardId(ref) {
+  return '#'+$(ref).closest("div[id*='show']").attr("id");
+}
+function thisForm(ref) {
+  return $(ref).closest(".form");
+}
+
 //traversal references
 function detectToggleAction(card_obj) {
   if (card_obj.toggle_action == 'caret-toggle') {
@@ -121,14 +128,13 @@ function toggleBodyState(card_obj) {
     bodyStateOff(card_obj);
   }
 }
-
 function bodyStateOn(card_obj) {
   card_obj.caret_toggle.find("i").toggleClass("fa-caret-right fa-caret-down");
   if (editState(card_obj)) toggleEdit(card_obj);
   collapseSibCardBody(card_obj.obj_id);
   if (controlState(card_obj)) controlStateOff(card_obj);
+  if (card_obj.toggle_action != 'caret-toggle') card_obj.parent_card.find(".card-body").addClass("show");
 }
-
 function bodyStateOff(card_obj) {
   card_obj.caret_toggle.find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
   if (card_obj.toggle_action != "caret-toggle") card_obj.parent_card.find(".card-body").removeClass("show");
@@ -141,21 +147,19 @@ function collapseSibCardBody(obj_id) {
   }
 }
 function bodyState(card_obj) {
-  return card_obj.parent_card.find(".card-body").hasClass("show");
+  if (card_obj.parent_card) return card_obj.parent_card.find(".card-body").hasClass("show");
 }
 function editState(card_obj) {
-  return card_obj.edit_toggle.find("span").hasClass("text-info");
+  if (card_obj.edit_toggle) return card_obj.edit_toggle.find("span").hasClass("text-info");
 }
 function controlState(card_obj) {
-  return card_obj.toggle_parent.hasClass("show");
+  if (card_obj.toggle_parent) return card_obj.toggle_parent.hasClass("show");
 }
-
 function toggleEditState(card_obj) {
   toggleEdit(card_obj);
   if (bodyState(card_obj)) bodyStateOff(card_obj);
   if (controlState(card_obj)) controlStateOff(card_obj);
 }
-
 function toggleEdit(card_obj) {
   var form = card_obj.edit_toggle.closest(".form");
   var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
@@ -178,101 +182,14 @@ function controlStateOff(card_obj) {
 }
 //end new
 
-function showCardId(ref) {
-  return '#'+$(ref).closest("div[id*='show']").attr("id");
-}
-function thisForm(ref) {
-  return $(ref).closest(".form");
-}
+//OBSOLUTE?
+
 function toggleParent(ref) {
   return $(ref).find(".card-header .toggle-parent");
 }
 function caretToggle(ref){
   return $(ref).find("button.caret-toggle");
 }
-
-//CARET TOGGLE STATE//
-// function toggleCaretState(card_id, form) {
-//   toggleCaret(form);
-//   //$(card_id).find(".card-header .caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
-//   if ($(card_id).data("body-state") == 0) {
-//     toggleCaretStateOn(card_id);
-//     checkEditState(card_id, form);
-//     checkControlState(card_id);
-//   } else {
-//     toggleCaretStateOff(card_id);
-//   }
-// }
-// function toggleCaretStateOn(card_id) {
-//   $(card_id).data("body-state", 1);
-//   //$(card_id).find(".card-header").filter(".caret-toggle i.fa-caret-right").toggleClass("fa-caret-right fa-caret-down");
-//   collapseCaretSibs(card_id);
-//   //collapseCaretSib(card_id);
-// }
-// function toggleCaretStateOff(card_id) {
-//   $(card_id).data("body-state", 0);
-//   //$(card_id).find(".card-header").filter(".caret-toggle i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
-// }
-// function collapseCaretSibs(card_id) {
-//   var card_sibs = $(card_id).siblings("div[id*='show'].card");
-//   $(card_sibs).find(".card-body.show").removeClass("show");
-//   $(card_sibs).data("body-state", 0);
-//   $(card_sibs).find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
-// }
-// function collapseCaretSib(card_id) {
-//   //var card_sib = $(card_id).siblings("div[id*='show']").filter('[data-body-state="1"]');
-//   var card_sib = $(card_id).siblings('[data-body-state="1"]');
-//   if ($(card_sib).length) {
-//     $(card_sib).data("body-state", 0);
-//     $(card_sib).find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
-//     $(card_sib).find(".card-body").removeClass("show");
-//   }
-// }
-
-//TEST STATE
-// function checkBodyState(card_id) {
-//   if ($(card_id).data("body-state") == 1) {
-//     $(card_id).data("body-state", 0);
-//     $(card_id).find(".card-header .caret-toggle i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
-//     $(card_id).find(".card-body").removeClass("show");
-//   }
-// }
-// function checkEditState(card_id, form) {
-//   if ($(card_id).data("edit-state") == 1) {
-//     toggleEditState(card_id, form);
-//   }
-// }
-// function checkControlState(card_id) {
-//   if ($(card_id).data("control-state") == 1) {
-//     $(card_id).find(".card-header .toggle-form.show").removeClass("show");
-//     $(card_id).find(".card-header .toggle-parent.show").removeClass("show");
-//     toggleControlState(card_id);
-//   }
-// }
-
-//TOGGLE
-// function toggleControlState(card_id) {
-//   if ($(card_id).data("control-state") == 1) {
-//     $(card_id).data("control-state", 0);
-//   } else {
-//     $(card_id).data("control-state", 1);
-//   }
-// }
-
-// function toggleEditState(card_id, form) {
-//   //var form = $(card_id).find(".card-header .form");
-//   var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
-//   $(form).find(".input-group-append button").toggleClass("show");
-//   $(form).find('.edit-btn').toggleClass("text-info text-secondary");
-//   setHiddenInputs(form);
-//   toggleInputs(inputs);
-//   if ($(card_id).data("edit-state") == 0) {
-//     $(card_id).data("edit-state", 1);
-//   } else {
-//     $(card_id).data("edit-state", 0);
-//   }
-// }
-
 function toggleCaret(ref) {
   $(ref).find(".caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
 }
@@ -317,17 +234,22 @@ function setHiddenInputs(form) {
   $(form).find("span.type-label").text(type);
   $(form).find("input.name-field").val(name);
 }
-
-function afterNestedCreate(card_id) {
-  //var card_id = showCardId(form);
-  //checkControlState(card_id);
-  $(card_id).find(".card-header").find(".toggle-parent.show, .toggle-form.show").removeClass("show");
-  $(card_id).find(".form .caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
-  //toggleCaret(form);
-  $(card_id).data("body-state", 1);
-  $(card_id).data("control-state", 1);
-  $(card_id).find(".card-body").addClass("show");
+function afterNestedCreate(ref) {
+  var obj_id = "#"+ref.split("-").slice(0,2).join("-");
+  var card_obj = {obj_id: obj_id, toggle_action: "create", parent_card: $(obj_id+'-'+'show'), caret_toggle: $(obj_id+'-'+'caret-toggle'), toggle_parent: $(obj_id+'-'+'toggle-parent')};
+  bodyStateOn(card_obj);
+  console.log(ref);
 }
+// function afterNestedCreate(card_id) {
+//   //var card_id = showCardId(form);
+//   //checkControlState(card_id);
+//   $(card_id).find(".card-header").find(".toggle-parent.show, .toggle-form.show").removeClass("show");
+//   $(card_id).find(".form .caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
+//   //toggleCaret(form);
+//   $(card_id).data("body-state", 1);
+//   $(card_id).data("control-state", 1);
+//   $(card_id).find(".card-body").addClass("show");
+// }
 //#CRUD: ADD: after item_group#create, toggle-hide form, toggle-show btn-group
 function afterAdd(form_id) {
   var toggle_parent = $(form_id).closest(".toggle-parent");
