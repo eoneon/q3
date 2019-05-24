@@ -1,3 +1,4 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'item_groups/forms/form', origin: @origin, target: @target, url: product_part_item_groups_path(@origin, ItemGroup.new), form_id: @form_id %>");
+$("#<%= dom_ref(@form_id) %>").html("<%= j render 'item_groups/forms/form', origin: @origin, target: @target, url: product_part_item_groups_path(@origin, ItemGroup.new), form_id: @form_id %>");
 $('#<%= dom_ref(@origin, "#{to_snake(@target)}-index") %>').html('<%= j render "sub_parts/index", origin: @origin, type: to_snake(@target) %>');
-afterAdd('#<%= @form_id %>');
+var ref = $("#<%= dom_ref(@form_id) %>").closest(".toggle-parent").attr("id");
+afterNestedCreate(ref);

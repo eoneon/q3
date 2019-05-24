@@ -1,6 +1,5 @@
 $("#<%= dom_ref(@form_id) %>").html("<%= j render 'product_parts/forms/new_part', product_part: ProductPart.new, url: product_part_sub_parts_path(@product_part), form_id: @form_id %>");
 $('#<%= dom_ref(@product_part, "#{to_snake(@sub_part)}-index") %>').html('<%= j render "sub_parts/index", origin: @product_part, type: to_snake(@sub_part) %>');
-
 var ref = $("#<%= dom_ref(@form_id) %>").closest(".toggle-parent").attr("id");
 afterNestedCreate(ref);
 $("#tab-index").append("<%= j render 'product_parts/tab', product_part: @sub_part %>");

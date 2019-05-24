@@ -1,5 +1,5 @@
 <% self_join_assocs(product_part, :product_kind).unshift(to_snake(product_part.sti_field_type)).each do |target| %>
-  <div class="col collapse toggle-form" id='<%= dom_ref(product_part, "#{target}-item_group-add") %>'>
+  <div class="col collapse toggle-form" id='<%= dom_ref(product_part, "#{target}-add") %>'>
     <%= render 'item_groups/forms/form', origin: product_part, target: target, url: product_part_item_groups_path(product_part, ItemGroup.new), form_id: dom_ref(product_part, "#{target}-item_group-add-form-id") %>
   </div>
   <div class="col collapse toggle-form" id='<%= dom_ref(product_part, "#{target}-new") %>'>

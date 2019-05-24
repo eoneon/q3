@@ -21,8 +21,12 @@ $(document).ready(function(){
   //TOGGLE CARET & SIBLING VIEWS
   $("body").on("click", ".caret-toggle, .edit-toggle, .control-toggle", function(){
     var obj_id = objId($(this));
-    var card_obj = {obj_id: obj_id,toggle_action: toggleAction($(this)),parent_card: $(obj_id+'-'+'show'),caret_toggle: $(obj_id+'-'+'caret-toggle'),edit_toggle: $(obj_id+'-'+'edit-toggle'),toggle_parent: $(obj_id+'-'+'toggle-parent')};
+    var card_obj = {obj_id: obj_id,toggle_action: toggleAction($(this)),parent_card: $(obj_id+'-'+'show'),card_body: $(obj_id+'-'+'body'),caret_toggle: $(obj_id+'-'+'caret-toggle'),edit_toggle: $(obj_id+'-'+'edit-toggle'),toggle_parent: $(obj_id+'-'+'toggle-parent')};
     detectToggleAction(card_obj);
+    var tags = ['show', 'body', 'caret-toggle'];
+    //var result = objIdAndTag($(this));
+    var result = objRef($(this), tags);
+    console.log(result['caret-toggle']);
   });
 
   //TOGGLE VIEW: hide item_group#add form upon background click
@@ -98,6 +102,30 @@ $(document).ready(function(){
 
 });
 
+function objRef(target, tags) {
+  var card_obj = objIdAndTag(target);
+  $.each(tags, function(i, tag) {
+    card_obj[tag] = $(toId(card_obj["obj_ref"],tag));
+  });
+  return card_obj;
+}
+
+function objIdAndTag(target) {
+  var dom_id_arr = $(target).attr("id").split("-");
+  var id_arr = $.grep(dom_id_arr, function(i, idx) {
+    return $.isNumeric(i);
+  });
+  var idx = dom_id_arr.lastIndexOf(id_arr.pop())+1;
+  return card_obj = {obj_ref: dom_id_arr.slice(0, idx).join("-"), target: dom_id_arr.slice(idx).join("-")};
+}
+function toSnake(val) {
+  return val.replace("-", "_");
+}
+function toId(val, tag) {
+  return '#'+[val,tag].join("-");
+}
+
+//OBSOLETE
 function objId(target) {
   return '#'+$(target).attr("id").split("-").slice(0,2).join("-");
 }
@@ -110,6 +138,7 @@ function showCardId(ref) {
 function thisForm(ref) {
   return $(ref).closest(".form");
 }
+//END OBSOLETE
 
 //traversal references
 function detectToggleAction(card_obj) {
@@ -131,13 +160,13 @@ function toggleBodyState(card_obj) {
 function bodyStateOn(card_obj) {
   card_obj.caret_toggle.find("i").toggleClass("fa-caret-right fa-caret-down");
   if (editState(card_obj)) toggleEdit(card_obj);
-  collapseSibCardBody(card_obj.obj_id);
+  if (card_obj.toggle_action == 'caret-toggle') collapseSibCardBody(card_obj.obj_id);
   if (controlState(card_obj)) controlStateOff(card_obj);
-  if (card_obj.toggle_action != 'caret-toggle') card_obj.parent_card.find(".card-body").addClass("show");
+  if (card_obj.toggle_action != 'caret-toggle') card_obj.card_body.addClass("show");
 }
 function bodyStateOff(card_obj) {
   card_obj.caret_toggle.find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
-  if (card_obj.toggle_action != "caret-toggle") card_obj.parent_card.find(".card-body").removeClass("show");
+  if (card_obj.toggle_action != "caret-toggle") card_obj.card_body.removeClass("show");
 }
 function collapseSibCardBody(obj_id) {
   var sib_card = $(obj_id+'-show').siblings("div[id*='show']").has(".card-body.show");
@@ -147,7 +176,7 @@ function collapseSibCardBody(obj_id) {
   }
 }
 function bodyState(card_obj) {
-  if (card_obj.parent_card) return card_obj.parent_card.find(".card-body").hasClass("show");
+  if (card_obj.card_body) return card_obj.card_body.hasClass("show");
 }
 function editState(card_obj) {
   if (card_obj.edit_toggle) return card_obj.edit_toggle.find("span").hasClass("text-info");
@@ -236,20 +265,11 @@ function setHiddenInputs(form) {
 }
 function afterNestedCreate(ref) {
   var obj_id = "#"+ref.split("-").slice(0,2).join("-");
-  var card_obj = {obj_id: obj_id, toggle_action: "create", parent_card: $(obj_id+'-'+'show'), caret_toggle: $(obj_id+'-'+'caret-toggle'), toggle_parent: $(obj_id+'-'+'toggle-parent')};
+  var card_obj = {obj_id: obj_id, toggle_action: "create", parent_card: $(obj_id+'-'+'show'), card_body: $(obj_id+'-'+'body'), caret_toggle: $(obj_id+'-'+'caret-toggle'), toggle_parent: $(obj_id+'-'+'toggle-parent')};
   bodyStateOn(card_obj);
-  console.log(ref);
+  console.log(card_obj);
 }
-// function afterNestedCreate(card_id) {
-//   //var card_id = showCardId(form);
-//   //checkControlState(card_id);
-//   $(card_id).find(".card-header").find(".toggle-parent.show, .toggle-form.show").removeClass("show");
-//   $(card_id).find(".form .caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
-//   //toggleCaret(form);
-//   $(card_id).data("body-state", 1);
-//   $(card_id).data("control-state", 1);
-//   $(card_id).find(".card-body").addClass("show");
-// }
+
 //#CRUD: ADD: after item_group#create, toggle-hide form, toggle-show btn-group
 function afterAdd(form_id) {
   var toggle_parent = $(form_id).closest(".toggle-parent");
@@ -268,10 +288,6 @@ function toggleShowView(show_id, show_partial) {
   var id_arr = show_id.split('-');
   if ($(show_id).length == 0) {
     $(id_arr.splice(0,1).join(' ')).html(show_partial);
-  // } else {
-  //   $(show_id).remove();
-  //   id_arr.splice(2,1, 'tab-item');
-  //   $(id_arr.join('-')).removeClass("active");
   }
 }
 
