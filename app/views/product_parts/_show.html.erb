@@ -1,6 +1,6 @@
 <div class="card border m-1 border-dark" id="<%= dom_ref(product_part, 'show') %>">
   <div class="card-header">
-    <%= render "product_parts/header/header", product_part: product_part %>
+    <%= render "product_parts/header/header", product_part: product_part, obj_ref: dom_ref(product_part) %>
   </div>
 
   <div class="card-body p-1 collapse" id="<%= dom_ref(product_part, 'body') %>">

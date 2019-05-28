@@ -1,12 +1,12 @@
 <div class="row align-items-center justify-content-between bg-light">
   <div class="col-11 pr-0">
-    <%= render "product_parts/forms/form", product_part: product_part, url: product_part_path(product_part), target: product_part, form_id: dom_ref(product_part, 'edit') %>
+    <%= render "product_parts/forms/form", product_part: product_part, url: product_part_path(product_part), target: product_part, obj_ref: obj_ref, form_id: dom_ref(product_part, 'edit-form') %>
   </div>
 
   <div class="col-1 pl-0">
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group align-items-center" role="group">
-        <button class="btn bg-transparent text-info control-toggle" id="<%= dom_ref(product_part, 'control-toggle') %>" data-toggle="collapse" data-target="#<%= dom_ref(product_part, 'toggle-parent') %>" type="button" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></button>
+        <button class="btn bg-transparent text-info control-toggle" id="<%= dom_ref(product_part, 'control-toggle') %>" data-toggle="collapse" data-target="#<%= dom_ref(product_part, 'parent-toggle') %>" type="button" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></button>
         <%= button_to product_part_path(product_part), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm bg-transparent font-weight-light text-danger pl-0" do %>
           <span><%= (fa_icon "minus-square") %></span>
         <% end %>
@@ -15,9 +15,9 @@
   </div>
 </div>
 
-<div class="form-row collapse pl-2 align-items-center toggle-parent" id="<%= dom_ref(product_part, 'toggle-parent') %>">
-  <div class="col collapse show toggle-btn-group" id="<%= dom_ref(product_part, "toggle-btn-group") %>">
-    <%= render "product_parts/forms/nested_form_toggle", product_part: product_part %>
+<div class="form-row collapse pl-2 align-items-center parent-toggle" id="<%= dom_ref(product_part, 'parent-toggle') %>">
+  <div class="col collapse show btn-group-toggle" id="<%= dom_ref(product_part, "btn-group-toggle") %>">
+    <%= render "product_parts/forms/nested_form_toggle", product_part: product_part, obj_ref: obj_ref %>
   </div>
-  <%= render "product_parts/forms/nested_forms", product_part: product_part %>
+  <%= render "product_parts/forms/nested_forms", product_part: product_part, obj_ref: obj_ref %>
 </div>

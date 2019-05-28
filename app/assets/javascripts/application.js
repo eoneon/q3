@@ -20,19 +20,15 @@ $(document).ready(function(){
 
   //TOGGLE CARET & SIBLING VIEWS
   $("body").on("click", ".caret-toggle, .edit-toggle, .control-toggle", function(){
-    var obj_id = objId($(this));
-    var card_obj = {obj_id: obj_id,toggle_action: toggleAction($(this)),parent_card: $(obj_id+'-'+'show'),card_body: $(obj_id+'-'+'body'),caret_toggle: $(obj_id+'-'+'caret-toggle'),edit_toggle: $(obj_id+'-'+'edit-toggle'),toggle_parent: $(obj_id+'-'+'toggle-parent')};
+    var tags = ['show', 'body', 'caret-toggle', 'edit-toggle', 'control-toggle', 'parent-toggle'];
+    var card_obj = objRef($(this), tags);
     detectToggleAction(card_obj);
-    var tags = ['show', 'body', 'caret-toggle'];
-    //var result = objIdAndTag($(this));
-    var result = objRef($(this), tags);
-    console.log(result['caret-toggle']);
   });
 
   //TOGGLE VIEW: hide item_group#add form upon background click
   $(document).on("click", function(e){
     var toggle_form = $(".toggle-form.show").eq(0);
-    var toggle_parent = $(e.target).closest(".toggle-parent");
+    var toggle_parent = $(e.target).closest(".parent-toggle");
     collapseToggleFormIf(toggle_parent, toggle_form);
   });
 
@@ -105,7 +101,7 @@ $(document).ready(function(){
 function objRef(target, tags) {
   var card_obj = objIdAndTag(target);
   $.each(tags, function(i, tag) {
-    card_obj[tag] = $(toId(card_obj["obj_ref"],tag));
+    card_obj[tag] = $(toId(card_obj["obj_id"],tag));
   });
   return card_obj;
 }
@@ -116,8 +112,9 @@ function objIdAndTag(target) {
     return $.isNumeric(i);
   });
   var idx = dom_id_arr.lastIndexOf(id_arr.pop())+1;
-  return card_obj = {obj_ref: dom_id_arr.slice(0, idx).join("-"), target: dom_id_arr.slice(idx).join("-")};
+  return card_obj = {obj_id: dom_id_arr.slice(0, idx).join("-"), target: dom_id_arr.slice(idx).join("-")};
 }
+
 function toSnake(val) {
   return val.replace("-", "_");
 }
@@ -129,6 +126,7 @@ function toId(val, tag) {
 function objId(target) {
   return '#'+$(target).attr("id").split("-").slice(0,2).join("-");
 }
+//replaced by: card_obj["target"]
 function toggleAction(target) {
   return $(target).attr("id").split("-").slice(2).join("-");
 }
@@ -142,47 +140,47 @@ function thisForm(ref) {
 
 //traversal references
 function detectToggleAction(card_obj) {
-  if (card_obj.toggle_action == 'caret-toggle') {
+  if (card_obj["target"] == 'caret-toggle') {
 	  toggleBodyState(card_obj);
-  } else if (card_obj.toggle_action == 'edit-toggle') {
+  } else if (card_obj["target"] == 'edit-toggle') {
     toggleEditState(card_obj);
-  } else if (card_obj.toggle_action == 'control-toggle') {
+  } else if (card_obj["target"] == 'control-toggle') {
     toggleControlState(card_obj);
   }
 }
 function toggleBodyState(card_obj) {
-  if (card_obj.caret_toggle.find("i").hasClass("fa-caret-right")) {
+  if (card_obj["caret-toggle"].find("i").hasClass("fa-caret-right")) {
     bodyStateOn(card_obj);
   } else {
     bodyStateOff(card_obj);
   }
 }
 function bodyStateOn(card_obj) {
-  card_obj.caret_toggle.find("i").toggleClass("fa-caret-right fa-caret-down");
+  card_obj["caret-toggle"].find("i").toggleClass("fa-caret-right fa-caret-down");
   if (editState(card_obj)) toggleEdit(card_obj);
-  if (card_obj.toggle_action == 'caret-toggle') collapseSibCardBody(card_obj.obj_id);
+  if (card_obj["target"] == 'caret-toggle') collapseSibCardBody(card_obj["show"]);
   if (controlState(card_obj)) controlStateOff(card_obj);
-  if (card_obj.toggle_action != 'caret-toggle') card_obj.card_body.addClass("show");
+  if (card_obj["target"] != 'caret-toggle') card_obj["body"].addClass("show");
 }
 function bodyStateOff(card_obj) {
-  card_obj.caret_toggle.find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
-  if (card_obj.toggle_action != "caret-toggle") card_obj.card_body.removeClass("show");
+  card_obj["caret-toggle"].find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
+  if (card_obj["target"] != "caret-toggle") card_obj["body"].removeClass("show");
 }
-function collapseSibCardBody(obj_id) {
-  var sib_card = $(obj_id+'-show').siblings("div[id*='show']").has(".card-body.show");
+function collapseSibCardBody(card) {
+  var sib_card = $(card).siblings("div[id*='show']").has(".card-body.show");
   if ($(sib_card).length) {
     $(sib_card).find(".card-body").removeClass("show");
     $(sib_card).find("i.fa-caret-down").toggleClass("fa-caret-right fa-caret-down");
   }
 }
 function bodyState(card_obj) {
-  if (card_obj.card_body) return card_obj.card_body.hasClass("show");
+  if (card_obj["body"]) return card_obj["body"].hasClass("show");
 }
 function editState(card_obj) {
-  if (card_obj.edit_toggle) return card_obj.edit_toggle.find("span").hasClass("text-info");
+  if (card_obj["edit-toggle"]) return card_obj["edit-toggle"].find("span").hasClass("text-info");
 }
 function controlState(card_obj) {
-  if (card_obj.toggle_parent) return card_obj.toggle_parent.hasClass("show");
+  if (card_obj["parent-toggle"]) return card_obj["parent-toggle"].hasClass("show");
 }
 function toggleEditState(card_obj) {
   toggleEdit(card_obj);
@@ -190,10 +188,10 @@ function toggleEditState(card_obj) {
   if (controlState(card_obj)) controlStateOff(card_obj);
 }
 function toggleEdit(card_obj) {
-  var form = card_obj.edit_toggle.closest(".form");
+  var form = card_obj["edit-toggle"].closest(".form");
   var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
   $(form).find(".input-group-append button").toggleClass("show");
-  card_obj.edit_toggle.find("span").toggleClass("text-info text-secondary");
+  card_obj["edit-toggle"].find("span").toggleClass("text-info text-secondary");
   setHiddenInputs(form);
   toggleInputs(inputs);
 }
@@ -207,14 +205,14 @@ function controlStateOn(card_obj) {
   if (bodyState(card_obj)) bodyStateOff(card_obj);
 }
 function controlStateOff(card_obj) {
-  card_obj.toggle_parent.removeClass("show");
+  card_obj["parent-toggle"].removeClass("show");
 }
 //end new
 
 //OBSOLUTE?
 
 function toggleParent(ref) {
-  return $(ref).find(".card-header .toggle-parent");
+  return $(ref).find(".card-header .parent-toggle");
 }
 function caretToggle(ref){
   return $(ref).find("button.caret-toggle");
@@ -229,7 +227,7 @@ function disabledStatus(ref, field) {
 //background click: afterBackgroundClick
 function collapseToggleFormIf(toggle_parent, toggle_form) {
   if ($(toggle_form).length && !$(toggle_parent).find(toggle_form).length) {
-    var toggle_parent = $(toggle_form).closest(".toggle-parent");
+    var toggle_parent = $(toggle_form).closest(".parent-toggle");
     toggleItemGroupCtrl(toggle_parent, toggle_form);
     $(toggle_form).find("select").val('');
   }
@@ -263,22 +261,23 @@ function setHiddenInputs(form) {
   $(form).find("span.type-label").text(type);
   $(form).find("input.name-field").val(name);
 }
-function afterNestedCreate(ref) {
-  var obj_id = "#"+ref.split("-").slice(0,2).join("-");
-  var card_obj = {obj_id: obj_id, toggle_action: "create", parent_card: $(obj_id+'-'+'show'), card_body: $(obj_id+'-'+'body'), caret_toggle: $(obj_id+'-'+'caret-toggle'), toggle_parent: $(obj_id+'-'+'toggle-parent')};
+function afterNestedCreate(target) {
+  var tags = ['show', 'body', 'caret-toggle', 'parent-toggle'];
+  var card_obj = objRef(target, tags)
+  //var obj_id = "#"+ref.split("-").slice(0,2).join("-");
+  //var card_obj = {obj_id: obj_id, toggle_action: "create", parent_card: $(obj_id+'-'+'show'), card_body: $(obj_id+'-'+'body'), caret_toggle: $(obj_id+'-'+'caret-toggle'), toggle_parent: $(obj_id+'-'+'parent-toggle')};
   bodyStateOn(card_obj);
-  console.log(card_obj);
 }
 
 //#CRUD: ADD: after item_group#create, toggle-hide form, toggle-show btn-group
 function afterAdd(form_id) {
-  var toggle_parent = $(form_id).closest(".toggle-parent");
+  var toggle_parent = $(form_id).closest(".parent-toggle");
   var toggle_form = $(form_id).closest(".toggle-form.show");
   toggleItemGroupCtrl(toggle_parent, toggle_form);
 }
 //#ADD form: item_group: toggle-show btn-group when background clicked
 function toggleItemGroupCtrl(toggle_parent, toggle_form) {
-  $(toggle_parent).find(".toggle-btn-group").add(toggle_form).toggleClass("show");
+  $(toggle_parent).find(".btn-group-toggle").add(toggle_form).toggleClass("show");
 }
 
 //CRUD functions//
@@ -299,12 +298,12 @@ function checkBoxSubmit(form, check_box) {
 }
 
 //#CREATE: toggle insert show card for created object, reset tab-index and add active class
-function refreshCreate(show_id, tab_item_partial, show_partial){
-  var tab_index_id = show_id.concat('-', 'tab-index');
-  $(tab_index_id).find('.list-group-item').removeClass("active");
-  $(tab_index_id).append(tab_item_partial);
-  $(show_id).html(show_partial);
-}
+// function refreshCreate(show_id, tab_item_partial, show_partial){
+//   var tab_index_id = show_id.concat('-', 'tab-index');
+//   $(tab_index_id).find('.list-group-item').removeClass("active");
+//   $(tab_index_id).append(tab_item_partial);
+//   $(show_id).html(show_partial);
+// }
 
 function enableCustomInputs() {
   $("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
