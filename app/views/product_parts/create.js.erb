@@ -1,4 +1,4 @@
-$("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'product_parts/forms/new', product_part: ProductPart.new, url: ProductPart.new, form_id: @form_id %>");
+$("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'product_parts/forms/new', product_part: ProductPart.new, url: ProductPart.new, obj_ref: obj_ref(@form_id), form_id: @form_id %>");
 $("#tab-index .list-group-item").removeClass("active");
 $("#tab-index").append("<%= j render 'product_parts/tab', product_part: @product_part %>");
 $("#<%= dom_ref(@product_part, 'tab-item') %>").addClass("active");
