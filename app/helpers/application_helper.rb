@@ -93,6 +93,16 @@ module ApplicationHelper
     opts.has_key?(:up) ? txt.upcase : txt
   end
 
+  def obj_ref(dom_ref)
+    dom_arr = dom_ref.split("-")
+    idx = dom_arr.rindex{|i| is_number?(i)}
+    dom_arr[0..idx].join("-")
+  end
+
+  def is_number?(obj)
+    obj.to_s == obj.to_i.to_s || obj.to_s == obj.to_f.to_s
+  end
+
   def cond_attr(eval_test, rslt, *attrs)
     if eval_test == rslt
       attrs[0]
