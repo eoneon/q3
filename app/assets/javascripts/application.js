@@ -100,10 +100,7 @@ $(document).ready(function(){
 
 function objRef(target, tags) {
   var card_obj = objIdAndTag(target);
-  $.each(tags, function(i, tag) {
-    card_obj[tag] = $(toId(card_obj["obj_id"],tag));
-  });
-  return card_obj;
+  return buildObjRef(card_obj, tags)
 }
 
 function objIdAndTag(target) {
@@ -113,6 +110,13 @@ function objIdAndTag(target) {
   });
   var idx = dom_id_arr.lastIndexOf(id_arr.pop())+1;
   return card_obj = {obj_id: dom_id_arr.slice(0, idx).join("-"), target: dom_id_arr.slice(idx).join("-")};
+}
+
+function buildObjRef(obj, tags) {
+  $.each(tags, function(i, tag) {
+    obj[tag] = $(toId(obj["obj_id"],tag));
+  });
+  return obj
 }
 
 function toSnake(val) {
@@ -263,18 +267,20 @@ function setHiddenInputs(form) {
 }
 function afterNestedCreate(target) {
   var tags = ['show', 'body', 'caret-toggle', 'parent-toggle'];
-  var card_obj = objRef(target, tags)
+  var card_obj = objRef(target, tags);
   //var obj_id = "#"+ref.split("-").slice(0,2).join("-");
   //var card_obj = {obj_id: obj_id, toggle_action: "create", parent_card: $(obj_id+'-'+'show'), card_body: $(obj_id+'-'+'body'), caret_toggle: $(obj_id+'-'+'caret-toggle'), toggle_parent: $(obj_id+'-'+'parent-toggle')};
   bodyStateOn(card_obj);
 }
 
 //#CRUD: ADD: after item_group#create, toggle-hide form, toggle-show btn-group
-function afterAdd(form_id) {
-  var toggle_parent = $(form_id).closest(".parent-toggle");
-  var toggle_form = $(form_id).closest(".toggle-form.show");
-  toggleItemGroupCtrl(toggle_parent, toggle_form);
+function afterAdd(obj_ref, target) {
+  var tags = ['show', 'body', 'caret-toggle', 'parent-toggle'];
+  var card_obj = {obj_id: obj_ref, target: target};
+  buildObjRef(card_obj, tags);
+  bodyStateOn(card_obj);
 }
+
 //#ADD form: item_group: toggle-show btn-group when background clicked
 function toggleItemGroupCtrl(toggle_parent, toggle_form) {
   $(toggle_parent).find(".btn-group-toggle").add(toggle_form).toggleClass("show");
