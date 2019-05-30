@@ -96,6 +96,7 @@ module ApplicationHelper
   def obj_ref(dom_ref)
     dom_arr = dom_ref.split("-")
     idx = dom_arr.rindex{|i| is_number?(i)}
+    idx = idx.nil? ? dom_arr.rindex("new") : idx
     dom_arr[0..idx].join("-")
   end
 

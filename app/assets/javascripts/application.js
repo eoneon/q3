@@ -96,6 +96,11 @@ $(document).ready(function(){
     $(a).addClass("active").siblings().removeClass("active");
   });
 
+  $("body").on("click", "[href$='-new']", function(){
+    var form = $(this).attr("href");
+    $(form).find(".type-label").text($(this).attr("data-name"));
+    $(form).find("input:text.type-field").val($(this).attr("data-value"));
+  });
 });
 
 function objRef(target, tags) {
@@ -268,8 +273,6 @@ function setHiddenInputs(form) {
 function afterNestedCreate(target) {
   var tags = ['show', 'body', 'caret-toggle', 'parent-toggle'];
   var card_obj = objRef(target, tags);
-  //var obj_id = "#"+ref.split("-").slice(0,2).join("-");
-  //var card_obj = {obj_id: obj_id, toggle_action: "create", parent_card: $(obj_id+'-'+'show'), card_body: $(obj_id+'-'+'body'), caret_toggle: $(obj_id+'-'+'caret-toggle'), toggle_parent: $(obj_id+'-'+'parent-toggle')};
   bodyStateOn(card_obj);
 }
 
