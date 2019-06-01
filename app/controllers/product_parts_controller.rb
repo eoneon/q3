@@ -1,6 +1,6 @@
 class ProductPartsController < ApplicationController
   def index
-    @product_parts = ProductPart.all.order(:type)
+    @product_parts = ProductPart.all.order("type ASC, name ASC")
 
     respond_to do |format|
       format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='product_parts.xlsx'"}
@@ -32,6 +32,7 @@ class ProductPartsController < ApplicationController
     @product_part.assign_attributes(product_part_params)
 
     if @product_part.save
+      @product_parts = ProductPart.where(id: @ids).order("type ASC, name ASC")
       @form_id = params[:form_id]
       respond_to do |format|
         format.js
@@ -56,8 +57,20 @@ class ProductPartsController < ApplicationController
 
   private
 
-  def product_part_params
+  def obj_key
     obj_key = params[:form_id].split('-')[0].to_sym
+  end
+
+  def product_part_params
     params.require(obj_key).permit!
+  end
+
+  def search_ids
+    ids = params[:search_ids][1..-2].split(',').map! {|n| n.to_i}
+    if @product_part.category == "1" && ids.exclude?(params[:id].to_i)
+      ids << params[:id].to_i
+    elsif @product_part.category == "0" && ids.include?(params[:id].to_i)
+     ids - [params[:id].to_i]
+    end
   end
 end

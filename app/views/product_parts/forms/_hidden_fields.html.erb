@@ -1,6 +1,7 @@
 <%= hidden_field_tag :form_id, form_id %>
 <%= hidden_field_tag :type, product_part.type %>
 <%= hidden_field_tag :name, product_part.name %>
+<%= hidden_field_tag :search_ids, [] %>
 <div class="collapse">
   <%= f.check_box :display_name, class: 'display' %>
   <%= f.check_box :category, class: 'category' %>

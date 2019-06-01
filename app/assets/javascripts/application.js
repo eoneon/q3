@@ -17,6 +17,7 @@
 //= require_tree .
 
 $(document).ready(function(){
+  $('#search-form').find("option:first").attr("selected", true);
 
   //TOGGLE CARET & SIBLING VIEWS
   $("body").on("click", ".caret-toggle, .edit-toggle, .control-toggle", function(){
@@ -41,8 +42,10 @@ $(document).ready(function(){
 
   //#SEARCH: handler for submitting search form: on dropdown selection
   $("body").on("change", ".search-select", function(){
-    var form = $(this).closest(".form");
-    $(form).submit();
+    var idx = $(this).prop("selectedIndex");
+    $(this).closest(".form").submit();
+    $('#search-form select option').removeAttr('selected');
+    $('#search-form select :nth-child('+idx+')').attr('selected', true);
   });
 
   //#CRUD SHOW
@@ -60,7 +63,10 @@ $(document).ready(function(){
 
   //#CRUD EDIT: handler for submitting product_part form: on checkbox selection
   $("body").on("click", ".category-check", function(){
+    var ids = $('#search-form').find("option:selected").val();
+    //console.log(ids);
     var form = $(this).closest(".form");
+    $(form).find("input[name='search_ids']").val(ids);
     var check_box = $(form).find("input:checkbox.category");
     checkBoxSubmit(form, check_box);
   });

@@ -1,14 +1,7 @@
 class SearchProductPartsController < ApplicationController
   def index
     ids = params[:product_part][:ids][1..-2].split(',')
-    # ids = params[:product_part][:ids]
-    @product_parts = ProductPart.where(id: ids)
-
-    # if where_clause.count == 0
-    #   ProductPart.all
-    # else
-    #   ProductPart.where(where_clause)
-    # end
+    @product_parts = ProductPart.where(id: ids).order("type ASC, name ASC")
 
     respond_to do |format|
       format.js
