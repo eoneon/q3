@@ -1,5 +1,5 @@
 <%= form_with model: ProductPart.new, url: search_product_parts_path, method: :get, id: 'search-form' do |f| %>
-  <div class="form">
+  <div class="form" data-search="0">
     <%#= hidden_field_tag :form_id, form_id %>
     <div class="form-row align-items-center">
       <div class="input-group align-items-center rounded-border bg-white">
