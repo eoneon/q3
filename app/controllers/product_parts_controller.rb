@@ -33,11 +33,9 @@ class ProductPartsController < ApplicationController
     @product_part.assign_attributes(product_part_params)
 
     if @product_part.save
-      #@product_parts = ProductPart.where(id: @ids).order("type ASC, name ASC")
       @form_id = params[:form_id]
       respond_to do |format|
         format.js {render file: "/product_parts/#{render_partial(prev_category)}"}
-        #format.js
       end
     end
   end
@@ -67,14 +65,14 @@ class ProductPartsController < ApplicationController
     params.require(obj_key).permit!
   end
 
-  def search_ids
-    ids = params[:search_ids][1..-2].split(',').map! {|n| n.to_i}
-    if @product_part.category == "1" && ids.exclude?(params[:id].to_i)
-      ids << params[:id].to_i
-    elsif @product_part.category == "0" && ids.include?(params[:id].to_i)
-     ids - [params[:id].to_i]
-    end
-  end
+  # def search_ids
+  #   ids = params[:search_ids][1..-2].split(',').map! {|n| n.to_i}
+  #   if @product_part.category == "1" && ids.exclude?(params[:id].to_i)
+  #     ids << params[:id].to_i
+  #   elsif @product_part.category == "0" && ids.include?(params[:id].to_i)
+  #    ids - [params[:id].to_i]
+  #   end
+  # end
 
   def render_partial(prev_category)
     if @product_part.category != prev_category

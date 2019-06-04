@@ -1,2 +1,17 @@
-$("#<%= dom_ref(@product_part, 'tab-item') %>").remove();
 $("#<%= dom_ref(@product_part, 'show') %>").remove();
+var form = $("#search-form");
+//get selected index
+var idx = $(form).find(".form").attr("data-search");
+//get ids array
+var id_arr = $(form).find('select option').eq(idx).val();
+if (id_arr.length == 1) {
+  var idx = 0
+}
+//get value at that index
+//if single id, set index to 0
+$(form).html("<%= j render 'search_product_parts/form' %>");
+
+$(form).find(".form").attr("data-search", idx);
+$(form).find('select option').eq(idx).attr('selected', true);
+
+$(form).submit();

@@ -47,7 +47,6 @@ $(document).ready(function(){
     $(form).submit();
     $(form).find(".form").attr("data-search", idx);
     $(form).find('select :nth-child('+idx+')').attr('selected', true);
-    //console.log(idx);
   });
 
   //#CRUD SHOW
@@ -65,9 +64,7 @@ $(document).ready(function(){
 
   //#CRUD EDIT: handler for submitting product_part form: on checkbox selection
   $("body").on("click", ".category-check", function(){
-    // var ids = $('#search-form').find("option:selected").val();
     var form = $(this).closest(".form");
-    // $(form).find("input[name='search_ids']").val(ids);
     var check_box = $(form).find("input:checkbox.category");
     checkBoxSubmit(form, check_box);
   });
@@ -112,21 +109,14 @@ $(document).ready(function(){
 
 function afterSearch(target, tags) {
   var card_obj = objRef(target, tags);
-  //var test = card_obj['edit-form'].find('input.category').prop("checked");
   var search_ids = $("#search-form").find('select option').eq(idx).val();
   var id = card_obj.obj_id.split("-").pop();
-  //var test = search_ids[id];
   if (!card_obj['edit-form'].find('input.category').prop("checked") && !search_ids[id]){
     card_obj['show'].remove();
   } else {
     card_obj['tab-item'].filter("a").addClass("active");
   }
-  //console.log("test:"+test);
 }
-// function submitSearch(idx, form) {
-//   $(form).filter('select :nth-child('+idx+')').attr('selected', true);
-//   $(form).submit();
-// }
 
 function objRef(target, tags) {
   var card_obj = objIdAndTag(target);

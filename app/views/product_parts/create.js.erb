@@ -1,5 +1,10 @@
 $("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'product_parts/forms/new', product_part: ProductPart.new, url: ProductPart.new, obj_ref: obj_ref(@form_id), form_id: @form_id %>");
-$("#tab-index .list-group-item").removeClass("active");
-$("#tab-index").append("<%= j render 'product_parts/tab', product_part: @product_part %>");
-$("#<%= dom_ref(@product_part, 'tab-item') %>").addClass("active");
 $("#show-card").html("<%= j render 'product_parts/show', product_part: @product_part %>");
+var form = $("#search-form");
+var idx = $(form).find(".form").attr("data-search");
+//needs to happen before we submit form
+$(form).html("<%= j render 'search_product_parts/form' %>");
+$(form).find(".form").attr("data-search", idx);
+$(form).find('select option').eq(idx).attr('selected', true);
+
+$(form).submit();
