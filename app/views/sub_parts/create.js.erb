@@ -1,4 +1,11 @@
 $("#<%= dom_ref(@form_id) %>").html("<%= j render 'product_parts/forms/new_part', product_part: ProductPart.new, url: product_part_sub_parts_path(@product_part), obj_ref: obj_ref(@form_id), form_id: @form_id %>");
 $('#<%= dom_ref(@product_part, "#{to_snake(@sub_part)}-index") %>').html('<%= j render "sub_parts/index", origin: @product_part, type: to_snake(@sub_part) %>');
 afterNestedCreate("#<%= dom_ref(@form_id) %>");
-$("#tab-index").append("<%= j render 'product_parts/tab', product_part: @sub_part %>");
+var form = $("#search-form");
+var idx = $(form).find(".form").attr("data-search");
+//needs to happen before we submit form
+$(form).html("<%= j render 'search_product_parts/form' %>");
+$(form).find(".form").attr("data-search", idx);
+$(form).find('select option').eq(idx).attr('selected', true);
+
+$(form).submit();
