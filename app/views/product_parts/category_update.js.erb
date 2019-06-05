@@ -1,4 +1,8 @@
+var caret_state = $("#<%= dom_ref(@form_id) %>").find(".caret-toggle i").hasClass("fa-caret-down");
 $("#<%= dom_ref(@form_id) %>").html("<%= j render 'product_parts/forms/form', product_part: @product_part, url: product_part_path(@product_part), target: @product_part, obj_ref: obj_ref(@form_id), form_id: @form_id %>");
+if (caret_state == true) {
+  $("#<%= dom_ref(@form_id) %>").find(".caret-toggle i").toggleClass("fa-caret-down fa-caret-right");
+}
 var form = $("#search-form");
 var idx = $(form).find(".form").attr("data-search");
 //needs to happen before we submit form
