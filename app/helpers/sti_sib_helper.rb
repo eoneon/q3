@@ -16,11 +16,23 @@ module StiSibHelper
   end
 
   def abbrv_sti(folder_name)
-    abbrv_sti_key.has_key?(folder_name.to_sym) ? abbrv_sti_key[folder_name.to_sym] : folder_name
+    glob_type = normalize_type(folder_name)
+    abbrv_sti_key.has_key?(glob_type.to_sym) ? abbrv_sti_key[glob_type.to_sym] : glob_type
+  end
+
+  def normalize_type(folder_name)
+    arr = folder_name.split("_") - ["field", "value"]
+    arr.join("_")
+  end
+
+  def abbrv_type(type)
+    arr = to_snake(type).split("_") - ["field", "value"]
+    obj = arr.join("")
+    abbrv_sti_key[obj.to_sym]
   end
 
   def abbrv_sti_key
-    {medium: 'Medium', product_kind: 'ProductKind', material: 'Matrial', certificate: 'Certificate', edition: 'Edition', dimension: 'Dimension', mounting: 'Mounting', signature: 'Signature', sub_medium: 'Submedium'}
+    {medium: 'Medium', product_kind: 'ProductKind', material: 'Material', certificate: 'Certificate', edition: 'Edition', dimension: 'Dimension', mounting: 'Mounting', signature: 'Signature', sub_medium: 'Submedium'}
   end
 
   def dir_list(folder_names)
@@ -72,7 +84,16 @@ module StiSibHelper
   end
 
   ###
-  def type_vl(*sti_superklass)
+  def item_field_type_vl(*sti_superklass)
+    fields = ItemField.all
+    vl = [["all fields", fields.ids]]
+    dir_list(sti_superklass).each do |type|
+      vl << type_any?(type, fields)
+    end
+    vl.compact
+  end
+
+  def product_part_type_vl(*sti_superklass)
     pps = ProductPart.all
     cat_pps = pps.where(category: "1")
 
@@ -86,8 +107,8 @@ module StiSibHelper
     vl.compact + vl2.compact
   end
 
-  def type_any?(type, pps)
-    sti = pps.where(type: type.classify)
+  def type_any?(type, objs)
+    sti = objs.where(type: type.classify)
     ["show #{type.pluralize}", sti.ids] if sti.any?
   end
 

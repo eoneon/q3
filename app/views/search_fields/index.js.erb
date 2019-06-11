@@ -1,0 +1,13 @@
+var target = $("#show-card").find("div");
+var form = $("#search-form");
+var idx = $(form).find(".form").attr("data-search");
+//this part is duplicated:
+$(form).html("<%= j render 'search_fields/form' %>");
+$(form).find(".form").attr("data-search", idx);
+$(form).find('select option').eq(idx).attr('selected', true);
+
+$("#tab-index").html("<%= j render 'item_fields/tabs', item_fields: @item_fields %>");
+if ($(target).length) {
+  var tags = ['show', 'tab-item', 'edit-form']
+  afterSearch(target, tags);
+}

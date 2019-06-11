@@ -1,12 +1,16 @@
 <%= form_with model: item_field, url: item_field, id: form_id do |f| %>
-  <div class="form">
+  <div class="form" data-sti-name="item_field">
     <%= hidden_field_tag :form_id, form_id %>
+    <%= f.text_field :type, class: "collapse type-field" %>
     <div class="form-row align-items-center">
-      <div class="input-group input-group-sm align-items-center bg-white">
-        <%= f.select :type, options_for_select(sti_sibs_classified(:item_field)), {include_blank: "- type -"}, {class: "form-control border-0 ml-2"} %>
-        <%= f.select :field_type, options_for_select(ItemField.field_type_list), {prompt: "- field-type -"}, {class: "form-control border-0"} %>
-        <%= f.text_field :field_name, placeholder: "enter field-name", class: "form-control" %>
-        <button class="btn btn-sm bg-transparent rounded-circle text-primary" type="submit"><%= (fa_icon "plus-circle") %></button>
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <%= render "product_parts/forms/new_type_dropdown", sti: :item_field %>
+        </div>
+        <%= f.text_field :field_name, placeholder: "enter field name", class: "form-control field-name-field border-secondary" %>
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-primary" type="submit" disabled><%= (fa_icon "plus") %></button>
+        </div>
       </div>
     </div>
   </div>

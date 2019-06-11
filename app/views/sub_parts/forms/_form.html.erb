@@ -1,5 +1,5 @@
 <%= form_with model: target, url: url, id: form_id do |f| %>
-  <div class="form">
+  <div class="form" data-sti-name="product_part">
     <%= render "product_parts/forms/hidden_fields", f: f, form_id: form_id, product_part: target %>
     <div class="form-row align-items-center">
       <div class="input-group border-secondary input-border rounded-left rounded-right-border pr-1 mr-1">

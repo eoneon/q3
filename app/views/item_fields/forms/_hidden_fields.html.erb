@@ -1,0 +1,8 @@
+<%= hidden_field_tag :form_id, form_id %>
+<%= hidden_field_tag :type, abbrv_type(item_field.type) %>
+<%= hidden_field_tag :field_name, item_field.field_name %>
+<%= hidden_field_tag :field_type, abbrv_field_type_key[item_field.field_type.to_sym] %>
+<div class="collapse">
+  <%= f.text_field :field_type, class: "field-type-field" %>
+  <%= f.text_field :type, class: "type-field" %>
+</div>

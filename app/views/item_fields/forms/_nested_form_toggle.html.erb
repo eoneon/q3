@@ -1,0 +1,13 @@
+<div class="btn-toolbar" role="toolbar">
+
+    <div class="btn-group ml-2" role="group">
+      <div class="dropdown">
+        <button class="dropdown-toggle btn btn-xs btn-secondary btn-outline-secondary mb-1" type="button" data-toggle="dropdown" aria-expanded="false"><%= to_txt(target) %></button>
+        <div class="dropdown-menu">
+          <a class="dropdown-item form-opt" data-toggle="collapse" href='#<%= dom_ref(item_field, "#{target}-add") %>'>add <%= to_txt(target) %></a>
+          <a class="dropdown-item form-opt" data-toggle="collapse" data-name="<%= abbrv_sti(target) %>" data-value="<%= target.classify %>" href='#<%= dom_ref(item_field, "#{target}-new") %>'>create <%= to_txt(target) %></a>
+        </div>
+      </div>
+    </div>
+  
+</div>

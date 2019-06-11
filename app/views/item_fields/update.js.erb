@@ -1,4 +1,13 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'item_fields/forms/form', item_field: @item_field, url: item_field_path(@item_field), form_id: @form_id %>");
-$("<%= dom_ref('#item_field', @item_field.id, 'tab-item') %>").text("<%= @item_field.field_name %>");
-enableToggleInput("#<%= @form_id %>");
-getDeleteBtn("#<%= @form_id %>").toggleClass("disabled");
+var caret_state = $("#<%= dom_ref(@form_id) %>").find(".caret-toggle i").hasClass("fa-caret-down");
+$("#<%= dom_ref(@form_id) %>").html("<%= j render 'item_fields/forms/form', item_field: @item_field, url: item_field_path(@item_field), obj_ref: obj_ref(@form_id), form_id: @form_id %>");
+if (caret_state == true) {
+  $("#<%= dom_ref(@form_id) %>").find(".caret-toggle i").toggleClass("fa-caret-down fa-caret-right");
+}
+var form = $("#search-form");
+var idx = $(form).find(".form").attr("data-search");
+//needs to happen before we submit form
+$(form).html("<%= j render 'search_fields/form' %>");
+$(form).find(".form").attr("data-search", idx);
+$(form).find('select option').eq(idx).attr('selected', true);
+
+$(form).submit();

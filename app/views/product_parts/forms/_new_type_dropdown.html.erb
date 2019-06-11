@@ -5,7 +5,7 @@
     <button class="btn btn-sm btn-secondary border-light dropdown-toggle type-btn" type="button" data-toggle="dropdown" aria-expanded="false"></button>
     <div class="dropdown-menu">
       <a class="dropdown-item select-opt active" data-name="STI type" data-value="">-choose type-</a>
-      <% sti_abbrv_vl(:product_part).each do |opt| %>
+      <% sti_abbrv_vl(sti).each do |opt| %>
         <a class="dropdown-item select-opt" data-name="<%= opt[0] %>" data-value="<%= opt[-1] %>"><%= opt[0] %></a>
       <% end %>
     </div>

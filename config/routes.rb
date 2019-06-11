@@ -20,7 +20,8 @@ Rails.application.routes.draw do
   end
 
   resources :search_product_parts, only: [:index]
-
+  resources :search_fields, only: [:index]
+  
   resources :item_fields do
     resources :item_values, only: [:update]
     resources :item_groups, only: [:create, :destroy] do

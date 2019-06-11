@@ -1,8 +1,25 @@
 <%= form_with model: item_field, url: url, id: form_id do |f| %>
-  <div class="form">
-    <%= hidden_field_tag :form_id, form_id %>
+  <div class="form" data-sti-name="item_field">
+    <%= render "item_fields/forms/hidden_fields", f: f, form_id: form_id, item_field: item_field %>
     <div class="form-row align-items-center">
-      <%= render "item_fields/forms/input_group", f: f, item_field: item_field, form_id: form_id %>
+      <div class="input-group border-secondary input-border rounded-left rounded-right-border pr-1 mr-1">
+        <div class="input-group-prepend">
+          <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" id="<%= dom_ref(obj_ref, 'caret-toggle') %>" data-toggle="collapse" data-target="#<%= dom_ref(obj_ref, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
+          <button class="btn btn-sm bg-transparent border-light-gray edit-toggle my-1" id="<%= dom_ref(obj_ref, 'edit-toggle') %>" type="button"><span class="text-secondary"><%= (fa_icon "edit") %></span></button>
+          <div class="btn-group">
+            <button class="dropdown-toggle type-btn type-dropdown btn bg-disabled border-light-gray rounded-0 border-right-0 my-1 px-1 py-0" type="button" data-toggle="dropdown" aria-expanded="false" disabled><span class="type-label"><%= abbrv_type(item_field.type) %></span></button>
+            <%= render "product_parts/forms/edit_type_dropdown", sti: :item_field %>
+          </div>
+          <div class="btn-group">
+            <button class="dropdown-toggle field-type-btn btn bg-disabled border-light-gray rounded-0 border-right-0 my-1 px-1 py-0" type="button" data-toggle="dropdown" aria-expanded="false" disabled><span class="field-type-label"><%= abbrv_field_type_key[item_field.field_type.to_sym] %></span></button>
+            <%= render "item_fields/forms/field_type_dropdown" %>
+          </div>
+        </div>
+        <%= f.text_field :field_name, placeholder: "enter field-name-field", class: "form-control squared-border bg-light text-uppercase my-1 pl-2 field-name-field", disabled: true %>
+        <div class="input-group-append">
+          <button class="btn btn-sm btn-primary field-submit rounded-right-border border-left-0 my-1" type="submit" disabled><%= (fa_icon "plus") %></button>
+        </div>
+      </div>
     </div>
   </div>
 <% end %>

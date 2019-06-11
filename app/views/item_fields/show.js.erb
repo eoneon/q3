@@ -1,3 +1,4 @@
-var show_id = "<%= dom_ref('#item_field', @item_field.id, 'show') %>";
-var show_partial = "<%= j render 'item_fields/show', item_field: @item_field %>";
-toggleShowView(show_id, show_partial);
+// var show_id = "<%#= dom_ref('#item_field', @item_field.id, 'show') %>";
+// var show_partial = "<%#= j render 'item_fields/show', item_field: @item_field %>";
+// toggleShowView(show_id, show_partial);
+$("#show-card").html("<%= j render 'item_fields/show', item_field: @item_field %>");

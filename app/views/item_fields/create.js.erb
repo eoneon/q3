@@ -1,5 +1,10 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'item_fields/forms/new', item_field: ProductPart.new, form_id: @form_id %>");
-var show_id = "#item_field";
-var tab_item_partial = $("<%= j render 'item_fields/tab', item_field: @item_field %>").addClass("active");
-var show_partial = "<%= j render 'item_fields/show', item_field: @item_field %>";
-refreshCreate(show_id, tab_item_partial, show_partial);
+$("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'item_fields/forms/new', item_field: ItemField.new, form_id: @form_id %>");
+$("#show-card").html("<%= j render 'item_fields/show', item_field: @item_field %>");
+var form = $("#search-form");
+var idx = $(form).find(".form").attr("data-search");
+//needs to happen before we submit form
+$(form).html("<%= j render 'search_fields/form' %>");
+$(form).find(".form").attr("data-search", idx);
+$(form).find('select option').eq(idx).attr('selected', true);
+
+$(form).submit();

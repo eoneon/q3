@@ -24,6 +24,7 @@ $(document).ready(function(){
     var tags = ['show', 'body', 'caret-toggle', 'edit-toggle', 'control-toggle', 'parent-toggle'];
     var card_obj = objRef($(this), tags);
     detectToggleAction(card_obj);
+    //console.log(card_obj); //sti-name
   });
 
   //TOGGLE VIEW: hide item_group#add form upon background click
@@ -77,8 +78,17 @@ $(document).ready(function(){
   });
 
   //#CRUD EDIT handler for enable/disable form with valid/present values
-  $("body").on("change keyup", ".name-field, .type-field", function(){
+  $("body").on("change keyup", ".name-field, .field-name-field, field-type-field, .type-field", function(){
     var form = $(this).closest(".form");
+    //call enableSubmit; then route to sti specific enableSubmit based on following condition: line:
+    //var sti_name = $(form).data("sti-name");
+    // if (sti_name == "product_part") {
+    //   enableSubmitProductPart(form);
+    // } else if (sti_name == "item_field") {
+    //   enableSubmitItemField(form);
+    // } else if (sti_name == "item_value") {
+    //   enableSubmitItemValue(form);
+    // }
     enableSubmit(form);
   });
 
@@ -94,6 +104,7 @@ $(document).ready(function(){
   $("body").on("click", ".select-opt", function(){
     var a = $(this);
     var form = $(a).closest(".form");
+    //here
     $(form).find(".type-label").text($(a).attr("data-name"));
     $(form).find("input:text.type-field").val($(a).attr("data-value"));
     enableSubmit(form);
@@ -107,11 +118,20 @@ $(document).ready(function(){
   });
 });
 
+function enableSubmitProductPart(form) {
+  var status = $(form).find(".name-field").val().length && $(form).find(".type-field").val().length ? false : true
+  $(form).find("button:submit").prop("disabled", status);
+}
+function enableSubmitItemField(form) {
+  var status = $(form).find(".field-name-field").val().length && $(form).find(".type-field").val().length ? false : true
+  $(form).find("button:submit").prop("disabled", status);
+}
+
 function afterSearch(target, tags) {
   var card_obj = objRef(target, tags);
   var search_ids = $("#search-form").find('select option').eq(idx).val();
   var id = card_obj.obj_id.split("-").pop();
-  if (!card_obj['edit-form'].find('input.category').prop("checked") && !search_ids[id]){
+  if (!card_obj['edit-form'].find('input.category').prop("checked") && !search_ids[id]) {
     card_obj['show'].remove();
   } else {
     card_obj['tab-item'].filter("a").addClass("active");
@@ -120,14 +140,12 @@ function afterSearch(target, tags) {
 
 function objRef(target, tags) {
   var card_obj = objIdAndTag(target);
-  return buildObjRef(card_obj, tags)
+  return buildObjRef(card_obj, tags);
 }
 
 function objIdAndTag(target) {
   var dom_id_arr = $(target).attr("id").split("-");
-  var id_arr = $.grep(dom_id_arr, function(i, idx) {
-    return $.isNumeric(i);
-  });
+  var id_arr = getIdxOfLastNumb(dom_id_arr);
   var idx = dom_id_arr.lastIndexOf(id_arr.pop())+1;
   return card_obj = {obj_id: dom_id_arr.slice(0, idx).join("-"), target: dom_id_arr.slice(idx).join("-")};
 }
@@ -136,9 +154,15 @@ function buildObjRef(obj, tags) {
   $.each(tags, function(i, tag) {
     obj[tag] = $(toId(obj["obj_id"],tag));
   });
+  obj['sti-name'] = $(obj['show']).find('.form').data('sti-name');
   return obj
 }
-
+function getIdxOfLastNumb(dom_id_arr){
+  var idx = $.grep(dom_id_arr, function(i, idx) {
+    return $.isNumeric(i);
+  });
+  return idx;
+}
 function toSnake(val) {
   return val.replace("-", "_");
 }
@@ -201,24 +225,67 @@ function bodyState(card_obj) {
   if (card_obj["body"]) return card_obj["body"].hasClass("show");
 }
 function editState(card_obj) {
+  // console.log("here");
   if (card_obj["edit-toggle"]) return card_obj["edit-toggle"].find("span").hasClass("text-info");
 }
 function controlState(card_obj) {
   if (card_obj["parent-toggle"]) return card_obj["parent-toggle"].hasClass("show");
 }
 function toggleEditState(card_obj) {
+  //console.log("here");
   toggleEdit(card_obj);
   if (bodyState(card_obj)) bodyStateOff(card_obj);
   if (controlState(card_obj)) controlStateOff(card_obj);
 }
+//refac-edit
 function toggleEdit(card_obj) {
   var form = card_obj["edit-toggle"].closest(".form");
-  var inputs = $(form).find("input.name-field, button.type-btn, button.delete-btn");
-  $(form).find(".input-group-append button").toggleClass("show");
   card_obj["edit-toggle"].find("span").toggleClass("text-info text-secondary");
-  setHiddenInputs(form);
+  if (card_obj["sti-name"] == "product_part") {
+     toggleEditProductPart(form);
+  } else if (card_obj["sti-name"] == "item_field") {
+     toggleEditItemField(form);
+  } else if (card_obj["sti-name"] == "item_value") {
+     toggleEditItemValue(form);
+  }
+}
+
+function toggleEditProductPart(form) {
+  var inputs = $(form).find("input.name-field, button.type-btn");
+  $(form).find(".input-group-append button").toggleClass("show");
+  setHiddenInputsProductPart(form);
   toggleInputs(inputs);
 }
+
+function toggleEditItemField(form) {
+  var inputs = $(form).find("input.field-name-field, button.type-btn, button.field-type-btn, button:submit");
+  setHiddenInputsItemField(form);
+  toggleInputs(inputs);
+}
+
+function setHiddenInputsProductPart(form) {
+  var type = $(form).find("input:hidden[name='type']").val();
+  var name = $(form).find("input:hidden[name='name']").val();
+  $(form).find("span.type-label").text(type);
+  $(form).find("input.name-field").val(name);
+}
+
+function setHiddenInputsItemField(form) {
+  var type = $(form).find("input:hidden[name='type']").val();
+  var field_type = $(form).find("input:hidden[name='field_type']").val();
+  var field_name = $(form).find("input:hidden[name='field_name']").val();
+  $(form).find("span.type-label").text(type);
+  $(form).find("span.field-type-label").text(field_type);
+  $(form).find("input.field-name-field").val(field_name);
+}
+// function toggleEdit(card_obj) {
+//   var form = card_obj["edit-toggle"].closest(".form");
+//   var inputs = $(form).find("input.name-field, input.field-name-field, button.type-btn, button.field-type-btn, button.field-submit");
+//   $(form).find(".input-group-append button").toggleClass("show");
+//   card_obj["edit-toggle"].find("span").toggleClass("text-info text-secondary");
+//   setHiddenInputs(form);
+//   toggleInputs(inputs);
+// }
 function toggleControlState(card_obj) {
   if (!controlState(card_obj)) {
     controlStateOn(card_obj);
@@ -226,6 +293,7 @@ function toggleControlState(card_obj) {
 }
 function controlStateOn(card_obj) {
   if (editState(card_obj)) toggleEdit(card_obj);
+  console.log(editState(card_obj));
   if (bodyState(card_obj)) bodyStateOff(card_obj);
 }
 function controlStateOff(card_obj) {
@@ -266,9 +334,19 @@ function resetDropdown(form, a) {
 }
 
 //#NEW/#EDIT: disable submit if invalid/missing :type/:name
+// function enableSubmit(form) {
+//   var access = $(form).find(".name-field").val().length  && $(form).find(".type-field").val().length ? false : true
+//   $(form).find("button:submit").prop("disabled", access);
+// }
 function enableSubmit(form) {
-  var access = $(form).find(".name-field").val().length  && $(form).find(".type-field").val().length ? false : true
-  $(form).find("button:submit").prop("disabled", access);
+  var sti_name = $(form).data("sti-name");
+  if (sti_name == "product_part") {
+    enableSubmitProductPart(form);
+  } else if (sti_name == "item_field") {
+    enableSubmitItemField(form);
+  } else if (sti_name == "item_value") {
+    enableSubmitItemValue(form);
+  }
 }
 
 //#EDIT FORM: replaces toggleDisable
@@ -282,8 +360,12 @@ function toggleInputs(input_set){
 function setHiddenInputs(form) {
   var type = $(form).find("input:hidden[name='type']").val();
   var name = $(form).find("input:hidden[name='name']").val();
+  var field_type = $(form).find("input:hidden[name='field_type']").val();
+  var field_name = $(form).find("input:hidden[name='field_name']").val();
   $(form).find("span.type-label").text(type);
+  $(form).find("span.field-type-label").text(field_type);
   $(form).find("input.name-field").val(name);
+  $(form).find("input.field-name-field").val(field_name);
 }
 function afterNestedCreate(target) {
   var tags = ['show', 'body', 'caret-toggle', 'parent-toggle'];

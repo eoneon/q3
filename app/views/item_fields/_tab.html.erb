@@ -1,9 +1,9 @@
-<a class="list-group-item list-group-item-action py-1" id="<%= dom_ref('item_field', item_field.id, 'tab-item') %>" href="<%= item_field_path(item_field) %>" data-remote="true" data-toggle="list">
+<a class="list-group-item list-group-item-action py-1" id="<%= dom_ref(item_field, 'tab-item') %>" href="<%= item_field_path(item_field) %>" data-remote="true" data-toggle="list">
   <div class="row">
-    <div class="col-4">
-      <%= item_field.type %>
+    <div class="col-3 item-type">
+      <%= abbrv_type(item_field) %>
     </div>
-    <div class="col">
+    <div class="col item-name">
       <%= item_field.field_name %>
     </div>
   </div>

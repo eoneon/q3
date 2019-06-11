@@ -1,0 +1,5 @@
+<div class="dropdown-menu">
+  <% abbrv_field_type_vl.each do |opt| %>
+    <a class="dropdown-item field-type-opt" data-name="<%= opt[0] %>" data-value="<%= opt[-1] %>"><%= opt[0] %></a>
+  <% end %>
+</div>

@@ -1,4 +1,4 @@
-<%= form_with model: ProductPart.new, url: search_product_parts_path, method: :get, id: 'search-form' do |f| %>
+<%= form_with model: ItemField.new, url: search_fields_path, method: :get, id: 'search-form' do |f| %>
   <div class="form" data-search="0">
     <div class="form-row align-items-center">
       <div class="input-group align-items-center rounded-border bg-white">
@@ -7,7 +7,7 @@
             <span><%= (fa_icon "search") %></span>
           </div>
         </div>
-        <%= f.select :ids, options_for_select(product_part_type_vl(:product_part)), {}, {class: "form-control border-0 search-select"} %>
+        <%= f.select :ids, options_for_select(item_field_type_vl(:item_field)), {}, {class: "form-control border-0 search-select"} %>
         <div class="input-group-append">
           <div class="input-group-text bg-transparent border-top-0 border-right-0 border-bottom-0">
             <span> </span>
