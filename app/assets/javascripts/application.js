@@ -107,8 +107,26 @@ $(document).ready(function(){
     $(form).find(".type-label").text($(this).attr("data-name"));
     $(form).find("input:text.type-field").val($(this).attr("data-value"));
   });
+
+  $("body").on("change", ".form-check-input.item-value-properties, .properties-text", function(){
+    var form = $(this).closest("form");
+    $(form).submit();
+    //var custom_status = $(this).find("[value='custom']:checked");
+    //console.log(custom_status);
+    // if ($(custom_status).length) {
+    //   $(custom_status).closest(".form-row").find("input:text.properties-text").prop("disabled", false);
+    // } else {
+    //   $(form).submit();
+    // }
+    // console.log($(form).find(".form-check-input.item-value-properties[value='custom']:checked"));
+  });
 });
 
+function enableCustomInputs() {
+  //$(".form-check-input.item-value-properties[value='custom']:checked").closest(".col-auto").next(".col-sm-6").find("input:text.properties-text").prop("disabled", false);
+  $(".form-check-input.item-value-properties[value='custom']:checked").closest(".properties-col").next(".properties-col").find("input:text.properties-text").prop("disabled", false);
+
+}
 function enableSubmitProductPart(form) {
   var status = $(form).find(".name-field").val().length && $(form).find(".type-field").val().length ? false : true
   $(form).find("button:submit").prop("disabled", status);
@@ -413,9 +431,9 @@ function checkBoxSubmit(form, check_box) {
 //   $(show_id).html(show_partial);
 // }
 
-function enableCustomInputs() {
-  $("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
-}
+// function enableCustomInputs() {
+//   $("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
+// }
 //obsolete?
 function resetDropdownOptions(id){
   return $('a[href="#'+id+'"]').prop("disabled", true).addClass("disabled").siblings().prop("disabled", false).removeClass("disabled");
