@@ -1,11 +1,9 @@
-<div class="card border m-1 border-dark <%= dom_ref(item_value, 'card') %>" id="<%= dom_ref('item_value', item_value.id, 'show') %>">
-  <div class="card-header <%= dom_ref(item_value, 'header') %> pt-0">
-    <%= render "item_values/header", item_value: item_value %>
+<div class="card border m-1 border-dark" id="<%= dom_ref(item_value, 'show') %>">
+  <div class="card-header">
+    <%= render "item_values/header", item_value: item_value, obj_ref: dom_ref(item_value) %>
   </div>
 
-  <div class="card-body p-2 collapse show" id="<%= dom_ref(item_value, 'body') %>">
-    <div id='<%= dom_ref(item_value, "properties-edit") %>'>
-      <%= render "item_values/forms/form", item_value: item_value, url: item_value_path(item_value), form_id: dom_ref(item_value, "properties-edit-form-id") %>
-    </div>
+  <div class="card-body p-1 collapse" id="<%= dom_ref(item_value, 'body') %>">
+    <%= render "item_values/forms/properties_form", item_value: item_value, url: item_value_path(item_value), form_id: dom_ref(item_value, "properties-edit-form") %>
   </div>
 </div>

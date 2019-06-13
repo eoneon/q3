@@ -1,3 +1,1 @@
-var show_id = "<%= dom_ref('#item_value', @item_value.id, 'show') %>";
-var show_partial = "<%= j render 'item_values/show', item_value: @item_value %>";
-toggleShowView(show_id, show_partial);
+$("#show-card").html("<%= j render 'item_values/show', item_value: @item_value %>");

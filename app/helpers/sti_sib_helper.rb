@@ -86,9 +86,18 @@ module StiSibHelper
   ###
   def item_field_type_vl(*sti_superklass)
     fields = ItemField.all
-    vl = [["all fields", fields.ids]]
+    vl = [["all field names", fields.ids]]
     dir_list(sti_superklass).each do |type|
       vl << type_any?(type, fields)
+    end
+    vl.compact
+  end
+
+  def item_value_type_vl(*sti_superklass)
+    values = ItemValue.all
+    vl = [["all field values", values.ids]]
+    dir_list(sti_superklass).each do |type|
+      vl << type_any?(type, values)
     end
     vl.compact
   end

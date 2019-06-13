@@ -1,14 +1,12 @@
 <div class="card bg-light mb-3 p-2" id="item_value-new">
-  <%= render "item_values/forms/new", item_value: ItemValue.new, form_id: "item_value-new-form-id" %>
+  <%= render "item_values/forms/new", item_value: ItemValue.new, form_id: "item_value-new-form" %>
 </div>
-<%= render "product_kinds/import", url: import_item_values_path %>
+<%#= render "product_kinds/import", url: import_item_values_path %>
 
-<div class="card align-items-center bg-light m-0 p-0">
-  <div class="card-body bg-light m-0 p-1">
-    <span>Item-Values</span>
-  </div>
+<div class="card bg-light mb-0 p-2">
+  <%= render "search_values/form" %>
 </div>
 
-<div class="list-group" id='<%= "item_value-tab-index" %>' role="tablist">
+<div class="list-group" id='<%= "tab-index" %>' role="tablist">
   <%= render "item_values/tabs", item_values: item_values %>
 </div>

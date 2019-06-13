@@ -80,15 +80,6 @@ $(document).ready(function(){
   //#CRUD EDIT handler for enable/disable form with valid/present values
   $("body").on("change keyup", ".name-field, .field-name-field, field-type-field, .type-field", function(){
     var form = $(this).closest(".form");
-    //call enableSubmit; then route to sti specific enableSubmit based on following condition: line:
-    //var sti_name = $(form).data("sti-name");
-    // if (sti_name == "product_part") {
-    //   enableSubmitProductPart(form);
-    // } else if (sti_name == "item_field") {
-    //   enableSubmitItemField(form);
-    // } else if (sti_name == "item_value") {
-    //   enableSubmitItemValue(form);
-    // }
     enableSubmit(form);
   });
 
@@ -124,6 +115,10 @@ function enableSubmitProductPart(form) {
 }
 function enableSubmitItemField(form) {
   var status = $(form).find(".field-name-field").val().length && $(form).find(".type-field").val().length ? false : true
+  $(form).find("button:submit").prop("disabled", status);
+}
+function enableSubmitItemValue(form) {
+  var status = $(form).find(".name-field").val().length && $(form).find(".type-field").val().length ? false : true
   $(form).find("button:submit").prop("disabled", status);
 }
 
@@ -262,6 +257,13 @@ function toggleEditItemField(form) {
   setHiddenInputsItemField(form);
   toggleInputs(inputs);
 }
+//here
+function toggleEditItemValue(form) {
+  var inputs = $(form).find("input.name-field, button.type-btn");
+  $(form).find(".input-group-append button").toggleClass("show");
+  setHiddenInputsItemValue(form);
+  toggleInputs(inputs);
+}
 
 function setHiddenInputsProductPart(form) {
   var type = $(form).find("input:hidden[name='type']").val();
@@ -278,14 +280,14 @@ function setHiddenInputsItemField(form) {
   $(form).find("span.field-type-label").text(field_type);
   $(form).find("input.field-name-field").val(field_name);
 }
-// function toggleEdit(card_obj) {
-//   var form = card_obj["edit-toggle"].closest(".form");
-//   var inputs = $(form).find("input.name-field, input.field-name-field, button.type-btn, button.field-type-btn, button.field-submit");
-//   $(form).find(".input-group-append button").toggleClass("show");
-//   card_obj["edit-toggle"].find("span").toggleClass("text-info text-secondary");
-//   setHiddenInputs(form);
-//   toggleInputs(inputs);
-// }
+//here
+function setHiddenInputsItemValue(form) {
+  var type = $(form).find("input:hidden[name='type']").val();
+  var name = $(form).find("input:hidden[name='name']").val();
+  $(form).find("span.type-label").text(type);
+  $(form).find("input.name-field").val(name);
+}
+
 function toggleControlState(card_obj) {
   if (!controlState(card_obj)) {
     controlStateOn(card_obj);

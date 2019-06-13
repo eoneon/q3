@@ -1,26 +1,14 @@
-<small class="ml-5 my-0 py-0 form-text text-muted input-label">Edit <%= obj_to_cap_hyph_str(item_value) %></small>
-<div class="row justify-content-between align-items-center bg-light" id="<%= dom_ref(item_value, 'header') %>">
-  <button class="caret-toggle btn btn-lg bg-transparent pl-2 border py-0" data-toggle="collapse" data-target="#<%= dom_ref(item_value, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-down") %></button>
-
-  <ul class="nav ml-3 mr-0">
-    <li class="nav-item-dropdown">
-      <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><%= (fa_icon "ellipsis-v") %></a>
-      <%= render "item_values/dropdown_menu", item_value: item_value %>
-    </li>
-  </ul>
-
-  <div class="col" id="<%= dom_ref(item_value, 'accordion') %>">
-    <div class="collapse show toggle-sibling" id="<%= dom_ref(item_value, 'name-edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(item_value) %>" data-parent="#<%= dom_ref(item_value, 'accordion') %>">
-      <%= render "item_values/forms/form", item_value: item_value, url: item_value_path(item_value), form_id: dom_ref(item_value, 'name-edit-form-id') %>
-    </div>
+<div class="row align-items-center justify-content-between bg-light">
+  <div class="col-11 pr-0">
+    <%= render "item_values/forms/form", item_value: item_value, url: item_value_path(item_value), obj_ref: obj_ref, form_id: dom_ref(item_value, 'name-edit-form') %>
   </div>
 
   <div class="col-1">
-    <div class="row align-items-center">
-      <div class="col mx-2 p-0">
-      </div>
-      <div class="col p-0">
-        <%= link_to (fa_icon "times"), item_value_path(item_value), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group align-items-center" role="group">
+        <%= button_to item_value_path(item_value), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm bg-transparent font-weight-light text-danger" do %>
+          <span><%= (fa_icon "minus-square") %></span>
+        <% end %>
       </div>
     </div>
   </div>

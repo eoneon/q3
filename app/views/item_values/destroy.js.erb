@@ -1,2 +1,14 @@
-$("<%= dom_ref('#item_value', @item_value.id, 'tab-item') %>").remove();
-$("<%= dom_ref('#item_value', @item_value.id, 'show') %>").remove();
+$("#<%= dom_ref(@item_value, 'show') %>").remove();
+var form = $("#search-form");
+var id = "<%= @item_value %>"
+var idx = $(form).find(".form").attr("data-search");
+var id_arr = $(form).find('select option').eq(idx).val();
+
+if (id_arr.length == 1 && id_arr.slice(0,1) == id) {
+  var idx = 0
+}
+
+$(form).html("<%= j render 'search_values/form' %>");
+$(form).find(".form").attr("data-search", idx);
+$(form).find('select option').eq(idx).attr('selected', true);
+$(form).submit();

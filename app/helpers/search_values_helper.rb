@@ -1,0 +1,2 @@
+module SearchValuesHelper
+end

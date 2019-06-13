@@ -1,0 +1,11 @@
+<div class="form-row align-items-center">
+  <div class="input-group">
+    <div class="input-group-prepend">
+      <%= render "product_parts/forms/edit_type_dropdown", sti: :item_value %>
+    </div>
+    <%= f.text_field :name, placeholder: "enter item-value name", class: "form-control name-field border-secondary" %>
+    <div class="input-group-append">
+      <button class="btn btn-sm btn-primary" type="submit" disabled><%= (fa_icon "plus") %></button>
+    </div>
+  </div>
+</div>

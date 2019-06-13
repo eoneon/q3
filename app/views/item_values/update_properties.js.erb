@@ -1,1 +1,1 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'item_values/forms/form', item_value: @item_value, url: item_value_path(@item_value), form_id: @form_id %>");
+$("#<%= dom_ref(@form_id) %>").html("<%= j render 'item_values/forms/properties_form', item_value: @item_value, url: item_value_path(@item_value), form_id: @form_id %>");
