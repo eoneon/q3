@@ -24,7 +24,6 @@ $(document).ready(function(){
     var tags = ['show', 'body', 'caret-toggle', 'edit-toggle', 'control-toggle', 'parent-toggle'];
     var card_obj = objRef($(this), tags);
     detectToggleAction(card_obj);
-    //console.log(card_obj); //sti-name
   });
 
   //TOGGLE VIEW: hide item_group#add form upon background click
@@ -111,21 +110,11 @@ $(document).ready(function(){
   $("body").on("change", ".form-check-input.item-value-properties, .properties-text", function(){
     var form = $(this).closest("form");
     $(form).submit();
-    //var custom_status = $(this).find("[value='custom']:checked");
-    //console.log(custom_status);
-    // if ($(custom_status).length) {
-    //   $(custom_status).closest(".form-row").find("input:text.properties-text").prop("disabled", false);
-    // } else {
-    //   $(form).submit();
-    // }
-    // console.log($(form).find(".form-check-input.item-value-properties[value='custom']:checked"));
   });
 });
 
 function enableCustomInputs() {
-  //$(".form-check-input.item-value-properties[value='custom']:checked").closest(".col-auto").next(".col-sm-6").find("input:text.properties-text").prop("disabled", false);
   $(".form-check-input.item-value-properties[value='custom']:checked").closest(".properties-col").next(".properties-col").find("input:text.properties-text").prop("disabled", false);
-
 }
 function enableSubmitProductPart(form) {
   var status = $(form).find(".name-field").val().length && $(form).find(".type-field").val().length ? false : true
@@ -184,19 +173,19 @@ function toId(val, tag) {
 }
 
 //OBSOLETE
-function objId(target) {
-  return '#'+$(target).attr("id").split("-").slice(0,2).join("-");
-}
+// function objId(target) {
+//   return '#'+$(target).attr("id").split("-").slice(0,2).join("-");
+// }
 //replaced by: card_obj["target"]
-function toggleAction(target) {
-  return $(target).attr("id").split("-").slice(2).join("-");
-}
-function showCardId(ref) {
-  return '#'+$(ref).closest("div[id*='show']").attr("id");
-}
-function thisForm(ref) {
-  return $(ref).closest(".form");
-}
+// function toggleAction(target) {
+//   return $(target).attr("id").split("-").slice(2).join("-");
+// }
+// function showCardId(ref) {
+//   return '#'+$(ref).closest("div[id*='show']").attr("id");
+// }
+// function thisForm(ref) {
+//   return $(ref).closest(".form");
+// }
 //END OBSOLETE
 
 //traversal references
@@ -238,18 +227,17 @@ function bodyState(card_obj) {
   if (card_obj["body"]) return card_obj["body"].hasClass("show");
 }
 function editState(card_obj) {
-  // console.log("here");
   if (card_obj["edit-toggle"]) return card_obj["edit-toggle"].find("span").hasClass("text-info");
 }
 function controlState(card_obj) {
   if (card_obj["parent-toggle"]) return card_obj["parent-toggle"].hasClass("show");
 }
 function toggleEditState(card_obj) {
-  //console.log("here");
   toggleEdit(card_obj);
   if (bodyState(card_obj)) bodyStateOff(card_obj);
   if (controlState(card_obj)) controlStateOff(card_obj);
 }
+
 //refac-edit
 function toggleEdit(card_obj) {
   var form = card_obj["edit-toggle"].closest(".form");
@@ -275,7 +263,7 @@ function toggleEditItemField(form) {
   setHiddenInputsItemField(form);
   toggleInputs(inputs);
 }
-//here
+
 function toggleEditItemValue(form) {
   var inputs = $(form).find("input.name-field, button.type-btn");
   $(form).find(".input-group-append button").toggleClass("show");
@@ -298,7 +286,7 @@ function setHiddenInputsItemField(form) {
   $(form).find("span.field-type-label").text(field_type);
   $(form).find("input.field-name-field").val(field_name);
 }
-//here
+
 function setHiddenInputsItemValue(form) {
   var type = $(form).find("input:hidden[name='type']").val();
   var name = $(form).find("input:hidden[name='name']").val();
@@ -323,18 +311,18 @@ function controlStateOff(card_obj) {
 
 //OBSOLUTE?
 
-function toggleParent(ref) {
-  return $(ref).find(".card-header .parent-toggle");
-}
+// function toggleParent(ref) {
+//   return $(ref).find(".card-header .parent-toggle");
+// }
 function caretToggle(ref){
   return $(ref).find("button.caret-toggle");
 }
 function toggleCaret(ref) {
   $(ref).find(".caret-toggle i").toggleClass("fa-caret-right fa-caret-down");
 }
-function disabledStatus(ref, field) {
-  $(ref).find('.'+field).prop("disabled");
-}
+// function disabledStatus(ref, field) {
+//   $(ref).find('.'+field).prop("disabled");
+// }
 
 //background click: afterBackgroundClick
 function collapseToggleFormIf(toggle_parent, toggle_form) {
@@ -431,32 +419,29 @@ function checkBoxSubmit(form, check_box) {
 //   $(show_id).html(show_partial);
 // }
 
-// function enableCustomInputs() {
-//   $("input:radio[value='custom']:checked").closest(".col").find("input:text").prop("disabled", false);
-// }
 //obsolete?
-function resetDropdownOptions(id){
-  return $('a[href="#'+id+'"]').prop("disabled", true).addClass("disabled").siblings().prop("disabled", false).removeClass("disabled");
-}
+// function resetDropdownOptions(id){
+//   return $('a[href="#'+id+'"]').prop("disabled", true).addClass("disabled").siblings().prop("disabled", false).removeClass("disabled");
+// }
 
-function addOption(form, id, name){
-  $(form).find("option:last").after("<option value='"+id+"'>"+name+"</option>");
-}
-function removeOption(form, id){
-  $(form).find("option[value='"+id+"']").hide();
-}
+// function addOption(form, id, name){
+//   $(form).find("option:last").after("<option value='"+id+"'>"+name+"</option>");
+// }
+// function removeOption(form, id){
+//   $(form).find("option[value='"+id+"']").hide();
+// }
 //getter functions
-function getInputs(form) {
-  return $(form).find("input:text, select, button:submit, button.category-check, button.display-check");
-}
+// function getInputs(form) {
+//   return $(form).find("input:text, select, button:submit, button.category-check, button.display-check");
+// }
 function getCheckInput(form) {
   return $(form).find("input:checkbox[name=category]").val();
 }
 
 //sub_parts/create.js
-function getInputGroupDiv(form) {
-  return $(form).find("div.input-group");
-}
+// function getInputGroupDiv(form) {
+//   return $(form).find("div.input-group");
+// }
 
 // function getCategoryInput(form) {
 //   return $(form).find("input:checkbox.category");
