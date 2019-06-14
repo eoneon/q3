@@ -2,6 +2,5 @@
   <%= render 'item_groups/forms/form', origin: item_field, target: target, url: item_field_item_groups_path(item_field, ItemGroup.new), form_id: dom_ref(obj_ref, "add-form") %>
 </div>
 <div class="col collapse toggle-form" id='<%= dom_ref(obj_ref, "new") %>'>
-  <%# <%= render "item_fields/forms/new_part", item_field: ItemValue.new, url: item_field_item_values_path(item_field), form_id: dom_ref(item_field, "#{target}-new-form") %> %>
-  <%#= render "item_values/forms/new", item_field: ItemValue.new, url: item_field_item_values_path(item_field), form_id: dom_ref(obj_ref, "new-form") %>
+  <%= render "item_values/forms/new_value", item_value: ItemValue.new, url: item_field_sub_values_path(item_field), form_id: dom_ref(obj_ref, "new-form") %>
 </div>

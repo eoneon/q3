@@ -1,4 +1,4 @@
-$("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'item_values/forms/new', item_value: ItemValue.new, form_id: @form_id %>");
+$("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'item_values/forms/new', item_value: ItemValue.new, url: ItemValue.new, form_id: @form_id %>");
 $("#show-card").html("<%= j render 'item_values/show', item_value: @item_value %>");
 var form = $("#search-form");
 var idx = $(form).find(".form").attr("data-search");

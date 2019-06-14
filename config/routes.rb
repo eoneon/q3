@@ -25,6 +25,7 @@ Rails.application.routes.draw do
 
   resources :item_fields do
     resources :item_values, only: [:update]
+    resources :sub_values, only: [:create]
     resources :item_groups, only: [:create, :destroy] do
       member do
         post :sort_up, :sort_down
