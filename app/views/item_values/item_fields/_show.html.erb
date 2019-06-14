@@ -1,11 +1,8 @@
-<div class="card border m-1 border-dark <%= dom_ref(item_value, 'card') %>" id="<%= dom_ref(item_group, 'show') %>">
-  <div class="card-header <%= dom_ref(item_value, 'header') %> pt-0">
-    <%= render "item_values/item_fields/header", item_field: item_field, item_value: item_value, item_group: item_group %>
+<div class="card border m-1 border-dark" id="<%= dom_ref(obj_ref, 'show') %>">
+  <div class="card-header">
+    <%= render "item_values/item_fields/header", item_field: item_field, item_value: item_value, item_group: item_group, obj_ref: obj_ref %>
   </div>
-
-  <div class="card-body p-2 collapse" id="<%= dom_ref(item_value, 'body') %>">
-    <div id='<%= dom_ref(item_field, item_value, "properties-edit") %>'>
-      <%= render "item_values/forms/form", item_value: item_value, url: item_field_item_value_path(item_field, item_value), form_id: dom_ref(item_field, item_value, "properties-edit-form-id") %>
-    </div>
+  <div class="card-body p-1 collapse" id="<%= dom_ref(obj_ref, 'body') %>">
+    <%= render "item_values/forms/properties_form", item_value: item_value, url: item_field_item_value_path(item_field, item_value), form_id: dom_ref(obj_ref, "properties-edit-form") %>
   </div>
 </div>

@@ -1,6 +1,6 @@
 var caret_state = $("#<%= dom_ref(@form_id) %>").find(".caret-toggle i").hasClass("fa-caret-down");
 $("#<%= dom_ref(@form_id) %>").html("<%= j render 'item_values/forms/form', item_value: @item_value, url: item_value_path(@item_value), obj_ref: obj_ref(@form_id), form_id: @form_id %>");
-$("#<%= dom_ref(obj_ref(@form_id), 'properties-edit-form') %>").html("<%= j render 'item_values/forms/properties_form', item_value: @item_value, url: item_value_path(@item_value), obj_ref: obj_ref(@form_id), form_id: @form_id %>");
+$("#<%= dom_ref(obj_ref(@form_id), 'properties-edit-form') %>").html("<%= j render 'item_values/forms/properties_form', item_value: @item_value, url: item_value_path(@item_value), obj_ref: obj_ref(@form_id), form_id: dom_ref(obj_ref(@form_id), 'properties-edit-form') %>");
 $("#<%= dom_ref(obj_ref(@form_id), 'properties-edit-form') %>").submit();
 
 if (caret_state == true) {

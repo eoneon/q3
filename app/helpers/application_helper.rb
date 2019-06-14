@@ -179,7 +179,8 @@ module ApplicationHelper
   end
 
   def uniq_vl(parent_obj, kollection_name, text_method)
-    set = parent_obj.public_send(to_kollection_name(kollection_name)).pluck(:"#{text_method}").uniq + [parent_obj.name]
+    set = parent_obj.public_send(to_kollection_name(kollection_name)).pluck(:"#{text_method}").uniq #+ [parent_obj.name]
+    set = set + [parent_obj.name] if to_super_klass_name(parent_obj) == "ProductPart" 
     to_konstant(kollection_name).where.not("#{text_method}": set)
   end
 
