@@ -2,14 +2,17 @@
   <div class="form" data-sti-name="item_value">
     <%= hidden_field_tag :form_id, form_id %>
     <%= f.text_field :type, class: "collapse type-field" %>
+    <label class="fs-xs py-0 my-0">New <%= "#{to_txt(item_value, j: ' ')}" %></label>
     <div class="form-row align-items-center">
-      <div class="input-group">
-        <div class="input-group-prepend">
-          <%= render "product_parts/forms/new_type_dropdown", sti: :item_value %>
-        </div>
-        <%= f.text_field :name, placeholder: "enter item-value name", class: "form-control name-field border-secondary" %>
-        <div class="input-group-append">
-          <button class="btn btn-sm btn-primary" type="submit" disabled><%= (fa_icon "plus") %></button>
+      <div class="col-11">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <label class="input-group-text input-border border-secondary bg-secondary font-weight-light text-white text-sm small"><small class="type-label">STI type</small></label>
+          </div>
+          <%= f.text_field :name, placeholder: "enter item-value name", class: "form-control form-control-sm name-field border border-secondary" %>
+          <div class="input-group-append">
+            <button class="btn btn-sm btn-primary" type="submit" disabled><%= (fa_icon "plus") %></button>
+          </div>
         </div>
       </div>
     </div>
