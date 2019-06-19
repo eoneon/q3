@@ -17,8 +17,7 @@
 
 <div class="form-row collapse pl-2 align-items-center parent-toggle" id="<%= dom_ref(item_field, 'parent-toggle') %>">
   <div class="col collapse show btn-group-toggle" id="<%= dom_ref(item_field, "btn-group-toggle") %>">
-    <%#= render "item_fields/forms/nested_form_toggle", item_field: item_field, obj_ref: obj_ref, target: to_snake(item_field.sti_value_type) %>
-    <%= render "item_fields/forms/nested_form_toggle", item_field: item_field, obj_ref: dom_ref(obj_ref, item_field.sti_value_type), target: to_snake(item_field.sti_value_type) %>
+    <%= render "item_fields/forms/nested_form_toggle", item_field: item_field, obj_ref: dom_ref(obj_ref, to_snake(item_field.sti_value_type)), target: to_snake(item_field.sti_value_type) %>
   </div>
-  <%= render "item_fields/forms/nested_forms", item_field: item_field, obj_ref: dom_ref(obj_ref, item_field.sti_value_type), target: to_snake(item_field.sti_value_type) %>
+  <%= render "item_fields/forms/nested_forms", item_field: item_field, obj_ref: dom_ref(obj_ref, to_snake(item_field.sti_value_type)), target: to_snake(item_field.sti_value_type) %>
 </div>

@@ -1,3 +1,3 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'item_groups/forms/form', origin: @origin, target: @target, url: product_part_item_groups_path(@origin, ItemGroup.new), form_id: @form_id %>");
+$("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'item_groups/forms/form', origin: @origin, target: to_snake(@target), url: item_field_item_groups_path(@origin, ItemGroup.new), form_id: @form_id %>");
 $('#<%= dom_ref(@origin, "#{to_snake(@origin.sti_field_type)}-index") %>').html('<%= j render "item_fields/product_parts/index", origin: @origin %>');
-toggleFormOnCreate('#<%= @form_id %>');
+afterAdd("<%= obj_ref(@form_id) %>", "add");

@@ -1,11 +1,11 @@
-<div class="card border m-1 border-dark <%= dom_ref(target, 'card') %>" id="<%= dom_ref(item_group, 'show') %>">
-  <div class="card-header <%= dom_ref(target, 'header') %> pt-0">
-    <%= render "item_fields/product_parts/header", origin: origin, target: target, item_group: item_group %>
+<div class="card border m-1 border-dark" id="<%= dom_ref(obj_ref, 'show') %>">
+  <div class="card-header">
+    <%= render "item_fields/product_parts/header", origin: origin, item_field: item_field, item_group: item_group, obj_ref: obj_ref %>
   </div>
 
-  <div class="card-body p-2 collapse" id="<%= dom_ref(item_group, 'body') %>">
-    <div id='<%= dom_ref(target, "#{to_snake(target.sti_value_type)}-index") %>'>
-      <%= render "item_values/item_fields/index", origin: target %>
+  <div class="card-body p-1 collapse" id="<%= dom_ref(obj_ref, 'body') %>">
+    <div id='<%= dom_ref(obj_ref, "#{to_snake(item_field.sti_value_type)}-index") %>'>
+      <%= render "item_values/item_fields/index", origin: item_field %>
     </div>
   </div>
 </div>

@@ -94,13 +94,13 @@ $(document).ready(function(){
   $("body").on("click", ".select-opt", function(){
     var a = $(this);
     var form = $(a).closest(".form");
-    //here
     $(form).find(".type-label").text($(a).attr("data-name"));
     $(form).find("input:text.type-field").val($(a).attr("data-value"));
     enableSubmit(form);
     $(a).addClass("active").siblings().removeClass("active");
   });
 
+  //?
   $("body").on("click", "[href$='-new']", function(){
     var form = $(this).attr("href");
     $(form).find(".type-label").text($(this).attr("data-name"));
@@ -280,17 +280,20 @@ function setHiddenInputsProductPart(form) {
 
 function setHiddenInputsItemField(form) {
   var type = $(form).find("input:hidden[name='type']").val();
+  var data_name = $(form).find('a.select-opt[data-value="'+type+'"]').attr("data-name");
   var field_type = $(form).find("input:hidden[name='field_type']").val();
   var field_name = $(form).find("input:hidden[name='field_name']").val();
-  $(form).find("span.type-label").text(type);
+  $(form).find("span.type-label").text(data_name);
   $(form).find("span.field-type-label").text(field_type);
   $(form).find("input.field-name-field").val(field_name);
+  //console.log(v);
 }
 
 function setHiddenInputsItemValue(form) {
   var type = $(form).find("input:hidden[name='type']").val();
+  var data_name = $(form).find('a.select-opt[data-value="'+type+'"]').attr("data-name");
   var name = $(form).find("input:hidden[name='name']").val();
-  $(form).find("span.type-label").text(type);
+  $(form).find("span.type-label").text(data_name);
   $(form).find("input.name-field").val(name);
 }
 

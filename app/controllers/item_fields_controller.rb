@@ -1,6 +1,6 @@
 class ItemFieldsController < ApplicationController
   def index
-    @item_fields = ItemField.all.order(:type)
+    @item_fields = ItemField.all.order("type ASC, field_name ASC")
 
     respond_to do |format|
       format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='item_fields.xlsx'"}

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   resources :product_parts do
     resources :sub_parts, only: [:create, :update]
     resources :item_fields, only: [:update]
+    resources :sub_fields, only: [:create]
     resources :item_groups, only: [:create, :destroy] do
       member do
         post :sort_up, :sort_down

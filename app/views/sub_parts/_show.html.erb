@@ -5,7 +5,7 @@
 
   <div class="card-body collapse p-1" id="<%= dom_ref(obj_ref, 'body') %>">
     <div id='<%= dom_ref(target, "#{to_snake(target.sti_field_type)}-index") %>'>
-      <%#= render "item_fields/product_parts/index", origin: target %>
+      <%= render "item_fields/product_parts/index", origin: target %>
     </div>
     <% self_join_assocs(target, :product_kind).each do |type| %>
       <div id='<%= dom_ref(target, "#{to_snake(type)}-index") %>'>

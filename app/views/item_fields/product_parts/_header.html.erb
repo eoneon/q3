@@ -1,32 +1,23 @@
-<small class="ml-5 my-0 py-0 form-text text-muted input-label">Edit <%= obj_to_cap_hyph_str(target) %></small>
-<div class="row justify-content-between align-items-center bg-light" id="<%= dom_ref(target, 'header') %>">
-  <button class="caret-toggle btn btn-lg bg-transparent pl-2 border py-0" data-toggle="collapse" data-target="#<%= dom_ref(item_group, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
-
-  <ul class="nav ml-3 mr-0">
-    <li class="nav-item-dropdown">
-      <a class="nav-link dropdown bg-transparent text-info m-0 p-0 border" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="true"><%= (fa_icon "ellipsis-v") %></a>
-      <%= render "item_fields/product_parts/dropdown_menu", origin: origin, target: target %>
-    </li>
-  </ul>
-
-  <div class="col" id="<%= dom_ref(item_group, 'accordion') %>">
-    <div class="collapse show toggle-sibling" id="<%= dom_ref(origin, target, 'edit') %>" data-label="Edit <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
-      <%= render "item_fields/forms/form", item_field: target, url: product_part_item_field_path(origin, target), form_id: dom_ref(origin, target, 'edit-form-id') %>
-    </div>
-
-    <div class="collapse toggle-sibling" id='<%= dom_ref(target, "#{to_snake(target.sti_value_type)}-item_group-add") %>' data-label="Add <%= obj_to_cap_hyph_str(target) %>" data-parent="#<%= dom_ref(item_group, 'accordion') %>">
-      <%= render 'item_groups/forms/form', origin: target, target: to_snake(target.sti_value_type), url: item_field_item_groups_path(target, ItemGroup.new), form_id: dom_ref(target, "#{to_snake(target.sti_value_type)}-item_group-add-form-id") %>
-    </div>
+<div class="row align-items-center justify-content-between bg-light">
+  <div class="col-11 pr-0">
+    <%= render "item_fields/forms/form", item_field: item_field, url: product_part_item_field_path(origin, item_field), target: item_field, obj_ref: obj_ref, form_id: dom_ref(obj_ref, 'edit-form') %>
   </div>
 
-  <div class="col-1">
-    <div class="row align-items-center">
-      <div class="col mx-2 p-0">
-        <%= render "item_groups/sort_btn_group", origin: origin, item_group: item_group %>
-      </div>
-      <div class="col p-0">
-        <%= link_to (fa_icon "times"), item_field_item_group_path(target, item_group), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "delete-btn btn btn-sm btn-transparent text-danger pl-0 ml-0 disabled" %>
+  <div class="col-1 pl-0">
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group align-items-center" role="group">
+        <button class="btn bg-transparent text-info control-toggle" id="<%= dom_ref(obj_ref, 'control-toggle') %>" data-toggle="collapse" data-target="#<%= dom_ref(obj_ref, 'parent-toggle') %>" type="button" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></button>
+        <%= button_to item_field_item_group_path(item_field, item_group), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm bg-transparent font-weight-light text-danger pl-0" do %>
+          <span><%= (fa_icon "minus-square") %></span>
+        <% end %>
       </div>
     </div>
   </div>
+</div>
+
+<div class="form-row collapse pl-2 align-items-center parent-toggle" id="<%= dom_ref(obj_ref, 'parent-toggle') %>">
+  <div class="col collapse show btn-group-toggle" id="<%= dom_ref(obj_ref, "btn-group-toggle") %>">
+    <%= render "item_fields/forms/nested_form_toggle", item_field: item_field, obj_ref: dom_ref(obj_ref, item_field.sti_value_type), target: to_snake(item_field.sti_value_type) %>
+  </div>
+  <%= render "item_fields/forms/nested_forms", item_field: item_field, obj_ref: dom_ref(obj_ref, item_field.sti_value_type), target: to_snake(item_field.sti_value_type) %>
 </div>

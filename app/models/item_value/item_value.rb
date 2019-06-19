@@ -2,12 +2,12 @@ class ItemValue < ApplicationRecord
   include Importable
   include Sti
 
-  before_create :set_properties
+  #before_create :set_properties
   before_save :reset_text_values
 
-  def set_properties
-    text_keys.map {|k| self.properties = {"#{k}"=>"#{name}","#{k}_value"=>"#{name}"}}
-  end
+  # def set_properties
+  #   text_keys.map {|k| self.properties = {"#{k}"=>"#{name}","#{k}_value"=>"#{name}"}}
+  # end
 
   def text_keys
     ['tagline', 'description', 'attribute']

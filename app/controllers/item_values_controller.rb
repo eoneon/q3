@@ -1,6 +1,6 @@
 class ItemValuesController < ApplicationController
   def index
-    @item_values = ItemValue.all.order(:type)
+    @item_values = ItemValue.all.order("type ASC, name ASC")
 
     respond_to do |format|
       format.xlsx {response.headers['Content-Disposition'] = "attachment; filename='item_values.xlsx'"}
