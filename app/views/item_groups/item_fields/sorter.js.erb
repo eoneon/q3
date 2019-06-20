@@ -1,1 +1,2 @@
-$('#<%= dom_ref(@origin, "#{to_snake(@target)}-index") %>').html('<%= j render "item_fields/product_parts/index", origin: @origin, type: to_snake(@target) %>');
+var index_ref = $('#<%= dom_ref(@obj_ref) %>').closest("[id$='-index']").attr("id");
+$('#'+index_ref).html('<%= j render "item_fields/product_parts/index", origin: @origin, type: to_snake(@target) %>');
