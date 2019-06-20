@@ -18,7 +18,8 @@ class ItemGroupsController < ApplicationController
     swap_sort(@origin, -1)
 
     respond_to do |format|
-      format.js {render file: "/item_groups/sorter.js.erb"}
+      @obj_ref = params[:obj_ref]
+      format.js {render file: "/#{render_filepath}/sorter.js.erb"}
     end
   end
 
@@ -29,7 +30,8 @@ class ItemGroupsController < ApplicationController
     swap_sort(@origin, 1)
 
     respond_to do |format|
-      format.js {render file: "/item_groups/sorter.js.erb"}
+      @obj_ref = params[:obj_ref]
+      format.js {render file: "/#{render_filepath}/sorter.js.erb"}
     end
   end
 
@@ -42,9 +44,7 @@ class ItemGroupsController < ApplicationController
 
     if item_group.destroy
       reset_sort(@origin, sort, type)
-
       respond_to do |format|
-        #format.js {render file: "/item_groups/#{partial_name}/destroy.js.erb"}
         format.js {render file: "/#{render_filepath}/destroy.js.erb"}
       end
     end

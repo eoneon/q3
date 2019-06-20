@@ -1,0 +1,1 @@
+$('#<%= dom_ref(@obj_ref, "#{to_snake(@target)}-index") %>').html('<%= j render "sub_parts/index", origin: @origin, type: to_snake(@target) %>');

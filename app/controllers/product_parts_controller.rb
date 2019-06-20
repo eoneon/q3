@@ -44,7 +44,7 @@ class ProductPartsController < ApplicationController
     @product_part = ProductPart.find(params[:id])
 
     if @product_part.destroy
-      ItemGroup.where(target_id:params[:id]).destroy_all
+      ItemGroup.where(target_id: params[:id]).destroy_all
       respond_to do |format|
         format.js
       end

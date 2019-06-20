@@ -1,5 +1,8 @@
 <div class="row align-items-center justify-content-between bg-light">
-  <div class="col-11 pr-0">
+  <div class="col-auto px-0 mr-0">
+    <%= render "item_groups/item_values/sort_btn_group", origin: item_field, item_group: item_group, obj_ref: obj_ref %>
+  </div>
+  <div class="col-10 px-0 mx-0">
     <%= render "item_values/forms/form", item_value: item_value, url: item_field_item_value_path(item_field, item_value), obj_ref: obj_ref, form_id: dom_ref(obj_ref, 'name-edit-form') %>
   </div>
 

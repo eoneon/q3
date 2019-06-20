@@ -43,6 +43,7 @@ class ItemFieldsController < ApplicationController
     @item_field = ItemField.find(params[:id])
 
     if @item_field.destroy
+      ItemGroup.where(target_id: params[:id]).destroy_all
       respond_to do |format|
         format.js {render file: "/#{render_filepath}/destroy.js.erb"}
       end
