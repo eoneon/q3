@@ -1,2 +1,2 @@
-var index_ref = $('#<%= dom_ref(@obj_ref) %>').closest("[id$='-index']").attr("id");
+var index_ref = $('#<%= dom_ref(@obj_ref, "header") %>').closest("[id$='-index']").attr("id");
 $('#'+index_ref).html('<%= j render "sub_parts/index", origin: @origin, type: to_snake(@target) %>');

@@ -100,6 +100,14 @@ $(document).ready(function(){
     $(a).addClass("active").siblings().removeClass("active");
   });
 
+  $("body").on("click", ".field-type-opt", function(){
+    var a = $(this);
+    var form = $(a).closest(".form");
+    $(form).find(".field-type-label").text($(a).attr("data-name"));
+    $(form).find("input:text.field-type-field").val($(a).attr("data-value"));
+    $(a).addClass("active").siblings().removeClass("active");
+  });
+
   //?
   $("body").on("click", "[href$='-new']", function(){
     var form = $(this).attr("href");

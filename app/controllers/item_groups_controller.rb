@@ -44,6 +44,7 @@ class ItemGroupsController < ApplicationController
 
     if item_group.destroy
       reset_sort(@origin, sort, type)
+      @obj_ref = params[:obj_ref]
       respond_to do |format|
         format.js {render file: "/#{render_filepath}/destroy.js.erb"}
       end

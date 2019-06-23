@@ -1,5 +1,5 @@
 <div class="card border m-1 border-dark" id="<%= dom_ref(obj_ref, 'show') %>">
-  <div class="card-header">
+  <div class="card-header" id="<%= dom_ref(obj_ref, 'header') %>">
     <%= render "item_values/item_fields/header", item_field: item_field, item_value: item_value, item_group: item_group, obj_ref: obj_ref %>
   </div>
   <div class="card-body p-1 collapse" id="<%= dom_ref(obj_ref, 'body') %>">

@@ -1,5 +1,5 @@
-<div class="card m-1" id="<%= dom_ref(obj_ref, 'show') %>">
-  <div class="card-header">
+<div class="card border-dark m-1" id="<%= dom_ref(obj_ref, 'show') %>">
+  <div class="card-header" id="<%= dom_ref(obj_ref, 'header') %>">
     <%= render "sub_parts/header", origin: origin, target: target, item_group: item_group, obj_ref: obj_ref %>
   </div>
 
@@ -7,7 +7,8 @@
     <div id='<%= dom_ref(target, "#{to_snake(target.sti_field_type)}-index") %>'>
       <%= render "item_fields/product_parts/index", origin: target %>
     </div>
-    <% self_join_assocs(target, :product_kind).each do |type| %>
+    <%# self_join_assocs(target, :product_kind).each do |type| %>
+    <% self_join_assocs(target).each do |type| %>
       <div id='<%= dom_ref(target, "#{to_snake(type)}-index") %>'>
         <%= render "sub_parts/index", origin: target, type: type %>
       </div>

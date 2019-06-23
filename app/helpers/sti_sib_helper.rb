@@ -27,12 +27,16 @@ module StiSibHelper
 
   def abbrv_type(type)
     arr = to_snake(type).split("_") - ["field", "value"]
-    obj = arr.join("")
+    obj = arr.join("_")
     abbrv_sti_key[obj.to_sym]
   end
 
   def abbrv_sti_key
-    {medium: 'Medium', product_kind: 'ProductKind', material: 'Material', certificate: 'Certificate', edition: 'Edition', dimension: 'Dimension', mounting: 'Mounting', signature: 'Signature', sub_medium: 'Submedium'}
+    {medium: 'Medium', product_kind: 'ProductKind', material: 'Material', certificate: 'Certificate', edition: 'Edition', dimension: 'Dimension', mounting: 'Mounting', signature: 'Signature', sub_medium: 'Submedia'}
+  end
+
+  def ordered_types
+    ['Medium', 'SubMedium', 'Material', 'Edition', 'Mounting', 'Signature', 'Certificate', 'Dimension']
   end
 
   def dir_list(folder_names)

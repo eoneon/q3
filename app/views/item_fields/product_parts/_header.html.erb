@@ -10,7 +10,7 @@
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group align-items-center" role="group">
         <button class="btn bg-transparent text-info control-toggle" id="<%= dom_ref(obj_ref, 'control-toggle') %>" data-toggle="collapse" data-target="#<%= dom_ref(obj_ref, 'parent-toggle') %>" type="button" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></button>
-        <%= button_to item_field_item_group_path(item_field, item_group), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm bg-transparent font-weight-light text-danger pl-0" do %>
+        <%= button_to item_field_item_group_path(item_field, item_group, obj_ref: obj_ref), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm bg-transparent font-weight-light text-danger pl-0" do %>
           <span><%= (fa_icon "minus-square") %></span>
         <% end %>
       </div>

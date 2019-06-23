@@ -8,7 +8,7 @@
       <%= render "item_fields/product_parts/index", origin: product_part %>
     </div>
 
-    <% self_join_assocs(product_part, :product_kind).each do |type| %>
+    <% self_join_assocs(product_part).each do |type| %>
       <div id='<%= dom_ref(product_part, "#{to_snake(type)}-index") %>'>
         <%= render "sub_parts/index", origin: product_part, type: type %>
       </div>

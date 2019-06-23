@@ -1,3 +1,4 @@
 $("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'item_groups/forms/form', origin: @origin, target: @target, url: product_part_item_groups_path(@origin, ItemGroup.new), obj_ref: obj_ref(@form_id), form_id: @form_id %>");
 $('#<%= dom_ref(@origin, "#{to_snake(@target)}-index") %>').html('<%= j render "sub_parts/index", origin: @origin, type: to_snake(@target) %>');
-afterAdd("<%= obj_ref(@form_id) %>", "add");
+var target = $("#<%= dom_ref(@form_id) %>").closest("[id$='-show']");
+afterNestedCreate(target);

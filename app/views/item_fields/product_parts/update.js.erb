@@ -1,3 +1,1 @@
-$("#<%= new_dom_ref(@form_id, 'form', nil) %>").html("<%= j render 'item_fields/forms/form', item_field: @item_field, url: product_part_item_field_path(@item_field), form_id: @form_id %>");
-enableToggleInput("#<%= @form_id %>");
-getDeleteBtn("#<%= @form_id %>").toggleClass("disabled");
+$("#<%= dom_ref(@form_id) %>").html("<%= j render 'item_fields/forms/form', item_field: @item_field, url: product_part_item_field_path(@item_field), obj_ref: obj_ref(@form_id), form_id: @form_id %>");

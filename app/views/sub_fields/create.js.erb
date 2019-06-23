@@ -1,3 +1,4 @@
 $("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'item_fields/forms/new_field', item_field: ItemField.new, url: product_part_sub_fields_path(@product_part), form_id: @form_id %>");
 $('#<%= dom_ref(obj_ref(@form_id), "#{to_snake(@sub_field)}-index") %>').html('<%= j render "item_fields/product_parts/index", origin: @product_part %>');
-afterNestedCreate("#<%= dom_ref(@form_id) %>");
+var target = $("#<%= dom_ref(@form_id) %>").closest("[id$='-show']");
+afterNestedCreate(target);
