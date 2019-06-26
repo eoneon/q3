@@ -7,6 +7,7 @@ class ProductKind < ProductPart
   has_many :materials, through: :item_groups, source: :target, source_type: "Material"
   has_many :sub_media, through: :item_groups, source: :target, source_type: "SubMedium"
   has_many :editions, through: :item_groups, source: :target, source_type: "Edition"
+  has_many :mountings, through: :item_groups, source: :target, source_type: "Mounting"
   has_many :signatures, through: :item_groups, source: :target, source_type: "Signature"
   has_many :certificates, through: :item_groups, source: :target, source_type: "Certificate"
 end

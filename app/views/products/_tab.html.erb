@@ -1,3 +1,7 @@
 <a class="list-group-item list-group-item-action py-1" id="<%= dom_ref(product, 'tab-item') %>" href="<%= product_path(product) %>" data-remote="true" data-toggle="list">
-  <%= product.name %>
+  <div class="row">
+    <div class="col item-name">
+      <%= product.name %>
+    </div>
+  </div>
 </a>

@@ -1,12 +1,9 @@
-<div class="card bg-light mb-3 p-2" id="product-new">
-  <%= render "products/forms/new", product: Product.new, form_id: "product-new-form-id" %>
+<div class="card bg-light mb-3" id="product-new">
+  <%= render "products/forms/new", product: Product.new, url: Product.new, form_id: "product-new-form" %>
 </div>
-<%= render "products/import", url: import_products_path %>
 
-<div class="card align-items-center bg-light m-0 p-0">
-  <div class="card-body bg-light m-0 p-1">
-    <span>Products</span>
-  </div>
+<div class="card bg-light mb-0 p-2">
+  <%#= render "search_products/form" %>
 </div>
 
 <div class="list-group" id="tab-index" role="tablist">
