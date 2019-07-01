@@ -28,11 +28,26 @@ module ProductsHelper
     clause.flatten.join(' ').compact.join(' ')
   end
 
+
+  #here
   def nested_product_parts(obj)
     self_join_assocs(obj).map{|sti| to_kollection(obj, sti)}
   end
 
-  def product_select(product, f: f)
+  def product_selections(obj)
+    a = []
+    product_parts = nested_product_parts(obj)
+    product_parts.each do |sub_part|
+      if nested_sub_parts = nested_sub_parts?(obj)
+        a << nested_sub_parts if ['ProductKind', 'Medium', 'Material'].include?(nested_sub_parts.name)
+      else
+        a << sub_part
+      end
+    end
+    a
+  end
+
+  def product_select(product, f)
     if pk = product.product_kind.first
       nested_product_parts(pk).reject {|i| i.empty?}.each do |sub_part|
         render(partial: "products/forms/select", locals: {f: f, sub_part: sub_part})
@@ -40,9 +55,9 @@ module ProductsHelper
     end
   end
 
-  def sub_part_select(obj, f: f)
-    if nested_product_parts(obj).reject {|i| i.empty?}.any?
-      nested_product_parts(obj).reject {|i| i.empty?}.each do |sub_part|
+  def sub_part_select(obj, f)
+    if nested_sub_parts = nested_sub_parts?(obj)
+      nested_sub_parts.each do |sub_part|
         render(partial: "products/forms/select", locals: {f: f, sub_part: sub_part})
       end
     end

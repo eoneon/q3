@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  def index 
+  def index
     @products = Product.all
 
     respond_to do |format|
@@ -18,7 +18,7 @@ class ProductsController < ApplicationController
 
   def create
     @product = Product.new(product_params)
-
+    @products = Product.all
     if @product.save
       @form_id = params[:form_id]
       respond_to do |format|
@@ -49,10 +49,10 @@ class ProductsController < ApplicationController
     end
   end
 
-  def import
-    Product.import(params[:file])
-    redirect_to products_path, notice: 'Products imported.'
-  end
+  # def import
+  #   Product.import(params[:file])
+  #   redirect_to products_path, notice: 'Products imported.'
+  # end
 
   private
 

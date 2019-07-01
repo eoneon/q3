@@ -12,11 +12,15 @@ class ApplicationController < ActionController::Base
   end
 
   def origin_key
-    ['product_part', 'item_field', 'item_value'].detect {|sti| params[:"#{sti}_id"].present?}
+    ['product', 'product_part', 'item_field', 'item_value'].detect {|sti| params[:"#{sti}_id"].present?}
   end
 
+  # def target_key
+  #   helpers.obj_assocs(@origin).detect {|sti| params[:item_group][:"#{sti}_id"].present?}
+  # end
+
   def target_key
-    helpers.obj_assocs(@origin).detect {|sti| params[:item_group][:"#{sti}_id"].present?}
+    helpers.obj_assocs(@origin).detect {|sti| params[:"#{superklass_name}"][:"#{sti}_id"].present?}
   end
 
   def render_filepath

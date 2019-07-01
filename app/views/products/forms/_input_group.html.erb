@@ -1,4 +1,4 @@
-<div class="input-group input-group-sm align-items-center <%= dom_attr(form_id, ['bg-white', 'bg-disabled'], 'new') %>">
+<div class="input-group input-group-sm align-items-center">
   <% if dom_cond(form_id, 'edit') %>
     <button class="btn btn-sm rounded-circle bg-transparent <%= dom_attr(form_id, 'toggle-input-access', 'edit') %>" type="button" id="<%= new_dom_ref(form_id, 'form', 'btn') %>"><%= (fa_icon "toggle-off") %></button>
   <% end %>

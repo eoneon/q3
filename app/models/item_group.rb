@@ -8,4 +8,12 @@ class ItemGroup < ApplicationRecord
     count = origin.sti_item_groups(target_type).count
     self.sort = count == 0 ? 1 : count + 1
   end
+
+  def set_count
+    if ["ProductPart", "ItemField", "ItemValue"].include?(origin.origin_type)
+      origin.sti_item_groups(target_type).count
+    else
+      origin.item_groups.count
+    end
+  end
 end
