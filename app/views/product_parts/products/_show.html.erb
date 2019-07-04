@@ -1,6 +1,8 @@
 <div class="card border-dark m-1" id="<%= dom_ref(obj_ref, 'show') %>">
   <div class="col-auto px-0 mr-0">
-    <%#= render "product_item_groups/product_parts/sort_btn_group", product: product, item_group: item_group, obj_ref: obj_ref %>
+    <div class="btn-group-vertical btn-group-sm border-left border-right" role="group">
+      <%= render 'product_item_groups/products/sorter', product: product, item_group: item_group, obj_ref: obj_ref %>
+    </div>
     <%= product_part.name %>
   </div>
 

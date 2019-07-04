@@ -9,4 +9,8 @@ class Product < ApplicationRecord
   has_many :material_values, through: :item_groups, source: :target, source_type: "MaterialValue"
   has_many :media, through: :item_groups, source: :target, source_type: "Medium"
   has_many :media_values, through: :item_groups, source: :target, source_type: "MediumValue"
+
+  def sorted_groups
+    self.item_groups.order(:sort)
+  end
 end

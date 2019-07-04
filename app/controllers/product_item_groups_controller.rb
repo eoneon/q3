@@ -20,7 +20,7 @@ class ProductItemGroupsController < ApplicationController
 
     respond_to do |format|
       @obj_ref = params[:obj_ref]
-      format.js
+      format.js {render file: "/product_item_groups/sorter.js.erb"}
     end
   end
 
@@ -32,7 +32,7 @@ class ProductItemGroupsController < ApplicationController
 
     respond_to do |format|
       @obj_ref = params[:obj_ref]
-      format.js
+      format.js {render file: "/product_item_groups/sorter.js.erb"}
     end
   end
 
@@ -60,7 +60,7 @@ class ProductItemGroupsController < ApplicationController
     params.require(:item_group).permit!
   end
 
-  def swap_sort(origin_obj, pos)
+  def product_swap_sort(origin_obj, pos)
     sort_obj = ItemGroup.find(params[:id])
     sort = sort_obj.sort
     sort2 = pos == -1 ? sort - 1 : sort + 1
