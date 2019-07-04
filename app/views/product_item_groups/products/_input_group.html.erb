@@ -1,0 +1,11 @@
+<div class="col-11">
+  <div class="input-group input-border align-items-center bg-disabled">
+    <div class="input-group-prepend">
+      <button class="btn btn-sm btn-danger btn-outline-secondary rounded-0 border-left-0 border-top-0 border-bottom-0 close-form" type="button" data-toggle="collapse" href='#<%= dom_ref(origin, "toggle-btn-group") %>'><%= (fa_icon "times") %></button>
+    </div>
+    <%= f.collection_select to_fk(target), uniq_vl(origin, target, name_param(target)), :id, name_param(target), {prompt: "- select #{obj_to_hyph_str(target)} -"}, class: "form-control form-control-sm border-0" %>
+    <div class="input-group-append">
+      <button class="btn btn-sm btn-primary rounded-0 border-0" type="submit"><%= (fa_icon "plus") %></button>
+    </div>
+  </div>
+</div>

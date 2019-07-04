@@ -62,6 +62,12 @@ $(document).ready(function(){
     }
   });
 
+  //#SEARCH: handler for submitting search form: on dropdown selection
+  $("body").on("change", ".product-select", function(){
+    var form = $(this).closest("form");
+    $(form).submit();
+  });
+
   //#CRUD EDIT: handler for submitting product_part form: on checkbox selection
   $("body").on("click", ".category-check", function(){
     var form = $(this).closest(".form");

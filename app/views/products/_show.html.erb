@@ -1,14 +1,11 @@
 <div class="card border m-1 border-dark" id="<%= dom_ref(product, 'show') %>">
-  <div class="card-header">
-    <%#= render "products/header", product: product %>
-    <%= product.name %>
+  <div class="card-header" id="<%= dom_ref(product, 'header') %>">
+    <%= render 'product_item_groups/products/form', product: product, item_group: ItemGroup.new, form_id: dom_ref(product, 'item_group-add-form') %>
   </div>
 
   <div class="card-body p-1" id="<%= dom_ref(product, 'body') %>">
-    <%# <% self_join_assocs(product).each do |type| %>
-      <div id='<%#= dom_ref(product, "product_part-index") %>'>
-        <%#= render "product_parts/products/index", product: product, type: type %>
-      </div>
-    <%# end %>
+    <div id='<%= dom_ref(product, "product_part-index") %>'>
+      <%= render 'product_parts/products/index', product: product %>
+    </div>
   </div>
 </div>

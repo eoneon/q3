@@ -1,0 +1,2 @@
+$("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'product_item_groups/products/form', product: @product, url: product_product_item_groups_path(@product, ItemGroup.new), obj_ref: obj_ref(@form_id), form_id: @form_id %>");
+$('#<%= dom_ref(@product, "product_part-index") %>').html('<%= j render "product_parts/products/index", product: @product %>');

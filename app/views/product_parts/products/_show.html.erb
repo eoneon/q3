@@ -1,13 +1,13 @@
 <div class="card border-dark m-1" id="<%= dom_ref(obj_ref, 'show') %>">
-  <%#= render "product_parts/products/header", product: product, product_part: product_part, item_group: item_group, obj_ref: obj_ref %>
   <div class="col-auto px-0 mr-0">
-    <%= render "product_item_groups/product_parts/sort_btn_group", product: product, item_group: item_group, obj_ref: obj_ref %>
+    <%#= render "product_item_groups/product_parts/sort_btn_group", product: product, item_group: item_group, obj_ref: obj_ref %>
+    <%= product_part.name %>
   </div>
 
   <div class="col-1 pl-0 ml-0">
     <div class="btn-toolbar" role="toolbar">
       <div class="btn-group align-items-center" role="group">
-        <%= button_to product_item_group_path(product_part, item_group, obj_ref: obj_ref), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm bg-transparent font-weight-light text-danger pl-1" do %>
+        <%= button_to product_product_item_group_path(product_part, item_group, obj_ref: obj_ref), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm bg-transparent font-weight-light text-danger pl-1" do %>
           <span><%= (fa_icon "minus-square") %></span>
         <% end %>
       </div>

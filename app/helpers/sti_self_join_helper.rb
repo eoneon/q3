@@ -7,35 +7,56 @@ module StiSelfJoinHelper
     child_subklasses.flatten
   end
 
-  def product_media(pk)
-    h = {parent: pk}
-    [:product_kind, :medium, :material].each do |type|
-      if type == :product_kind
-        h[type] = set_product_kind(pk, type)
-      else
-        h[type] = set_sub_kollection(h[:product_kind], type)
-      end
-    end
-    h
-  end
+  # def product_media(pk)
+  #   h = {parent: pk}
+  #   ['product_kind', 'medium', 'material'].each do |type|
+  #     product_selects(pk, h, type)
+  #   end
+  #   h
+  # end
+  #
+  # def product_selects(pk, h, type)
+  #   if type == 'product_kind'
+  #     h[type] = set_product_kind(pk, type)
+  #     h["#{type}_field"] = set_product_kind_field(h, type)
+  #   else
+  #     h[type] = set_sub_part(h['product_kind'], type)
+  #   end
+  # end
+  #
+  # def set_product_kind(pk, type)
+  #   if pk2 = has_kollection?(pk, type)
+  #     pk2.first
+  #   else
+  #     pk
+  #   end
+  # end
+  #
+  # def set_sub_part(pk, type)
+  #   if sub_obj = has_kollection?(pk, type)
+  #     if sub_obj.count == 1
+  #       has_kollection?(sub_obj.first, type)
+  #     else
+  #       sub_obj
+  #     end
+  #   end
+  # end
+  #
+  # def set_field(obj, type)
+  #   field = "#{type}_field"
+  #   if fields = has_kollection?(obj, field)
+  #     fields
+  #   end
+  # end
+  #
+  # def set_product_kind_field(h, type)
+  #   if h[:parent] == h['product_kind']
+  #     set_field(h['product_kind'], type)
+  #   else
+  #     [h[:parent], h['product_kind']].map {|obj| set_field(obj, type)}
+  #   end
+  # end
 
-  def set_product_kind(pk, type)
-    if pk2 = has_kollection?(pk, type)
-      pk2.first
-    else
-      pk
-    end
-  end
-
-  def set_sub_kollection(pk, type)
-    if sub_obj = has_kollection?(pk, type)
-      if sub_obj.count == 1
-        has_kollection?(sub_obj.first, type)
-      else
-        sub_obj
-      end
-    end
-  end
   # def set_sub_kollection(pk, type)
   #   if sub_obj = has_kollection?(pk, type)
   #     sub_obj
@@ -69,27 +90,27 @@ module StiSelfJoinHelper
     to_kollection(obj, type) if to_kollection(obj, type).any?
   end
 
-  def nested_sti_kollection(obj)
-    result = []
-    has_many_sti_kollection(obj).each do |kollection|
-      result << nested_sub_kollection(kollection)
-    end
-    result
-  end
+  # def nested_sti_kollection(obj)
+  #   result = []
+  #   has_many_sti_kollection(obj).each do |kollection|
+  #     result << nested_sub_kollection(kollection)
+  #   end
+  #   result
+  # end
+  #
+  # def kollection_and_sub_kollection(obj)
+  #   has_many_sti_assoc_names(obj).map {|assoc_name| nested_sub_kollection(to_kollection(obj, assoc_name)) if to_kollection(obj, assoc_name)}.reject {|i| i.empty?}
+  # end
 
-  def kollection_and_sub_kollection(obj)
-    has_many_sti_assoc_names(obj).map {|assoc_name| nested_sub_kollection(to_kollection(obj, assoc_name)) if to_kollection(obj, assoc_name)}.reject {|i| i.empty?}
-  end
-
-  def nested_sub_kollection(kollection)
-   types = ['ProductKind', 'Material']
-   if kollection.count == 1 && types.include?(kollection[0].name)
-      sub_obj = kollection.first
-      kollection_and_sub_kollection(sub_obj)
-    else
-      kollection
-    end
-  end
+  # def nested_sub_kollection(kollection)
+  #  types = ['ProductKind', 'Material']
+  #  if kollection.count == 1 && types.include?(kollection[0].name)
+  #     sub_obj = kollection.first
+  #     kollection_and_sub_kollection(sub_obj)
+  #   else
+  #     kollection
+  #   end
+  # end
 
   def has_many_assoc_names(obj)
     to_konstant(obj).reflect_on_all_associations(:has_many).map{|assoc_name| to_snake(assoc_name.name)}
@@ -107,14 +128,14 @@ module StiSelfJoinHelper
     has_many_sti_assocs(obj).map {|assoc_name| to_kollection(obj, assoc_name)}.reject {|i| i.empty?}
   end
 
-  def sub_group(obj, types)
-    sub_obj = types.map {|i| to_kollection(obj, i) if to_kollection(obj, i).any?}.compact.flatten
-    if sub_obj.count == 1
-      sub_group(sub_obj.first, types)
-    else
-      obj
-    end
-  end
+  # def sub_group(obj, types)
+  #   sub_obj = types.map {|i| to_kollection(obj, i) if to_kollection(obj, i).any?}.compact.flatten
+  #   if sub_obj.count == 1
+  #     sub_group(sub_obj.first, types)
+  #   else
+  #     obj
+  #   end
+  # end
 
   #working: check console for working example
   def obj_assocs(obj)

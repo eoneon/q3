@@ -1,5 +1,0 @@
-<% if origin_sti_item_groups = origin_sti_item_groups?(product, type) %>
-  <% origin_sti_item_groups.each do |item_group| %>
-    <%= render "product_parts/products/show", product: product, product_part: item_group.target, item_group: item_group, obj_ref: dom_ref(product_part, item_group.target, item_group) %>
-  <% end %>
-<% end %>
