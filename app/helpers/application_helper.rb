@@ -15,6 +15,11 @@ module ApplicationHelper
     fk.to_sym
   end
 
+  def to_fks(obj)
+    fks = to_snake(obj) + '_ids'
+    fks.to_sym
+  end
+
   def to_classify(obj)
     if obj.class == String
       obj.classify
@@ -152,6 +157,16 @@ module ApplicationHelper
   end
 
   #string formatting methods for views: presentation
+  def arr_to_text(arr)
+    if arr.length == 2
+      arr.join(" & ")
+    elsif arr.length > 2
+      "#{arr[0..-3].join(", ")} #{arr[-2, 2].join(" & ")}"
+    else
+      arr[0]
+    end
+  end
+
   def obj_to_hyph_str(obj)
     to_snake(obj).split('_').join('-')
   end
@@ -180,7 +195,7 @@ module ApplicationHelper
 
   def uniq_vl(parent_obj, kollection_name, text_method)
     set = parent_obj.public_send(to_kollection_name(kollection_name)).pluck(:"#{text_method}").uniq #+ [parent_obj.name]
-    set = set + [parent_obj.name] if to_super_klass_name(parent_obj) == "ProductPart" 
+    set = set + [parent_obj.name] if to_super_klass_name(parent_obj) == "ProductPart"
     to_konstant(kollection_name).where.not("#{text_method}": set)
   end
 

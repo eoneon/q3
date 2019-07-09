@@ -1,13 +1,20 @@
 module ProductsHelper
-  def product_types
+  def product_media_types
     ['product_kind', 'medium', 'material']
+  end
+
+  def product_sub_part_types
+    ['edition', 'signature', 'certificate']
+  end
+
+  def build_identifier_params(selection, opt={})
+    selection.map {|prxy| opt[to_fks(prxy.name)] = prxy.pluck(:id)}
+    opt
   end
 
   #1a
   def product_select(product, f)
-    if type = product_types.detect {|type| !has_kollection?(product, type)}
-      #type_params = {fk: type}
-      #set_product_params(product, type_params[:fk])
+    if type = product_media_types.detect {|type| !has_kollection?(product, type)}
       set_product_params(product, type, f)
     end
   end
@@ -15,34 +22,16 @@ module ProductsHelper
   #1b
   def set_product_params(product, type, f)
     if type == 'product_kind'
-      #type_params[:kollection] = ProductKind.all
       kollection = ProductKind.all
     else
       pk = product.product_kinds.first
-      h = product_group(pk)
-      #type_params[:kollection] = h[type_params[:fk]]
+      h = product_media_group(pk)
       kollection = h[type]
     end
     concat(render(partial: "product_item_groups/products/select", locals: {product: product, type: type, kollection: kollection, f: f}))
   end
 
-  # def test_method(product)
-  #   if type = ['product_kind', 'medium', 'material'].detect {|type| !has_kollection?(product, type)}
-  #     type
-  #   end
-  # end
-
-
-  def product_form_group(product, f)
-    if pk = product.product_kinds.first
-      h = product_group(pk)
-      ['medium', 'material'].each do |type|
-        concat(render(partial: "product_item_groups/products/select", locals: {product: product, type: type, h: h, f: f}))
-      end
-    end
-  end
-
-  def product_group(pk)
+  def product_media_group(pk)
     h = {parent: pk}
     ['product_kind', 'medium', 'material'].each do |type|
       product_kind_group(pk, h, type)
@@ -53,15 +42,16 @@ module ProductsHelper
   def product_kind_group(pk, h, type)
     if type == 'product_kind'
       h[type] = set_product_kind(pk, type)
-      h["#{type}_field"] = set_product_kind_field(h, type)
+      #h["#{type}_field"] = set_product_kind_field(h, type)
     else
       h[type] = set_sub_part(h['product_kind'], type)
     end
   end
 
   def set_product_kind(pk, type)
-    if pk2 = has_kollection?(pk, type)
-      pk2.first
+    #if pk2 = has_kollection?(pk, type)
+    if pk2 = has_obj?(pk, type)
+      pk2
     else
       pk
     end
@@ -92,6 +82,57 @@ module ProductsHelper
     end
   end
 
+  def sub_part_group_set(p)
+    obj_set = product_sub_part_group(p)
+    opt_idx = [[0,1,2], [0,1], [0,2], [0]]
+    opts = []
+    opt_idx.each do |opt_set|
+      opt_values = opt_set.map {|i| obj_set[i]}.compact
+      opt_name = arr_to_text(opt_values.map {|proxy| abbrv_type(proxy.name)})
+      opts << opt_values.unshift(opt_name)
+    end
+    opts
+  end
+
+  def product_sub_part_group(p)
+    if pk = has_obj?(p, 'product_kind')
+      pk_set = product_kind_set(pk)
+      objs = pk_set.map {|pk| product_sub_part_types.map {|type| get_nested_parts_or_fields(pk, type)}.reject {|i| i.nil?}}.flatten(1)
+    end
+  end
+
+  def product_kind_set(pk)
+    if pk2 = has_obj?(pk, 'product_kind')
+      [pk, pk2]
+    else
+      [pk]
+    end
+  end
+
+  def get_nested_parts_or_fields(pk, type)
+    if obj_kollection = has_kollection?(pk, type)
+      obj = obj_kollection.first
+      if has_shared_type_kollection?(obj)
+        obj_kollection
+      #elsif field_kollection = has_kollection?(obj, obj.class.name + '_field')
+      elsif field_kollection = has_field_kollection?(obj)
+        field_kollection
+      end
+    end
+  end
+
+  def has_shared_type_kollection?(obj)
+    if shared_type_kollection = has_kollection?(obj, obj.class.name)
+      shared_type_kollection
+    end
+  end
+
+  def has_field_kollection?(obj)
+    if field_kollection = has_kollection?(obj, obj.class.name + '_field')
+      field_kollection
+    end
+  end
+
   def selected_id?(obj, assoc_name)
     if obj = has_obj?(obj, assoc_name)
       obj.id
@@ -99,57 +140,20 @@ module ProductsHelper
       nil
     end
   end
-  # def nested_selects(product, f, *product_parts)
-  #   product_parts.each do |product_part|
-  #     if part = relation_any?(parent_obj, product_part)
-  #       render(partial: "products/forms/select", locals: {f: ff, product_part: part})
-  #       if fields = fields_any?(part)
-  #         render(partial: "item_fields/fields/#{field.field_type}", locals: {f: ff, field: field})
-  #       end
-  #     end
-  #   end
-  # end
-  #
-  # def build_clause(product, *product_parts)
-  #   clause =[]
-  #   product_parts.each do |product_part|
-  #     if part = relation_any?(parent_obj, product_part)
-  #       if fields = fields_any?(part)
-  #         clause << fields.map {|field| field.name}
-  #       else
-  #         clause << part.name
-  #       end
-  #     end
-  #   end
-  #   clause.flatten.join(' ').compact.join(' ')
-  # end
 
+  def product_name(product)
+    product_media_types.map {|type| format_product_name(product, type)}.reject {|i| i.nil?}.join(" ")
+  end
 
-  #here
-  # def nested_product_parts(obj)
-  #   self_join_assocs(obj).map{|sti| to_kollection(obj, sti)}
-  # end
-  #
-  # def product_selections(obj)
-  #   a = []
-  #   product_parts = nested_product_parts(obj)
-  #   product_parts.each do |sub_part|
-  #     if nested_sub_parts = nested_sub_parts?(obj)
-  #       a << nested_sub_parts if ['ProductKind', 'Medium', 'Material'].include?(nested_sub_parts.name)
-  #     else
-  #       a << sub_part
-  #     end
-  #   end
-  #   a
-  # end
-
-
-
-  # def sub_part_select(obj, f)
-  #   if nested_sub_parts = nested_sub_parts?(obj)
-  #     nested_sub_parts.each do |sub_part|
-  #       render(partial: "products/forms/select", locals: {f: f, sub_part: sub_part})
-  #     end
-  #   end
-  # end
+  def format_product_name(product, type)
+    if sub_part = has_obj?(product, type)
+      if type == 'product_kind'
+        sub_part.name.split(" ").reject {|word| ['prints','art', 'print-media'].include?(word)}.join(" ")
+      elsif type == 'medium'
+        sub_part.name
+      elsif type == 'material'
+        "on #{sub_part.name}"
+      end
+    end
+  end
 end
