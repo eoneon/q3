@@ -10,6 +10,12 @@ class Product < ApplicationRecord
   has_many :media, through: :item_groups, source: :target, source_type: "Medium"
   has_many :media_values, through: :item_groups, source: :target, source_type: "MediumValue"
 
+  has_many :editions, through: :item_groups, source: :target, source_type: "Edition"
+  has_many :signatures, through: :item_groups, source: :target, source_type: "Signature"
+  has_many :signature_fields, through: :item_groups, source: :target, source_type: "SignatureField"
+  has_many :certificates, through: :item_groups, source: :target, source_type: "Certificate"
+  has_many :certificate_fields, through: :item_groups, source: :target, source_type: "CertificateField"
+
   def sorted_groups
     self.item_groups.order(:sort)
   end

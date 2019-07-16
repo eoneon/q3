@@ -1,6 +1,8 @@
 <%= form_with model: ItemGroup.new, url: product_product_item_groups_path(product, ItemGroup.new), id: form_id do |f| %>
   <div class="form">
     <%= hidden_field_tag :form_id, form_id %>
+    <%= hidden_field_tag :opt_types, opt_types(product) %>
+    <%= hidden_field_tag :selected_opt, selected_opt(product) %>
     <div class="form-row align-items-center">
        <% product_select(product, f) %>
     </div>

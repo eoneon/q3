@@ -49,6 +49,16 @@ $(document).ready(function(){
     $(form).find('select :nth-child('+idx+')').attr('selected', true);
   });
 
+  $("body").on("click", ".identifier-opt", function(){
+    var a = $(this);
+    var form = $(a).closest(".form");
+    var params = $(a).attr("data-params").split(' ');
+    $.each(params, function(i, param){
+      $(form).find('input:checkbox[name*="'+param+'"]').prop("checked", true);
+    });
+    $(form).find('.identifier-label').text($(a).text());
+  });
+
   //#CRUD SHOW
   $("body").on("click", "#tab-index a.list-group-item", function(e){
     var item_id = '#'+$(this).attr("id");

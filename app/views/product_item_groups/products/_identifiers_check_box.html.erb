@@ -1,0 +1,4 @@
+<%= hidden_field_tag "item_group[#{opt_obj}][]", nil %>
+<% ids.each do |id| %>
+  <%= check_box_tag "item_group[#{opt_obj}][]", id, has_check_box_id?(p, opt_obj, id) %>
+<% end %>

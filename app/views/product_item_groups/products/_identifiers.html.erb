@@ -1,0 +1,8 @@
+<div class="dropdown">
+  <button class="dropdown-toggle" type="button" data-toggle="dropdown"><span class="identifier-label"></span></button>
+  <div class="dropdown-menu">
+    <% objs.each do |opt| %>
+      <a class="dropdown-item identifier-opt" data-params="<%= opt[1] %>" data-value="<%= opt[-1] %>"><%= opt[0] %></a>
+    <% end %>
+  </div>
+</div>

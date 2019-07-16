@@ -1,22 +1,95 @@
 module ProductsHelper
-  def product_media_types
+  def media_types
     ['product_kind', 'medium', 'material']
   end
 
-  def product_sub_part_types
+  def identifier_types
     ['edition', 'signature', 'certificate']
   end
+  #use pop! to slice off first item and change arr
+  def identifier_opts_idx(obj_set)
+    if obj_set.map {|i| i.name}.include?("Edition")
+      [[0,1,2], [0,1], [0,2], [0]]
+    else
+      [[0,1], [0], [1]]
+    end
+  end
 
-  def build_identifier_params(selection, opt={})
+  def opts_set(all_identifiers)
+    idx_set = identifier_opts_idx(all_identifiers) #=> [[0,1,2], [0,1], [0,2], [0]]
+    #idx_complete_subset = idx_set.slice(0) #=> [0,1,2]
+    proxy_names = all_identifiers.map {|prxy| prxy.name} #=> ["Edition","SignatureField","CertificateField"]
+    param_set = identifier_params(all_identifiers) #=> {:edition_ids=>[17], :signature_field_ids=>[4], :certificate_field_ids=>[10]}
+
+    params = [[proxy_names, param_set]]
+
+    idx_set.drop(1).each do |idx_subset| #idx_set.drop(1) => [[0,1], [0,2], [0]]
+      #inverse_set = idx_complete_subset - idx_subset
+      #=> [0,1,2] - [0,1] => [2]
+      #empty_keys = inverse_set.map {|idx| to_fks(proxy_names[idx])} #=> "CertificateField" => [:certificate_field_ids]
+      types = idx_subset.map {|idx| proxy_names[idx]} #=> ["Edition","SignatureField"]
+      # empty_keys = proxy_names - names
+      # empty_keys = empty_keys.map {|name| to_fks(name)}
+      empty_keys = empty_keys(proxy_names, types)
+      #h = fk_opt_hash(param_set, empty_keys, h={})
+      #h = {}
+      #h = param_set.each { |k,v| empty_keys.include?(k) ? h[k] = [] : h[k] = v}
+      params << [types, fk_opt_hash(param_set, empty_keys, h={})]
+    end
+    params
+  end
+
+  def fk_opt_hash(param_set, empty_keys, h={})
+    param_set.each { |k,v| empty_keys.include?(k) ? h[k] = [] : h[k] = v}
+    h
+  end
+
+  def empty_keys(proxy_names, types)
+    empty_keys = proxy_names - types
+    empty_keys.map {|type| to_fks(type)}
+  end
+
+  def opt_types(product)
+    identifier_set(product).map {|i| i.name}
+  end
+
+  def selected_opt(product)
+    product.item_groups.where(target_type: opt_types(product)).pluck(:target_type)
+  end
+  # def identifier_elements(p)
+  #   unless media_types.detect {|type| !has_kollection?(p, type)}
+  #     identifier_opts(p)
+  #   end
+  # end
+
+  def identifier_params(selection, opt={})
     selection.map {|prxy| opt[to_fks(prxy.name)] = prxy.pluck(:id)}
     opt
   end
 
   #1a
-  def product_select(product, f)
-    if type = product_media_types.detect {|type| !has_kollection?(product, type)}
-      set_product_params(product, type, f)
+  def product_select(p, f)
+    if type = media_types.detect {|type| !has_kollection?(p, type)}
+      set_product_params(p, type, f)
+    # end
+    else
+      objs = identifier_opts(p)
+      concat(render(partial: "product_item_groups/products/identifiers", locals: {objs: objs}))
+      #concat(render(partial: "product_item_groups/products/identifiers_check_box", locals: {p: p, objs: objs}))
+      identifier_check_boxes(p, objs)
     end
+  end
+
+  def identifier_check_boxes(p, objs)
+    #if opt_objs = identifier_opts(p)[0][-1]
+      objs[0][-1].each_pair do |opt_obj, ids|
+        concat(render(partial: "product_item_groups/products/identifiers_check_box", locals: {p: p, opt_obj: opt_obj, ids: ids}))
+      end
+    #end
+  end
+
+  def has_check_box_id?(obj, fks, id)
+    obj.public_send(fks).include?(id)
   end
 
   #1b
@@ -33,7 +106,7 @@ module ProductsHelper
 
   def product_media_group(pk)
     h = {parent: pk}
-    ['product_kind', 'medium', 'material'].each do |type|
+    media_types.each do |type|
       product_kind_group(pk, h, type)
     end
     h
@@ -49,7 +122,6 @@ module ProductsHelper
   end
 
   def set_product_kind(pk, type)
-    #if pk2 = has_kollection?(pk, type)
     if pk2 = has_obj?(pk, type)
       pk2
     else
@@ -82,22 +154,22 @@ module ProductsHelper
     end
   end
 
-  def sub_part_group_set(p)
-    obj_set = product_sub_part_group(p)
-    opt_idx = [[0,1,2], [0,1], [0,2], [0]]
+  def identifier_opts(p)
+    obj_set = identifier_set(p)
+    opt_idx = identifier_opts_idx(obj_set)
     opts = []
     opt_idx.each do |opt_set|
       opt_values = opt_set.map {|i| obj_set[i]}.compact
-      opt_name = arr_to_text(opt_values.map {|proxy| abbrv_type(proxy.name)})
-      opts << opt_values.unshift(opt_name)
+      opt_types = opt_values.map {|proxy| proxy.name}
+      opts << [opt_types.map {|type| to_fks(type)}.join(' '), identifier_params(opt_values)].unshift(arr_to_text(opt_types.map {|type| abbrv_type(type)}))
     end
     opts
   end
 
-  def product_sub_part_group(p)
+  def identifier_set(p)
     if pk = has_obj?(p, 'product_kind')
       pk_set = product_kind_set(pk)
-      objs = pk_set.map {|pk| product_sub_part_types.map {|type| get_nested_parts_or_fields(pk, type)}.reject {|i| i.nil?}}.flatten(1)
+      objs = pk_set.map {|pk| identifier_types.map {|type| get_nested_parts_or_fields(pk, type)}.reject {|i| i.nil?}}.flatten(1)
     end
   end
 
@@ -114,7 +186,6 @@ module ProductsHelper
       obj = obj_kollection.first
       if has_shared_type_kollection?(obj)
         obj_kollection
-      #elsif field_kollection = has_kollection?(obj, obj.class.name + '_field')
       elsif field_kollection = has_field_kollection?(obj)
         field_kollection
       end
@@ -142,7 +213,7 @@ module ProductsHelper
   end
 
   def product_name(product)
-    product_media_types.map {|type| format_product_name(product, type)}.reject {|i| i.nil?}.join(" ")
+    media_types.map {|type| format_product_name(product, type)}.reject {|i| i.nil?}.join(" ")
   end
 
   def format_product_name(product, type)
