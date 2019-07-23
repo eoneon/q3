@@ -28,8 +28,11 @@ module ItemTypesHelper
     scoped_set = ItemGroup.where(origin_type: 'Product')
     medium_group_sets.each do |prxy_opt|
       unless origin_with_opt_exists?(scoped_set, prxy_opt)
-        product = Product.create
-        prxy_opt.map {|sub_obj| to_kollection(product, sub_obj) << sub_obj}
+        name = prxy_opt.map {|sub_obj| medium_group_name(sub_obj)}.reject {|i| i.nil?}.join(" ")
+        product = Product.new(name: name)
+        if product.save!  
+          prxy_opt.map {|sub_obj| to_kollection(product, sub_obj) << sub_obj}
+        end
       end
     end
   end
@@ -87,6 +90,15 @@ module ItemTypesHelper
     end
   end
 
+  def medium_group_name(sub_obj)
+    if sub_obj.type == 'ProductKind'
+      sub_obj.name.split(" ").reject {|word| ['prints','art', 'print-media'].include?(word)}.join(" ")
+    elsif sub_obj.type == 'Medium'
+      sub_obj.name
+    elsif sub_obj.type == 'Material'
+      "on #{sub_obj.name}"
+    end
+  end
   #type-specific nest collection
   # def has_sti_specific_sub_kollection?(obj)
   #   if sub_kollection = has_kollection?(obj, obj.class.name)
