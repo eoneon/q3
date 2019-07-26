@@ -5,8 +5,9 @@ class ItemGroup < ApplicationRecord
   before_create :set_sort
 
   def set_sort
-    count = set_count
-    self.sort = count == 0 ? 1 : count + 1
+    #count = set_count
+    #self.sort = count == 0 ? 1 : count + 1
+    self.sort = set_count + 1
   end
 
   def set_count

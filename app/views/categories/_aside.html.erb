@@ -1,0 +1,11 @@
+<div class="card bg-light mb-3" id="category-new">
+  <%#= render "categories/forms/new", category: Category.new, url: Category.new, form_id: "category-new-form" %>
+</div>
+
+<div class="card bg-light mb-0 p-2">
+  <%#= render "search_categories/form" %>
+</div>
+
+<div class="list-group" id="tab-index" role="tablist">
+  <%= render "categories/tabs", categories: categories %>
+</div>

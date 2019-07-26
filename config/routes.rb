@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+  resources :categories do
+    resources :item_groups, only: [:create, :destroy] do
+      member do
+        post :sort_up, :sort_down
+      end
+    end
+  end
+
   resources :products do
     resources :product_item_groups, only: [:create, :destroy] do
       member do

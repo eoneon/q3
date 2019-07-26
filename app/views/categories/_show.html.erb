@@ -1,0 +1,13 @@
+<div class="card border m-1 border-dark" id="<%= dom_ref(category, 'show') %>">
+  <div class="card-header">
+    <%= render "categories/header", category: category, obj_ref: dom_ref(category) %>
+  </div>
+
+  <div class="card-body p-1 collapse" id="<%= dom_ref(category, 'body') %>">
+    <% self_join_assocs(category).each do |type| %>
+      <div id='<%= dom_ref(category, "#{to_snake(type)}-index") %>'>
+        <%= render "sub_categories/index", origin: category, type: type %>
+      </div>
+    <% end %>
+  </div>
+</div>

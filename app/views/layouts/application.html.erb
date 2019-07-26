@@ -11,12 +11,15 @@
     <div class="container">
       <nav class="fixed-top navbar navbar-expand" id="nav-bar">
         <span><%#= render "layouts/nav_menu" %></span>
+        <a href="<%= categories_path %>" class="nav-link text-white">
+          Categories
+        </a>
         <a href="<%= products_path %>" class="nav-link text-white">
           Products
         </a>
-        <a href="<%= product_kinds_path %>" class="nav-link text-white">
+        <!-- <a href="<%= product_kinds_path %>" class="nav-link text-white">
           Products-Kinds
-        </a>
+        </a> -->
         <a href="<%= product_parts_path %>" class="nav-link text-white">
           Product-Parts
         </a>

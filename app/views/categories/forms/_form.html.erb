@@ -1,0 +1,23 @@
+<%= form_with model: product_part, url: url, id: form_id do |f| %>
+  <div class="form" data-sti-name="product_part">
+    <%= render "product_parts/forms/hidden_fields", f: f, form_id: form_id, product_part: product_part %>
+    <div class="form-row align-items-center">
+      <div class="input-group border-secondary input-border rounded-left rounded-right-border pr-1 mr-1">
+        <div class="input-group-prepend">
+          <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" id="<%= dom_ref(obj_ref, 'caret-toggle') %>" data-toggle="collapse" data-target="#<%= dom_ref(obj_ref, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
+          <div class="btn-group">
+            <button class="dropdown-toggle type-btn type-dropdown btn bg-disabled border-light-gray rounded-0 border-right-0 my-1 px-1 py-0" type="button" data-toggle="dropdown" aria-expanded="false" disabled><span class="type-label"><%= abbrv_type(product_part) %></span></button>
+            <%= render "product_parts/forms/edit_type_dropdown", sti: :product_part %>
+          </div>
+          <button class="btn btn-sm bg-transparent border-light-gray edit-toggle my-1" id="<%= dom_ref(obj_ref, 'edit-toggle') %>" type="button"><span class="text-secondary"><%= (fa_icon "edit") %></span></button>
+        </div>
+        <%= f.text_field :name, placeholder: "enter product-part name", class: "form-control squared-border bg-light text-uppercase my-1 pl-2 name-field", disabled: true %>
+        <div class="input-group-append">
+          <button class="collapse show btn btn-sm bg-transparent border-light-gray font-weight-light category-check my-1 <%= cond_attr(product_part.category, true, 'text-success', 'text-secondary') %>" type="button"><%= (fa_icon "header") %></button>
+          <button class="collapse show btn btn-sm bg-transparent rounded-right-border border-light-gray font-weight-light display-check my-1 pr-2 <%= cond_attr(product_part.display_name, true, 'text-success', 'text-secondary') %>" type="button"><%= (fa_icon "star") %></button>
+          <button class="collapse btn btn-sm btn-primary rounded-right-border border-left-0 my-1" type="submit"><%= (fa_icon "plus") %></button>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
