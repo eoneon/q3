@@ -1,6 +1,6 @@
 <div class="row align-items-center justify-content-between bg-light">
   <div class="col-11 pr-0">
-    <%#= render "categories/forms/form", category: category, url: category_path(category), target: category, obj_ref: obj_ref, form_id: dom_ref(category, 'edit-form') %>
+    <%= render "categories/forms/form", category: category, url: category_path(category), target: category, obj_ref: obj_ref, form_id: dom_ref(category, 'edit-form') %>
   </div>
 
   <div class="col-1 pl-0">
@@ -17,7 +17,7 @@
 
 <div class="form-row collapse pl-2 align-items-center parent-toggle" id="<%= dom_ref(category, 'parent-toggle') %>">
   <div class="col collapse show btn-group-toggle" id="<%= dom_ref(category, "btn-group-toggle") %>">
-    <%= render "categories/forms/nested_form_toggle", category: category, obj_ref: obj_ref %>
+    <%#= render "categories/forms/nested_form_toggle", category: category, obj_ref: obj_ref %>
   </div>
-  <%= render "categories/forms/nested_forms", category: category, obj_ref: obj_ref %>
+  <%#= render "categories/forms/nested_forms", category: category, obj_ref: obj_ref %>
 </div>

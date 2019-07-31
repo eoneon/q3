@@ -1,0 +1,27 @@
+<div class="row align-items-center justify-content-between bg-light">
+  <div class="col-auto px-0 mr-0">
+    <%#= render "item_groups/sub_categories/sort_btn_group", origin: origin, item_group: item_group, obj_ref: obj_ref %>
+  </div>
+
+  <div class="col-10 px-0 mx-0">
+    <%= render "categories/forms/form", category: target, url: category_sub_category_path(origin, target), target: item_group, obj_ref: obj_ref, form_id: dom_ref(obj_ref, 'edit-form') %>
+  </div>
+
+  <div class="col-1 pl-0 ml-0">
+    <div class="btn-toolbar" role="toolbar">
+      <div class="btn-group align-items-center" role="group">
+        <button class="btn bg-transparent text-info control-toggle pl-0" id="<%= dom_ref(obj_ref, 'control-toggle') %>" data-toggle="collapse" data-target="#<%= dom_ref(obj_ref, 'parent-toggle') %>" type="button" aria-expanded="false"><%= (fa_icon "ellipsis-v") %></button>
+        <%= button_to category_item_group_path(target, item_group, obj_ref: obj_ref), method: :delete, remote: true, data: {confirm: "Are you sure?"}, class: "btn btn-sm bg-transparent font-weight-light text-danger pl-1" do %>
+          <span><%= (fa_icon "minus-square") %></span>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="form-row collapse pl-2 ml-2 align-items-center parent-toggle" id="<%= dom_ref(obj_ref, 'parent-toggle') %>">
+  <div class="col collapse show btn-group-toggle" id="<%= dom_ref(obj_ref, "btn-group-toggle") %>">
+    <%#= render "sub_categories/forms/nested_form_toggle", category: target, obj_ref: obj_ref %>
+  </div>
+  <%#= render "sub_categories/forms/nested_forms", category: target, obj_ref: obj_ref %>
+</div>

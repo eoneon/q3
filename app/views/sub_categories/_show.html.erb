@@ -1,0 +1,14 @@
+<div class="card border-dark m-1" id="<%= dom_ref(obj_ref, 'show') %>">
+  <div class="card-header" id="<%= dom_ref(obj_ref, 'header') %>">
+    <%= render "sub_categories/header", origin: origin, target: target, item_group: item_group, obj_ref: obj_ref %>
+  </div>
+
+  <div class="card-body collapse p-1" id="<%= dom_ref(obj_ref, 'body') %>">
+    <%# self_join_assocs(target, :product_kind).each do |type| %>
+    <% self_join_assocs(target).each do |type| %>
+      <div id='<%= dom_ref(target, "#{to_snake(type)}-index") %>'>
+        <%= render "sub_categories/index", origin: target, type: type %>
+      </div>
+    <% end %>
+  </div>
+</div>

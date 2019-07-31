@@ -3,13 +3,14 @@
     <%= render "categories/forms/hidden_fields", f: f, form_id: form_id, category: category %>
     <div class="form-row align-items-center">
       <div class="input-group border-secondary input-border rounded-left rounded-right-border pr-1 mr-1">
+
         <div class="input-group-prepend">
-          <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" id="<%= dom_ref(obj_ref, 'caret-toggle') %>" data-toggle="collapse" data-target="#<%= dom_ref(obj_ref, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
+          <button class="caret-toggle btn btn-lg border-light-gray border-right-0 bg-disabled ml-1 my-1 pl-2 py-0" data-toggle="collapse" data-target="#<%= dom_ref(obj_ref, 'body') %>" type="button" aria-expanded="false"><%= (fa_icon "caret-right") %></button>
           <div class="btn-group">
-            <!-- <button class="dropdown-toggle type-btn type-dropdown btn bg-disabled border-light-gray rounded-0 border-right-0 my-1 px-1 py-0" type="button" data-toggle="dropdown" aria-expanded="false" disabled><span class="type-label"><%= abbrv_type(category) %></span></button> -->
-            <%#= render "categories/forms/edit_type_dropdown", sti: :category %>
+            <!-- <button class="dropdown-toggle type-btn type-dropdown btn bg-disabled border-light-gray rounded-0 border-right-0 my-1 px-1 py-0" type="button" data-toggle="dropdown" aria-expanded="false" disabled><span class="type-label"><%#= abbrv_type(target) %></span></button> -->
+            <%#= render "categories/forms/edit_type_dropdown", category: target %>
           </div>
-          <button class="btn btn-sm bg-transparent border-light-gray edit-toggle my-1" id="<%= dom_ref(obj_ref, 'edit-toggle') %>" type="button"><span class="text-secondary"><%= (fa_icon "edit") %></span></button>
+          <button class="btn btn-sm bg-transparent border-light-gray text-secondary edit-btn my-1" type="button"><%= (fa_icon "edit") %></button>
         </div>
         <%= f.text_field :name, placeholder: "enter product-part name", class: "form-control squared-border bg-light text-uppercase my-1 pl-2 name-field", disabled: true %>
         <div class="input-group-append">

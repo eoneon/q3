@@ -1,0 +1,9 @@
+$("#<%= dom_ref(@form_id) %>").replaceWith("<%= j render 'product_parts/forms/form', product_part: @sub_part, url: product_part_sub_part_path(@product_part, @sub_part), target: @product_part.item_groups.first, obj_ref: obj_ref(@form_id), form_id: @form_id %>");
+var form = $("#search-form");
+var idx = $(form).find(".form").attr("data-search");
+//needs to happen before we submit form
+$(form).html("<%= j render 'search_product_parts/form' %>");
+$(form).find(".form").attr("data-search", idx);
+$(form).find('select option').eq(idx).attr('selected', true);
+
+$(form).submit();

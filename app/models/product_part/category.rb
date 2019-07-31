@@ -10,7 +10,7 @@ class Category < ProductPart
   has_many :sub_medium_groups, through: :item_groups, source: :target, source_type: "SubMediumGroup"
     has_many :sub_media, through: :item_groups, source: :target, source_type: "SubMedium"
 
-  has_many :identifier_groups, through: :item_groups, source: :target, source_type: "IdentiferGroup"
+  has_many :identifier_groups, through: :item_groups, source: :target, source_type: "IdentifierGroup"
     has_many :editions, through: :item_groups, source: :target, source_type: "Edition"
     has_many :signatures, through: :item_groups, source: :target, source_type: "Signature"
     has_many :certificates, through: :item_groups, source: :target, source_type: "Certificate"

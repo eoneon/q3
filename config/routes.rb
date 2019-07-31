@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :categories do
+    resources :sub_categories, only: [:create, :update]
     resources :item_groups, only: [:create, :destroy] do
       member do
         post :sort_up, :sort_down
