@@ -1,4 +1,5 @@
 module PopProductPartsHelper
+  #edit: item_categories
   def org_categories
     ['Flat-Category', 'Sericel-Category', 'HB-Sculpture-Category', 'HM-Sculpture-Category', 'General-Sculpture-Category']
   end
@@ -8,10 +9,10 @@ module PopProductPartsHelper
   end
 
   def pp_hash(sti_key, assoc_key)
-    h = {product_kind: product_kind_assoc, medium: medium_assoc, material: material_assoc, mounting: mounting_assoc, dimension: dimension_assoc, mounting_dimension: mounting_dimension_assoc}
+    h = {product_kind: product_kind_assoc, medium: medium_assoc, material: material_assoc, mounting: mounting_assoc, dimension: dimension_assoc, siganture: signature_assoc}
     h[sti_key].assoc(assoc_key).drop(1)
   end
-
+  #mounting_dimension: mounting_dimension_assoc
   #####################
   def product_kind_assoc
     [flat_pk, sericel_pk, hb_sculpture_pk, hm_sculpture_pk, gen_sculpture_pk]
@@ -33,11 +34,12 @@ module PopProductPartsHelper
     [flat_dimension, sculpture_dimension]
   end
 
-  def mounting_dimension_assoc
-    [flat_mounting_dimension, sculpture_mounting_dimension]
-  end
+  # def mounting_dimension_assoc
+  #   [flat_mounting_dimension, sculpture_mounting_dimension]
+  # end
 
   #org_elements
+  #edit: add Flat-Mounting-Dimension
   def flat_category
     ['Flat-Category', 'Flat-ProductKind', 'Flat-Material', 'Flat-Mounting', 'Flat-Dimension']
   end
@@ -159,11 +161,48 @@ module PopProductPartsHelper
     ['Sculpture-Dimension', 'sculpture-dimension']
   end
 
-  def flat_mounting_dimension
-    ['Flat-Mounting-Dimension', 'flat-mounting-dimension']
+  # def flat_mounting_dimension
+  #   ['Flat-MountingDimension', 'flat-mounting-dimension']
+  # end
+  #
+  # def sculpture_mounting_dimension
+  #   ['Sculpture-MountingDimension', 'sculpture-mounting-dimension']
+  # end
+
+  #####################
+  def sti_cat_group(sti_key)
+    h = {signature: signature_assoc}
+    h[sti_key].assoc(assoc_key)
   end
 
-  def sculpture_mounting_dimension
-    ['Sculpture-Mounting-Dimension', 'sculpture-mounting-dimension']
+  # def signature_group
+  #   ['Flat-Signature', 'Sculpture-Signature']
+  # end
+
+  #####################
+  def option_group(sti_key)
+    #h = {signature: flat_signature_opt_idx}
+    #h[sti_key].assoc(assoc_key)
+    #['Flat-Signature', flat_signature_opt_idx]
+  end
+
+  def signature_assoc
+    [flat_signature, sculpture_signature]
+  end
+
+  def flat_signature
+    ['Flat-Signature', 'artist', 'relative', 'famous', 'authorized']
+  end
+
+  def flat_signature_opt_idx
+    [[0], [0,0], [0,1], [0,2], [2], [0,3], [3]]
+  end
+
+  def sculpture_signature_opt_idx
+    [[0]]
+  end
+
+  def sculpture_signature
+    ['Sculpture-Signature', 'artist']
   end
 end

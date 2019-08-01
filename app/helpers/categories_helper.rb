@@ -1,21 +1,21 @@
 module CategoriesHelper
   def pop_sti_categories
-    origin_category = find_or_create_by_name(:category, 'Category')
+    origin = find_or_create_by_name(:category, 'STI-Category')
     categories =[]
     self_join_assocs('category', :category).each do |type|
       category = find_or_create_by_name(:category, to_classify(type))
-      associate_unless_included(origin_category, category)
+      associate_unless_included(origin, category)
       categories << category
     end
     pk = categories.select {|i| i.name == 'ProductKind'}.first
-    pop_org_categories(pk, origin_category)
+    pop_org_categories(pk, origin)
     #categories
   end
 
   #sti_category: Category(name: 'ProductKind')
-  def pop_org_categories(sti_category, origin_category)
-    structure = find_or_create_by_name(:category, 'structure')
-    associate_unless_included(origin_category, structure)
+  def pop_org_categories(sti_category, origin)
+    structure = find_or_create_by_name(:category, 'Item-Category')
+    associate_unless_included(origin, structure)
     sti_key = to_snake(sti_category.name)
     #['Flat-Category', 'Sericel-Category'...]
     org_categories.each do |cat_name|
@@ -51,8 +51,8 @@ module CategoriesHelper
       #Category(name: 'Flat-ProductKind') << #ProductKind(name: 'original-art')
       if sti_key == :product_kind
         pop_sub_pps(pp, :medium)
-      # elsif sti_key == :mounting
-      #   pop_sub_pps(pp, :mounting_dimension)
+      elsif sti_key == :mounting && pp.name != 'wrapped'
+        pop_mountings_dimensions(pp, :dimension)
       end
     end
   end
@@ -65,33 +65,10 @@ module CategoriesHelper
     end
   end
 
-  # def pop_org_categories(sti_category)
-  #   sti_key = to_snake(sti_category.name)
-  #   org_categories(sti_key).each do |org_name|
-  #     org_category = find_or_create_by_name(:category, org_name)
-  #     associate_unless_included(sti_category, org_category)
-  #     pop_sti_product_parts(org_category, sti_category.name)
-  #     pop_org_subcategories(org_category, sti_key)
-  #   end
-  # end
-  #
-  # def pop_org_subcategories(org_category, sti_key)
-  #   org_subcategories(sti_key).each do |sub_org_name|
-  #     name = org_category.name.split('-').first.singularize
-  #     org_subcategory_name = [name, sub_org_name].join('-').pluralize
-  #     org_subcategory = find_or_create_by_name(:category, org_subcategory_name)
-  #     associate_unless_included(org_category, org_subcategory)
-  #   end
-  # end
-  #
-  # def pop_sti_product_parts(org_category, sti_type)
-  #   sti_key = to_snake(sti_type)
-  #   assoc = org_category.name
-  #   sti_product_parts(sti_key, assoc).each do |pp_name|
-  #     pp = find_or_create_by_name(sti_type, pp_name)
-  #     associate_unless_included(org_category, pp)
-  #   end
-  # end
+  def pop_mountings_dimensions(mounting_pp, sti_key)
+    sub_dimension_pp = find_or_create_by_name(sti_key, append_name(mounting_pp.name, sti_key.to_s))
+    associate_unless_included(mounting_pp, sub_dimension_pp)
+  end
 
   def find_or_create_by_name(klass, name)
     to_konstant(klass).where(name: name).first_or_create
@@ -121,6 +98,9 @@ module CategoriesHelper
     h[:"#{sti_key}"].assoc(sti_name).drop(1)
   end
 
+  def append_name(sti, suffix)
+    [sti, suffix].join('-')
+  end
 #############
 
   def category_origin(obj)
