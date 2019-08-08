@@ -1,17 +1,50 @@
 module PopProductPartsHelper
-  #edit: item_categories
-  def org_categories
-    ['Flat-Category', 'Sericel-Category', 'HB-Sculpture-Category', 'HM-Sculpture-Category', 'General-Sculpture-Category']
+  def cat_assocs
+    flat_cat_assocs + sculpture_cat_assocs
   end
 
-  def org_elements(assoc_key)
-    [flat_category, sericel_category, hb_sculpture_category, hm_sculpture_category, gen_sculpture_category].assoc(assoc_key).drop(1)
+  def flat_cat_assocs
+    flat_items.map {|i| cat_pk_mat_items.map{|sti| append_name(i, sti) } + flat_mount_dim_items}
   end
+
+  def sculpture_cat_assocs
+    sculpture_items.map {|i| cat_pk_mat_items.map{|sti| append_name(i, sti) } + sculpture_mount_dim_items}
+  end
+
+  ################ structural stuff
+  #relevant to :flat_cat_assocs re: flat_mount_dim_items
+  def flat_items
+    ['Flat', 'Sericel']
+  end
+  #relevant to signature and certificates (will be)
+  # def cat_items
+  #   ['Flat', 'Sculpture']
+  # end
+  ################
+
+  def sculpture_items
+    ['HB', 'HM', 'General'].map{|n| append_name(n, 'Sculpture')}
+  end
+
+  def cat_pk_mat_items
+    ['Category', 'ProductKind', 'Material']
+  end
+
+  def flat_mount_dim_items
+    ['Mounting', 'Dimension'].map{|sti| append_name('Flat',sti)}
+  end
+
+  def sculpture_mount_dim_items
+    ['Mounting', 'Dimension'].map{|sti| append_name('Sculpture',sti)}
+  end
+
+########################end refactor
 
   def pp_hash(sti_key, assoc_key)
-    h = {product_kind: product_kind_assoc, medium: medium_assoc, material: material_assoc, mounting: mounting_assoc, dimension: dimension_assoc, siganture: signature_assoc}
+    h = {product_kind: product_kind_assoc, medium: medium_assoc, material: material_assoc, mounting: mounting_assoc, dimension: dimension_assoc, signature: signature_assoc}
     h[sti_key].assoc(assoc_key).drop(1)
   end
+
   #mounting_dimension: mounting_dimension_assoc
   #####################
   def product_kind_assoc
@@ -34,36 +67,16 @@ module PopProductPartsHelper
     [flat_dimension, sculpture_dimension]
   end
 
-  # def mounting_dimension_assoc
-  #   [flat_mounting_dimension, sculpture_mounting_dimension]
-  # end
-
-  #org_elements
-  #edit: add Flat-Mounting-Dimension
-  def flat_category
-    ['Flat-Category', 'Flat-ProductKind', 'Flat-Material', 'Flat-Mounting', 'Flat-Dimension']
+  def signature_assoc
+    [['Flat-Signature', 'artist', 'authorized', 'relative', 'famous'], ['Sculpture-Signature', 'artist']]
   end
 
-  def sericel_category
-    ['Sericel-Category', 'Sericel-ProductKind', 'Sericel-Material', 'Flat-Mounting', 'Flat-Dimension']
+  def certificate_assoc
+    [['General-Certificate'], ['Publisher-Certificate'], ['Animation-Certificate']]
   end
 
-  def hb_sculpture_category
-    ['HB-Sculpture-Category', 'HB-Sculpture-ProductKind', 'HB-Sculpture-Material', 'Sculpture-Mounting', 'Sculpture-Dimension']
-  end
+  ##################### product_kind_set
 
-  def hm_sculpture_category
-    ['HM-Sculpture-Category', 'HM-Sculpture-ProductKind', 'HM-Sculpture-Material', 'Sculpture-Mounting', 'Sculpture-Dimension']
-  end
-
-  def gen_sculpture_category
-    ['General-Sculpture-Category', 'General-Sculpture-ProductKind', 'General-Sculpture-Material', 'Sculpture-Mounting', 'Sculpture-Dimension']
-  end
-  ###
-
-  #####################
-  #org_product_parts(product_kind)
-  #product_kind_set
   def flat_pk
     ['Flat-ProductKind', 'original art', 'one-of-a-kind art', 'print-media']
   end
@@ -84,9 +97,7 @@ module PopProductPartsHelper
     ['General-Sculpture-ProductKind', 'general-sculpture media']
   end
 
-  #####################
-  #org_product_parts(medium)
-  #medium_set
+  ###################### medium_set
   def original_med
     ['original art', 'painting', 'sketch']
   end
@@ -119,9 +130,7 @@ module PopProductPartsHelper
     ['general-sculpture media', 'general-sculpture']
   end
 
-  #####################
-  #org_product_parts(material)
-  #material_set
+  ###################### material_set
   def flat_mat
     ['Flat-Material', 'canvas', 'paper', 'board', 'metal']
   end
@@ -142,9 +151,7 @@ module PopProductPartsHelper
     ['Sericel-Material', 'sericel']
   end
 
-  #####################
-  #org_product_parts(mounting)
-  #mounting_assoc
+  ##################### mounting_assoc
   def flat_mounting
     ['Flat-Mounting', 'framed', 'bordered', 'wrapped', 'matting']
   end
@@ -161,6 +168,74 @@ module PopProductPartsHelper
     ['Sculpture-Dimension', 'sculpture-dimension']
   end
 
+  #####################
+  def sti_cat_group(sti_key)
+    h = {signature: signature_assoc}
+    h[sti_key].assoc(assoc_key)
+  end
+
+  #####################
+  # def option_group(sti_key, assoc_key)
+  #   h = {signature: signature_opt_idx}
+  #   h[sti_key].assoc(assoc_key).drop(1)
+  # end
+
+  ##################### start of added methods
+
+  def sti_opt_group(sti_scope:, **opt_keys)
+    args = [:hash_key, :assoc_key].map {|k| opt_keys[k]}.compact
+    public_send(sti_scope + '_opts', *args)
+
+  end
+
+  def signature_opts(hash_key, assoc_key)
+    h = {category: opt_group_values(signature_opt_group), opts: signature_opt_group, opt_idx: signature_opt_idx}
+    h[hash_key].assoc(assoc_key).drop(1)
+  end
+
+  def certificate_opts(hash_key)
+    h = {category: "", opts: certificate_opt_group, opt_idx: ""}
+    h[hash_key]
+  end
+
+  def edition_opts(hash_key)
+    h = {category: "", opts: edition_opt_group, opt_idx: ""}
+    h[hash_key]
+  end
+
+  def sub_medium_opts(hash_key)
+    h = {category: "", opts: sub_medium_opt_group, opt_idx: sub_medium_opt_idx}
+    h[hash_key]
+  end
+
+  def signature_opt_group
+    ['Signature', ['Flat-Signature', 'artist', 'authorized', 'relative', 'famous'], ['Sculpture-Signature', 'artist']]
+  end
+
+  def certificate_opt_group
+    ['general-certificate', 'publisher-certificate', 'animation-certificate']
+  end
+
+  def edition_opt_group
+    ['numbered-xy', 'numbered', 'from-an-edition', 'open-edition']
+  end
+
+  def sub_medium_opt_group
+    ['embellishment', 'leafing', 'remarque']
+  end
+
+  def signature_opt_idx
+    [['Flat-Signature', [0], [0,0], [0,1], [0,2], [2], [0,3], [3]], ['Sculpture-Signature', [0]]]
+  end
+
+  def sub_medium_opt_idx
+    [[0,1,2], [0,1], [0,2], [0], [1], [2]]
+  end
+
+  def opt_group_values(opt_group)
+    opt_group.drop(1).select {|a| a[0]}.flatten
+  end
+
   # def flat_mounting_dimension
   #   ['Flat-MountingDimension', 'flat-mounting-dimension']
   # end
@@ -168,41 +243,44 @@ module PopProductPartsHelper
   # def sculpture_mounting_dimension
   #   ['Sculpture-MountingDimension', 'sculpture-mounting-dimension']
   # end
-
-  #####################
-  def sti_cat_group(sti_key)
-    h = {signature: signature_assoc}
-    h[sti_key].assoc(assoc_key)
-  end
-
-  # def signature_group
-  #   ['Flat-Signature', 'Sculpture-Signature']
+  # def signature_assoc
+  #   [flat_signature, sculpture_signature]
+  # end
+  #edit: item_categories
+  # def org_categories
+  #   ['Flat-Category', 'Sericel-Category', 'HB-Sculpture-Category', 'HM-Sculpture-Category', 'General-Sculpture-Category']
   # end
 
-  #####################
-  def option_group(sti_key)
-    #h = {signature: flat_signature_opt_idx}
-    #h[sti_key].assoc(assoc_key)
-    #['Flat-Signature', flat_signature_opt_idx]
-  end
+  # def org_elements(assoc_key)
+  #   [flat_category, sericel_category, hb_sculpture_category, hm_sculpture_category, gen_sculpture_category].assoc(assoc_key).drop(1)
+  # end
+  #org_elements
+  #edit: add Flat-Mounting-Dimension
+  # def flat_category
+  #   ['Flat-Category', 'Flat-ProductKind', 'Flat-Material', 'Flat-Mounting', 'Flat-Dimension']
+  # end
+  #
+  # def sericel_category
+  #   ['Sericel-Category', 'Sericel-ProductKind', 'Sericel-Material', 'Flat-Mounting', 'Flat-Dimension']
+  # end
+  #
+  # def hb_sculpture_category
+  #   ['HB-Sculpture-Category', 'HB-Sculpture-ProductKind', 'HB-Sculpture-Material', 'Sculpture-Mounting', 'Sculpture-Dimension']
+  # end
+  #
+  # def hm_sculpture_category
+  #   ['HM-Sculpture-Category', 'HM-Sculpture-ProductKind', 'HM-Sculpture-Material', 'Sculpture-Mounting', 'Sculpture-Dimension']
+  # end
+  #
+  # def gen_sculpture_category
+  #   ['General-Sculpture-Category', 'General-Sculpture-ProductKind', 'General-Sculpture-Material', 'Sculpture-Mounting', 'Sculpture-Dimension']
+  # end
+  ###
+  # def sculpture_signature_opt_idx
+  #   ['Sculpture-Signature', [[0]]]
+  # end
 
-  def signature_assoc
-    [flat_signature, sculpture_signature]
-  end
-
-  def flat_signature
-    ['Flat-Signature', 'artist', 'relative', 'famous', 'authorized']
-  end
-
-  def flat_signature_opt_idx
-    [[0], [0,0], [0,1], [0,2], [2], [0,3], [3]]
-  end
-
-  def sculpture_signature_opt_idx
-    [[0]]
-  end
-
-  def sculpture_signature
-    ['Sculpture-Signature', 'artist']
-  end
+  # def sculpture_signature
+  #   ['Sculpture-Signature', 'artist']
+  # end
 end

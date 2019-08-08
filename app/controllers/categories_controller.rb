@@ -4,7 +4,9 @@ class CategoriesController < ApplicationController
     #@categories = Category.all #.order("name ASC")
     categories = Category.includes(:item_groups).order('item_groups.sort') #yes, but don't want first category
     #@categories = categories.where.not(name: 'Category')
-    @categories = categories.where(name: helpers.org_categories)
+    #@categories = categories.where(name: helpers.org_categories)
+    categories = Category.find_by(name: 'Product-Category').categories
+    @categories = categories + Category.find_by(name: 'Option-Group').categories 
   end
 
   def show
