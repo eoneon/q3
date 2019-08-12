@@ -185,7 +185,6 @@ module PopProductPartsHelper
   def sti_opt_group(sti_scope:, **opt_keys)
     args = [:hash_key, :assoc_key].map {|k| opt_keys[k]}.compact
     public_send(sti_scope + '_opts', *args)
-
   end
 
   def signature_opts(hash_key, assoc_key)

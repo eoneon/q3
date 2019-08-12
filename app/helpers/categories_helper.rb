@@ -1,19 +1,23 @@
 module CategoriesHelper
+  # def test(v:, **opts)
+  #   #p noise
+  #   p opts[:noise]
+  #   p opts[:color]
+  # end
+
   def pop_cat_items
-    origin = find_or_create_by_name(:category, 'Origin')
-    prod_cat_origin = find_or_create_by_name_and_assoc(origin, :category, 'Product-Category')
+    origin = find_or_create_by_name(obj_klass: :category, name: 'Origin')
+    prod_cat_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: 'Product-Category')
     pop_prod_cat_items(prod_cat_origin)
-    #refactor starts here
-    opt_group_origin = find_or_create_by_name_and_assoc(origin, :category, 'Option-Group')
-    #pop_sig_opt_groups(opt_group_origin)
+    opt_group_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: 'Option-Group')
     build_opt_groups(origin)
   end
 
   def pop_prod_cat_items(origin)
     cat_assocs.each do |assoc_arr|
-      prod_cat = find_or_create_by_name_and_assoc(origin, :category, assoc_arr.first)
+      prod_cat = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: assoc_arr.first)
       assoc_arr.drop(1).each do |prod_subcat_name|
-        prod_subcat = find_or_create_by_name_and_assoc(prod_cat, :category, prod_subcat_name)
+        prod_subcat = find_or_create_by_name_and_assoc(origin: prod_cat, target_type: :category, target_name: prod_subcat_name)
         pop_pp_items(prod_subcat)
       end
     end
@@ -22,21 +26,17 @@ module CategoriesHelper
   ############################ start of refactor
   def build_opt_groups(origin)
     ['SubMedium', 'Edition', 'Signature', 'Certificate'].each do |sti|
-      sti_key = to_snake(sti)
-      #=> 'signature'
-      nested_origin_name = [sti, origin.name].join('-')
-      #['Signature', 'Option-Group'].join('-')
-      #=> 'Signature-Option-Group'
-      nested_origin = find_or_create_by_name_and_assoc(origin, :category, nested_origin_name)
-      #Category(name: 'Option-Group') << nested_origin/'Signature-Option-Group'
-      pop_nested_opt_groups?(nested_origin, sti_key)
+      sti_key = to_snake(sti) #=> 'signature'
+      nested_origin_name = append_name(sti, origin.name) #=> 'Signature-Option-Group'
+      nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: nested_origin_name) #Category(name: 'Option-Group') << nested_origin/'Signature-Option-Group'
+      pop_nested_cat_groups?(nested_origin, sti_key)
     end
   end
 
-  def pop_nested_opt_groups?(origin, sti_key)
-    #if nested_opt_names = has_category_hash_key?(sti_key)
-    if sti_opt_group(sti_key, :category).present?
-      pop_nested_opt_groups(origin, sti_key)
+  def pop_nested_cat_groups?(origin, sti_key)
+    if nested_cat_names = has_category_hash_key?(sti_scope: sti_key)
+    # if sti_opt_group(sti_key, :category).present?
+      pop_nested_cat_groups(origin, sti_key, nested_cat_names)
     else
       #refac pt 1
       #keys = {sti_key: sti_key}
@@ -45,65 +45,66 @@ module CategoriesHelper
     end
   end
 
-  #test for: pop_nested_opt_groups?
-  def has_category_hash_key?(sti_scope)
-    if sti_opt_group(sti_scope: sti_scope, :category).present?
-      sti_opt_group(sti_scope: sti_scope, :category)
-    end
-  end
+  # def pop_nested_cat_groups(origin, sti_key)
+  #   sti_opt_group(sti_key, :category).each do |cat_name|
+  #     nested_origin_name = [cat_name, origin.name].join('-')
+  #     nested_origin = find_or_create_by_name_and_assoc(origin, :category, nested_origin_name)
+  #     #origin << #Category(name: 'Flat-Signature-Option-Group')
+  #     #refac pt 2
+  #     #keys = {sti_key: sti_key, assoc_key: cat_name}
+  #     #pop_opts(nested_origin, keys)
+  #     pop_opts(nested_origin, sti_key, cat_name)
+  #     #Category(name: 'Flat-Signature-Option-Group'), "signature", 'Flat-Signature'
+  #   end
+  # end
 
-  def pop_nested_opt_groups(origin, sti_key)
-    sti_opt_group(sti_key, :category).each do |cat_name|
-      nested_origin_name = [cat_name, origin.name].join('-')
-      nested_origin = find_or_create_by_name_and_assoc(origin, :category, nested_origin_name)
+  def pop_nested_cat_groups(origin, sti_key, nested_cat_names)
+    nested_cat_names.each do |nested_cat_name|
+      name = append_name(nested_cat_name, origin.name)
+      nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: name)
       #origin << #Category(name: 'Flat-Signature-Option-Group')
-      #refac pt 2
-      #keys = {sti_key: sti_key, assoc_key: cat_name}
-      #pop_opts(nested_origin, keys)
-      pop_opts(nested_origin, sti_key, cat_name)
-      #Category(name: 'Flat-Signature-Option-Group'), "signature", 'Flat-Signature'
+      #pop_opts(origin: nested_origin, sti_key: sti_key, assoc_key: nested_cat_name)
+      opt_names = sti_opt_group(sti_scope: sti_key, hash_key: :opts, assoc_key: nested_cat_name)
+      opt_set = find_or_create_by_names_and_assoc(origin: nested_origin, target_type: sti_key, target_names: opt_names)
+      #opt_group_args = {sti_scope: sti_key, hash_key: :opts, assoc_key: opt_keys[:assoc_key]}
+      if opt_idx = has_opt_idx_hash_key?(sti_scope: sti_key, hash_key: :opts, assoc_key: nested_cat_name)
+        #obj_set = find_or_create_by_names(obj_klass: sti_key, names: opt_names)
+        #(origin: nested_origin, opt_idx: opt_idx, opt_names: opt_names)
+      else
+        assoc_kollection(origin: nested_origin, target_type: sti_key, targets: opt_set)
+      end
     end
   end
-  ##refac pt 3
-  #pop_opts(origin, keys)
-  def pop_opts(origin, sti_key, *assoc_key)
-    #refac pt 4
-    #opt_names = sti_opt_group(sti_key, keys)
-    opt_names = sti_opt_group(sti_key, :opts, assoc_key)
-    #refac pt 5
-    #opts = opt_names.map {|opt_name| find_or_create_by_name(keys[sti_key], opt_name)}
-    opts = opt_names.map {|opt_name| find_or_create_by_name(sti_key, opt_name)}
 
-    #refac pt 6
-    #sti_opt_group(sti_key, keys).empty?
-    if sti_opt_group(sti_key, :opt_idx).empty?
-      assoc_kollection(origin, opts)
-    else
-      #refac pt 7
-      pop_nested_opt_group_via_opt_idx(origin, sti_key, assoc_key, opts)
-    end
-  end
+  # def pop_opts_and_assoc(origin:, sti_key:, assoc_key:, opt_names:)
+  #   #opt_group_args = {sti_scope: sti_key, hash_key: :opts, assoc_key: opt_keys[:assoc_key]}
+  #   #opt_names = sti_opt_group(opt_group_args.compact!)
+  #   find_or_create_by_names_and_assoc(origin: origin, target_type: sti_key, target_names: opt_names)
+  #   # if opt_idx = has_opt_idx_hash_key?(opt_group_args.delete(:hash_key))
+  #   #   #(opt_idx: opt_idx)
+  #   # else
+  #   #   find_or_create_by_names_and_assoc(origin: origin, target_type: sti_key, target_names: opt_names)
+  #   # end
+  # end
+
+  # def pop_opts(origin:, **opt_keys)
+  #   #get opt names
+  #   opt_names = sti_opt_group(sti_scope: sti_key, hash_key: :opts, assoc_key: assoc_key)
+  #
+  #   #assoc_kollection(origin: origin, target_type: sti_key, targets: opt_names)
+  #
+  #   opts = opt_names.map {|opt_name| find_or_create_by_name(obj_klass: sti_key, name: opt_name)}
+  #   #origin:, target_type:, targets:
+  #   #refac pt 6
+  #   #sti_opt_group(sti_key, keys).empty?
+  #   if sti_opt_group(sti_key, :opt_idx).empty?
+  #     assoc_kollection(origin, opts)
+  #   else
+  #     #refac pt 7
+  #     pop_nested_opt_group_via_opt_idx(origin, sti_key, assoc_key, opts)
+  #   end
+  # end
   ############################ end of refactor
-  #redundant
-  # def pop_sig_opt_groups(origin)
-  #   sti = 'Signature'
-  #   opt_group_origin = find_or_create_by_name_and_assoc(origin, :category, append_name(sti, 'Option-Group'))
-  #   ['Flat', 'Sculpture'].each do |cat|
-  #     assoc_key = append_name(cat, sti)
-  #     name = append_name(assoc_key, 'Option-Group')
-  #     sig_opt_group = find_or_create_by_name_and_assoc(opt_group_origin, :category, name)
-  #     pop_sig_items(sig_opt_group, assoc_key)
-  #   end
-  # end
-  #redundant
-  # def pop_sig_items(sig_opt_group, assoc_key)
-  #   sig_pps =[]
-  #   pp_hash(:signature, assoc_key).each do |sig_pp_name|
-  #     #sig_pps << find_or_create_by_name_and_assoc(sig_opt_group, :signature, sig_pp_name)
-  #     sig_pps << find_or_create_by_name(:signature, sig_pp_name)
-  #   end
-  #   pop_opt_groups(sig_opt_group, :category, :signature, assoc_key, sig_pps)
-  # end
 
   def pop_pp_items(prod_subcat)
     assoc_key = prod_subcat.name #'Flat-ProductKind'
@@ -174,6 +175,26 @@ module CategoriesHelper
     end
   end
 
+  #test for: pop_nested_cat_groups?
+  def has_category_hash_key?(sti_scope:)
+    if sti_opt_group(sti_scope: sti_scope, hash_key: :category).present?
+      sti_opt_group(sti_scope: sti_scope, hash_key: :category)
+    end
+  end
+
+  def has_opt_idx_hash_key?(sti_scope:, **opt_keys)
+    if sti_opt_group(sti_scope: sti_scope, hash_key: :opt_idx).present?
+      opt_group_args = {sti_scope: sti_scope, hash_key: :opt_idx, assoc_key: opt_keys[:assoc_key]}
+      sti_opt_group(opt_group_args.compact!)
+    end
+  end
+
+  # def has_category_hash_key_and_opt_idx_key?(sti_scope:)
+  #   if has_category_hash_key?(sti_scope) && has_opt_idx_hash_key?(sti_scope)
+  #     #sti_opt_group(sti_scope: sti_scope, :opt_idx)
+  #   end
+  # end
+
   # def assoc_opts_to_group(opts, parent, hm_assoc)
   #   #test =[]
   #   opts.each do |opt|
@@ -185,21 +206,39 @@ module CategoriesHelper
 
   ##################### end of refactor
   #replaces: :assoc_opts_to_group
-  def assoc_kollection(origin, target_type, targets)
+  def assoc_kollection(origin:, target_type:, targets:)
     to_kollection(origin, target_type) << targets
+    targets.map {|target| to_kollection(origin, target_type) << target}
   end
 
-  def find_or_create_by_name_and_assoc(origin, target_type, target_name)
+  def find_or_create_by_name_and_assoc(origin:, target_type:, target_name:)
     target = find_or_create_by_name(target_type, target_name)
-    associate_unless_included(origin, target)
+    assoc_unless_included(origin, target)
     return target
   end
 
-  def find_or_create_by_name(klass, name)
-    to_konstant(klass).where(name: name).first_or_create
+  def find_or_create_by_names_and_assoc(origin:, target_type:, target_names:)
+    targets =[]
+    target_names.each do |target_name|
+      target << find_or_create_by_name(target_type, target_name)
+      assoc_unless_included(origin, target)
+    end
+    return target
   end
 
-  def associate_unless_included(origin, target)
+  def find_or_create_by_name(obj_klass:, name:)
+    to_konstant(obj_klass).where(name: name).first_or_create
+  end
+
+  def find_or_create_by_names(obj_klass:, names:)
+    objs = []
+    names.each do |name|
+      objs << find_or_create_by_name(obj_klass: obj_klass, name: name)
+    end
+    return objs
+  end
+
+  def assoc_unless_included(origin, target)
     to_kollection(origin, target) << target unless to_kollection(origin, target).include?(target)
   end
 
