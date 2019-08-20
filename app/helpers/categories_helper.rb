@@ -63,18 +63,19 @@ module CategoriesHelper
   end
 
   def build_nested_cats_and_opt_groups_scoped_by_opt_idxs(origin:, sti_key:, nested_origin_names:, opt_names:, opt_idx:)
-    nested_origin_names.each do |nested_origin_name|
-      nested_origin = build_nested_origin(origin: origin, target_type: :category, target_name: append_name(nested_origin_name, 'Option-Group'))
+    nested_origin_names.each do |nested_origin_name| #'Flat-Signature'
+      nested_origin = build_nested_origin(origin: origin, target_type: :category, target_name: append_name(nested_origin_name, 'Option-Group')) #'Flat-Signature-Option-Group'
       opts = find_or_create_by_names(obj_klass: sti_key, names: opt_names.assoc(nested_origin_name).drop(1))
-      idxd_target_groups = build_idxd_set_of_target_groups(opts: opts, opt_idx: opt_idx.assoc(nested_origin_name).drop(1))
-      build_target_groups_with_idxd_targets(origin: nested_origin, target_type: :category, nested_target_type: sti_key, idxd_target_groups: idxd_target_groups)
+      all_idxd_target_groups = build_idxd_set_of_target_groups(opts: opts, opt_idx: opt_idx.assoc(nested_origin_name).drop(1))
+
+      build_target_groups_with_idxd_targets(origin: nested_origin, target_type: :category, nested_target_type: sti_key, all_idxd_target_groups: all_idxd_target_groups)
     end
   end
 
   def build_opt_groups_scoped_by_opt_idxs(origin:, sti_key:, opt_names:, opt_idx:)
     opts = find_or_create_by_names(obj_klass: sti_key, names: opt_names)
-    idxd_target_groups = build_idxd_set_of_target_groups(opts: opts, opt_idx: opt_idx)
-    build_target_groups_with_idxd_targets(origin: origin, target_type: :category, nested_target_type: sti_key, idxd_target_groups: idxd_target_groups)
+    all_idxd_target_groups = build_idxd_set_of_target_groups(opts: opts, opt_idx: opt_idx)
+    build_target_groups_with_idxd_targets(origin: origin, target_type: :category, nested_target_type: sti_key, all_idxd_target_groups: all_idxd_target_groups)
   end
 
   #####################################################
@@ -83,28 +84,44 @@ module CategoriesHelper
     opt_idx.map {|idx_set| idx_set.map {|idx| opts[idx]}}
   end
 
-  def build_target_groups_with_idxd_targets(origin:, target_type:, nested_target_type:, idxd_target_groups:)
-    if missing_target_groups = find_missing_target_groups(origin: origin, target_type: target_type, nested_target_type: nested_target_type, idxd_target_groups: idxd_target_groups)
+  def build_target_groups_with_idxd_targets(origin:, target_type:, nested_target_type:, all_idxd_target_groups:)
+    if missing_target_groups = missing_target_groups?(origin, target_type, nested_target_type, all_idxd_target_groups)
       build_missing_target_groups(origin: origin, target_type: target_type, nested_target_type: nested_target_type, missing_target_groups: missing_target_groups)
     end
   end
 
-  def find_missing_target_groups(origin:, target_type:, nested_target_type:, idxd_target_groups:)
-    if !has_kollection?(origin, target_type)
-      idxd_target_groups
-    elsif nested_origins = has_kollection?(origin, target_type)
-      target_group_set = nested_origins.map {|nested_origin| has_kollection?(nested_origin, nested_target_type).to_a} #cross reference :target_group_set and :idxd_target_groups
-      missing_target_groups = idxd_target_groups.select {|target_group| target_group_set.exclude?(target_group)}
-      if missing_target_groups.any?
+  def missing_target_groups?(origin, target_type, nested_target_type, all_idxd_target_groups)
+    if target_group_id_set = target_group_id_set?(origin, target_type, nested_target_type)
+      if missing_target_groups = find_missing_target_groups(all_idxd_target_groups, target_group_id_set)
         missing_target_groups
       end
+    else
+      all_idxd_target_groups
     end
+  end
+
+  def target_group_id_set?(origin, target_type, nested_target_type)
+    if nested_origins = has_kollection?(origin, target_type)
+      target_group_id_set = nested_origins.map {|nested_origin| has_kollection_ids?(nested_origin, nested_target_type)}
+      target_group_id_set if target_group_id_set.any?
+    end
+  end
+
+  def find_missing_target_groups(all_idxd_target_groups, target_group_id_set)
+    missing_target_groups =[]
+    all_idxd_target_groups.each do |idxd_target_group|
+      idxd_target_group_ids = idxd_target_group.map {|target| target.id}
+      missing_target_groups << idxd_target_group if target_group_id_set.exclude?(idxd_target_group_ids)
+    end
+    return missing_target_groups if missing_target_groups.any?
   end
 
   def build_missing_target_groups(origin:, target_type:, nested_target_type:, missing_target_groups:)
     missing_target_groups.each do |target_group|
       target_group_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: target_type, target_name: arr_to_text(target_group.map {|target| target.name}))
-      target_group.map {|target| to_kollection(target_group_origin, nested_target_type) << target}
+      if !has_kollection?(target_group_origin, nested_target_type)
+        target_group.map {|target| to_kollection(target_group_origin, nested_target_type) << target}
+      end
     end
   end
 
@@ -154,6 +171,12 @@ module CategoriesHelper
   def assoc_kollection(origin:, target_type:, targets:)
     to_kollection(origin, target_type) << targets
     targets.map {|target| to_kollection(origin, target_type) << target}
+  end
+
+  def has_kollection_ids?(origin, target_type)
+    if kollection = has_kollection?(origin, target_type)
+      kollection.pluck(:id)
+    end
   end
 
   #####################
