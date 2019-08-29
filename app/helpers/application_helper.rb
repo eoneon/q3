@@ -98,6 +98,10 @@ module ApplicationHelper
     opts.has_key?(:up) ? txt.upcase : txt
   end
 
+  def append_name(sti, suffix)
+    [sti, suffix].join('-')
+  end
+  
   def obj_ref(dom_ref)
     dom_arr = dom_ref.split("-")
     idx = dom_arr.rindex{|i| is_number?(i)}

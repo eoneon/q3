@@ -13,7 +13,7 @@ module PopProductPartsHelper
 
   ################ structural stuff
   #relevant to :flat_cat_assocs re: flat_mount_dim_items
-  
+
   def flat_items
     ['Flat', 'Sericel']
   end
@@ -73,12 +73,16 @@ module PopProductPartsHelper
 
   ##################### product_kind_set
 
+  def limited_pk
+    [['Flat-ProductKind', 'print-media'], ['Sericel-ProductKind', 'sericel-media'], ['General-Sculpture-ProductKind', 'general-sculpture media']]
+  end
+
   def flat_pk
     ['Flat-ProductKind', 'original art', 'one-of-a-kind art', 'print-media']
   end
 
   def sericel_pk
-    ['Sericel-ProductKind', 'production-sericel', 'sericel']
+    ['Sericel-ProductKind', 'production-sericel media', 'sericel-media']
   end
 
   def hb_sculpture_pk
@@ -99,7 +103,7 @@ module PopProductPartsHelper
   end
 
   def one_of_a_kind_med
-    ['one-of-a-kind art', 'mixed-media', 'hand-pulled prints', 'hand-pulled prints', 'monoprints']
+    ['one-of-a-kind art', 'mixed-media', 'hand-pulled prints', 'monoprints']
   end
 
   def print_med
@@ -107,12 +111,20 @@ module PopProductPartsHelper
   end
 
   def prod_sericel_med
-    ['production-sericel', 'production-sericel & sketch']
+    ['production-sericel media', 'production-sericel', 'production-sericel & sketch']
   end
 
+  # def prod_sericel_med
+  #   ['production-sericel', 'production-sericel & sketch']
+  # end
+
   def gen_sericel_med
-    ['sericel']
+    ['sericel-media', 'sericel']
   end
+
+  # def gen_sericel_med
+  #   ['sericel']
+  # end
 
   def hand_blown_med
     ['hand-blown glass media', 'hand-blown glass', 'gartner-blade media']

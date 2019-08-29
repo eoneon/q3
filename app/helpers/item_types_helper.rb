@@ -1,18 +1,41 @@
 module ItemTypesHelper
-
-  def product_kind_sets
-    ProductKind.all.map {|pk| build_pk_group(pk)}
+  def prod_cat_items
+    ['Flat', 'Sericel', 'HB-Sculpture', 'HM-Sculpture', 'General-Sculpture']
   end
 
-  def pk_medium_material_sets(set)
+  def product_kind_sets
+    set =[]
+    prod_cat_items.each do |prod_cat|
+      origin = find_or_create_by_name(obj_klass: :category, name: append_name(prod_cat, 'ProductKind'))
+      pk_targets = has_kollection?(origin, 'product_kind')
+      set << pk_targets.all.map {|pk| build_pk_group(pk)}
+    end
+    set
+  end
+
+  def pk_medium_material_sets
     sets =[]
-    product_kind_sets.each do |set|
-      pk, pk2 = set[0], set[-1]
-      media_material_sets = ['media', 'material'].map {|type| obj_or_kollection?(pk2, type)}
+    product_kind_sets.each do |pk_set|
+      pk, pk2 = pk_set[0], pk_set[-1]
+      media_material_sets = ['medium', 'material'].map {|type| obj_or_kollection?(pk2, type)}
       sets << [pk, media_material_sets] unless media_material_sets.compact.count < 2
     end
     sets
   end
+  #
+  # def product_kind_sets
+  #   ProductKind.all.map {|pk| build_pk_group(pk)}
+  # end
+  #
+  # def pk_medium_material_sets(set)
+  #   sets =[]
+  #   product_kind_sets.each do |set|
+  #     pk, pk2 = set[0], set[-1]
+  #     media_material_sets = ['media', 'material'].map {|type| obj_or_kollection?(pk2, type)}
+  #     sets << [pk, media_material_sets] unless media_material_sets.compact.count < 2
+  #   end
+  #   sets
+  # end
 
   def build_medium_group_params(sets)
     product_params =[]
@@ -30,7 +53,7 @@ module ItemTypesHelper
       unless origin_with_opt_exists?(scoped_set, prxy_opt)
         name = prxy_opt.map {|sub_obj| medium_group_name(sub_obj)}.reject {|i| i.nil?}.join(" ")
         product = Product.new(name: name)
-        if product.save!  
+        if product.save!
           prxy_opt.map {|sub_obj| to_kollection(product, sub_obj) << sub_obj}
         end
       end
@@ -90,15 +113,17 @@ module ItemTypesHelper
     end
   end
 
-  def medium_group_name(sub_obj)
-    if sub_obj.type == 'ProductKind'
-      sub_obj.name.split(" ").reject {|word| ['prints','art', 'print-media'].include?(word)}.join(" ")
-    elsif sub_obj.type == 'Medium'
-      sub_obj.name
-    elsif sub_obj.type == 'Material'
-      "on #{sub_obj.name}"
-    end
-  end
+  #commented out due to name collision: categories_helper
+  # def medium_group_name(sub_obj)
+  #   if sub_obj.type == 'ProductKind'
+  #     sub_obj.name.split(" ").reject {|word| ['prints','art', 'print-media'].include?(word)}.join(" ")
+  #   elsif sub_obj.type == 'Medium'
+  #     sub_obj.name
+  #   elsif sub_obj.type == 'Material'
+  #     "on #{sub_obj.name}"
+  #   end
+  # end
+
   #type-specific nest collection
   # def has_sti_specific_sub_kollection?(obj)
   #   if sub_kollection = has_kollection?(obj, obj.class.name)
