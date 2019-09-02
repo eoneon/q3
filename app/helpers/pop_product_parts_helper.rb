@@ -192,8 +192,12 @@ module PopProductPartsHelper
     h = {category: opt_group_values(signature_opt_group), opts: signature_opt_group, opt_idx: signature_opt_idx}
   end
 
+  # def certificate_opts
+  #   h = {category: nil, opts: certificate_opt_group, opt_idx: nil}
+  # end
+  #added
   def certificate_opts
-    h = {category: nil, opts: certificate_opt_group, opt_idx: nil}
+    h = {category: opt_group_values(certificate_opt_group), opts: certificate_opt_group, opt_idx: certificate_opt_idx}
   end
 
   def edition_opts
@@ -208,8 +212,12 @@ module PopProductPartsHelper
     [['Flat-Signature', 'artist', 'authorized', 'relative', 'famous'], ['Sculpture-Signature', 'artist']]
   end
 
+  # def certificate_opt_group
+  #   ['general-certificate', 'publisher-certificate', 'animation-certificate']
+  # end
+  #added
   def certificate_opt_group
-    ['general-certificate', 'publisher-certificate', 'animation-certificate']
+    [['General-Certificate', 'certificate'], ['Publisher-Certificate', 'publisher-certificate'], ['Animation-Certificate', 'animation-seal', 'sports-seal', 'animation-certificate', 'general-certificate']]
   end
 
   def edition_opt_group
@@ -222,6 +230,10 @@ module PopProductPartsHelper
 
   def signature_opt_idx
     [['Flat-Signature', [0], [0,0], [0,1], [0,2], [2], [0,3], [3]], ['Sculpture-Signature', [0]]]
+  end
+  #added
+  def certificate_opt_idx
+    [['General-Certificate', [0]], ['Publisher-Certificate', [0]], ['Animation-Certificate', [0,1,2], [0,1,3], [0,2], [0,3], [2], [3]]]
   end
 
   def sub_medium_opt_idx
