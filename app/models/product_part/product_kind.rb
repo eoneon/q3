@@ -3,6 +3,7 @@ class ProductKind < ProductPart
   has_many :products, through: :item_groups, source: :target, source_type: "Product"
   has_many :product_kind_fields, through: :item_groups, source: :target, source_type: "ProductKindField"
   has_many :product_kinds, through: :item_groups, source: :target, source_type: "ProductKind"
+  has_many :categories, through: :item_groups, source: :target, source_type: "Category"
   has_many :media, through: :item_groups, source: :target, source_type: "Medium"
   has_many :materials, through: :item_groups, source: :target, source_type: "Material"
   has_many :sub_media, through: :item_groups, source: :target, source_type: "SubMedium"

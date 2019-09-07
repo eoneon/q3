@@ -6,8 +6,8 @@ class CategoriesController < ApplicationController
     #@categories = categories.where.not(name: 'Category')
     #@categories = categories.where(name: helpers.org_categories)
     categories = Category.find_by(name: 'Product-Category').categories
-    #categories2 = Category.find_by(name: 'Medium-Group').medium_groups
-    @categories = categories + Category.find_by(name: 'Option-Group').categories #+ categories2
+    #categories2 = Category.find_by(name: 'Identifier-Group').identifier_groups
+    @categories = categories + Category.find_by(name: 'Option-Group').categories + categories2
   end
 
   def show
