@@ -129,32 +129,4 @@ module StiSibHelper
     sti = cat_pps.where(type: type.classify)
     ["show top-level #{type.pluralize}", sti.ids] if sti.any?
   end
-
-  # def type_vl(*sti_superklass)
-  #   types = []
-  #   dir_list(sti_superklass).each do |type|
-  #     types << type_any?(type)
-  #   end
-  #   types = types.compact #=> array of present types in db
-  #   category_types = category_types_vl(types).compact
-  #   types.unshift(["show all product parts", nil]) + (category_types)
-  # end
-  #
-  # def type_any?(type)
-  #   sti = ProductPart.where(type: type.classify)
-  #   ["show all #{type}", type.classify] if sti.any?
-  # end
-  #
-  # def category_types_vl(types_vl)
-  #   category_types = []
-  #   types_vl.each do |type_opt|
-  #     category_types << category_type_any?(type_opt[-1])
-  #   end
-  #   category_types.compact
-  # end
-  #
-  # def category_type_any?(type)
-  #   sti = ProductPart.where(type: type.classify, category: "1")
-  #   ["show top-level #{to_snake(type)}", type.classify] if sti.any?
-  # end
 end

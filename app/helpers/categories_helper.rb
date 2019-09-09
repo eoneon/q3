@@ -2,7 +2,6 @@ module CategoriesHelper
 
   def build_app_data
     origin = find_or_create_by_name(obj_klass: :category, name: 'Origin')
-    #['Product-Category', 'Option-Group', 'Medium-Group'].each do |name|
     ['Product-Category', 'Option-Group', 'Medium-Group', 'Identifier-Group'].each do |name|
       nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: name)
       public_send('build_' + to_snake(name), nested_origin)
@@ -25,7 +24,6 @@ module CategoriesHelper
   #scoped_identifier_set
   def identifiers(h)
     identifier_set, flat_signature, sculpture_signature, cert_identifiers = {}, h['flat_signature'], h['sculpture_signature'], opt_group_values(certificate_opt_group).map {|key| h[build_key(key)]}
-
     identifier_set['flat_product_kind'] = build_identifier_set(cert_identifiers.take(2), flat_signature)
     identifier_set['sculpture_product_kind'] = build_identifier_set(cert_identifiers.take(2), sculpture_signature)
     identifier_set['sericel_product_kind'] = build_identifier_set(cert_identifiers, flat_signature)
@@ -78,30 +76,22 @@ module CategoriesHelper
     opt_group_values(identifier_pks).each do |key|
       nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :identifier_group, target_name: append_name(key, 'Identifier-Group')) #IdentifierGroup(name: 'Flat-ProductKind-Identifier-Group')
       if nested_sub_origins = has_kollection?(nested_origin, :identifier_group)
-      #if nested_sub_origins = has_kollection?(nested_origin, :identifier_group)
         existing_set = nested_sub_origins.map {|obj| type_and_id_assoc_arr(obj_set: to_kollection(obj, :category)) if has_kollection?(obj, :category)}
-        # nested_sub_origins.each do |nested_sub_origin|
-        #   if nested_identifier_opts = has_kollection?(nested_sub_origin, :category)
-              #type_and_id_assoc_arr(obj_set: nested_identifier_opts)
-        #     existing_set = nested_identifier_opts.map {|nested_identifier_opt| type_and_id_assoc_arr(obj_set: identifier_group)}
-        #   end
-        # end
-      #if nested_identifier_groups = has_kollection?(nested_origin, :identifier_group) #[ #IdentifierGroup(name: "Signed (Flat) with General Certificate")]
-
-        #existing_set = nested_identifier_groups.map {|identifier_group| type_and_id_assoc_arr(obj_set: identifier_group)}
           ################# B
         build_identifier_group_combos(origin: nested_origin, existing_set: existing_set, set: set[build_key(key)])
       else
         build_missing_identifier_groups(origin: nested_origin, target_type: :identifier_group, target_group_set: set[build_key(key)])
       end
+      origin_names = identifier_pks.assoc(key).drop(1)
+      assoc_target_and_origins_via_name_set(origin_klass: :product_kind, origin_names: origin_names, target: nested_origin)
     end
   end
 
-  def format_nested_sub_kollection(nested_sub_origin)
-    if nested_identifier_groups = has_kollection?(nested_sub_origin, :identifier_group)
-      nested_identifier_groups.map {|identifier_group| type_and_id_assoc_arr(obj_set: identifier_group)}
-    end
-  end
+  # def format_nested_sub_kollection(nested_sub_origin)
+  #   if nested_identifier_groups = has_kollection?(nested_sub_origin, :identifier_group)
+  #     nested_identifier_groups.map {|identifier_group| type_and_id_assoc_arr(obj_set: identifier_group)}
+  #   end
+  # end
   ##################################################### utility methods for :build_medium_group
 
   ################# A: build_medium_group_values
@@ -181,17 +171,6 @@ module CategoriesHelper
     h = {}
     obj_set.map {|obj| h[to_snake(obj.type)] = obj.id}
   end
-  # def hashified_type_eql_id_via_obj_set(obj_set:)
-  #   h = {}
-  #   obj_set.each do |obj|
-  #     k = to_snake(obj.type)
-  #     if h.keys.include?(k)
-  #       k = "#{k}1"
-  #     end
-  #     h[k] = obj.id
-  #   end
-  #   h
-  # end
 
   def type_and_id_assoc_arr(obj_set:)
     obj_set.map {|obj| [to_snake(obj.type), obj.id]}
@@ -234,6 +213,7 @@ module CategoriesHelper
         pop_pp_items(prod_subcat)
       end
     end
+    assoc_material_to_mountings_and_dimensions
   end
 
   def pop_pp_items(prod_subcat)
@@ -260,6 +240,14 @@ module CategoriesHelper
     dim_pp = find_or_create_by_name_and_assoc(origin: mounting_pp, target_type: sti_key, target_name: append_name(mounting_pp.name, sti_key.to_s))
   end
 
+  def assoc_material_to_mountings_and_dimensions
+    flat_items.concat(sculpture_items).each do |item|
+      origin = find_or_create_by_name(obj_klass: :category, name: append_name(item, 'Material'))
+      target_names = origin.name.split('-').include?('Sculpture') ? sculpture_mount_dim_items : flat_mount_dim_items
+      set = target_names.map {|name| [:category, name]}
+      assoc_nested_origins_and_target_set(origin: origin, hm_assoc: :material, target_set: set)
+    end
+  end
   ##################################################### Option-Group II
 
   def build_option_group(origin)
@@ -382,6 +370,11 @@ module CategoriesHelper
     return target
   end
 
+  def assoc_target_and_origins_via_name_set(origin_klass:, origin_names:, target:)
+    origin_set = find_or_create_by_names(obj_klass: origin_klass, names: origin_names)
+    origin_set.map {|origin| assoc_unless_included(origin, target)}
+  end
+
   def find_or_create_by_names_and_assoc(origin:, target_type:, target_names:)
     targets =[]
     target_names.each do |target_name|
@@ -392,7 +385,6 @@ module CategoriesHelper
     return targets
   end
 
-  #new
   def find_or_create_by_name_and_assoc_many(origins:, target_type:, target_name:)
     target = find_or_create_by_name(obj_klass: target_type, name: target_name)
     origins.map {|origin| assoc_unless_included(origin, target)}
@@ -416,6 +408,15 @@ module CategoriesHelper
   def has_kollection_ids?(origin, target_type)
     if kollection = has_kollection?(origin, target_type)
       kollection.pluck(:id)
+    end
+  end
+
+  #new
+  def assoc_nested_origins_and_target_set(origin:, hm_assoc:, target_set:)
+    target_set.each do |set|
+      target = find_or_create_by_name(obj_klass: set[0], name: set[1])
+      #Category(name: 'Flat-Material').materials
+      to_kollection(origin, hm_assoc).map {|nested_origin| assoc_unless_included(nested_origin, target)}
     end
   end
 
