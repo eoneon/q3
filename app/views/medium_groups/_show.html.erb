@@ -1,0 +1,17 @@
+<div class="card border m-1 border-dark" id="<%= dom_ref(product_part, 'show') %>">
+  <div class="card-header">
+    <%= render "product_parts/header/header", product_part: product_part, obj_ref: dom_ref(product_part) %>
+  </div>
+
+  <div class="card-body p-1 collapse" id="<%= dom_ref(product_part, 'body') %>">
+    <div id='<%= dom_ref(product_part, "#{to_snake(product_part.sti_field_type)}-index") %>'>
+      <%= render "item_fields/product_parts/index", origin: product_part %>
+    </div>
+
+    <% self_join_assocs(product_part).each do |type| %>
+      <div id='<%= dom_ref(product_part, "#{to_snake(type)}-index") %>'>
+        <%= render "sub_parts/index", origin: product_part, type: type %>
+      </div>
+    <% end %>
+  </div>
+</div>

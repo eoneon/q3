@@ -87,11 +87,6 @@ module CategoriesHelper
     end
   end
 
-  # def format_nested_sub_kollection(nested_sub_origin)
-  #   if nested_identifier_groups = has_kollection?(nested_sub_origin, :identifier_group)
-  #     nested_identifier_groups.map {|identifier_group| type_and_id_assoc_arr(obj_set: identifier_group)}
-  #   end
-  # end
   ##################################################### utility methods for :build_medium_group
 
   ################# A: build_medium_group_values

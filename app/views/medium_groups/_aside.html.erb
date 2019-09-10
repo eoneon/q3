@@ -1,0 +1,11 @@
+<div class="card bg-light mb-3" id="product_part-new">
+  <%= render "product_parts/forms/new", product_part: ProductPart.new, url: ProductPart.new, form_id: "product_part-new-form" %>
+</div>
+
+<div class="card bg-light mb-0 p-2">
+  <%#= render "search_product_parts/form" %>
+</div>
+
+<div class="list-group" id="tab-index" role="tablist">
+  <%= render "product_parts/tabs", product_parts: product_parts %>
+</div>
