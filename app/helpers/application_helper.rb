@@ -72,6 +72,10 @@ module ApplicationHelper
     arr_x.all? {|x| arr_y.include?(x)}
   end
 
+  def exclude_all?(arr_x, arr_y)
+    arr_x.all? {|x| arr_y.exclude?(x)}
+  end
+
   def include_none?(arr_x, arr_y)
     arr_x.all? {|x| arr_y.exclude?(x)}
   end
@@ -101,7 +105,7 @@ module ApplicationHelper
   def append_name(sti, suffix)
     [sti, suffix].join('-')
   end
-  
+
   def obj_ref(dom_ref)
     dom_arr = dom_ref.split("-")
     idx = dom_arr.rindex{|i| is_number?(i)}
