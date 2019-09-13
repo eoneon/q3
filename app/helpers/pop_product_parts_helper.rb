@@ -148,7 +148,7 @@ module PopProductPartsHelper
   end
 
   def hm_sculpture_mat
-    ['HM-Sculpture-Material', 'hand-blown ceramic']
+    ['HM-Sculpture-Material', 'hand-made ceramic']
   end
 
   def gen_sculpt_mat

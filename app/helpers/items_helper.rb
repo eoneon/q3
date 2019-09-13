@@ -1,19 +1,67 @@
 module ItemsHelper
   def build_medium_sets
-    medium_set.each do |set|
-      h, k, v = {}, 'medium_tier', set[0]
-      h[k] = v
-      set.drop(1).each do |medium_name|
-        medium = find_or_create_by_name(obj_klass: :medium, name: medium_name)
-        next if k_exists_v_match?(h: medium.tags, h2: h, k: k, v: v)
-        medium.tags = update_hash(h: medium.tags, h2: h, k: k, v: v)
-        medium.save
-      end
-    end
+    build_obj_from_sets(medium_set, 'medium_tier', :medium)
+    build_obj_from_sets(material_types, 'material_type', :material)
+    build_obj_from_sets(dimension_types, 'dimension_type', :dimension)
+    build_obj_from_sets(mounting_types, 'mounting_type', :mounting)
+    build_obj_from_sets(edition_types, 'edition_type', :edition)
+    #build_obj_from_sets(sub_medium_types, 'sub_medium_type', :edition)
     build_pk_medium_combos
     add_product_kind_tags
   end
 
+  def build_obj_from_sets(obj_set, k, obj_klass)
+    obj_set.each do |set|
+      h, k, v = {}, k, set[0]
+      h[k] = v
+      set.drop(1).each do |obj_name|
+        obj = find_or_create_by_name(obj_klass: obj_klass, name: obj_name)
+        next if k_exists_v_match?(h: obj.tags, h2: h, k: k, v: v)
+        obj.tags = update_hash(h: obj.tags, h2: h, k: k, v: v)
+        obj.save
+      end
+    end
+  end
+
+  ###########################################################
+  def build_product_combos
+    set = build_product_combo_set
+    if Product.any?
+      existing_set = Product.all.map {|p| [:product_kind, :material].map{|target_type| has_obj?(p, target_type)}.flatten}
+      add_missing_product_combos(set, existing_set)
+    else
+      add_all_product_combos(set)
+    end
+  end
+
+  def build_product_combo_set
+    set =[]
+    ProductKind.all.each do |pk|
+      #assoc_key = pk.tags['material_type']
+      Material.where(name: material_types.assoc(pk.tags['material_type'])).map {|material| set << [pk, material]}
+    end
+    set
+  end
+
+  def add_missing_product_combos(set, existing_set)
+    set.each do |product_combo|
+      if existing_set.exclude?(product_combo)
+        add_product_combos(product_combo)
+      end
+    end
+  end
+
+  def add_all_product_combos(set)
+    set.each do |product_combo|
+      add_product_combos(product_combo)
+    end
+  end
+
+  def add_product_combos(product_combo)
+    name = product_combo.map(&:name).join(' on ')
+    p = find_or_create_by_name(obj_klass: :product, name: name)
+    product_combo.map {|obj| assoc_unless_included(p, obj)}
+  end
   ###########################################################
 
   def add_product_kind_tags
@@ -57,6 +105,7 @@ module ItemsHelper
     h ={}
     h['dimension_type'] = set_dimention_type(target_names)
     h['art_type'] = set_art_type(target_names)
+    h['material_type'] = set_material_type(target_names)
     h
   end
 
@@ -78,10 +127,22 @@ module ItemsHelper
     end
   end
 
+  #A(3)
+  def set_material_type(target_names)
+    if include_any?(target_names, original_art_type_set.prepend('print'))
+      'flat'
+    elsif material = target_names.detect {|name| name if ['sericel', 'photography', 'hand-blown-glass', 'hand-made-ceramic'].include?(name)}
+      material
+    elsif exclude_all?(target_names, ['hand-blown-glass', 'hand-made-ceramic']) && target_names.include?('sculpture')
+      'sculpture'
+    end
+  end
+
   #A(1)(i)
   def original_art_type_set
     ['original', 'one-of-a-kind']
   end
+
   #A(1)(ii)
   def print_art_type_set
     ['print', 'sericel', 'photography']
@@ -152,6 +213,21 @@ module ItemsHelper
     ['diptych', 'triptych', 'quadriptych', 'set']
   end
 
+  def material_types
+    [['flat', 'canvas', 'paper', 'board'], ['photography', 'photography-paper'], ['sculpture', 'sculpture-materials'], ['sericel', 'sericel', 'sericel & background']]
+  end
+
+  def dimension_types
+    [['two-d', 'width & height'], ['three-d', 'width, height & depth']]
+  end
+
+  def mounting_types
+    [['two-d', 'framed', 'bordered', 'matted'], ['three-d', 'case', 'base']]
+  end
+
+  def edition_types
+    ['edition' ,'numbered-xy', 'numbered', 'from-an-edition', 'open-edition']
+  end
   #policies?
   def k_exists_v_match?(h:, h2:, k:, v:)
     h && h.present? && h.has_key?(k) && h[k] == v
