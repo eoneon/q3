@@ -1,13 +1,14 @@
 module ItemsHelper
-  def build_medium_sets
-    build_obj_from_sets(medium_set, 'medium_tier', :medium)
+  def build_medium_types
+    build_obj_from_sets(medium_type, 'medium_type', :medium)
     build_obj_from_sets(material_types, 'material_type', :material)
     build_obj_from_sets(dimension_types, 'dimension_type', :dimension)
     build_obj_from_sets(mounting_types, 'mounting_type', :mounting)
-    build_obj_from_sets(edition_types, 'edition_type', :edition)
+    #build_obj_from_sets(edition_types, 'edition_type', :edition)
     #build_obj_from_sets(sub_medium_types, 'sub_medium_type', :edition)
     build_pk_medium_combos
     add_product_kind_tags
+    build_product_combos
   end
 
   def build_obj_from_sets(obj_set, k, obj_klass)
@@ -58,9 +59,28 @@ module ItemsHelper
   end
 
   def add_product_combos(product_combo)
-    name = product_combo.map(&:name).join(' on ')
+    #name = product_combo.map(&:name).join(' on ')
+    name_set = product_combo.map(&:name)
+    name = format_product_material_name(name_set)
     p = find_or_create_by_name(obj_klass: :product, name: name)
     product_combo.map {|obj| assoc_unless_included(p, obj)}
+  end
+
+  def format_product_material_name(name_set)
+    name_split = name_set.join(' ').split(' ')
+    if name_split.include?('sericel')
+      name_split.delete_at(name_split.rindex('sericel'))
+      name_split.join(' ')
+    elsif name_split.include?('sculpture')
+      name_split.delete_at(name_split.rindex('sculpture'))
+      name_split.push('sculpture').join(' ')
+      #name_split << name
+      #name_split.join(' ')
+    elsif include_any?(name_split, ['hand-made', 'hand-blown'])
+      name_split.push('sculpture').join(' ')
+    else 
+      name_set.join(' on ')
+    end
   end
   ###########################################################
 
@@ -111,14 +131,17 @@ module ItemsHelper
 
   #A(1)
   def set_dimention_type(target_names)
-    target_names.include?('sculpture') ? 'three-d' : 'two-d'
+    #target_names.include?('sculpture') ? 'three-d' : 'two-d'
+    include_any?(target_names, sculpture_art_type_set) ? 'three-d' : 'two-d'
   end
 
   #A(2)
   def set_art_type(target_names)
     if include_any?(target_names, original_art_type_set) #A(1)(i)
       'original'
-    elsif target_names.include?('sculpture')
+    # elsif target_names.include?('sculpture')
+    #   'sculpture'
+    elsif include_any?(target_names, sculpture_art_type_set)
       'sculpture'
     elsif target_names.include?('limited-edition') && include_any?(target_names, print_art_type_set) #A(1)(ii)
       'limited-edition'
@@ -131,10 +154,10 @@ module ItemsHelper
   def set_material_type(target_names)
     if include_any?(target_names, original_art_type_set.prepend('print'))
       'flat'
-    elsif material = target_names.detect {|name| name if ['sericel', 'photography', 'hand-blown-glass', 'hand-made-ceramic'].include?(name)}
+    elsif material = target_names.detect {|name| name if ['sericel', 'photography', 'hand-blown', 'hand-made', 'sculpture'].include?(name)}
       material
-    elsif exclude_all?(target_names, ['hand-blown-glass', 'hand-made-ceramic']) && target_names.include?('sculpture')
-      'sculpture'
+    # elsif exclude_all?(target_names, ['hand-blown', 'hand-made']) && target_names.include?('sculpture')
+    #   'sculpture'
     end
   end
 
@@ -148,6 +171,9 @@ module ItemsHelper
     ['print', 'sericel', 'photography']
   end
 
+  def sculpture_art_type_set
+    ['sculpture', 'hand-blown', 'hand-made']
+  end
   ###########################################################
 
   def update_hash(h:, h2:, k:, v:)
@@ -189,7 +215,7 @@ module ItemsHelper
   end
 
   def build_pk_medium_combo_set
-    primary_media = Medium.where("tags -> 'medium_tier' = 'primary'")
+    primary_media = Medium.where("tags -> 'medium_type' = 'primary'")
     set =[]
     pk_medium_combo_set.each do |medium_combo|
       set << medium_combo.map {|medium_name| primary_media.find_by(name: medium_name)}
@@ -197,12 +223,12 @@ module ItemsHelper
     set
   end
 
-  def medium_set
+  def medium_type
     [primary_media, secondary_media, component_media]
   end
 
   def primary_media
-    ['primary', 'original', 'painting', 'drawing', 'monoprint', 'production', 'one-of-a-kind', 'mixed-media', 'limited-edition', 'print', 'hand-pulled', 'hand-made-ceramic', 'hand-blown-glass', 'photography', 'sculpture', 'sculpture-type', 'animation', 'sericel']
+    ['primary', 'original', 'painting', 'drawing', 'monoprint', 'production', 'one-of-a-kind', 'mixed-media', 'limited-edition', 'print', 'hand-pulled', 'hand-made', 'hand-blown', 'photography', 'sculpture', 'sculpture-type', 'animation', 'sericel']
   end
 
   def secondary_media
@@ -213,12 +239,25 @@ module ItemsHelper
     ['diptych', 'triptych', 'quadriptych', 'set']
   end
 
+  # def material_types
+  #   [['flat', 'canvas', 'paper', 'board'], ['photography', 'photography-paper'], ['sculpture', 'sculpture-materials'], ['sericel', 'sericel', 'sericel & background']]
+  # end
   def material_types
-    [['flat', 'canvas', 'paper', 'board'], ['photography', 'photography-paper'], ['sculpture', 'sculpture-materials'], ['sericel', 'sericel', 'sericel & background']]
+    [
+      ['flat', 'canvas', 'paper', 'board'],
+      ['photography', 'photography-paper'],
+      ['sculpture', 'metal', 'glass', 'mixed-media','ceramic'],
+      ['hand-blown', 'glass'],
+      ['hand-made', 'ceramic'],
+      ['sericel', 'sericel', 'sericel with background']
+    ]
   end
-
+  # def dimension_types
+  #   [['two-d', 'width & height'], ['three-d', 'width, height & depth']]
+  # end
+  #replace
   def dimension_types
-    [['two-d', 'width & height'], ['three-d', 'width, height & depth']]
+    [['two-d', 'width', 'height'], ['three-d', 'width', 'depth', 'height']]
   end
 
   def mounting_types
@@ -260,8 +299,8 @@ module ItemsHelper
    ['animation', 'sericel'],
    ['limited-edition', 'sericel'],
    ['sculpture'],
-   ['hand-blown-glass', 'sculpture'],
-   ['hand-made-ceramic', 'sculpture'],
+   ['hand-blown'],
+   ['hand-made'],
    ['limited-edition', 'sculpture']]
   end
 end
