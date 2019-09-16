@@ -10,6 +10,8 @@ module ItemsHelper
     build_pk_medium_combos
     add_product_kind_tags
     build_product_combos
+    build_secondary_medium_set
+    assoc_medium_submedia
   end
 
   def build_obj_from_sets(obj_set, k, obj_klass)
@@ -252,19 +254,69 @@ module ItemsHelper
     set
   end
 
+  ########################################################### opt-group
+
+  def build_secondary_medium_set
+    origin = find_or_create_by_name(obj_klass: :option_group, name: 'submedia-option')
+    set = build_secondary_medium_combo_set
+    if nested_origins = has_kollection?(origin, :option_group)
+      existing_set = nested_origins.map {|nested_origin| nested_origin.media.to_a}
+      add_missing_secondary_medium_combos(origin, set, existing_set)
+    else
+      add_all_secondary_medium_combos(origin, set)
+    end
+    #origin
+  end
+
+  def build_secondary_medium_combo_set
+    media = Medium.where(name: secondary_media)
+    opt_idx = [[0], [1], [0, 1]]
+    build_idxd_set_of_target_groups(opts: media, opt_idx: opt_idx)
+  end
+
+  def build_idxd_set_of_target_groups(opts:, opt_idx:)
+    opt_idx.map {|idx_set| idx_set.map {|idx| opts[idx]}}
+  end
+
+  def add_missing_secondary_medium_combos(origin, set, existing_set)
+    set.each do |submedium_combo|
+      if existing_set.exclude?(submedium_combo)
+        add_secondary_medium_combos(origin, submedium_combo)
+      end
+    end
+  end
+
+  def add_all_secondary_medium_combos(origin, set)
+    set.each do |submedium_combo|
+      add_secondary_medium_combos(origin, submedium_combo)
+    end
+  end
+
+  def add_secondary_medium_combos(origin, submedium_combo)
+    name_set = submedium_combo.map(&:name)
+    name = arr_to_text(name_set)
+    opt_group =  find_or_create_by_name_and_assoc(origin: origin, target_type: :option_group, target_name: name)
+    submedium_combo.map {|target| assoc_unless_included(opt_group, target)}
+  end
+
+  def assoc_medium_submedia
+    print = Medium.find_by(name: 'print')
+    option_group = OptionGroup.find_by(name: 'submedia-option')
+    has_kollection?(option_group, :option_group).map{|opt_group| assoc_unless_included(print, opt_group)}
+  end
+  
+  ###########################################################
+
   def medium_type
     [primary_media, secondary_media, component_media]
   end
 
-  # def primary_media
-  #   ['primary', 'original', 'painting', 'drawing', 'monoprint', 'production', 'one-of-a-kind', 'mixed-media', 'limited-edition', 'print', 'hand-pulled', 'hand-made', 'hand-blown', 'photography', 'sculpture', 'sculpture-type', 'animation', 'sericel']
-  # end
   def primary_media
-    ['primary', 'original', 'painting', 'drawing', 'production', 'one-of-a-kind', 'mixed-media', 'limited-edition', 'single-edition', 'open-edition', 'print', 'hand-pulled', 'hand-made', 'hand-blown', 'photography', 'sculpture', 'sculpture-type', 'animation', 'sericel']
+    ['primary', 'original', 'painting', 'drawing', 'production', 'one-of-a-kind', 'mixed-media', 'limited-edition', 'embellished', 'single-edition', 'open-edition', 'print', 'hand-pulled', 'hand-made', 'hand-blown', 'photography', 'sculpture', 'sculpture-type', 'animation', 'sericel']
   end
 
   def secondary_media
-    ['secondary', 'embellishment', 'remarque']
+    ['secondary', 'leafing', 'remarque']
   end
 
   def component_media
@@ -321,25 +373,60 @@ module ItemsHelper
    ['original', 'production', 'sericel'],
    ['original', 'mixed-media'],
    ['one-of-a-kind', 'mixed-media'],
+   ['embellished', 'one-of-a-kind', 'mixed-media'],
    ['single-edition', 'one-of-a-kind', 'mixed-media'],
+   ['embellished', 'single-edition', 'one-of-a-kind', 'mixed-media'],
    ['one-of-a-kind', 'hand-pulled', 'print'],
+   ['embellished', 'one-of-a-kind', 'hand-pulled', 'print'],
    ['single-edition', 'one-of-a-kind', 'hand-pulled', 'print'],
+   ['embellished', 'single-edition', 'one-of-a-kind', 'hand-pulled', 'print'],
    ['print'],
+   ['embellished', 'print'],
    ['single-edition', 'print'],
    ['hand-pulled', 'print'],
    ['open-edition', 'print'],
    ['photography'],
    ['limited-edition', 'print'],
+   ['embellished', 'limited-edition', 'print'],
    ['limited-edition', 'hand-pulled', 'print'],
    ['single-edition', 'hand-pulled', 'print'],
    ['limited-edition', 'photography'],
    ['animation', 'sericel'],
    ['limited-edition', 'sericel'],
-   ['sculpture'],
    ['hand-blown'],
    ['hand-made'],
-   ['limited-edition', 'sculpture']]
+   ['sculpture'],
+   ['embellished', 'sculpture'],
+   ['limited-edition', 'sculpture'],
+   ['embellished', 'limited-edition', 'sculpture']]
   end
+
+  # def pk_medium_combo_set
+  #  [['original', 'painting'],
+  #  ['original', 'drawing'],
+  #  ['original', 'production', 'drawing'],
+  #  ['original', 'production', 'sericel'],
+  #  ['original', 'mixed-media'],
+  #  ['one-of-a-kind', 'mixed-media'],
+  #  ['single-edition', 'one-of-a-kind', 'mixed-media'],
+  #  ['one-of-a-kind', 'hand-pulled', 'print'],
+  #  ['single-edition', 'one-of-a-kind', 'hand-pulled', 'print'],
+  #  ['print'],
+  #  ['single-edition', 'print'],
+  #  ['hand-pulled', 'print'],
+  #  ['open-edition', 'print'],
+  #  ['photography'],
+  #  ['limited-edition', 'print'],
+  #  ['limited-edition', 'hand-pulled', 'print'],
+  #  ['single-edition', 'hand-pulled', 'print'],
+  #  ['limited-edition', 'photography'],
+  #  ['animation', 'sericel'],
+  #  ['limited-edition', 'sericel'],
+  #  ['sculpture'],
+  #  ['hand-blown'],
+  #  ['hand-made'],
+  #  ['limited-edition', 'sculpture']]
+  # end
 
   def assoc_keys(nested_arr)
     nested_arr.map {|set| set[0]}

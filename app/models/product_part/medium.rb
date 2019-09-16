@@ -1,6 +1,7 @@
 class Medium < ProductPart
   has_many :item_groups, as: :origin, dependent: :destroy
   has_many :products, through: :item_groups, source: :target, source_type: "Product"
+  has_many :option_groups, through: :item_groups, source: :target, source_type: "OptionGroup"
 
   has_many :product_kinds, through: :item_groups, source: :target, source_type: "ProductKind"
   has_many :media, through: :item_groups, source: :target, source_type: "Medium"
