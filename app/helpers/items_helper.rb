@@ -2,8 +2,12 @@ module ItemsHelper
   def build_medium_types
     build_obj_from_sets(medium_type, 'medium_type', :medium)
     build_obj_from_sets(material_types, 'material_type', :material)
-    build_obj_from_sets(dimension_types, 'dimension_type', :dimension)
-    build_obj_from_sets(mounting_types, 'mounting_type', :mounting)
+    add_material_tags
+    #build_obj_from_sets(dimension_types, 'dimension_type', :dimension)
+    #build_obj_from_sets(mounting_types, 'dimension_type', :mounting)
+
+    assoc_material_dimension_mounting
+    #build_material_dimension_mounting
     #build_obj_from_sets(edition_types, 'edition_type', :edition)
     #build_obj_from_sets(sub_medium_types, 'sub_medium_type', :edition)
     build_pk_medium_combos
@@ -24,7 +28,40 @@ module ItemsHelper
     end
   end
 
+  def add_material_tags
+    materials = Material.all
+    assoc_keys = assoc_keys(material_types)
+    i = assoc_keys.index('sculpture')
+    [assoc_keys[0...i].prepend('two-d'), assoc_keys[i..-1].prepend('three-d')].each do |set|
+      tag = set[0]
+      scoped_assoc_keys = set.drop(1)
+      scoped_names = scoped_assoc_keys.map {|key| material_types.assoc(key)}.flatten
+      materials.where(name: scoped_names).each do |material|
+        h, k, v, tags = {}, 'dimension_type', tag, material.tags
+        h[k] = v
+        next if k_exists_v_match?(h: tags, h2: h, k: k, v: v)
+        material.tags = update_hash(h: tags, h2: h, k: :k, v: v )
+        material.save
+      end
+    end
+  end
+
+  def assoc_material_dimension_mounting
+    materials = Material.all
+    #dimensions = Dimension.all
+    #mountings = Mounting.all
+    ['two-d', 'three-d'].each do |tag|
+      materials.where("tags @> ?", ("dimension_type => #{tag}")).each do |material|
+        #dimension_names = dimension_types.assoc(tag)
+        find_or_create_by_names_and_assoc(origin: material, target_type: :dimension, target_names: dimension_types.assoc(tag).drop(1))
+        find_or_create_by_names_and_assoc(origin: material, target_type: :mounting, target_names: mounting_types.assoc(tag).drop(1))
+        #dimensions.where("tags @> ?", ("dimension_type => #{tag}")).map {|dimension| assoc_unless_included(material, dimension)}
+        #mountings.where("tags @> ?", ("dimension_type => #{tag}")).map {|mounting| assoc_unless_included(material, mounting)}
+      end
+    end
+  end
   ###########################################################
+
   def build_product_combos
     set = build_product_combo_set
     if Product.any?
@@ -38,7 +75,6 @@ module ItemsHelper
   def build_product_combo_set
     set =[]
     ProductKind.all.each do |pk|
-      #assoc_key = pk.tags['material_type']
       Material.where(name: material_types.assoc(pk.tags['material_type'])).map {|material| set << [pk, material]}
     end
     set
@@ -59,7 +95,6 @@ module ItemsHelper
   end
 
   def add_product_combos(product_combo)
-    #name = product_combo.map(&:name).join(' on ')
     name_set = product_combo.map(&:name)
     name = format_product_material_name(name_set)
     p = find_or_create_by_name(obj_klass: :product, name: name)
@@ -74,11 +109,9 @@ module ItemsHelper
     elsif name_split.include?('sculpture')
       name_split.delete_at(name_split.rindex('sculpture'))
       name_split.push('sculpture').join(' ')
-      #name_split << name
-      #name_split.join(' ')
     elsif include_any?(name_split, ['hand-made', 'hand-blown'])
       name_split.push('sculpture').join(' ')
-    else 
+    else
       name_set.join(' on ')
     end
   end
@@ -108,15 +141,8 @@ module ItemsHelper
     h.keys.each do |k|
       next if k_exists_v_match?(h: tags, h2: h, k: k, v: h[k])
       update_hash(h: tags, h2: h, k: k, v: h[k])
-      #check_kv(h: tags, h2: h, k: k, v: h[k]) #D
     end
   end
-
-  #D
-  # def check_kv(h:, h2:, k:, v:)
-  #   next if k_exists_v_match?(h: h, h2: h2, k: k, v: v)
-  #   update_hash(h: h, h2: h2, k: k, v: v) #E
-  # end
 
   ###########################################################
 
@@ -131,16 +157,17 @@ module ItemsHelper
 
   #A(1)
   def set_dimention_type(target_names)
-    #target_names.include?('sculpture') ? 'three-d' : 'two-d'
-    include_any?(target_names, sculpture_art_type_set) ? 'three-d' : 'two-d'
+    if include_any?(target_names, sculpture_art_type_set)
+      'three-d'
+    else
+      'two-d'
+    end
   end
 
   #A(2)
   def set_art_type(target_names)
     if include_any?(target_names, original_art_type_set) #A(1)(i)
       'original'
-    # elsif target_names.include?('sculpture')
-    #   'sculpture'
     elsif include_any?(target_names, sculpture_art_type_set)
       'sculpture'
     elsif target_names.include?('limited-edition') && include_any?(target_names, print_art_type_set) #A(1)(ii)
@@ -156,8 +183,6 @@ module ItemsHelper
       'flat'
     elsif material = target_names.detect {|name| name if ['sericel', 'photography', 'hand-blown', 'hand-made', 'sculpture'].include?(name)}
       material
-    # elsif exclude_all?(target_names, ['hand-blown', 'hand-made']) && target_names.include?('sculpture')
-    #   'sculpture'
     end
   end
 
@@ -246,16 +271,13 @@ module ItemsHelper
     [
       ['flat', 'canvas', 'paper', 'board'],
       ['photography', 'photography-paper'],
+      ['sericel', 'sericel', 'sericel with background'],
       ['sculpture', 'metal', 'glass', 'mixed-media','ceramic'],
       ['hand-blown', 'glass'],
-      ['hand-made', 'ceramic'],
-      ['sericel', 'sericel', 'sericel with background']
+      ['hand-made', 'ceramic']
     ]
   end
-  # def dimension_types
-  #   [['two-d', 'width & height'], ['three-d', 'width, height & depth']]
-  # end
-  #replace
+
   def dimension_types
     [['two-d', 'width', 'height'], ['three-d', 'width', 'depth', 'height']]
   end
@@ -302,5 +324,9 @@ module ItemsHelper
    ['hand-blown'],
    ['hand-made'],
    ['limited-edition', 'sculpture']]
+  end
+
+  def assoc_keys(nested_arr)
+    nested_arr.map {|set| set[0]}
   end
 end
