@@ -3,12 +3,9 @@ module ItemsHelper
     build_obj_from_sets(medium_type, 'medium_type', :medium)
     build_obj_from_sets(material_types, 'material_type', :material)
     add_material_tags
-    #build_obj_from_sets(dimension_types, 'dimension_type', :dimension)
-    #build_obj_from_sets(mounting_types, 'dimension_type', :mounting)
-
     assoc_material_dimension_mounting
-    #build_material_dimension_mounting
-    #build_obj_from_sets(edition_types, 'edition_type', :edition)
+    build_obj_from_sets(edition_types, 'edition_type', :edition)
+    assoc_medium_edition
     #build_obj_from_sets(sub_medium_types, 'sub_medium_type', :edition)
     build_pk_medium_combos
     add_product_kind_tags
@@ -48,18 +45,23 @@ module ItemsHelper
 
   def assoc_material_dimension_mounting
     materials = Material.all
-    #dimensions = Dimension.all
-    #mountings = Mounting.all
     ['two-d', 'three-d'].each do |tag|
       materials.where("tags @> ?", ("dimension_type => #{tag}")).each do |material|
-        #dimension_names = dimension_types.assoc(tag)
         find_or_create_by_names_and_assoc(origin: material, target_type: :dimension, target_names: dimension_types.assoc(tag).drop(1))
         find_or_create_by_names_and_assoc(origin: material, target_type: :mounting, target_names: mounting_types.assoc(tag).drop(1))
-        #dimensions.where("tags @> ?", ("dimension_type => #{tag}")).map {|dimension| assoc_unless_included(material, dimension)}
-        #mountings.where("tags @> ?", ("dimension_type => #{tag}")).map {|mounting| assoc_unless_included(material, mounting)}
       end
     end
   end
+
+  def assoc_medium_edition
+    assoc_keys = assoc_keys(edition_types)
+    media = Medium.where(name: assoc_keys)
+    assoc_keys.each do |tag|
+      medium = media.find_by(name: tag)
+      find_or_create_by_names_and_assoc(origin: medium, target_type: :edition, target_names: edition_types.assoc(tag).drop(1))
+    end
+  end
+
   ###########################################################
 
   def build_product_combos
@@ -115,6 +117,7 @@ module ItemsHelper
       name_set.join(' on ')
     end
   end
+
   ###########################################################
 
   def add_product_kind_tags
@@ -199,6 +202,7 @@ module ItemsHelper
   def sculpture_art_type_set
     ['sculpture', 'hand-blown', 'hand-made']
   end
+
   ###########################################################
 
   def update_hash(h:, h2:, k:, v:)
@@ -252,8 +256,11 @@ module ItemsHelper
     [primary_media, secondary_media, component_media]
   end
 
+  # def primary_media
+  #   ['primary', 'original', 'painting', 'drawing', 'monoprint', 'production', 'one-of-a-kind', 'mixed-media', 'limited-edition', 'print', 'hand-pulled', 'hand-made', 'hand-blown', 'photography', 'sculpture', 'sculpture-type', 'animation', 'sericel']
+  # end
   def primary_media
-    ['primary', 'original', 'painting', 'drawing', 'monoprint', 'production', 'one-of-a-kind', 'mixed-media', 'limited-edition', 'print', 'hand-pulled', 'hand-made', 'hand-blown', 'photography', 'sculpture', 'sculpture-type', 'animation', 'sericel']
+    ['primary', 'original', 'painting', 'drawing', 'production', 'one-of-a-kind', 'mixed-media', 'limited-edition', 'single-edition', 'open-edition', 'print', 'hand-pulled', 'hand-made', 'hand-blown', 'photography', 'sculpture', 'sculpture-type', 'animation', 'sericel']
   end
 
   def secondary_media
@@ -264,9 +271,6 @@ module ItemsHelper
     ['diptych', 'triptych', 'quadriptych', 'set']
   end
 
-  # def material_types
-  #   [['flat', 'canvas', 'paper', 'board'], ['photography', 'photography-paper'], ['sculpture', 'sculpture-materials'], ['sericel', 'sericel', 'sericel & background']]
-  # end
   def material_types
     [
       ['flat', 'canvas', 'paper', 'board'],
@@ -287,9 +291,17 @@ module ItemsHelper
   end
 
   def edition_types
-    ['edition' ,'numbered-xy', 'numbered', 'from-an-edition', 'open-edition']
+    [
+      ['limited-edition', 'numbered-xy', 'numbered', 'from-an-edition'],
+      ['open-edition', 'open-edition'],
+      ['single-edition', 'numbered 1/1']
+    ]
   end
-  #policies?
+
+  # def edition_types
+  #   ['edition' ,'numbered-xy', 'numbered', 'from-an-edition', 'open-edition']
+  # end
+
   def k_exists_v_match?(h:, h2:, k:, v:)
     h && h.present? && h.has_key?(k) && h[k] == v
   end
@@ -308,15 +320,18 @@ module ItemsHelper
    ['original', 'production', 'drawing'],
    ['original', 'production', 'sericel'],
    ['original', 'mixed-media'],
-   ['original', 'monoprint'],
    ['one-of-a-kind', 'mixed-media'],
+   ['single-edition', 'one-of-a-kind', 'mixed-media'],
    ['one-of-a-kind', 'hand-pulled', 'print'],
-   ['one-of-a-kind', 'monoprint'],
+   ['single-edition', 'one-of-a-kind', 'hand-pulled', 'print'],
    ['print'],
+   ['single-edition', 'print'],
    ['hand-pulled', 'print'],
+   ['open-edition', 'print'],
    ['photography'],
    ['limited-edition', 'print'],
    ['limited-edition', 'hand-pulled', 'print'],
+   ['single-edition', 'hand-pulled', 'print'],
    ['limited-edition', 'photography'],
    ['animation', 'sericel'],
    ['limited-edition', 'sericel'],
