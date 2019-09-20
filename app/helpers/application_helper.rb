@@ -207,11 +207,21 @@ module ApplicationHelper
     to_konstant(kollection_name).where.not("#{text_method}": set)
   end
 
-  #removed methods: guides for grouping collections
-  # def filtered_vl(parent_obj, child_obj)
-  #   set = parent_obj.public_send(to_kollection_name(child_obj)).pluck(:name).uniq
-  #   to_konstant(child_obj).where.not(name: set)
-  # end
+  def readable_obj_set(obj_set)
+    a = []
+    obj_set.each do |set|
+      if set.first.class == Array
+        a << set.map {|obj| make_obj_set_readable(obj)}
+      else
+        a << make_obj_set_readable(obj)
+      end
+    end
+    a
+  end
+
+  def make_obj_set_readable(obj)
+    "#{obj.type}: #{obj.id}, #{obj.name}"
+  end
 
   def filtered_thru_vl(parent_obj, child_obj, other_obj)
     id_set = parent_obj.public_send(to_kollection_name(child_obj)).map{|obj| obj.public_send(to_kollection_name(other_obj)).first}

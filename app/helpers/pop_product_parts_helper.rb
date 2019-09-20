@@ -188,9 +188,9 @@ module PopProductPartsHelper
     public_send(sti_scope + '_opts')
   end
 
-  def signature_opts
-    h = {category: opt_group_values(signature_opt_group), opts: signature_opt_group, opt_idx: signature_opt_idx}
-  end
+  # def signature_opts
+  #   h = {category: opt_group_values(signature_opt_group), opts: signature_opt_group, opt_idx: signature_opt_idx}
+  # end
 
   def certificate_opts
     h = {category: opt_group_values(certificate_opt_group), opts: certificate_opt_group, opt_idx: certificate_opt_idx}
