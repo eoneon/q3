@@ -207,16 +207,19 @@ module ApplicationHelper
     to_konstant(kollection_name).where.not("#{text_method}": set)
   end
 
-  def readable_obj_set(obj_set)
-    a = []
-    obj_set.each do |set|
-      if set.first.class == Array
-        a << set.map {|obj| make_obj_set_readable(obj)}
-      else
-        a << make_obj_set_readable(obj)
-      end
-    end
-    a
+  # def readable_obj_set(obj_set)
+  #   a = []
+  #   obj_set.each do |set|
+  #     if set.first.class == Array
+  #       a << set.map {|obj| make_obj_set_readable(obj)}
+  #     else
+  #       a << make_obj_set_readable(obj)
+  #     end
+  #   end
+  #   a
+  # end
+  def readable_obj_set(set)
+    set.map {|subset| subset.map {|obj| make_obj_set_readable(obj)}}
   end
 
   def make_obj_set_readable(obj)

@@ -1,238 +1,311 @@
 module PopProductPartsHelper
-  def cat_assocs
-    flat_cat_assocs + sculpture_cat_assocs
+  ##################################################################  tags_hash methods
+  def sti_opts
+    ['medium', 'material', 'edition', 'signature', 'dimension', 'mounting', 'certificate']
   end
 
-  def flat_cat_assocs
-    flat_items.map {|i| cat_pk_mat_items.map{|sti| append_name(i, sti) } + flat_mount_dim_items}
+  def tags_hash
+    h = {medium_tags: medium_tags, material_tags: material_tags, edition_tags: edition_tags, signature_tags: signature_tags, dimension_tags: dimension_tags, mounting_tags: mounting_tags, certificate_tags: certificate_tags, product_kind_tags: product_kind_tags}
   end
 
-  def sculpture_cat_assocs
-    sculpture_items.map {|i| cat_pk_mat_items.map{|sti| append_name(i, sti) } + sculpture_mount_dim_items}
+  ##############################
+
+  def medium_tags
+    h = {medium_type: scoped_medium_types}
   end
 
-  ################ structural stuff
-  #relevant to :flat_cat_assocs re: flat_mount_dim_items
-
-  def flat_items
-    ['Flat', 'Sericel']
+  def material_tags
+    h = {dimension_tags: scoped_material_dimension_types, medium_assoc: scoped_material_medium_assoc}
   end
 
-  def sculpture_items
-    ['HB', 'HM', 'General'].map{|n| append_name(n, 'Sculpture')}
+  def edition_tags
+    h = {edition_type: scoped_edition_types}
   end
 
-  def cat_pk_mat_items
-    ['Category', 'ProductKind', 'Material']
+  def signature_tags
+    h = {signature_type: scoped_signature_types}
   end
 
-  def flat_mount_dim_items
-    ['Mounting', 'Dimension'].map{|sti| append_name('Flat',sti)}
+  def dimension_tags
+    h = {dimension_type: scoped_dimension_types}
   end
 
-  def sculpture_mount_dim_items
-    ['Mounting', 'Dimension'].map{|sti| append_name('Sculpture',sti)}
+  def mounting_tags
+    h = {mounting_type: scoped_mounting_dimension_types}
   end
 
-########################end refactor
-
-  def pp_hash(sti_key, assoc_key)
-    h = {product_kind: product_kind_assoc, medium: medium_assoc, material: material_assoc, mounting: mounting_assoc, dimension: dimension_assoc, signature: signature_assoc}
-    h[sti_key].assoc(assoc_key).drop(1)
+  def certificate_tags
+    h = {certificate_type: scoped_certificate_types}
   end
 
-  #mounting_dimension: mounting_dimension_assoc
-  #####################
-  def product_kind_assoc
-    [flat_pk, sericel_pk, hb_sculpture_pk, hm_sculpture_pk, gen_sculpture_pk]
+  def product_kind_tags
+    h = {material_assoc: scoped_medium_material_assoc}
   end
 
-  def medium_assoc
-    [original_med, one_of_a_kind_med, print_med, prod_sericel_med, gen_sericel_med, hand_blown_med, hand_made_med, gen_sculpt_med]
+  ##############################
+
+  def scoped_medium_types
+    [primary_media.prepend('primary'), secondary_media.prepend('secondary'), component_media.prepend('component')]
   end
 
-  def material_assoc
-    [flat_mat, hb_sculpture_mat, hm_sculpture_mat, gen_sculpt_mat, sericel_mat]
+  def scoped_medium_material_assoc
+    [flat_medium_materials.prepend('flat'), drawing_medium_materials, photo_medium_materials, sericel_medium_materials, sculpture_medium_materials, hand_blown_medium_materials, hand_made_medium_materials]
   end
 
-  def mounting_assoc
-    [flat_mounting, sculpture_mounting]
+  def scoped_material_medium_assoc
+    [flat_materials.prepend('flat'), photography_materials.prepend('photography'), sericel_materials, sculpture_materials.prepend('sculpture'), hand_blown_materials.prepend('hand-blown'), hand_made_medium_materials.prepend('hand-made')]
   end
 
-  def dimension_assoc
-    [flat_dimension, sculpture_dimension]
+  def scoped_material_dimension_types
+    [two_d_materials.prepend('true'), three_d_materials.prepend('true')]
   end
 
-  def signature_assoc
-    [['Flat-Signature', 'artist', 'authorized', 'relative', 'famous'], ['Sculpture-Signature', 'artist']]
+  def scoped_edition_types
+    [limited_edition.prepend('limited-edition'), open_edition, single_edition]
   end
 
-  def certificate_assoc
-    [['General-Certificate'], ['Publisher-Certificate'], ['Animation-Certificate']]
+  def scoped_signature_types
+    [flat_signatures.prepend('two-d'), sculpture_signatures.prepend('three-d')]
   end
 
-  ##################### product_kind_set
-
-  def limited_pk
-    [['Flat-ProductKind', 'print-media'], ['Sericel-ProductKind', 'sericel-media'], ['General-Sculpture-ProductKind', 'general-sculpture media']]
+  def scoped_dimension_types
+    [two_dimensions.prepend('two-d'), three_dimensions.prepend('three-d')]
   end
 
-  def sculpture_pk
-    [hb_sculpture_pk, hm_sculpture_pk, gen_sculpture_pk].map{|pk_arr|pk_arr.drop(1)}.flatten.prepend('Sculpture-ProductKind')
+  def scoped_mounting_dimension_types
+    [two_dimension_mountings.prepend('two-d'), three_dimension_mountings.prepend('three-d')]
   end
 
-  def flat_pk
-    ['Flat-ProductKind', 'original art', 'one-of-a-kind art', 'print-media']
+  def scoped_certificate_types
+    [basic_certificates.prepend('basic_coa'), publisher_certificates.prepend('publisher_coa'), animation_certificates.prepend('animation_coa')]
   end
 
-  def sericel_pk
-    ['Sericel-ProductKind', 'production-sericel media', 'sericel-media']
+  ########################################################### medium name sets & conditions
+
+  def medium_names
+    primary_media | secondary_media | component_media
   end
 
-  def hb_sculpture_pk
-    ['HB-Sculpture-ProductKind', 'hand-blown glass media']
+  def primary_media
+    ['original', 'painting', 'drawing', 'production', 'one-of-a-kind', 'mixed-media', 'limited-edition', 'embellished', 'single-edition', 'open-edition', 'print', 'hand-pulled', 'hand-made', 'hand-blown', 'photography', 'sculpture', 'sculpture-type', 'animation', 'sericel']
   end
 
-  def hm_sculpture_pk
-    ['HM-Sculpture-ProductKind', 'hand-made ceramic media']
+  def secondary_media
+    ['leafing', 'remarque']
   end
 
-  def gen_sculpture_pk
-    ['General-Sculpture-ProductKind', 'general-sculpture media']
+  def component_media
+    ['diptych', 'triptych', 'quadriptych', 'set']
   end
 
-  def identifier_pks
-    [flat_pk, sericel_pk, sculpture_pk]
+  def flat_art
+    ['original', 'one-of-a-kind', 'print']
   end
 
-  ###################### medium_set
-  def original_med
-    ['original art', 'painting', 'sketch']
+  def photo_art
+    ['photography']
   end
 
-  def one_of_a_kind_med
-    ['one-of-a-kind art', 'mixed-media', 'hand-pulled prints', 'monoprints']
+  def sericel_art
+    ['sericel']
   end
 
-  def print_med
-    ['print-media', 'premium-prints', 'generic-prints', 'hand-pulled prints', 'posters', 'photos']
+  def sculpture_art
+    ['sculpture']
   end
 
-  def prod_sericel_med
-    ['production-sericel media', 'production-sericel', 'production-sericel & sketch']
+  def hand_blown_art
+    ['hand-blown']
   end
 
-  def gen_sericel_med
-    ['sericel-media', 'sericel']
+  def hand_made_art
+    ['hand-made']
   end
 
-  def hand_blown_med
-    ['hand-blown glass media', 'hand-blown glass', 'gartner-blade media']
+  ########################################################### material name sets
+
+  def material_names
+    flat_materials | photography_materials | drawing_materials |sericel_materials | sculpture_materials | hand_blown_materials | hand_made_materials
   end
 
-  def hand_made_med
-    ['hand-made ceramic media', 'hand-made ceramic']
+  def two_d_materials
+    flat_materials | drawing_materials | photography_materials | sericel_materials
   end
 
-  def gen_sculpt_med
-    ['general-sculpture media', 'general-sculpture']
+  def three_d_materials
+    sculpture_materials | hand_blown_materials | hand_made_materials
   end
 
-  ###################### material_set
-  def flat_mat
-    ['Flat-Material', 'canvas', 'paper', 'board', 'metal']
+  def flat_materials
+    ['canvas', 'paper', 'board', 'metal']
   end
 
-  def hb_sculpture_mat
-    ['HB-Sculpture-Material', 'hand-blown glass']
+  def flat_materials
+    ['canvas', 'paper', 'board', 'metal']
   end
 
-  def hm_sculpture_mat
-    ['HM-Sculpture-Material', 'hand-made ceramic']
+  def drawing_materials
+    ['drawing-paper']
   end
 
-  def gen_sculpt_mat
-    ['General-Sculpture-Material', 'general-sculpture material']
+  def photography_materials
+    ['photography-paper']
   end
 
-  def sericel_mat
-    ['Sericel-Material', 'sericel']
+  def sericel_materials
+    ['sericel', 'sericel with background']
   end
 
-  ##################### mounting_assoc
-  def flat_mounting
-    ['Flat-Mounting', 'framed', 'bordered', 'wrapped', 'matting']
+  def sculpture_materials
+    ['metal', 'glass', 'mixed-media','ceramic']
   end
 
-  def sculpture_mounting
-    ['Sculpture-Mounting', 'case', 'base']
+  def hand_blown_materials
+    ['glass']
   end
 
-  def flat_dimension
-    ['Flat-Dimension', 'flat-dimension']
+  def hand_made_materials
+    ['ceramic']
   end
 
-  def sculpture_dimension
-    ['Sculpture-Dimension', 'sculpture-dimension']
+  ######### product_kind medium materials
+
+  def flat_medium_materials
+    ['painting', 'mixed-media', 'print']
   end
 
-  #####################
-  def sti_cat_group(sti_key)
-    h = {signature: signature_assoc}
-    h[sti_key].assoc(assoc_key)
+  def drawing_medium_materials
+    ['drawing']
   end
 
-  ##################### start of added methods
-
-  def scoped_opt_groups(sti_scope:)
-    public_send(sti_scope + '_opts')
+  def photo_medium_materials
+   ['photograph']
   end
 
-  # def signature_opts
-  #   h = {category: opt_group_values(signature_opt_group), opts: signature_opt_group, opt_idx: signature_opt_idx}
-  # end
-
-  def certificate_opts
-    h = {category: opt_group_values(certificate_opt_group), opts: certificate_opt_group, opt_idx: certificate_opt_idx}
+  def sericel_medium_materials
+   ['sericel']
   end
 
-  def edition_opts
-    h = {category: nil, opts: edition_opt_group, opt_idx: nil}
+  def sculpture_medium_materials
+    ['sculpture']
   end
 
-  def sub_medium_opts
-    h = {category: nil, opts: sub_medium_opt_group, opt_idx: sub_medium_opt_idx}
+  def hand_blown_medium_materials
+    ['hand-blown']
   end
 
-  def signature_opt_group
-    [['Flat-Signature', 'artist', 'authorized', 'relative', 'famous'], ['Sculpture-Signature', 'artist']]
+  def hand_made_medium_materials
+    ['hand-made']
   end
 
-  def certificate_opt_group
-    [['General-Certificate', 'certificate'], ['Publisher-Certificate', 'publisher-certificate'], ['Animation-Certificate', 'animation-seal', 'sports-seal', 'animation-certificate', 'general-certificate']]
+  ########################################################### edition name sets
+
+  def edition_names
+    limited_edition | open_edition | single_edition
   end
 
-  def edition_opt_group
-    ['numbered-xy', 'numbered', 'from-an-edition', 'open-edition']
+  def limited_edition
+    ['numbered-xy', 'numbered', 'from-an-edition']
   end
 
-  def sub_medium_opt_group
-    ['embellishment', 'leafing', 'remarque']
+  def open_edition
+    ['open-edition']
   end
 
-  def signature_opt_idx
-    [['Flat-Signature', [0], [0,0], [0,1], [0,2], [2], [0,3], [3]], ['Sculpture-Signature', [0]]]
+  def single_edition
+    ['single-edition']
   end
 
-  def certificate_opt_idx
-    [['General-Certificate', [0]], ['Publisher-Certificate', [0]], ['Animation-Certificate', [0,1,2], [0,1,3], [0,2], [0,3], [2], [3]]]
+  ########################################################### signature name sets
+
+  def signature_names
+    flat_signatures | sculpture_signatures
   end
 
-  def sub_medium_opt_idx
-    [[0,1,2], [0,1], [0,2], [0], [1], [2]]
+  def flat_signatures
+    ['artist', 'authorized', 'relative', 'famous']
   end
 
-  def opt_group_values(opt_group)
-    opt_group.map {|a| a[0]}.flatten
+  def sculpture_signatures
+    ['artist']
+  end
+
+  ########################################################### dimension & mounting name sets
+
+  def dimension_names
+    two_dimensions | three_dimensions
+  end
+
+  def two_dimensions
+    ['width', 'height']
+  end
+
+  def three_dimensions
+    ['width', 'height', 'depth']
+  end
+
+  def mounting_names
+    two_dimension_mountings | three_dimension_mountings
+  end
+
+  def two_dimension_mountings
+    ['framed', 'bordered', 'matted']
+  end
+
+  def three_dimension_mountings
+    ['case', 'base']
+  end
+
+  ########################################################### certificate name sets
+
+  def certificate_names
+    basic_certificates | publisher_certificates | animation_certificates
+  end
+
+  def basic_certificates
+    ['basic-certificate']
+  end
+
+  def publisher_certificates
+    ['publisher-certificate']
+  end
+
+  def animation_certificates
+    ['animation-seal', 'sports-seal', 'animation-certificate', 'basic-certificate']
+  end
+
+  def product_kind_medium_set
+   [['original', 'painting'],
+   ['original', 'drawing'],
+   ['original', 'production', 'drawing'],
+   ['original', 'production', 'sericel'],
+   ['original', 'mixed-media'],
+   ['one-of-a-kind', 'mixed-media'],
+   ['embellished', 'one-of-a-kind', 'mixed-media'],
+   ['single-edition', 'one-of-a-kind', 'mixed-media'],
+   ['embellished', 'single-edition', 'one-of-a-kind', 'mixed-media'],
+   ['one-of-a-kind', 'hand-pulled', 'print'],
+   ['embellished', 'one-of-a-kind', 'hand-pulled', 'print'],
+   ['single-edition', 'one-of-a-kind', 'hand-pulled', 'print'],
+   ['embellished', 'single-edition', 'one-of-a-kind', 'hand-pulled', 'print'],
+   ['print'],
+   ['embellished', 'print'],
+   ['single-edition', 'print'],
+   ['hand-pulled', 'print'],
+   ['open-edition', 'print'],
+   ['photography'],
+   ['limited-edition', 'print'],
+   ['embellished', 'limited-edition', 'print'],
+   ['limited-edition', 'hand-pulled', 'print'],
+   ['single-edition', 'hand-pulled', 'print'],
+   ['limited-edition', 'photography'],
+   ['animation', 'sericel'],
+   ['limited-edition', 'sericel'],
+   ['hand-blown'],
+   ['hand-made'],
+   ['sculpture'],
+   ['embellished', 'sculpture'],
+   ['limited-edition', 'sculpture'],
+   ['embellished', 'limited-edition', 'sculpture']]
   end
 end
