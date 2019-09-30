@@ -1,4 +1,7 @@
 module ApplicationHelper
+  # def my_test
+  #   __method__ #.to_s.split('_').last
+  # end
   #convert string, symbol, obj to formatted str representation of klass
   def to_snake(obj)
     if obj.class == String

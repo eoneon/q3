@@ -1,12 +1,12 @@
 module CategoriesHelper
 
-  def build_app_data
-    origin = find_or_create_by_name(obj_klass: :category, name: 'Origin')
-    ['Product-Category', 'Option-Group', 'Medium-Group', 'Identifier-Group'].each do |name|
-      nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: name)
-      public_send('build_' + to_snake(name), nested_origin)
-    end
-  end
+  # def build_app_data
+  #   origin = find_or_create_by_name(obj_klass: :category, name: 'Origin')
+  #   ['Product-Category', 'Option-Group', 'Medium-Group', 'Identifier-Group'].each do |name|
+  #     nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: name)
+  #     public_send('build_' + to_snake(name), nested_origin)
+  #   end
+  # end
 
   ####################################### build_identifier_group: origin = Category(name: 'Identifier-Group')
 
@@ -56,21 +56,21 @@ module CategoriesHelper
 
   ####################################### Medium-Group III
 
-  def build_medium_group(origin)
-    flat_items.push(sculpture_items).flatten.each do |key|
-      nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :medium_group, target_name: append_name(key, 'Medium-Group'))
-      ################# A
-      set = build_medium_group_set(key)
-
-      if nested_medium_groups = has_kollection?(nested_origin, :medium_group)
-        existing_set = nested_medium_groups.map {|medium_group| hashified_type_eql_id_via_assocs(obj: medium_group, assocs: medium_group_types)}
-        ################# B
-        build_medium_group_combos(origin: nested_origin, existing_set: existing_set, set: set)
-      else
-        build_missing_medium_groups(origin: nested_origin, target_type: :medium_group, target_group_set: set)
-      end
-    end
-  end
+  # def build_medium_group(origin)
+  #   flat_items.push(sculpture_items).flatten.each do |key|
+  #     nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: :medium_group, target_name: append_name(key, 'Medium-Group'))
+  #     ################# A
+  #     set = build_medium_group_set(key)
+  #
+  #     if nested_medium_groups = has_kollection?(nested_origin, :medium_group)
+  #       existing_set = nested_medium_groups.map {|medium_group| hashified_type_eql_id_via_assocs(obj: medium_group, assocs: medium_group_types)}
+  #       ################# B
+  #       build_medium_group_combos(origin: nested_origin, existing_set: existing_set, set: set)
+  #     else
+  #       build_missing_medium_groups(origin: nested_origin, target_type: :medium_group, target_group_set: set)
+  #     end
+  #   end
+  # end
 
   def build_scoped_identifier_groups(origin, set) #origin = Category(name: 'Identifier-Group')
     opt_group_values(identifier_pks).each do |key|
@@ -91,43 +91,43 @@ module CategoriesHelper
 
   ################# A: build_medium_group_values
 
-  def build_medium_group_set(key)
-    pk_sets = build_product_kind_sets(key) #A(1)
-    pk_medium_items = pk_sets.map {|pk| [pk[0], has_kollection?(pk[-1], 'medium').to_a]}
-    pk_medium_set = pk_medium_items.map {|items| items[1].map {|medium| [items[0], medium]}}.flatten(1)
-    material_set = find_origin_kollection_by_name(origin_name: append_name(key, 'Material'), origin_type: :category, target_type: 'Material').to_a
-    pk_medium_set.map {|pk_medium| material_set.map {|material| [pk_medium[0], pk_medium[1], material]}}.flatten(1)
-  end
+  # def build_medium_group_set(key)
+  #   pk_sets = build_product_kind_sets(key) #A(1)
+  #   pk_medium_items = pk_sets.map {|pk| [pk[0], has_kollection?(pk[-1], 'medium').to_a]}
+  #   pk_medium_set = pk_medium_items.map {|items| items[1].map {|medium| [items[0], medium]}}.flatten(1)
+  #   material_set = find_origin_kollection_by_name(origin_name: append_name(key, 'Material'), origin_type: :category, target_type: 'Material').to_a
+  #   pk_medium_set.map {|pk_medium| material_set.map {|material| [pk_medium[0], pk_medium[1], material]}}.flatten(1)
+  # end
 
   ################# A(1)
 
-  def build_product_kind_sets(key)
-    product_kinds = find_origin_kollection_by_name(origin_name: append_name(key, 'ProductKind'), origin_type: :category, target_type: 'ProductKind')
-    ################# A(2)
-    product_kinds.map {|pk| product_kind_set(pk)}
-  end
-
-  ################# A(2)
-
-  def product_kind_set(pk)
-    if pk2 = has_obj?(pk, 'product_kind')
-      [pk,pk2]
-    else
-      [pk]
-    end
-  end
+  # def build_product_kind_sets(key)
+  #   product_kinds = find_origin_kollection_by_name(origin_name: append_name(key, 'ProductKind'), origin_type: :category, target_type: 'ProductKind')
+  #   ################# A(2)
+  #   product_kinds.map {|pk| product_kind_set(pk)}
+  # end
+  #
+  # ################# A(2)
+  #
+  # def product_kind_set(pk)
+  #   if pk2 = has_obj?(pk, 'product_kind')
+  #     [pk,pk2]
+  #   else
+  #     [pk]
+  #   end
+  # end
 
   ##################################################### utility methods for :medium_group_target_sets
 
   ##################################################### B
 
-  def build_medium_group_combos(origin:, set:, existing_set:)
-    ################# B(1)
-    if missing_medium_groups = find_missing_targets(set: set, existing_set: existing_set)
-      ################# B(2)
-      build_missing_medium_groups(origin: origin, target_type: :medium_group, target_group_set: missing_medium_groups)
-    end
-  end
+  # def build_medium_group_combos(origin:, set:, existing_set:)
+  #   ################# B(1)
+  #   if missing_medium_groups = find_missing_targets(set: set, existing_set: existing_set)
+  #     ################# B(2)
+  #     build_missing_medium_groups(origin: origin, target_type: :medium_group, target_group_set: missing_medium_groups)
+  #   end
+  # end
 
   def build_identifier_group_combos(origin:, set:, existing_set:)
     ################# B(1)
@@ -138,16 +138,16 @@ module CategoriesHelper
   end
   ##################################################### B(1)
 
-  def find_missing_targets(set:, existing_set:)
-    excluded_set =[]
-    set.each do |obj_set|
-      hashified_obj_set = hashified_type_eql_id_via_obj_set(obj_set: obj_set)
-      if existing_set.exclude?(hashified_obj_set)
-        excluded_set << obj_set
-      end
-    end
-    return excluded_set if excluded_set.any?
-  end
+  # def find_missing_targets(set:, existing_set:)
+  #   excluded_set =[]
+  #   set.each do |obj_set|
+  #     hashified_obj_set = hashified_type_eql_id_via_obj_set(obj_set: obj_set)
+  #     if existing_set.exclude?(hashified_obj_set)
+  #       excluded_set << obj_set
+  #     end
+  #   end
+  #   return excluded_set if excluded_set.any?
+  # end
   ##################################################### B(1) for identifiers: should replace above
   def find_missing_identifiers(set:, existing_set:)
     excluded_set =[]
@@ -162,28 +162,28 @@ module CategoriesHelper
 
   ##################################################### hash methods for :find_missing_targets
 
-  def hashified_type_eql_id_via_obj_set(obj_set:)
-    h = {}
-    obj_set.map {|obj| h[to_snake(obj.type)] = obj.id}
-  end
-
-  def type_and_id_assoc_arr(obj_set:)
-    obj_set.map {|obj| [to_snake(obj.type), obj.id]}
-  end
-
-  def hashified_type_eql_id_via_assocs(obj:, assocs:)
-    h = {}
-    assocs.map {|assoc| h[assoc] = has_obj?(obj, assoc).id}
-  end
+  # def hashified_type_eql_id_via_obj_set(obj_set:)
+  #   h = {}
+  #   obj_set.map {|obj| h[to_snake(obj.type)] = obj.id}
+  # end
+  #
+  # def type_and_id_assoc_arr(obj_set:)
+  #   obj_set.map {|obj| [to_snake(obj.type), obj.id]}
+  # end
+  #
+  # def hashified_type_eql_id_via_assocs(obj:, assocs:)
+  #   h = {}
+  #   assocs.map {|assoc| h[assoc] = has_obj?(obj, assoc).id}
+  # end
 
   ##################################################### only difference between following methods is the format_name method so conflate
 
-  def build_missing_medium_groups(origin:, target_type:, target_group_set:)
-    target_group_set.each do |target_set|
-      nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: target_type, target_name: medium_group_name(target_set))
-      push_missing_targets_via_obj_set(origin: nested_origin, obj_set: target_set)
-    end
-  end
+  # def build_missing_medium_groups(origin:, target_type:, target_group_set:)
+  #   target_group_set.each do |target_set|
+  #     nested_origin = find_or_create_by_name_and_assoc(origin: origin, target_type: target_type, target_name: medium_group_name(target_set))
+  #     push_missing_targets_via_obj_set(origin: nested_origin, obj_set: target_set)
+  #   end
+  # end
 
   def build_missing_identifier_groups(origin:, target_type:, target_group_set:)
     target_group_set.each do |target_set|
@@ -194,55 +194,55 @@ module CategoriesHelper
 
   ##################################################### utility methods for :build_missing_medium_groups
 
-  def push_missing_targets_via_obj_set(origin:, obj_set:)
-    obj_set.map {|obj| to_kollection(origin, obj.type) << obj if !has_obj?(origin, obj.type)}
-  end
+  # def push_missing_targets_via_obj_set(origin:, obj_set:)
+  #   obj_set.map {|obj| to_kollection(origin, obj.type) << obj if !has_obj?(origin, obj.type)}
+  # end
 
   ####################################### Product-Category I
 
-  def build_product_category(origin)
-    cat_assocs.each do |assoc_arr|
-      prod_cat = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: assoc_arr.first)
-      assoc_arr.drop(1).each do |prod_subcat_name|
-        prod_subcat = find_or_create_by_name_and_assoc(origin: prod_cat, target_type: :category, target_name: prod_subcat_name)
-        pop_pp_items(prod_subcat)
-      end
-    end
-    assoc_material_to_mountings_and_dimensions
-  end
-
-  def pop_pp_items(prod_subcat)
-    assoc_key = prod_subcat.name #'Flat-ProductKind'
-    sti_key = :"#{to_snake(assoc_key.split('-').last)}"
-    pp_hash(sti_key, assoc_key).each do |pp_name|
-      pp = find_or_create_by_name_and_assoc(origin: prod_subcat, target_type: sti_key, target_name: pp_name)
-      if sti_key == :product_kind
-        pop_sub_pp_items(pp, :medium)
-      elsif sti_key == :mounting && pp.name != 'wrapped'
-        pop_mount_dim_items(pp, :dimension)
-      end
-    end
-  end
-
-  def pop_sub_pp_items(pp, sti_key)
-    assoc_key = pp.name
-    pp_hash(sti_key, assoc_key).each do |sub_pp_name|
-      sub_pp = find_or_create_by_name_and_assoc(origin: pp, target_type: sti_key, target_name: sub_pp_name)
-    end
-  end
-
-  def pop_mount_dim_items(mounting_pp, sti_key)
-    dim_pp = find_or_create_by_name_and_assoc(origin: mounting_pp, target_type: sti_key, target_name: append_name(mounting_pp.name, sti_key.to_s))
-  end
-
-  def assoc_material_to_mountings_and_dimensions
-    flat_items.concat(sculpture_items).each do |item|
-      origin = find_or_create_by_name(obj_klass: :category, name: append_name(item, 'Material'))
-      target_names = origin.name.split('-').include?('Sculpture') ? sculpture_mount_dim_items : flat_mount_dim_items
-      set = target_names.map {|name| [:category, name]}
-      assoc_nested_origins_and_target_set(origin: origin, hm_assoc: :material, target_set: set)
-    end
-  end
+  # def build_product_category(origin)
+  #   cat_assocs.each do |assoc_arr|
+  #     prod_cat = find_or_create_by_name_and_assoc(origin: origin, target_type: :category, target_name: assoc_arr.first)
+  #     assoc_arr.drop(1).each do |prod_subcat_name|
+  #       prod_subcat = find_or_create_by_name_and_assoc(origin: prod_cat, target_type: :category, target_name: prod_subcat_name)
+  #       pop_pp_items(prod_subcat)
+  #     end
+  #   end
+  #   assoc_material_to_mountings_and_dimensions
+  # end
+  #
+  # def pop_pp_items(prod_subcat)
+  #   assoc_key = prod_subcat.name #'Flat-ProductKind'
+  #   sti_key = :"#{to_snake(assoc_key.split('-').last)}"
+  #   pp_hash(sti_key, assoc_key).each do |pp_name|
+  #     pp = find_or_create_by_name_and_assoc(origin: prod_subcat, target_type: sti_key, target_name: pp_name)
+  #     if sti_key == :product_kind
+  #       pop_sub_pp_items(pp, :medium)
+  #     elsif sti_key == :mounting && pp.name != 'wrapped'
+  #       pop_mount_dim_items(pp, :dimension)
+  #     end
+  #   end
+  # end
+  #
+  # def pop_sub_pp_items(pp, sti_key)
+  #   assoc_key = pp.name
+  #   pp_hash(sti_key, assoc_key).each do |sub_pp_name|
+  #     sub_pp = find_or_create_by_name_and_assoc(origin: pp, target_type: sti_key, target_name: sub_pp_name)
+  #   end
+  # end
+  #
+  # def pop_mount_dim_items(mounting_pp, sti_key)
+  #   dim_pp = find_or_create_by_name_and_assoc(origin: mounting_pp, target_type: sti_key, target_name: append_name(mounting_pp.name, sti_key.to_s))
+  # end
+  #
+  # def assoc_material_to_mountings_and_dimensions
+  #   flat_items.concat(sculpture_items).each do |item|
+  #     origin = find_or_create_by_name(obj_klass: :category, name: append_name(item, 'Material'))
+  #     target_names = origin.name.split('-').include?('Sculpture') ? sculpture_mount_dim_items : flat_mount_dim_items
+  #     set = target_names.map {|name| [:category, name]}
+  #     assoc_nested_origins_and_target_set(origin: origin, hm_assoc: :material, target_set: set)
+  #   end
+  # end
   ##################################################### Option-Group II
 
   def build_option_group(origin)
@@ -413,6 +413,17 @@ module CategoriesHelper
       #Category(name: 'Flat-Material').materials
       to_kollection(origin, hm_assoc).map {|nested_origin| assoc_unless_included(nested_origin, target)}
     end
+  end
+
+  ##################################################### object based: build methods:
+  def assoc_origins_and_target_set(origins:, targets:)
+    origins.each do |origin|
+      assoc_targets(origin: origin, targets: targets)
+    end
+  end
+
+  def assoc_targets(origin:, targets:)
+    targets.map {|target| assoc_unless_included(origin, target)}
   end
 
   ##################################################### random utility methods

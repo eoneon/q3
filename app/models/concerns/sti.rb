@@ -16,13 +16,7 @@ module Sti
     self.class.name
   end
 
-  # def to_snake(obj)
-  #   if obj.class == String
-  #     obj.underscore.singularize
-  #   elsif obj.class == Symbol
-  #     obj.to_s.underscore.singularize
-  #   else
-  #     obj.class.name.underscore
-  #   end
-  # end
+  def hello
+    puts 'word'
+  end
 end

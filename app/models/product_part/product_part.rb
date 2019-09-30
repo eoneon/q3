@@ -1,6 +1,9 @@
 class ProductPart < ApplicationRecord
   include Importable
   include Sti
+  #include MediumBuild
+  #include Element
+  extend BuildAppData
 
   validates :type, presence: true
   validates :name, presence: true
