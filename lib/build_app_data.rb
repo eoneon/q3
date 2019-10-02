@@ -1,11 +1,7 @@
 module BuildAppData
-  def self.included(base)
-    #base.send :extend, CastType
-    base.extend(CastType)
-  end
 
   def find_or_create_by_name(klass:, name:)
-    to_konstant(klass).where(name: name).first_or_create
+    to_constant(klass).where(name: name).first_or_create
   end
 
   def find_or_create_by_names(klass:, names:)
@@ -66,7 +62,7 @@ module BuildAppData
   #
   def to_other_type(obj, type, return_type)
     if [String, Symbol].include?(type)
-      public_send('str_to_' + return_type, obj.str)
+      public_send('str_to_' + return_type, obj.to_s)
     else
       public_send('ar_to_' + return_type, type)
     end
@@ -78,8 +74,8 @@ module BuildAppData
     to_other_type(obj, obj.class, 'snake')
   end
 
-  def to_konstant(obj)
-    to_other_type(obj, obj.class, 'konstant')
+  def to_constant(obj)
+    to_other_type(obj, obj.class, 'constant')
   end
 
   def to_classify(obj)
@@ -97,7 +93,7 @@ module BuildAppData
     str.underscore.singularize
   end
 
-  def str_to_konstant(str)
+  def str_to_constant(str)
     str.classify.constantize
   end
 
@@ -114,7 +110,7 @@ module BuildAppData
     ar_obj.class.name.underscore
   end
 
-  def ar_obj_to_konstant(ar_obj)
+  def ar_obj_to_constant(ar_obj)
     ar_obj.class.name.constantize
   end
 

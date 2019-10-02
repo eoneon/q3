@@ -11,7 +11,7 @@ class ItemGroup < ApplicationRecord
   end
 
   def set_count
-    if ["ProductPart", "ItemField", "ItemValue"].include?(self.origin_type)
+    if ["ProductPart", "ItemField", "ItemValue, Element"].include?(self.origin_type)
       origin.sti_item_groups(target_type).count
     else
       origin.item_groups.count

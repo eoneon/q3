@@ -1,5 +1,5 @@
 class Material < ProductPart
-  include MaterialType
+  #include MaterialType
   has_many :item_groups, as: :origin, dependent: :destroy
   has_many :categories, through: :item_groups, source: :target, source_type: "Category"
   has_many :materials, through: :item_groups, source: :target, source_type: "Material" #remove

@@ -1,43 +1,7 @@
-require 'active_support/concern'
+module ElementSet
 
-module MediumType
-  extend ActiveSupport::Concern
-
-  class_methods do
-
-    def types
-      %w[primary secondary tertiary category component category]
-    end
-
-    def primary
-      %w[painting drawing mixed-media print sericel sculpture hand-blown hand-made]
-    end
-
-    def secondary
-      %w[embellished hand-pulled sculpture-type]
-    end
-
-    def tertiary
-      %w[leafing remarque]
-    end
-
-    def component
-      %w[diptych triptych quadriptych set]
-    end
-
-    def category
-      %w[original one-of-a-kind production limited-edition single-edition open-edition]
-    end
-
-    def material
-      [%w[painting drawing mixed-media print].prepend('standard'), %w[photography], %w[sericel], %w[hand-blown], %w[hand-made], %w[sculpture]]
-    end
-
-    def medium_group
-      primary | secondary | category
-    end
-
-    def medium_set
+  class Medium
+    def self.set
      [['original', 'painting'],
      ['original', 'drawing'],
      ['original', 'production', 'drawing'],
