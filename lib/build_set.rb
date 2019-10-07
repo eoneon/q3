@@ -92,10 +92,14 @@ module BuildSet
     str.classify.constantize
   end
 
-  def scoped_constant(konstant)
-    to_constant([self.name, konstant].join('::'))
+  # def scoped_constant(konstant)
+  #   to_constant([self.name, konstant].join('::'))
+  # end
+  def scoped_constant(*konstant)
+    #to_constant([self.name, konstant].join('::'))
+    to_constant(konstant.prepend(self.name).join('::'))
   end
-  
+
   def str_to_classify(str)
     str.classify
   end

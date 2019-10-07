@@ -1,79 +1,18 @@
 module ElementKind
   extend BuildSet
+  extend HashTag
 
   def self.pop_elements
-    #set =[]
     self.constants.each do |konstant|
-      kind = to_snake(konstant) #used for find_or_create_by
-      scoped_constant = scoped_constant(konstant)
+      scoped_constant = scoped_constant(konstant)                               #ElementKind::Medium
       scoped_constant.instance_methods(false).each do |instance_method|
-        tag_key = instance_method.to_s
         scoped_constant.new.public_send(instance_method).each do |element_name|
-          element = find_or_create_by(kind: kind, name: element_name)
-          update_tags(element, h ={tag_key => 'true'})
-      		# if element.tags.nil? || element.tags[tag_key] != 'true'
-      		#   element.tags.merge!(h ={tag_key => 'true'})
-      		#   element.save
-      		# end
+          element = find_or_create_by(kind: kind = to_snake(konstant), name: element_name)
+          update_tags(element, h ={instance_method.to_s => 'true'})
         end
       end
     end
   end
-
-  def self.update_tags(element, tag_hsh)
-    #element.tags ={} if element.tags.nil?
-    if element.tags.nil?
-      element.tags = tag_hsh
-      element.save
-    elsif !element.tags.has_key?(tag_hsh.keys.first)
-      element.tags.merge(tag_hsh)
-      element.save
-    end
-  end
-  # def self.klasses
-  #   self.constants.map {|kind| [kind, [self.name, kind].join('::')]}
-  # end
-  #=> [[:Medium, "ElementKind::Medium"], [:Material, "ElementKind::Material"], [:Edition, "ElementKind::Edition"], [:Signature, "ElementKind::Signature"], [:Certificate, "ElementKind::Certificate"], [:Dimension, "ElementKind::Dimension"], [:Mounting, "ElementKind::Mounting"]]
-
-  # ElementKind.pop_elements
-  # def self.pop_elements
-  #   set =[]
-  #   self.constants.each do |konstant|
-  #     #element_tags ={}
-  #     kind = to_snake(konstant)
-  #     scoped_constant = scoped_constant(konstant)
-  #     tags = scoped_constant.instance_methods(false)
-  #
-  #     #names = tags.map {|tag| scoped_constant.new.public_send(tag)}.flatten.uniq
-  #     grouped_element_names = tags.map {|tag| scoped_constant.new.public_send(tag)}
-  #
-  #     grouped_element_names.flatten.uniq.each do |element_name|
-  #       h ={}
-  #     #names.each do |name|
-  #       #tags.map {|tag| element_tags.merge!(h ={"#{tag}" => "true"}) if scoped_constant.new.public_send(tag).include?(name)}
-  #       #tags.map {|tag| element_tags.merge!(h ={"#{tag}" => "true"}) if scoped_constant.new.public_send(tag).include?(element_name)}
-  #       grouped_element_names.map {|element_group| }
-  #       set << element_name
-  #       #element = find_or_create_by(kind: kind, name: name)
-  #     end
-  #     #set << to_constant([self.name, konstant].join('::')).new
-  #     #set << scoped_constant(konstant).new
-  #
-  #   end
-  #   set
-  # end
-  #
-  # def self.check(element_group, name, h)
-  #   if value = element_group.include?(name)
-  #     h.merge!(h ={"#{scope}" => "#{value}"})
-  #     h[]
-  #     #puts "element_tags[#{scope}] = #{value}"
-  #   end
-  # end
-  # module Test
-  #   module Test2
-  #   end
-  # end
 
   class Medium
     def primary
