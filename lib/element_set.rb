@@ -28,12 +28,12 @@ module ElementSet
      ['limited-edition', 'photography'],
      ['animation', 'sericel'],
      ['limited-edition', 'sericel'],
-     ['hand-blown', 'sculpture-type'],
-     ['hand-made', 'sculpture-type'],
-     ['sculpture', 'sculpture-type'],
-     ['embellished', 'sculpture', 'sculpture-type'],
-     ['limited-edition', 'sculpture', 'sculpture-type'],
-     ['embellished', 'limited-edition', 'sculpture', 'sculpture-type']]
+     ['hand-blown', 'sculpture'],
+     ['hand-made', 'sculpture'],
+     ['sculpture'],
+     ['embellished', 'sculpture'],
+     ['limited-edition', 'sculpture'],
+     ['embellished', 'limited-edition', 'sculpture']]
     end
   end
 end

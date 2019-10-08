@@ -2,20 +2,92 @@ module ElementKind
   extend BuildSet
   extend HashTag
 
-  def self.pop_elements
-    text_tag_konstants =[]
+  ################################################################ ElementKind.pop_products - ElementKind.existing_products - Element.where(kind: 'product').destroy_all - Element.readable_objs(set)
 
+  def self.pop_products
+    existing_set = existing_products
+    if existing_set.any?
+      create_missing(existing_set)
+    else
+      create_all
+    end
+  end
+
+  def self.product_set
+    product_groups, media =[], Element.scoped_elements('medium')
+    Medium::TextTag.new.material_type.map{|set| set.first}.each do |material_type|
+      media.primary_media.where("tags @> ?", ("material_type => #{material_type}")).each do |medium|
+        ElementSet::Medium.set.each do |set|
+          if set.include?(medium.name)
+            media_group = media.where(name: set)
+            scoped_materials = Element.scoped_elements('material').where("tags @> ?", ("#{material_type} => true"))
+            scoped_materials.map {|material| product_groups << [media_group, material].flatten}
+          end
+        end
+      end
+    end
+    product_groups
+  end
+
+  def self.existing_products
+    existing_set =[]
+    Element.scoped_elements('product').each do |product|
+      product_group = product.elements #where(kind: %w[medium material])
+      #product_group = [:medium, :material].map {|assoc_obj| to_collection(origin: product, assoc_obj: assoc_obj).to_a}.flatten
+      existing_set << product_group if product_group.any?
+    end
+    existing_set
+  end
+
+  def self.create_missing(existing_set)
+    product_set.each do |target_set|
+      if existing_set.exclude?(target_set)
+        build_product(target_set)
+      end
+    end
+  end
+
+  def self.create_all
+    product_set.each do |target_set|
+      build_product(target_set)
+    end
+  end
+
+  def self.build_product(target_set)
+    name = format_product_name(target_set.map(&:name))
+    product = find_or_create_by(kind: 'product', name: name)
+    target_set.map {|target| assoc_unless_included(origin: product, target: target)}
+  end
+
+  def self.format_product_name(name_set)
+    if idx = name_set.index('sculpture')
+      name_set[0..-2].insert(idx, name_set[-1]).join(' ')
+    else
+      name_set.insert(-2, 'on').join(' ')
+    end
+  end
+
+  ################################################################ ElementKind.pop_elements
+
+  def self.pop_elements
+    set_text_tags(build_element)
+  end
+
+  def self.build_element
+    text_tag_konstants =[]
     self.constants.each do |konstant| #Medium
       text_tag_konstants << konstant if scoped_constant(konstant).constants.include?(:TextTag)
-      scoped_constant(konstant, :BooleanTag).instance_methods(false).each do |instance_method|
-        #ElementKind::Medium::BooleanTag.instance_methods => primary...
+      scoped_constant(konstant, :BooleanTag).instance_methods(false).each do |instance_method| #ElementKind::Medium::BooleanTag.instance_methods => primary...
         scoped_constant(konstant, :BooleanTag).new.public_send(instance_method).each do |value|
           element = find_or_create_by(kind: to_snake(konstant), name: value)
           update_tags(element, h ={instance_method.to_s => 'true'})
         end
       end
-      #
     end
+    text_tag_konstants
+  end
+
+  def self.set_text_tags(text_tag_konstants)
     elements = Element.where(kind: text_tag_konstants.map{|konstant| to_snake(konstant)})
     text_tag_konstants.each do |konstant|
       scoped_constant(konstant, :TextTag).instance_methods(false).each do |instance_method|
@@ -29,62 +101,8 @@ module ElementKind
       end
     end
   end
-  # def self.pop_elements
-  #   self.constants.each do |konstant|
-  #     #scoped_constant = scoped_constant(konstant)
-  #     scoped_constant = scoped_constant(konstant, 'BooleanTag')                           #ElementKind::Medium
-  #     scoped_constant.instance_methods(false).each do |instance_method|
-  #       scoped_constant.new.public_send(instance_method).each do |element_name|
-  #         element = find_or_create_by(kind: kind = to_snake(konstant), name: element_name)
-  #         element = update_tags(element, h ={instance_method.to_s => 'true'})
-  #       end
-  #     end
-  #
-  #     if scoped_constant(konstant).constants.include?(:TextTag)
-  #       scoped_constant = scoped_constant(konstant, 'TextTag') #ElementKind::Medium::TextTag
-  #       scoped_constant.instance_methods(false).each do |instance_method| #material_type/tag_key
-  #
-  #         scoped_element_names = scoped_constant.new.public_send(instance_method)
-  #         if scoped_element_names.include?(element.name)
-  #           update_tags(element, h = {to_snake(instance_method) => scoped_element_names.first})
-  #         end
-  #       end
-  #     end
-  #   end
-  # end
 
-  # def self.pop_elements
-  #   @elements =[]
-  #   self.constants.each do |konstant| #Medium
-  #     #ElementKind::Medium.constants
-  #     scoped_constant(konstant).constants.each do |tag_scope| #:BooleanTag
-  #       #ElementKind::Medium::BooleanTag.instance_methods
-  #       # => primary/material_type
-  #       scoped_constant(konstant, tag_scope).instance_methods(false).each do |instance_method|
-  #         #ElementKind::Medium::BooleanTag.primary
-  #           #=> %w[painting drawing...]
-  #         #ElementKind::Medium::BooleanTag.material_type
-  #           #=> [%w[painting drawing mixed-media print].prepend('standard'),...]
-  #         scoped_constant(konstant, tag_scope).new.public_send(instance_method).each do |value|
-  #           if tag_scope == :BooleanTag
-  #             element = find_or_create_by(kind: to_snake(konstant), name: value)
-  #             @elements << update_tags(element, h ={instance_method.to_s => 'true'})
-  #           elsif tag_scope == :TextTag
-  #             #puts "#{value}"
-  #             #puts "#{@element.name}"
-  #             element = @elements.last
-  #             if value.include?(element.name)
-  #               #puts "#{value}.include?(#{@element.name})"
-  #               update_tags(element, h = {to_snake(instance_method) => value.first})
-  #             end
-  #           end
-  #           @elements
-  #         end
-  #       end
-  #     end
-  #   end
-  #   @elements
-  # end
+  ################################################################ ElementKind.pop_elements
 
   module Medium
     class BooleanTag
@@ -93,7 +111,7 @@ module ElementKind
       end
 
       def secondary
-        %w[embellished hand-pulled sculpture-type]
+        %w[embellished hand-pulled]
       end
 
       def tertiary

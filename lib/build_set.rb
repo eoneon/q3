@@ -39,6 +39,11 @@ module BuildSet
 
   ###################################################
 
+  def assoc_unless_included(origin:, target:)
+    #to_collection(origin: origin, assoc_obj: target) << target unless to_collection(origin: origin, assoc_obj: target).include?(target)
+    origin.elements << target if origin.element_ids.exclude?(target.id)
+  end
+
   def assoc_scoped_collection(origin:, target:)
     to_collection(origin: origin, assoc_obj: target) << target
   end
@@ -47,8 +52,8 @@ module BuildSet
     origin.public_send(collection_name(assoc_obj))
   end
 
-  def collection_name(origin:, assoc_obj:)
-    to_snake(obj).pluralize
+  def collection_name(assoc_obj)
+    to_snake(assoc_obj).pluralize
   end
 
   # ###################################################

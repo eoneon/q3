@@ -10,7 +10,6 @@ module Q3
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 5.1
-    config.autoload_paths += %W(#{config.root}/app/models/element)
     config.autoload_paths += %W(#{config.root}/app/models/product_part)
     config.autoload_paths += %W(#{config.root}/app/models/item_field)
     config.autoload_paths += %W(#{config.root}/app/models/item_value)
