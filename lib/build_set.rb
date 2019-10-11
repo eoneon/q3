@@ -5,7 +5,6 @@ module BuildSet
       find_or_create_by_names(kind: kind, names: name)
     else
       return Element.where(kind: kind, name: name).first_or_create
-      #Element.scoped_elements(kind)
     end
   end
 
@@ -40,7 +39,6 @@ module BuildSet
   ###################################################
 
   def assoc_unless_included(origin:, target:)
-    #to_collection(origin: origin, assoc_obj: target) << target unless to_collection(origin: origin, assoc_obj: target).include?(target)
     origin.elements << target if origin.element_ids.exclude?(target.id)
   end
 
@@ -97,9 +95,6 @@ module BuildSet
     str.classify.constantize
   end
 
-  # def scoped_constant(konstant)
-  #   to_constant([self.name, konstant].join('::'))
-  # end
   def scoped_constant(*konstant)
     #to_constant([self.name, konstant].join('::'))
     to_constant(konstant.prepend(self.name).join('::'))
@@ -130,14 +125,27 @@ module BuildSet
     ar_obj.class.superclass.name
   end
 
-  def rat_non_self_test
-    'gross'
+  ################################################### array methods
+
+  def include_any?(arr_x, arr_y)
+    arr_x.any? {|x| arr_y.include?(x)}
   end
 
-  def test_self_dog
-    dog_non_self_test
+  def include_all?(arr_x, arr_y)
+    arr_x.all? {|x| arr_y.include?(x)}
   end
 
+  def exclude_all?(arr_x, arr_y)
+    arr_x.all? {|x| arr_y.exclude?(x)}
+  end
+
+  def include_none?(arr_x, arr_y)
+    arr_x.all? {|x| arr_y.exclude?(x)}
+  end
+
+  def include_pat?(str, pat)
+    str.index(/#{pat}/)
+  end
 end
 
 # def find_or_create_by_name(klass:, name:)
