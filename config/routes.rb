@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
-  resources :elements do
-    resources :item_groups, only: [:create, :destroy] do
-      member do
-        post :sort_up, :sort_down
-      end
-    end
-  end
+  resources :elements, only: [:index, :show]
 
   resources :categories do
     resources :sub_categories, only: [:create, :update]

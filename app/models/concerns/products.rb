@@ -13,20 +13,59 @@ module Products
       end
     end
 
+    # def product_set
+    #   product_groups, media =[], Element.by_kind('medium')
+    #   ElementKind::Medium::TextTag.new.material_type.map{|set| set.first}.each do |material_type|
+    #     media.primary_media.where("tags @> ?", ("material_type => #{material_type}")).each do |medium|
+    #       ElementSet::Medium.set.each do |set|
+    #         if set.include?(medium.name)
+    #           media_group = media.where(name: set)
+    #           scoped_materials = Element.by_kind('material').where("tags @> ?", ("#{material_type} => true"))
+    #           scoped_materials.map {|material| product_groups << [media_group, material].flatten}
+    #         end
+    #       end
+    #     end
+    #   end
+    #   product_groups
+    # end
+
     def product_set
-      product_groups, media =[], Element.by_kind('medium')
-      ElementKind::Medium::TextTag.new.material_type.map{|set| set.first}.each do |material_type|
-        media.primary_media.where("tags @> ?", ("material_type => #{material_type}")).each do |medium|
-          ElementSet::Medium.set.each do |set|
-            if set.include?(medium.name)
-              media_group = media.where(name: set)
-              scoped_materials = Element.by_kind('material').where("tags @> ?", ("#{material_type} => true"))
-              scoped_materials.map {|material| product_groups << [media_group, material].flatten}
-            end
-          end
-        end
+      product_groups =[]
+      media = Element.by_kind('medium')
+      materials = Element.by_kind('material')
+      ElementSet::Medium.set.each do |media_set|
+        media_group = media.where(name: media_set)
+        #media_group = media_set.map {|medium_name| media.where(name: medium_name)}
+        #material_set = production_materials(media_group.map(&:name))
+        material_set = production_materials(media_set)
+        material_group = materials.where(name: material_set)
+        material_group.map {|material| product_groups << [media_group, material].flatten}
       end
       product_groups
+    end
+
+    def production_materials(name_set)
+      if include_any?(name_set, %w[painting mixed-media print]) && name_set.exclude?('hand-pulled')
+        %w[canvas paper board metal]
+      elsif name_set.include?('production') && name_set.include?('drawing')
+        'animation-paper'
+      # elsif include_all?(%w[production drawing], name_set)
+      #   'animation-paper'
+      elsif name_set.include?('drawing') && name_set.exclude?('production')
+        'drawing-paper'
+      elsif name_set.include?('hand-pulled')
+        'canvas'
+      elsif name_set.include?('photography')
+        'photography-paper'
+      elsif name_set.include?('sericel')
+        'sericel'
+      elsif name_set.include?('hand-blown')
+        'hand-blown'
+      elsif name_set.include?('hand-made')
+        'ceramic'
+      elsif name_set.include?('sculpture')
+        %w[glass ceramic metal synthetic]
+      end
     end
 
     def existing_products
@@ -87,6 +126,7 @@ module Products
     def boolean_tag_options
       ElementKind::Medium::BooleanTag.new.primary + %w[original one-of-a-kind production limited-edition hand-pulled]
     end
+    #  => ["painting", "drawing", "mixed-media", "print", "sericel", "photography", "sculpture", "hand-blown", "hand-made", "original", "one-of-a-kind", "production", "limited-edition", "hand-pulled"]
 
     ################################################################ tags part 2
 
@@ -109,7 +149,6 @@ module Products
     ################################################################ tags part 3
 
     def product_search_tags(name_set, tag_hsh)
-      #if tags = compound_search_tags.detect {|tag_set| include_all?(name_set, tag_set)}
       if tags = compound_search_tags.detect {|tag_set| include_all?(tag_set, name_set)}
         tag_hsh.merge!(h={'search_scope' => format_text_value(tags)})
       elsif ['print', 'sculpture', 'hand-blown-glass'].include?(tag_hsh["art_type"])
@@ -135,18 +174,19 @@ module Products
       end
     end
 
-    # def format_scope_value(tag_set)
-    #   if tag_set.is_a? Array
-    #     to_snake(tag_set.join('_')).to_sym
-    #   else
-    #     to_snake(tag_set).to_sym
-    #   end
-    # end
+    def format_scope_value(tag_set)
+      if tag_set.is_a? Array
+        to_snake(tag_set.join('_')).to_sym
+      else
+        to_snake(tag_set).to_sym
+      end
+    end
 
     ################################################################ search value list
 
     def product_search_dropdown_vl
-      compound_tags_vl + hash_tags_vl
+      vl = compound_tags_vl + hash_tags_vl
+      vl.map {|set| set.first}
     end
 
     def compound_tags_vl
@@ -158,7 +198,7 @@ module Products
     end
 
     def compound_search_tags
-      [%w[original painting], %w[production animation], %w[one-of-a-kind mixed-media], %w[original drawing], %w[hand-pulled print], %w[photography], %w[mixed-media], %w[sericel]]
+      [%w[original painting], %w[production], %w[one-of-a-kind mixed-media], %w[original drawing], %w[hand-pulled print], %w[photography], %w[mixed-media], %w[sericel]]
     end
 
     def hash_search_tags
