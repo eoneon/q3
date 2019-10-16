@@ -1,6 +1,5 @@
 class ElementsController < ApplicationController
   def index
-    #@elements = Element.product_search(params[:element][:search])
     if params[:element] && params[:element][:search]
       @elements = Element.product_search(params[:element][:search])
     else

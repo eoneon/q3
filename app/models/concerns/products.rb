@@ -152,8 +152,8 @@ module Products
       [
         ['all products', 'products'],
         ['original paintings', 'painting'],
-        ['one-of-a_kind mixed-media', 'one_of_a_kind_mixed_media'],
-        ['one-of-a_kind mixed-media numbered 1/1', 'single_edition_one_of_a_kind_mixed_media'],
+        ['one-of-a-kind mixed-media', 'one_of_a_kind_mixed_media'],
+        ['one-of-a-kind mixed-media numbered 1/1', 'single_edition_one_of_a_kind_mixed_media'],
         ['production art', 'production'],
         ['drawings', 'drawing'],
         ['limited edition prints', 'limited_edition_prints'],
