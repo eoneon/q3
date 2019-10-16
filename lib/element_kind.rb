@@ -4,45 +4,12 @@ module ElementKind
 
   ################################################################ ElementKind.pop_elements
 
-  # def self.pop_elements
-  #   set_text_tags(build_element)
-  # end
-
   def self.pop_elements
     self.constants.each do |konstant|
       scoped_constant(konstant, :BooleanTag).instance_methods(false).each do |instance_method|
         scoped_constant(konstant, :BooleanTag).new.public_send(instance_method).each do |value|
           element = find_or_create_by(kind: to_snake(konstant), name: value)
           update_tags(element, h ={instance_method.to_s => 'true'})
-        end
-      end
-    end
-  end
-
-  # def self.build_element
-  #   text_tag_konstants =[]
-  #   self.constants.each do |konstant| #Medium
-  #     text_tag_konstants << konstant if scoped_constant(konstant).constants.include?(:TextTag)
-  #     scoped_constant(konstant, :BooleanTag).instance_methods(false).each do |instance_method| #ElementKind::Medium::BooleanTag.instance_methods => primary...
-  #       scoped_constant(konstant, :BooleanTag).new.public_send(instance_method).each do |value|
-  #         element = find_or_create_by(kind: to_snake(konstant), name: value)
-  #         update_tags(element, h ={instance_method.to_s => 'true'})
-  #       end
-  #     end
-  #   end
-  #   text_tag_konstants
-  # end
-
-  def self.set_text_tags(text_tag_konstants)
-    elements = Element.where(kind: text_tag_konstants.map{|konstant| to_snake(konstant)})
-    text_tag_konstants.each do |konstant|
-      scoped_constant(konstant, :TextTag).instance_methods(false).each do |instance_method|
-        scoped_constant(konstant, :TextTag).new.public_send(instance_method).each do |set|
-          elements.where(kind: to_snake(konstant)).each do |element|
-            if set.include?(element.name)
-              update_tags(element, h = {to_snake(instance_method) => set.first})
-            end
-          end
         end
       end
     end
@@ -56,13 +23,7 @@ module ElementKind
         %w[painting drawing mixed-media print sericel photography sculpture hand-blown hand-made]
       end
 
-      # def secondary
-      #   %w[embellished hand-pulled]
-      #   #%w[embellished]
-      # end
-
       def tertiary
-        #%w[leafing remarque]
         %w[embellished leafing remarque]
       end
 
@@ -71,23 +32,13 @@ module ElementKind
       end
 
       def category
-        #%w[original one-of-a-kind production limited-edition single-edition open-edition]
         %w[original one-of-a-kind hand-pulled production limited-edition single-edition open-edition]
       end
     end
-
-    # class TextTag
-    #   def material_type
-    #     [%w[painting drawing mixed-media print].prepend('standard'), %w[photography], %w[sericel], %w[hand-blown], %w[hand-made], %w[sculpture]]
-    #   end
-    # end
   end
 
   module Material
     class BooleanTag
-      # def standard
-      #   %w[canvas paper board metal]
-      # end
 
       def standard_flat
         %w[canvas paper board metal]
@@ -108,10 +59,6 @@ module ElementKind
       def sericel
         %w[sericel]
       end
-
-      # def sculpture
-      #   %w[glass ceramic metal synthetic]
-      # end
 
       def standard_sculpture
         %w[glass ceramic metal synthetic]
