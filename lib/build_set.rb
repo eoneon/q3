@@ -108,6 +108,10 @@ module BuildSet
     str.classify.constantize.superclass.name
   end
 
+  def scoped_konstant(*konstant)
+    konstant = konstant.map {|k| to_classify(k)}.join('::')
+    to_constant(konstant.map {|k| to_classify(k)}.join('::'))
+  end
   #convert ar-obj to: snake_case, constant, class, superclass
   def ar_obj_to_snake(ar_obj)
     ar_obj.class.name.underscore
@@ -145,6 +149,21 @@ module BuildSet
 
   def include_pat?(str, pat)
     str.index(/#{pat}/)
+  end
+
+  def arr_to_text(arr)
+    if arr.length == 2
+      arr.join(" & ")
+    elsif arr.length > 2
+      [arr[0..-3].join(", "), arr[-2, 2].join(" & ")].join(", ")
+    else
+      arr[0]
+    end
+  end
+
+  def update_tags(obj, tag_hsh)
+    obj.tags = tag_hsh
+    obj.save
   end
 end
 

@@ -4,6 +4,7 @@ module Products
   extend ActiveSupport::Concern
 
   class_methods do
+
     def pop_products
       existing_set = existing_products
       if existing_set.any?
@@ -17,7 +18,7 @@ module Products
       product_groups =[]
       media = Element.by_kind('medium')
       materials = Element.by_kind('material')
-      ElementSet::Medium.set.each do |media_set|
+      product_options.each do |media_set|
         media_group = media_set.map {|medium_name| media.where(name: medium_name).first}
         material_set = production_materials(media_set)
         material_group = materials.where(name: material_set)
@@ -52,7 +53,7 @@ module Products
       existing_set =[]
       Element.by_kind('product').each do |product|
         product_group = product.elements #where(kind: %w[medium material])
-        update_product_tags(product, build_product_tags(product_group.map(&:name)))
+        update_tags(product, build_product_tags(product_group.map(&:name)))
         existing_set << product_group if product_group.any?
       end
       existing_set
@@ -75,7 +76,7 @@ module Products
     def build_product(target_set)
       name = format_product_name(target_set.map(&:name))
       product = find_or_create_by(kind: 'product', name: name)
-      update_product_tags(product, build_product_tags(target_set.map(&:name)))
+      update_tags(product, build_product_tags(target_set.map(&:name)))
       target_set.map {|target| assoc_unless_included(origin: product, target: target)}
     end
 
@@ -129,24 +130,45 @@ module Products
 
     ################################################################ tags part 3
 
-    def format_text_value(tag_set)
-      if tag_set.is_a? Array
-        text_value = tag_set.join(' ')
-        include_any?(tag_set, %w[animation photography]) ? text_value : text_value.pluralize
-      else
-        tag_set == 'hand-blown-glass' ? tag_set : tag_set.pluralize
-      end
+    def product_options
+      [
+        %w[original painting],
+        %w[original drawing],
+        %w[original production drawing],
+        %w[original production sericel],
+        %w[original mixed-media],
+        %w[one-of-a-kind mixed-media],
+        %w[embellished one-of-a-kind mixed-media],
+        %w[single-edition one-of-a-kind mixed-media],
+        %w[embellished single-edition one-of-a-kind mixed-media],
+        %w[one-of-a-kind hand-pulled print],
+        %w[embellished one-of-a-kind hand-pulled print],
+        %w[single-edition one-of-a-kind hand-pulled print],
+        %w[embellished single-edition one-of-a-kind hand-pulled print],
+        %w[print],
+        %w[embellished print],
+        %w[single-edition print],
+        %w[hand-pulled print],
+        %w[open-edition print],
+        %w[photography],
+        %w[limited-edition print],
+        %w[embellished limited-edition print],
+        %w[limited-edition hand-pulled print],
+        %w[embellished limited-edition hand-pulled print],
+        %w[single-edition hand-pulled print],
+        %w[limited-edition photography],
+        %w[sericel],
+        %w[limited-edition sericel],
+        %w[hand-blown sculpture],
+        %w[hand-made sculpture],
+        %w[sculpture],
+        %w[embellished sculpture],
+        %w[limited-edition sculpture],
+        %w[embellished limited-edition sculpture]
+      ]
     end
 
-    def format_scope_value(tag_set)
-      if tag_set.is_a? Array
-        to_snake(tag_set.join('_')).to_sym
-      else
-        to_snake(tag_set).to_sym
-      end
-    end
-
-    ################################################################ search value list
+    ################################################################ search
 
     def product_search_dropdown_vl
       [
@@ -167,21 +189,5 @@ module Products
         ['limited edition sculptures', 'limited_edition_sculptures']
       ]
     end
-
-    # def compound_tags_vl
-    #   compound_search_tags.map {|tag_set| [format_text_value(tag_set), format_scope_value(tag_set)]}
-    # end
-    #
-    # def hash_tags_vl
-    #   hash_search_tags.map {|tag| [format_text_value(tag), format_scope_value(tag)]}
-    # end
-    #
-    # def compound_search_tags
-    #   [%w[original painting], %w[production], %w[one-of-a-kind mixed-media], %w[original drawing], %w[hand-pulled print], %w[photography], %w[mixed-media], %w[sericel]]
-    # end
-    #
-    # def hash_search_tags
-    #   %w[limited-edition print hand-blown-glass]
-    # end
   end
 end

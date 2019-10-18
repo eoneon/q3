@@ -101,8 +101,11 @@ module ObjBuild
     end
 
     def scoped_constant(*konstant)
-      #to_constant([self.name, konstant].join('::'))
       to_constant(konstant.prepend(self.name).join('::'))
+    end
+
+    def scoped_konstant(*konstant)
+      to_constant(konstant.map {|k| to_classify(k)}.join('::'))
     end
 
     def str_to_classify(str)
@@ -152,36 +155,51 @@ module ObjBuild
       str.index(/#{pat}/)
     end
 
+    def arr_to_text(arr)
+      if arr.length == 2
+        arr.join(" & ")
+      elsif arr.length > 2
+        [arr[0..-3].join(", "), arr[-2, 2].join(" & ")].join(", ")
+      else
+        arr[0]
+      end
+    end
+
     ################################################### hash methods
 
-    def update_tags(element, tag_hsh)
-      k, v = tag_hsh.keys.first, tag_hsh.values.first
-      if kv_missing?(element.tags) || kv_inequality?(element.tags, k, v)
-        kv_missing?(element.tags) ? element.tags = tag_hsh : element.tags.merge!(tag_hsh)
-         element.save
-      end
-      element
+    def update_tags(obj, tag_hsh)
+      obj.tags = tag_hsh
+      obj.save
     end
 
-    def kv_missing?(tags)
-      tags.nil? || tags.empty?
-    end
-
-    def kv_inequality?(tags, k, v)
-      !tags.has_key?(k) || tags.has_key?(k) && tags[k] != v
-    end
-
-    def missing_k?(tags, k)
-      !tags.has_key?(k)
-    end
-
-    def k_not_eql_v?(tags, k, v)
-      tags.has_key?(k) && tags[k] != v
-    end
+    # def update_tags(element, tag_hsh)
+    #   k, v = tag_hsh.keys.first, tag_hsh.values.first
+    #   if kv_missing?(element.tags) || kv_inequality?(element.tags, k, v)
+    #     kv_missing?(element.tags) ? element.tags = tag_hsh : element.tags.merge!(tag_hsh)
+    #      element.save
+    #   end
+    #   element
+    # end
+    #
+    # def kv_missing?(tags)
+    #   tags.nil? || tags.empty?
+    # end
+    #
+    # def kv_inequality?(tags, k, v)
+    #   !tags.has_key?(k) || tags.has_key?(k) && tags[k] != v
+    # end
+    #
+    # def missing_k?(tags, k)
+    #   !tags.has_key?(k)
+    # end
+    #
+    # def k_not_eql_v?(tags, k, v)
+    #   tags.has_key?(k) && tags[k] != v
+    # end
 
     ################################################### hash methods 2
 
-    def update_product_tags(product, tag_hsh)
+      # def update_tags(obj, tag_hsh)
       # if kv_missing?(product.tags)
       #   product.tags = tag_hsh
       # else
@@ -189,9 +207,8 @@ module ObjBuild
       #     product.tags.merge!(tag_hsh) if kv_inequality?(product.tags, k, tag_hsh[k])
       #   end
       # end
-      product.tags = tag_hsh
-      product.save
-    end
-
+      #   obj.tags = tag_hsh
+      #   obj.save
+      # end
   end
 end

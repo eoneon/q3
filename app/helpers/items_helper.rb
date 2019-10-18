@@ -12,7 +12,7 @@ module ItemsHelper
 
   def build_opts
     sti_opts.each do |sti|
-      public_send(sti + '_names').each do |name|                  #names
+      public_send(sti + '_names').each do |name|                  
         obj = find_or_create_by_name(obj_klass: sti, name: name)
         update_tags(obj, build_tags(sti, name))
       end

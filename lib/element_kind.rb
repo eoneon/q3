@@ -1,6 +1,7 @@
 module ElementKind
-  extend BuildSet
-  extend HashTag
+  #extend BuildSet
+  # extend HashTag
+  extend ObjBuild
 
   ################################################################ ElementKind.pop_elements
 
@@ -23,8 +24,12 @@ module ElementKind
         %w[painting drawing mixed-media print sericel photography sculpture hand-blown hand-made]
       end
 
+      def secondary
+        %w[embellished]
+      end
+      
       def tertiary
-        %w[embellished leafing remarque]
+        %w[leafing remarque]
       end
 
       def component
@@ -39,6 +44,13 @@ module ElementKind
 
   module Material
     class BooleanTag
+      def flat_signature
+        %w[canvas paper board metal photography-paper animation-paper drawing-paper sericel]
+      end
+
+      def sculpture_signature
+        %w[glass ceramic metal synthetic]
+      end
 
       def standard_flat
         %w[canvas paper board metal]

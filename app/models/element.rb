@@ -9,34 +9,42 @@ class Element < ApplicationRecord
 
   scope :primary_media, -> {where("tags @> ?", ("primary => true"))}
   scope :products, -> {where(kind: "product")}
+  scope :element_kinds, -> {where.not(kind: "product")}
 
-  #=> ["painting", "drawing", "mixed-media", "print", "sericel", "photography", "sculpture", "hand-blown", "hand-made", "original", "one-of-a-kind", "hand-pulled", "production", "limited-edition", "single-edition", "open-edition"]
+  ElementKind.constants.map{|kind| to_snake(kind)}.each do |scope_name|
+    scope :"#{scope_name}", -> {where(kind: scope_name)}
+  end
+
   boolean_tag_options.each do |scope_name|
     scope :"#{to_snake(scope_name)}", -> {products.where("tags ? :key", key: scope_name)}
     scope :"not_#{to_snake(scope_name)}", -> {products.where.not("tags ? :key", key: scope_name)}
   end
 
-  scope :one_of_a_kind_mixed_media, -> {not_single_edition.one_of_a_kind.mixed_medium} #"one-of-a-kind mixed-media"
-  scope :single_edition_one_of_a_kind_mixed_media, -> {single_edition.one_of_a_kind.mixed_medium} #"single-edition one-of-a-kind mixed-media"
+  scope :one_of_a_kind_mixed_media, -> {not_single_edition.one_of_a_kind.mixed_medium}
+  scope :single_edition_one_of_a_kind_mixed_media, -> {single_edition.one_of_a_kind.mixed_medium}
   scope :print_media, -> {print.or(sericel).or(photography)}
   scope :not_original_media, -> {not_original.merge(not_one_of_a_kind)}
-  scope :not_edition_media, -> {not_limited_edition.merge(not_single_edition).merge(not_open_edition)} #"all non-edition media"
-  scope :only_prints, -> {not_original_media.not_edition_media.print} #"non-edition prints"
-  scope :limited_edition_print_media, -> {limited_edition.print_media} #"non-edition prints"
-  scope :limited_edition_prints, -> {limited_edition.print} #"non-edition prints"
+  scope :not_edition_media, -> {not_limited_edition.merge(not_single_edition).merge(not_open_edition)}
+  scope :only_prints, -> {not_original_media.not_edition_media.print}
+  scope :limited_edition_print_media, -> {limited_edition.print_media}
+  scope :limited_edition_prints, -> {limited_edition.print}
   scope :limited_edition_sculptures, -> {not_hand_blown.merge(not_hand_made).sculpture.limited_edition}
   scope :standard_sculptures, -> {not_hand_blown.merge(not_hand_made).merge(not_limited_edition).sculpture}
-
-
 
   def self.by_kind(kind)
     self.where(kind: kind)
   end
 
-  def self.product_search(search_scope)
-    #self.where("tags @> hstore(:key,:value)", key: 'search_scope', value: search_scope)
-    #self.where("tags @> hstore(:key,:value)", key: search_scope, value: 'true')
-    self.public_send(search_scope)
+  def self.by_option_group(option_type)
+    self.where(kind: 'option-group').where("tags @> ?", ("option_type => #{option_type}"))
+  end
+
+  def self.element_search(kind)
+    self.public_send(kind)
+  end
+
+  def self.element_search_dropdown_vl
+    ElementKind.constants.map {|kind| [to_snake(kind).pluralize, to_snake(kind)]}.prepend(['all kinds', 'element_kinds'])
   end
 
   def self.readable_objs(set)
