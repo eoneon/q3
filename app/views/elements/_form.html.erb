@@ -7,7 +7,7 @@
             <span><%= (fa_icon "search") %></span>
           </div>
         </div>
-        <%= select_tag "element[search]", options_for_select(Element.element_search_dropdown_vl), {class: "form-control border-0 search-select"} %>
+        <%= select_tag "element[search]", options_for_select(Product.search_dropdown), {class: "form-control border-0 search-select"} %>
         <div class="input-group-append">
           <div class="input-group-text bg-transparent border-top-0 border-right-0 border-bottom-0">
             <span> </span>

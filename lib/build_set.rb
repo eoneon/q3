@@ -62,7 +62,7 @@ module BuildSet
     if [String, Symbol].include?(type)
       public_send('str_to_' + return_type, obj.to_s)
     else
-      public_send('ar_to_' + return_type, type)
+      public_send('ar_obj_to_' + return_type, type)
     end
   end
 
@@ -100,6 +100,10 @@ module BuildSet
     to_constant(konstant.prepend(self.name).join('::'))
   end
 
+  def to_scoped_constant(*konstants)
+    konstants.map{|konstant| konstant.to_s.classify}.join('::').constantize
+  end
+
   def str_to_classify(str)
     str.classify
   end
@@ -108,10 +112,10 @@ module BuildSet
     str.classify.constantize.superclass.name
   end
 
-  def scoped_konstant(*konstant)
-    konstant = konstant.map {|k| to_classify(k)}.join('::')
-    to_constant(konstant.map {|k| to_classify(k)}.join('::'))
-  end
+  # def scoped_konstant(*konstant)
+  #   konstant = konstant.map {|k| to_classify(k)}.join('::')
+  #   to_constant(konstant.map {|k| to_classify(k)}.join('::'))
+  # end
   #convert ar-obj to: snake_case, constant, class, superclass
   def ar_obj_to_snake(ar_obj)
     ar_obj.class.name.underscore
