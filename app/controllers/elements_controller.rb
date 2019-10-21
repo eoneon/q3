@@ -3,7 +3,7 @@ class ElementsController < ApplicationController
     if params[:element] && params[:element][:search]
       @elements = Element.element_search(params[:element][:search])
     else
-      @elements = Element.element_kinds
+      @elements = Element.product_elements
     end
 
     respond_to do |format|

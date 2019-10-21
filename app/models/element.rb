@@ -1,5 +1,5 @@
 class Element < ApplicationRecord
-  include Products
+  #include Products
   include ObjBuild
 
   has_many :item_groups, as: :origin, dependent: :destroy
@@ -9,13 +9,13 @@ class Element < ApplicationRecord
 
   scope :primary_media, -> {where("tags @> ?", ("primary => true"))}
   scope :products, -> {where(kind: "product")}
-  scope :element_kinds, -> {where.not(kind: "product")}
+  scope :product_elements, -> {where.not(kind: "product")}
 
-  ElementKind.constants.map{|kind| to_snake(kind)}.each do |scope_name|
+  ProductElement.product_elements.map{|konstant| konstant.to_s.underscore}.each do |scope_name|
     scope :"#{scope_name}", -> {where(kind: scope_name)}
   end
 
-  boolean_tag_options.each do |scope_name|
+  Product.boolean_tag_options.each do |scope_name|
     scope :"#{to_snake(scope_name)}", -> {products.where("tags ? :key", key: scope_name)}
     scope :"not_#{to_snake(scope_name)}", -> {products.where.not("tags ? :key", key: scope_name)}
   end
@@ -41,10 +41,6 @@ class Element < ApplicationRecord
 
   def self.element_search(kind)
     self.public_send(kind)
-  end
-
-  def self.element_search_dropdown_vl
-    ElementKind.constants.map {|kind| [to_snake(kind).pluralize, to_snake(kind)]}.prepend(['all kinds', 'element_kinds'])
   end
 
   def self.readable_objs(set)
