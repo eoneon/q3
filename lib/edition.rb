@@ -12,4 +12,12 @@ module Edition
       %w[open-edition]
     end
   end
+
+  class OptionGroupSet
+    def limited_edition
+      [
+        %w[numbered-xy], %w[numbered], %w[from-an-edition]
+      ]
+    end
+  end
 end

@@ -10,6 +10,8 @@ class Element < ApplicationRecord
   scope :primary_media, -> {where("tags @> ?", ("primary => true"))}
   scope :products, -> {where(kind: "product")}
   scope :product_elements, -> {where.not(kind: "product")}
+  scope :option_group, -> {where(kind: "option-group")}
+
 
   ProductElement.product_elements.map{|konstant| konstant.to_s.underscore}.each do |scope_name|
     scope :"#{scope_name}", -> {where(kind: scope_name)}

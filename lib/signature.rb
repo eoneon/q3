@@ -1,11 +1,5 @@
 module Signature
 
-  class OptionGroup
-    def self.populate
-      self.name
-    end
-  end
-
   class BooleanTag
     def standard
       %w[artist relative celebrity]

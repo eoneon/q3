@@ -20,4 +20,15 @@ module Medium
       %w[original one-of-a-kind hand-pulled production limited-edition single-edition open-edition]
     end
   end
+
+  class OptionGroupSet
+    def sub_media
+      [
+        %w[leafing],
+        %w[remarque],
+        %w[leafing remarque]
+      ]
+    end
+  end
+
 end

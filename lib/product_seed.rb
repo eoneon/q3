@@ -4,7 +4,7 @@ module ProductSeed
   def self.populate
     ProductElement.populate
     Product.populate
-    #OptionGroup.populate
+    OptionGroup.populate
     #ProductType.populate
   end
 end

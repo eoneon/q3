@@ -17,6 +17,6 @@ module ProductElement
   end
 
   def self.search_dropdown
-    product_elements.map {|kind| [to_snake(kind.to_s).pluralize, to_snake(kind.to_s)]}.prepend(['all kinds', 'product_elements'])
+    product_elements.map {|kind| [to_snake(kind.to_s).pluralize, to_snake(kind.to_s)]}.prepend(['all kinds', 'product_elements']).append(['option-groups', 'option_group'])
   end
 end
