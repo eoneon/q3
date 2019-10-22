@@ -3,7 +3,7 @@ module OptionGroup
 
   def self.populate
     elements = Element.all
-    [Signature, Certificate, Edition, Medium, SignatureCertificate].each do |option_constant|
+    [Signature, Certificate, Edition, Medium, Dimension, Mounting, SignatureCertificate].each do |option_constant|
       to_scoped_constant(option_constant, :option_group_set).instance_methods(false).each do |instance_method|
         #elements = Element.where(kind: option_constant.to_s.underscore)
         option_group = find_or_create_by(kind: 'option-group', name: instance_method.to_s) #flat_signature

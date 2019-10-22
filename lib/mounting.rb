@@ -8,4 +8,18 @@ module Mounting
       %w[case base wall-mount]
     end
   end
+
+  class OptionGroupSet
+    def flat_mounting
+      [
+        %w[framed], %w[bordered], %w[matted], %w[wall-mount]
+      ]
+    end
+
+    def sculpture_mounting
+      [
+        %w[case], %w[base], %w[wall-mount]
+      ]
+    end
+  end
 end
