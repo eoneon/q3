@@ -20,4 +20,10 @@ module Edition
       ]
     end
   end
+
+  class OptionGroupMatch
+    def limited_edition
+      h ={kind: 'medium', name: 'limited-edition'}
+    end
+  end
 end

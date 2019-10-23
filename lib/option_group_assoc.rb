@@ -2,37 +2,19 @@ module OptionGroupAssoc
   extend BuildSet
 
   def self.populate
-    [SignatureCertificate].each do |option_constant|
-      option_constant.instance_methods(false).each do |instance_method|
-        elements = Element.where(kind: option_constant.to_s.underscore)
-        update_tags(option_group, h={"option_type" => to_snake(option_constant.to_s)})
+    elements = Element.all
+    [Edition, Medium, Dimension, Mounting, SignatureCertificate].each do |option_constant|
+      to_scoped_constant(option_constant, :option_group_set).instance_methods(false).each do |instance_method|
+        product_elements = elements.where(to_scoped_constant(option_constant, :option_group_match).new.public_send(instance_method))
+        option_group = elements.find_by(kind: 'option-group', name: instance_method.to_s)
+        create_product_type(product_elements, option_group)
       end
     end
   end
 
-  class SignatureCertificate
-    def flat_signed_with_certificate
-      [
-        %w[flat_signature standard_certificate],
-        %w[flat_signature],
-        %w[standard_certificate]
-      ]
-    end
-
-    def sculpture_signed_with_certificate
-      [
-        %w[sculpture_signature standard_certificate],
-        %w[sculpture_signature],
-        %w[standard_certificate]
-      ]
-    end
-
-    def signed_with_animation_certificate
-      [
-        %w[flat_signature animation_certificate],
-        %w[flat_signature],
-        %w[animation_certificate]
-      ]
+  def self.create_product_type(product_elements, option_group)
+    product_elements.each do |product_element|
+      assoc_unless_included(origin: product_element, target: option_group)
     end
   end
 end

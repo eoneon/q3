@@ -31,4 +31,9 @@ module Medium
     end
   end
 
+  class OptionGroupMatch
+    def sub_media
+      h ={kind: 'medium', name: 'print'}
+    end
+  end
 end

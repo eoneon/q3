@@ -7,6 +7,10 @@ module Certificate
     def animation
       %w[animation-seal sports-seal animation-certificate]
     end
+
+    # def standard_animation
+    #   %w[animation-seal sports-seal standard-certificate]
+    # end
   end
 
   class OptionGroupSet
@@ -27,5 +31,16 @@ module Certificate
         %w[sports-seal]
       ]
     end
+
+    # def standard_animation_certificate
+    #   [
+    #     %w[animation-seal sports-seal standard-certificate],
+    #     %w[animation-seal standard-certificate],
+    #     %w[sports-seal standard-certificate],
+    #     %w[sports-seal animation-seal],
+    #     %w[standard-certificate],
+    #     %w[sports-seal]
+    #   ]
+    # end
   end
 end
