@@ -1,0 +1,13 @@
+<div class="card border-dark m-1">
+  <div class="card-header">
+    <%= option_group_name %>
+  </div>
+
+  <div class="card-body p-1">
+    <% option_set.each do |option| %>
+      <div>
+        <%= option.name %>
+      </div>
+    <% end %>
+  </div>
+</div>

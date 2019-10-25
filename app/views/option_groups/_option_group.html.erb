@@ -1,11 +1,17 @@
 <div class="card border-dark m-1">
   <div class="card-header">
-    <%= render "sub_parts/header", origin: origin, target: target, item_group: item_group, obj_ref: obj_ref %>
+    <%= format_option_group_name(option_group.first) %>
   </div>
 
   <div class="card-body p-1">
-    <div>
-      <%= render "item_fields/product_parts/index", origin: target %>
-    </div>
+    <% option_group.each do |option| %>
+      <div>
+        <% option.elements.each do |opt| %>
+          <div>
+            <%= format_option_group_name(opt) %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
   </div>
 </div>

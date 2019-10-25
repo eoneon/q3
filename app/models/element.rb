@@ -58,9 +58,10 @@ class Element < ApplicationRecord
   end
 
   def option_type_collection
-    ProductType.option_group_types.map {|option_type| ["#{option_type}-options", scoped_option_group(option_type)] if scoped_option_group(option_type).any?}.compact
+    #ProductType.option_group_types.map {|option_type| ["#{option_type}-options", scoped_option_group(option_type)] if scoped_option_group(option_type).any?}.compact
+    ProductType.option_group_types.map {|option_type| scoped_option_group(option_type) if scoped_option_group(option_type).any?}.compact
   end
-
+  
   ################################
 
   def self.readable_objs(set)
