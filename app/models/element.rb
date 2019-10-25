@@ -45,6 +45,24 @@ class Element < ApplicationRecord
     self.public_send(kind)
   end
 
+  ################################
+
+  def option_group_elements
+    if kind == 'product'
+      elements.where(kind: ProductType.option_group_types).map {|option_group| option_group.elements.where("tags ? :key", key: "option_type")}.flatten
+    end
+  end
+
+  def scoped_option_group(option_type)
+    option_group_elements.keep_if {|obj| obj.tags["option_type"] == option_type}
+  end
+
+  def option_type_collection
+    ProductType.option_group_types.map {|option_type| ["#{option_type}-options", scoped_option_group(option_type)] if scoped_option_group(option_type).any?}.compact
+  end
+
+  ################################
+
   def self.readable_objs(set)
     a =[]
     set.each do |obj|

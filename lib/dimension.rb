@@ -12,13 +12,13 @@ module Dimension
   class OptionGroupSet
     def flat_dimension
       [
-        BooleanTag.new.two_d
+        %w[width height]
       ]
     end
 
     def sculpture_dimension
       [
-        BooleanTag.new.three_d
+        %w[width height depth]
       ]
     end
   end

@@ -1,0 +1,11 @@
+<div class="card border-dark m-1">
+  <div class="card-header">
+    <%= render "sub_parts/header", origin: origin, target: target, item_group: item_group, obj_ref: obj_ref %>
+  </div>
+
+  <div class="card-body p-1">
+    <div>
+      <%= render "item_fields/product_parts/index", origin: target %>
+    </div>
+  </div>
+</div>

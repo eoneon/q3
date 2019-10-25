@@ -5,6 +5,6 @@ module ProductSeed
     ProductElement.populate
     Product.populate
     OptionGroup.populate
-    #ProductType.populate
+    ProductType.populate
   end
 end

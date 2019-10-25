@@ -5,6 +5,29 @@
 
   <div class="card-body p-1" id="<%= dom_ref(product, 'body') %>">
     <div id='<%= dom_ref(product, "product-index") %>'>
+      <% product.option_type_collection.each do |option_group| %>
+      <!-- option_groups -->
+      <div class="card border m-1 border-dark">
+        <% product.option_type_collection.each do |option_group| %>
+        <% end %>
+          <div class="card-header">
+            <% if option_group[1].present? %>
+            <%= option_group[0] %>
+            <% end %>
+          </div>
+
+          <div class="card-body p-1">
+            <% if option_group[1].any? %>
+            <% option_group[1].each do |option| %>
+              <div>
+                <%= option.name %>
+              </div>
+            <% end %>
+            <% end %>
+          </div>
+        <% end %>
+      </div>
+
     </div>
   </div>
 </div>
