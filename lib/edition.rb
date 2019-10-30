@@ -18,6 +18,7 @@ module Edition
       [
         %w[numbered-xy], %w[numbered], %w[from-an-edition]
       ]
+      #limited.map {|i| [i]}
     end
   end
 

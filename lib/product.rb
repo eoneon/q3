@@ -72,13 +72,15 @@ module Product
   end
 
   def self.material_options(name_set)
-    if include_any?(name_set, %w[painting mixed-media print]) && name_set.exclude?('hand-pulled')
+    #if include_any?(name_set, %w[painting mixed-media print]) && name_set.exclude?('hand-pulled')
+    if include_any?(name_set, %w[painting mixed-media standard-print])
       %w[canvas paper board metal]
     elsif include_all?(%w[production drawing], name_set)
       'animation-paper'
     elsif name_set.include?('drawing') && name_set.exclude?('production')
       'drawing-paper'
-    elsif name_set.include?('hand-pulled')
+    #elsif name_set.include?('hand-pulled')
+  elsif name_set.include?('hand-pulled-print')
       'canvas'
     elsif name_set.include?('photography')
       'photography-paper'
@@ -107,9 +109,11 @@ module Product
   def self.attr_tags(name_set, tag_hsh)
     if include_any?(name_set, %w[original one-of-a-kind])
       tag_hsh.merge!(h={'art_type' => "original", "art_category" => "original-painting"})
-    elsif name_set.include?('limited-edition') && include_any?(name_set, %w[print sericel photography])
+    #elsif name_set.include?('limited-edition') && include_any?(name_set, %w[print sericel photography])
+    elsif name_set.include?('limited-edition') && include_any?(name_set, %w[standard-print hand-pulled-print sericel photography])
       tag_hsh.merge!(h={'art_type' => "limited-edition", "art_category" => "limited-edition"})
-    elsif name_set.exclude?('limited-edition') && include_any?(name_set, %w[print sericel photography])
+    #elsif name_set.exclude?('limited-edition') && include_any?(name_set, %w[print sericel photography])
+    elsif name_set.exclude?('limited-edition') && include_any?(name_set, %w[standard-print hand-pulled-print sericel photography])
       tag_hsh.merge!(h={'art_type' => "print", "art_category" => "limited-edition"})
     elsif include_any?(name_set, %w[sculpture hand-made])
       tag_hsh.merge!(h={'art_type' => "sculpture", "art_category" => "sculpture"})
@@ -125,34 +129,39 @@ module Product
       %w[original production drawing],
       %w[original production sericel],
       %w[original mixed-media],
+
       %w[one-of-a-kind mixed-media],
-      %w[embellished one-of-a-kind mixed-media],
-      %w[single-edition one-of-a-kind mixed-media],
-      %w[embellished single-edition one-of-a-kind mixed-media],
-      %w[one-of-a-kind hand-pulled print],
-      %w[embellished one-of-a-kind hand-pulled print],
-      %w[single-edition one-of-a-kind hand-pulled print],
-      %w[embellished single-edition one-of-a-kind hand-pulled print],
-      %w[print],
-      %w[embellished print],
-      %w[single-edition print],
-      %w[hand-pulled print],
-      %w[open-edition print],
+      %w[one-of-a-kind hand-pulled-silkscreen],
+
+      %w[standard-print],
+      %w[hand-pulled-silkscreen],
       %w[photography],
-      %w[limited-edition print],
-      %w[embellished limited-edition print],
-      %w[limited-edition hand-pulled print],
-      %w[embellished limited-edition hand-pulled print],
-      %w[single-edition hand-pulled print],
-      %w[limited-edition photography],
       %w[sericel],
-      %w[limited-edition sericel],
+      %w[sculpture],
       %w[hand-blown sculpture],
       %w[hand-made sculpture],
-      %w[sculpture],
-      %w[embellished sculpture],
+
+      %w[limited-edition standard-print],
+      %w[limited-edition hand-pulled-silkscreen],
+      %w[limited-edition photography],
+      %w[limited-edition sericel],
       %w[limited-edition sculpture],
-      %w[embellished limited-edition sculpture]
+
+      %w[one-of-a-kind mixed-media single-edition],
+      %w[one-of-a-kind hand-pulled-silkscreen single-edition],
+      %w[standard-print single-edition],
+      %w[hand-pulled-silkscreen single-edition],
+
+      %w[embellished one-of-a-kind mixed-media],
+      %w[embellished one-of-a-kind hand-pulled-silkscreen],
+      %w[embellished standard-print],
+      %w[embellished limited-edition standard-print],
+      %w[embellished limited-edition hand-pulled-silkscreen],
+      %w[embellished sculpture],
+      %w[embellished limited-edition sculpture],
+
+      %w[embellished one-of-a-kind mixed-media single-edition],
+      %w[embellished one-of-a-kind hand-pulled-silkscreen single-edition]
     ]
   end
 
@@ -165,7 +174,7 @@ module Product
       ['production art', 'production'],
       ['drawings', 'drawing'],
       ['limited edition prints', 'limited_edition_prints'],
-      ['hand-pulled prints', 'hand_pulled'],
+      ['hand-pulled prints', 'hand_pulled_print'],
       ['photography', 'photography'],
       ['prints', 'only_prints'],
       ['sericels', 'sericel'],

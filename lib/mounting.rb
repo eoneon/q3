@@ -25,7 +25,8 @@ module Mounting
 
   class OptionGroupMatch
     def flat_mounting
-      h ={kind: 'medium', name: %w[painting drawing mixed-media print sericel photography]}
+      #h ={kind: 'medium', name: %w[painting drawing mixed-media print sericel photography]}
+      h ={kind: 'medium', name: %w[painting drawing mixed-media standard-print hand-pulled-print sericel photography]}
     end
   end
 
