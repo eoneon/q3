@@ -1,15 +1,16 @@
-module BasicProduct
+module FlatProduct
   extend BuildSet
+  extend ProductBuild
 
   def self.populate
     self.constants.each do |mojule|
-      category = find_or_create_by(kind: 'category', name: format_name(mojule))
+      category = find_or_create_by(kind: 'category', name: element_name(mojule))
       konstant = to_scoped_constant(self, mojule)
       to_scoped_constant(konstant, :medium).constants.each do |klass|
-        medium = find_or_create_by(kind: 'medium', name: format_name(klass))
+        medium = find_or_create_by(kind: 'medium', name: element_name(klass))
 
         to_scoped_constant(konstant, :medium, klass).new.sub_medium.each do |sub_medium_name|
-          sub_medium = find_or_create_by(kind: 'sub_medium', name: format_name(sub_medium_name))
+          sub_medium = find_or_create_by(kind: 'sub_medium', name: element_name(sub_medium_name))
           if material_set = to_scoped_constant(konstant, :medium, klass).new.material.detect {|set| set.first.include?(sub_medium_name)}
             material_set.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}.each do |material|
               build_product([category, sub_medium, medium, material])
@@ -22,59 +23,23 @@ module BasicProduct
     end
   end
 
-  def self.build_product(product_set)
-    name_set = product_set.map(&:name)
-    product = find_or_create_by(kind: 'product', name: product_name(name_set))
-    update_tags(product, set_tags(name_set))
-    product_set.map {|target| assoc_unless_included(origin: product, target: target)}
-  end
-
-  def self.set_tags(name_set, tags={})
-    name_set.map {|name| tags.merge!(h={name => 'true'})}
-    tags
-  end
-
-  def self.format_name(name)
-    name_set = name.to_s.underscore.split('_')
-    name_set.count >= 4 ? name_set.join('-') : name_set.join(' ')
-  end
-
-  def self.product_name(name_set, set=[])
-    name_set = format_hand_pulled(name_set)
-    name_set = name_set - ['print medium', 'basic print', 'standard print', 'mixed medium']
-    name_set.insert(-2, 'on') if on_material.include?(name_set.last)
-
-    name_set.join(' ').split(' ').each do |name|
-      set << name if set.exclude?(name)
-    end
-    set.join(' ')
-  end
-
-  def self.format_hand_pulled(name_set)
-    if name =  name_set.delete('hand pulled')
-      name_set.prepend(name)
-    else
-      name_set
-    end
-  end
-
   ##############################################################################
 
-  def self.on_material
-    standard_flat | photography_paper | production_drawing_paper
-  end
-
-  def self.standard_flat
-    %w[canvas paper board metal]
-  end
-
-  def self.photography_paper
-    ['photography paper']
-  end
-
-  def self.production_drawing_paper
-    ['animation paper']
-  end
+  # def self.on_material
+  #   standard_flat | photography_paper | production_drawing_paper
+  # end
+  #
+  # def self.standard_flat
+  #   %w[canvas paper board metal]
+  # end
+  #
+  # def self.photography_paper
+  #   ['photography paper']
+  # end
+  #
+  # def self.production_drawing_paper
+  #   ['animation paper']
+  # end
 
   ##############################################################################
 
@@ -90,7 +55,7 @@ module BasicProduct
         def material
           [
             [['watercolor', 'pastel', 'guache', 'sumi ink'], ['paper']],
-            [['painting', 'oil', 'acrylic', 'mixed media'], BasicProduct.standard_flat]
+            [['painting', 'oil', 'acrylic', 'mixed media'], FlatProduct.standard_flat]
           ]
         end
       end
@@ -133,10 +98,35 @@ module BasicProduct
 
         def material
           [
-            [MixedMedium.new.sub_medium, BasicProduct.standard_flat]
+            [MixedMedium.new.sub_medium, FlatProduct.standard_flat]
           ]
         end
       end
+
+      class Etching
+        def sub_medium
+          ['etching']
+        end
+
+        def material
+          [
+            [Etching.new.sub_medium, ['paper']]
+          ]
+        end
+      end
+
+      class HandPulled
+        def sub_medium
+          ['silkscreen']
+        end
+
+        def material
+          [
+            [['silkscreen'], ['canvas']]
+          ]
+        end
+      end
+
 
     end
   end
@@ -151,7 +141,7 @@ module BasicProduct
 
         def material
           [
-            [['print', 'fine art print', 'vintage style print'], BasicProduct.standard_flat],
+            [['print', 'fine art print', 'vintage style print'], FlatProduct.standard_flat],
             [['poster', 'vintage poster'], ['paper']]
           ]
         end
@@ -164,7 +154,7 @@ module BasicProduct
 
         def material
           [
-            [['giclee', 'serigraph', 'mixed media (print)'], BasicProduct.standard_flat],
+            [['giclee', 'serigraph', 'mixed media (print)'], FlatProduct.standard_flat],
             [['lithograph', 'etching'], ['paper']]
           ]
         end
