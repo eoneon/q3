@@ -157,6 +157,12 @@ module BuildSet
     str.index(/#{pat}/)
   end
 
+  def name_set(obj_set)
+    obj_set.map(&:name)
+  end
+
+  ################################################### word format methods
+
   def arr_to_text(arr)
     if arr.length == 2
       arr.join(" & ")
@@ -164,6 +170,14 @@ module BuildSet
       [arr[0..-3].join(", "), arr[-2, 2].join(" & ")].join(", ")
     else
       arr[0]
+    end
+  end
+
+  def format_vowel(vowel, word)
+    if %w[a e i o u].include?(word.first.downcase) && word.split('-').first != 'one'
+      'an'
+    else
+      'a'
     end
   end
 

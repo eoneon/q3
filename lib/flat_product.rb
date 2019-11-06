@@ -3,43 +3,38 @@ module FlatProduct
   extend ProductBuild
 
   def self.populate
-    self.constants.each do |mojule|
-      category = find_or_create_by(kind: 'category', name: element_name(mojule))
-      konstant = to_scoped_constant(self, mojule)
-      to_scoped_constant(konstant, :medium).constants.each do |klass|
-        medium = find_or_create_by(kind: 'medium', name: element_name(klass))
-
-        to_scoped_constant(konstant, :medium, klass).new.sub_medium.each do |sub_medium_name|
+    derivative_hsh = derivative_elements
+    self.constants.each do |mojule|                                                                                                       #Original, OneOfAKind, PrintMedium
+      category = find_or_create_by(kind: 'category', name: element_name(mojule))                                                          #Element(kind: 'category', name: 'original'),...
+      konstant = to_scoped_constant(self, mojule)                                                                                         #FlatProduct::Original, FlatProduct::OneOfAKind, FlatProduct::PrintMedium
+      to_scoped_constant(konstant, :medium).constants.each do |klass|                                                                     #FlatProduct::Original::Medium => [:Painting, :Drawing, :Production], FlatProduct::OneOfAKind::Medium => [:MixedMedium, :Etching, :HandPulled],...
+        medium = find_or_create_by(kind: 'medium', name: element_name(klass))                                                             #Element(kind: 'medium', name: 'painting'),...
+        to_scoped_constant(konstant, :medium, klass).new.sub_medium.each do |sub_medium_name|                                             #FlatProduct::Original::Medium.new.sub_medium => ['painting', 'oil', 'acrylic', 'mixed media', 'watercolor', 'pastel', 'guache', 'sumi ink']
           sub_medium = find_or_create_by(kind: 'sub_medium', name: element_name(sub_medium_name))
-          if material_set = to_scoped_constant(konstant, :medium, klass).new.material.detect {|set| set.first.include?(sub_medium_name)}
-            material_set.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}.each do |material|
-              build_product([category, sub_medium, medium, material])
-            end
-          else
-            build_product([category, sub_medium, medium])
+          material_set = to_scoped_constant(konstant, :medium, klass).new.material.detect {|set| set.first.include?(sub_medium_name)}     #Element(kind: 'sub_medium', name: 'oil'),...
+          material_set.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}.each do |material|
+            build_product([category, sub_medium, medium, material])
+            derivative_products(to_scoped_constant(konstant, :medium, klass), derivative_hsh, [category, sub_medium, medium, material])
           end
         end
       end
     end
   end
 
-  ##############################################################################
+  def self.derivative_products(konstant, hsh, product_set)
+    build_product([hsh[:limited_edition], product_set].flatten) if konstant.instance_methods(false).include?(:limited_edition)
+    build_product([hsh[:embellished], product_set].flatten) if konstant.instance_methods(false).include?(:embellished)
+    build_product([hsh[:embellished], hsh[:limited_edition], product_set].flatten) if include_all?([:embellished, :limited_edition], konstant.instance_methods(false))
+    build_product(product_set.insert(-2, hsh[:single_edition])) if konstant.instance_methods(false).include?(:single_edition) && !(konstant.to_s.split('::').include?('StandardPrint') && konstant.instance_methods(false).include?(:embellished))
+  end
 
-  # def self.on_material
-  #   standard_flat | photography_paper | production_drawing_paper
-  # end
-  #
-  # def self.standard_flat
-  #   %w[canvas paper board metal]
-  # end
-  #
-  # def self.photography_paper
-  #   ['photography paper']
-  # end
-  #
-  # def self.production_drawing_paper
-  #   ['animation paper']
-  # end
+  def self.derivative_elements
+    h={
+      embellished: find_or_create_by(kind: 'embellishment', name: 'embellished'),
+      single_edition: find_or_create_by(kind: 'edition', name: 'single edition'),
+      limited_edition: find_or_create_by(kind: 'edition', name: 'limited edition')
+    }
+  end
 
   ##############################################################################
 
@@ -74,13 +69,14 @@ module FlatProduct
 
       class Production
         def sub_medium
-          ['production drawing', 'production sericel']
+          ['production drawing', 'production sericel', 'hand painted production sericel']
         end
 
         def material
           [
             [['production drawing'], ['animation paper']],
-            [['production sericel'], ['sericel', 'sericel with background', 'sericel with lithographic background']]
+            [['production sericel'], ['sericel', 'sericel with background', 'sericel with lithographic background']],
+            [['hand painted production sericel'], ['sericel', 'sericel with background', 'sericel with lithographic background']]
           ]
         end
       end
@@ -93,13 +89,21 @@ module FlatProduct
 
       class MixedMedium
         def sub_medium
-          ['mixed media', 'acrylic mixed media', 'mixed media overpaint']
+          ['mixed media', 'acrylic mixed media', 'mixed media overpaint', 'monoprint']
         end
 
         def material
           [
             [MixedMedium.new.sub_medium, FlatProduct.standard_flat]
           ]
+        end
+
+        def embellished
+          MixedMedium.new.sub_medium
+        end
+
+        def single_edition
+          ['mixed media', 'monoprint']
         end
       end
 
@@ -113,6 +117,14 @@ module FlatProduct
             [Etching.new.sub_medium, ['paper']]
           ]
         end
+
+        def embellished
+          Etching.new.sub_medium
+        end
+
+        def single_edition
+          Etching.new.sub_medium
+        end
       end
 
       class HandPulled
@@ -125,8 +137,15 @@ module FlatProduct
             [['silkscreen'], ['canvas']]
           ]
         end
-      end
 
+        def embellished
+          HandPulled.new.sub_medium
+        end
+
+        def single_edition
+          HandPulled.new.sub_medium
+        end
+      end
 
     end
   end
@@ -158,6 +177,14 @@ module FlatProduct
             [['lithograph', 'etching'], ['paper']]
           ]
         end
+
+        def embellished
+          StandardPrint.new.sub_medium
+        end
+
+        def limited_edition
+          StandardPrint.new.sub_medium
+        end
       end
 
       class HandPulled
@@ -171,6 +198,14 @@ module FlatProduct
             [['lithograph'], ['paper']]
           ]
         end
+
+        def limited_edition
+          HandPulled.new.sub_medium
+        end
+
+        def embellished
+          HandPulled.new.sub_medium
+        end
       end
 
       class Sericel
@@ -183,6 +218,10 @@ module FlatProduct
             [['sericel'], ['sericel', 'sericel with background', 'sericel with lithographic background']]
           ]
         end
+
+        def limited_edition
+          Sericel.new.sub_medium
+        end
       end
 
       class Photograph
@@ -194,6 +233,10 @@ module FlatProduct
           [
             [['photograph'], ['photography paper']]
           ]
+        end
+
+        def limited_edition
+          Photograph.new.sub_medium
         end
       end
 

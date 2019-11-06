@@ -29,19 +29,6 @@ module ProductBuild
     end
   end
 
-  # def format_hand_pulled(name_set)
-  #   if name =  name_set.delete('hand pulled')
-  #     name_set.prepend(name)
-  #     if name = name_set.delete('one-of-a-kind')
-  #       name_set.prepend(name)
-  #     else
-  #       name_set
-  #     end
-  #   else
-  #     name_set
-  #   end
-  # end
-
   def format_sculpture(name_set)
     if name_set.first == 'sculpture'
       name_set[1..-1]
@@ -60,6 +47,16 @@ module ProductBuild
   def element_name(name)
     name_set = name.to_s.underscore.split('_')
     name_set.count >= 4 ? name_set.join('-') : name_set.join(' ')
+  end
+
+  def format_attr(name, *n)
+    i = n.empty? ? 0 : n.first
+    name_set = name.to_s.underscore.split('_')
+    name_set.count >= i ? name_set.join('-') : name_set.join(' ')
+  end
+
+  def format_opt_name(opt_grp, opt_grp_set)
+    [format_attr(opt_grp), format_attr(opt_grp_set)].join('-')
   end
 
   def on_material

@@ -3,7 +3,7 @@ module LimitedEdition
   extend ProductBuild
 
   def self.populate
-    category = find_or_create_by(kind: 'category', name: FlatProduct.element_name(self)) #=> "limited edition"
+    category = find_or_create_by(kind: 'category', name: element_name(self)) #=> "limited edition"
     konstant = to_scoped_constant(FlatProduct::PrintMedium::Medium)             #=> FlatProduct::PrintMedium::Medium
     konstant.constants.reject {|klass| klass == :BasicPrint}.each do |klass|    #=> [:StandardPrint, :HandPulled, :Sericel, :Photograph]
       medium = find_or_create_by(kind: 'medium', name: element_name(klass))
@@ -18,9 +18,5 @@ module LimitedEdition
         end
       end
     end
-  end
-
-  def self.test
-
   end
 end

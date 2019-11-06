@@ -7,34 +7,34 @@ class Element < ApplicationRecord
 
   validates :name, presence: true
 
-  scope :primary_media, -> {where("tags @> ?", ("primary => true"))}
+  #scope :primary_media, -> {where("tags @> ?", ("primary => true"))}
   scope :products, -> {where(kind: "product")}
   scope :product_elements, -> {where.not(kind: "product")}
   scope :option_group, -> {where(kind: "option-group")}
 
 
-  ProductElement.product_elements.map{|konstant| konstant.to_s.underscore}.each do |scope_name|
-    scope :"#{scope_name}", -> {where(kind: scope_name)}
-  end
+  # ProductElement.product_elements.map{|konstant| konstant.to_s.underscore}.each do |scope_name|
+  #   scope :"#{scope_name}", -> {where(kind: scope_name)}
+  # end
 
-  Product.boolean_tag_options.each do |scope_name|
-    scope :"#{to_snake(scope_name)}", -> {products.where("tags ? :key", key: scope_name)}
-    scope :"not_#{to_snake(scope_name)}", -> {products.where.not("tags ? :key", key: scope_name)}
-  end
+  # Product.boolean_tag_options.each do |scope_name|
+  #   scope :"#{to_snake(scope_name)}", -> {products.where("tags ? :key", key: scope_name)}
+  #   scope :"not_#{to_snake(scope_name)}", -> {products.where.not("tags ? :key", key: scope_name)}
+  # end
 
-  scope :one_of_a_kind_mixed_media, -> {not_single_edition.one_of_a_kind.mixed_medium}
-  scope :single_edition_one_of_a_kind_mixed_media, -> {single_edition.one_of_a_kind.mixed_medium}
-  #scope :print_media, -> {print.or(sericel).or(photography)}
-  scope :print_media, -> {standard_print.or(hand_pulled_print).or(sericel).or(photography)}
-  scope :not_original_media, -> {not_original.merge(not_one_of_a_kind)}
-  scope :not_edition_media, -> {not_limited_edition.merge(not_single_edition).merge(not_open_edition)}
-  #scope :only_prints, -> {not_original_media.not_edition_media.print}
-  scope :only_prints, -> {not_original_media.not_edition_media.standard_print}
-  scope :limited_edition_print_media, -> {limited_edition.print_media}
-  #scope :limited_edition_prints, -> {limited_edition.print}
-  scope :limited_edition_prints, -> {limited_edition.standard_print}
-  scope :limited_edition_sculptures, -> {not_hand_blown.merge(not_hand_made).sculpture.limited_edition}
-  scope :standard_sculptures, -> {not_hand_blown.merge(not_hand_made).merge(not_limited_edition).sculpture}
+  # scope :one_of_a_kind_mixed_media, -> {not_single_edition.one_of_a_kind.mixed_medium}
+  # scope :single_edition_one_of_a_kind_mixed_media, -> {single_edition.one_of_a_kind.mixed_medium}
+  #
+  # scope :print_media, -> {standard_print.or(hand_pulled_print).or(sericel).or(photography)}
+  # scope :not_original_media, -> {not_original.merge(not_one_of_a_kind)}
+  # scope :not_edition_media, -> {not_limited_edition.merge(not_single_edition).merge(not_open_edition)}
+  #
+  # scope :only_prints, -> {not_original_media.not_edition_media.standard_print}
+  # scope :limited_edition_print_media, -> {limited_edition.print_media}
+  #
+  # scope :limited_edition_prints, -> {limited_edition.standard_print}
+  # scope :limited_edition_sculptures, -> {not_hand_blown.merge(not_hand_made).sculpture.limited_edition}
+  # scope :standard_sculptures, -> {not_hand_blown.merge(not_hand_made).merge(not_limited_edition).sculpture}
 
   def self.by_kind(kind)
     self.where(kind: kind)
@@ -61,7 +61,6 @@ class Element < ApplicationRecord
   end
 
   def option_type_collection
-    #ProductType.option_group_types.map {|option_type| ["#{option_type}-options", scoped_option_group(option_type)] if scoped_option_group(option_type).any?}.compact
     ProductType.option_group_types.map {|option_type| scoped_option_group(option_type) if scoped_option_group(option_type).any?}.compact
   end
 
