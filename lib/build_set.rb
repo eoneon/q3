@@ -42,6 +42,10 @@ module BuildSet
     origin.elements << target if origin.element_ids.exclude?(target.id)
   end
 
+  def assoc_set_unless_included(origin:, kind:, targets:)
+    origin.elements << targets unless origin.elements.where(kind: kind).pluck(:id).sort == targets.map(&:id).sort
+  end
+
   def assoc_scoped_collection(origin:, target:)
     to_collection(origin: origin, assoc_obj: target) << target
   end

@@ -19,6 +19,8 @@ module OptionGroupSet
         opt_grp = find_or_create_by(kind: 'option-group', name: OptionGroup.format_name(opt_grp_name))               #Element(kind: 'option-group', name: 'numbered x/y'),...
         opt_grp = build_proof_options(build_standard_edition(opt_grp))
         assoc_unless_included(origin: opt_grp_set, target: opt_grp)
+        limited_edition = find_or_create_by(kind: 'category', name: 'limited edition')
+        #assoc_unless_included(origin: limited_edition, target: opt_grp_set)
       end
     end
 
@@ -72,5 +74,136 @@ module OptionGroupSet
       end
     end
 
+  end
+
+  module Dimension
+    extend BuildSet
+
+    def self.build_option_group(opt_grp_set)
+      OptionGroup.set.each do |opt_grp_name|
+        opt_grp = find_or_create_by(kind: 'option-group', name: opt_grp_name) #'flat dimension'
+        dimension_set = Option.set.assoc(opt_grp.name).last.map {|dimension_name| find_or_create_by(kind: 'dimension', name: dimension_name)}
+        name = arr_to_text(dimension_set.map(&:name))
+        option = find_or_create_by(kind: 'option', name: name)
+        dimension_set.map {|dimension| assoc_unless_included(origin: option, target: dimension)}
+        assoc_unless_included(origin: opt_grp, target: option)
+        assoc_unless_included(origin: opt_grp_set, target: opt_grp)
+        #OptionGroupAssoc
+      end
+    end
+
+    class OptionGroup
+      def self.set
+        ['flat dimension', 'sculpture dimension']
+      end
+    end
+
+    class Option
+      def self.set
+        [
+          [OptionGroup.set[0], %w[width height]],
+          [OptionGroup.set[1], %w[width height depth]]
+        ]
+      end
+    end
+
+    class OptionGroupAssoc
+      def self.set
+        [
+          [OptionGroup.set[0], Material.flat_dimension_material],
+          [OptionGroup.set[1], Material.standard_sculpture]
+        ]
+      end
+    end
+  end
+
+  module Mounting
+    extend BuildSet
+
+    def self.build_option_group(opt_grp_set)
+      OptionGroup.set.each do |opt_grp_name|
+        opt_grp = find_or_create_by(kind: 'option-group', name: opt_grp_name)                                        #Element(kind: 'option-group', name: 'flat mounting')
+        mounting_set = Option.set.assoc(opt_grp.name).last.map {|mounting_name| find_or_create_by(kind: 'option', name: mounting_name)}
+        mounting_set.map {|mounting| assoc_unless_included(origin: opt_grp, target: mounting)}
+        assoc_unless_included(origin: opt_grp_set, target: opt_grp)
+        #OptionGroupAssoc
+      end
+    end
+
+    class OptionGroup
+      def self.set
+        ['flat mounting', 'sculpture mounting', 'wrapped']
+      end
+    end
+
+    class Option
+      def self.set
+        [
+          [OptionGroup.set[0], %w[framed bordered matted wall-mount]],
+          [OptionGroup.set[1], %w[case base wall-mount]],
+          [OptionGroup.set[2], ['stretched', 'gallery wrapped']]
+        ]
+      end
+    end
+  end
+
+  module Certificate
+    extend BuildSet
+
+    def self.build_option_group(opt_grp_set)
+      OptionGroup.set.each do |opt_grp_name|
+        opt_grp = find_or_create_by(kind: 'option-group', name: opt_grp_name)                                        #Element(kind: 'option-group', name: 'flat mounting')
+        certificate_set = Option.set.assoc(opt_grp.name).last.map {|certificate_name| find_or_create_by(kind: 'option', name: certificate_name)}
+        certificate_set.map {|certificate| assoc_unless_included(origin: opt_grp, target: certificate)}
+        assoc_unless_included(origin: opt_grp_set, target: opt_grp)
+        #OptionGroupAssoc
+      end
+    end
+
+    class OptionGroup
+      def self.set
+        ['standard certificate', 'publisher certificate']
+      end
+    end
+
+    class Option
+      def self.set
+        [
+          [OptionGroup.set[0], %w[COA LOA]],
+          [OptionGroup.set[1], ['Peter Max COA', 'PSA/DNA']]
+        ]
+      end
+    end
+  end
+
+  module Signature
+    extend BuildSet
+
+    def self.build_option_group(opt_grp_set)
+      OptionGroup.set.each do |opt_grp_arr| #%w[artist]
+        signer_type_set = opt_grp_arr.map {|signer_type_name| find_or_create_by(kind: 'signer-type', name: signer_type_name)} #[Element(kind: 'signature', 'artist')],...
+        opt_grp = find_or_create_by(kind: 'option-group', name: arr_to_text(opt_grp_arr))
+        assoc_set_unless_included(origin: opt_grp, kind: 'signer-type', targets: signer_type_set)
+        signature_opt_grp = find_or_create_by(kind: 'option-group', name: 'signature-options')
+        signature_type_set = Option.set.map {|signature_type_name| find_or_create_by(kind: 'signature-type', name: signature_type_name)}
+        signature_type_set.map {|signature_type| assoc_unless_included(origin: signature_opt_grp, target: signature_type)}
+        signer_type_set.map {|signer_type| assoc_unless_included(origin: signer_type, target: signature_opt_grp)}
+        assoc_unless_included(origin: opt_grp_set, target: opt_grp)
+      end
+    end
+
+    class OptionGroup
+      def self.set
+        [
+          %w[artist], %w[artist artist]
+        ]
+      end
+    end
+
+    class Option
+      def self.set
+        ['hand signed', 'hand signed inverso', 'plate signed', 'authorized signature', 'official signature', 'estate signed']
+      end
+    end
   end
 end

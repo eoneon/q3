@@ -50,7 +50,7 @@ module FlatProduct
         def material
           [
             [['watercolor', 'pastel', 'guache', 'sumi ink'], ['paper']],
-            [['painting', 'oil', 'acrylic', 'mixed media'], FlatProduct.standard_flat]
+            [['painting', 'oil', 'acrylic', 'mixed media'], Material.standard_flat]
           ]
         end
       end
@@ -94,7 +94,7 @@ module FlatProduct
 
         def material
           [
-            [MixedMedium.new.sub_medium, FlatProduct.standard_flat]
+            [MixedMedium.new.sub_medium, Material.standard_flat]
           ]
         end
 
@@ -160,7 +160,7 @@ module FlatProduct
 
         def material
           [
-            [['print', 'fine art print', 'vintage style print'], FlatProduct.standard_flat],
+            [['print', 'fine art print', 'vintage style print'], Material.standard_flat],
             [['poster', 'vintage poster'], ['paper']]
           ]
         end
@@ -173,7 +173,7 @@ module FlatProduct
 
         def material
           [
-            [['giclee', 'serigraph', 'mixed media (print)'], FlatProduct.standard_flat],
+            [['giclee', 'serigraph', 'mixed media (print)'], Material.standard_flat],
             [['lithograph', 'etching'], ['paper']]
           ]
         end
@@ -215,7 +215,7 @@ module FlatProduct
 
         def material
           [
-            [['sericel'], ['sericel', 'sericel with background', 'sericel with lithographic background']]
+            [['sericel'], Material.sericel_material]
           ]
         end
 

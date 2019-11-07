@@ -12,7 +12,7 @@ module ProductBuild
     name_set = reject_extraneous(name_set)
     name_set = format_hand_pulled(name_set)
     name_set = format_sculpture(name_set)
-    name_set.insert(-2, 'on') if on_material.include?(name_set.last)
+    name_set.insert(-2, 'on') if Material.on_material.include?(name_set.last)
     reject_dup_words(name_set)
   end
 
@@ -59,19 +59,29 @@ module ProductBuild
     [format_attr(opt_grp), format_attr(opt_grp_set)].join('-')
   end
 
-  def on_material
-    standard_flat | photography_paper | production_drawing_paper
-  end
+  ##############################################################################
 
-  def standard_flat
-    %w[canvas paper board metal]
-  end
-
-  def photography_paper
-    ['photography paper']
-  end
-
-  def production_drawing_paper
-    ['animation paper']
-  end
+  # def flat_dimensiMaterial.on_material
+  #   Material.on_material | sericel_material
+  # end
+  #
+  # def Material.on_material
+  #   standard_flat | photography_paper | production_drawing_paper
+  # end
+  #
+  # def standard_flat
+  #   %w[canvas paper board metal]
+  # end
+  #
+  # def photography_paper
+  #   ['photography paper']
+  # end
+  #
+  # def production_drawing_paper
+  #   ['animation paper']
+  # end
+  #
+  # def sericel_material
+  #   ['sericel', 'sericel with background', 'sericel with lithographic background']
+  # end
 end
