@@ -2,10 +2,14 @@ module ProductBuild
   extend BuildSet
 
   def build_product(product_set)
-    name_set = product_set.map(&:name)
+    name_set = name_set(product_set)
     product = find_or_create_by(kind: 'product', name: product_name(name_set))
-    update_tags(product, set_tags(name_set))
-    product_set.map {|target| assoc_unless_included(origin: product, target: target)}
+    update_tags(product, set_tags(product_set))
+    obj_set(product_set).map {|target| assoc_unless_included(origin: product, target: target)}
+  end
+
+  def set_tags(product_set)
+    product_set.map {|set| [set.first, set.last.name]}.to_h
   end
 
   def product_name(name_set)
@@ -58,30 +62,4 @@ module ProductBuild
   def format_opt_name(opt_grp, opt_grp_set)
     [format_attr(opt_grp), format_attr(opt_grp_set)].join('-')
   end
-
-  ##############################################################################
-
-  # def flat_dimensiMaterial.on_material
-  #   Material.on_material | sericel_material
-  # end
-  #
-  # def Material.on_material
-  #   standard_flat | photography_paper | production_drawing_paper
-  # end
-  #
-  # def standard_flat
-  #   %w[canvas paper board metal]
-  # end
-  #
-  # def photography_paper
-  #   ['photography paper']
-  # end
-  #
-  # def production_drawing_paper
-  #   ['animation paper']
-  # end
-  #
-  # def sericel_material
-  #   ['sericel', 'sericel with background', 'sericel with lithographic background']
-  # end
 end

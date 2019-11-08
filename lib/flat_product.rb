@@ -13,8 +13,9 @@ module FlatProduct
           sub_medium = find_or_create_by(kind: 'sub_medium', name: element_name(sub_medium_name))
           material_set = to_scoped_constant(konstant, :medium, klass).new.material.detect {|set| set.first.include?(sub_medium_name)}     #Element(kind: 'sub_medium', name: 'oil'),...
           material_set.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}.each do |material|
-            build_product([category, sub_medium, medium, material])
-            derivative_products(to_scoped_constant(konstant, :medium, klass), derivative_hsh, [category, sub_medium, medium, material])
+            product_set = [[:category, category], [:sub_medium, sub_medium], [:medium, medium], [:material, material]]
+            build_product(product_set)
+            derivative_products(to_scoped_constant(konstant, :medium, klass), derivative_hsh, product_set)
           end
         end
       end
@@ -22,10 +23,10 @@ module FlatProduct
   end
 
   def self.derivative_products(konstant, hsh, product_set)
-    build_product([hsh[:limited_edition], product_set].flatten) if konstant.instance_methods(false).include?(:limited_edition)
-    build_product([hsh[:embellished], product_set].flatten) if konstant.instance_methods(false).include?(:embellished)
-    build_product([hsh[:embellished], hsh[:limited_edition], product_set].flatten) if include_all?([:embellished, :limited_edition], konstant.instance_methods(false))
-    build_product(product_set.insert(-2, hsh[:single_edition])) if konstant.instance_methods(false).include?(:single_edition) && !(konstant.to_s.split('::').include?('StandardPrint') && konstant.instance_methods(false).include?(:embellished))
+    build_product(product_set.insert(0,[:embellished, hsh[:embellished]]).insert(1, [:limited_edition, hsh[:limited_edition]])) if include_all?([:embellished, :limited_edition], konstant.instance_methods(false))
+    build_product(product_set.insert(0, [:limited_edition, hsh[:limited_edition]])) if konstant.instance_methods(false).include?(:limited_edition)
+    build_product(product_set.insert(0, [:embellished, hsh[:embellished]])) if konstant.instance_methods(false).include?(:embellished)
+    build_product(product_set.insert(-2, [:embellished, hsh[:embellished]])) if konstant.instance_methods(false).include?(:single_edition) && !(konstant.to_s.split('::').include?('StandardPrint') && konstant.instance_methods(false).include?(:embellished))
   end
 
   def self.derivative_elements
@@ -34,6 +35,16 @@ module FlatProduct
       single_edition: find_or_create_by(kind: 'edition', name: 'single edition'),
       limited_edition: find_or_create_by(kind: 'edition', name: 'limited edition')
     }
+  end
+
+  def self.product_search
+    set =[]
+    FlatProduct.constants.each do |mojule|
+      to_scoped_constant(self, mojule, :medium).constants.each do |konstant|
+        set << [format_attr(mojule, 3), format_attr(konstant)]
+      end
+    end
+    set
   end
 
   ##############################################################################

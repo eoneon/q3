@@ -161,8 +161,12 @@ module BuildSet
     str.index(/#{pat}/)
   end
 
-  def name_set(obj_set)
-    obj_set.map(&:name)
+  def obj_set(nested_arr)
+    nested_arr.map {|set| set.last}.flatten
+  end
+
+  def name_set(nested_arr)
+    obj_set(nested_arr).map {|obj| obj.name}
   end
 
   ################################################### word format methods
@@ -193,10 +197,8 @@ module BuildSet
   end
 
   def set_tags(name_set, tags={})
-    name_set.map {|name| tags.merge!(h={name => 'true'})}
+    name_set.map {|name| tags.merge!(h={name.split(' ').join(' ') => 'true'})}
     tags
   end
-
-  ###################################################
 
 end
