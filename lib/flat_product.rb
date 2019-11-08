@@ -37,15 +37,39 @@ module FlatProduct
     }
   end
 
-  def self.product_search
+  def self.scopes
     set =[]
     FlatProduct.constants.each do |mojule|
       to_scoped_constant(self, mojule, :medium).constants.each do |konstant|
-        set << [format_attr(mojule, 3), format_attr(konstant)]
+        scope_name = [to_snake(mojule), to_snake(konstant)].join('_')
+        set << [scope_name, format_attr(mojule), format_attr(konstant)]
       end
     end
     set
   end
+
+  def self.search
+    set =[]
+    FlatProduct.constants.each do |mojule|
+      to_scoped_constant(self, mojule, :medium).constants.each do |konstant|
+        scope_name = [to_snake(mojule), to_snake(konstant)].join('_')
+        value_set = [format_attr(mojule, 3), format_attr(konstant, 4)]
+        set << [search_text(value_set), scope_name]
+      end
+    end
+    set.prepend(['all products', 'products'])
+  end
+
+  def self.search_text(value_set)
+    value_set = value_set.reject {|i| i == 'print medium'}
+    value_set.append('media') if value_set.include?('production')
+    value_set.append('prints') if value_set.include?('hand pulled')
+    value_set.join(' ').pluralize
+  end
+  # def self.scope_name(set)
+  #   set.map {|i| i.join('_').split('-').join('_').split(' ').join('_')}
+  # end
+  #=> [["original", "painting"], ["original", "drawing"], ["original", "production"], ["one-of-a-kind", "mixed medium"], ["one-of-a-kind", "etching"], ["one-of-a-kind", "hand pulled"], ["print medium", "basic print"], ["print medium", "standard print"], ["print medium", "hand pulled"], ["print medium", "sericel"], ["print medium", "photograph"]]
 
   ##############################################################################
 

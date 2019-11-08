@@ -7,15 +7,13 @@ class Element < ApplicationRecord
 
   validates :name, presence: true
 
-  #scope :primary_media, -> {where("tags @> ?", ("primary => true"))}
   scope :products, -> {where(kind: "product")}
-  scope :product_elements, -> {where.not(kind: "product")}
+  #scope :product_elements, -> {where.not(kind: "product")}
   scope :option_group, -> {where(kind: "option-group")}
 
-
-  # ProductElement.product_elements.map{|konstant| konstant.to_s.underscore}.each do |scope_name|
-  #   scope :"#{scope_name}", -> {where(kind: scope_name)}
-  # end
+  FlatProduct.scopes.each do |set|
+    scope :"#{set[0]}", -> {products.where("tags @> ? AND tags @> ?", ("category => #{set[1]}"), ("medium => #{set[2]}"))}
+  end
 
   # Product.boolean_tag_options.each do |scope_name|
   #   scope :"#{to_snake(scope_name)}", -> {products.where("tags ? :key", key: scope_name)}
@@ -44,9 +42,13 @@ class Element < ApplicationRecord
     self.where(kind: 'option-group').where("tags @> ?", ("option_type => #{option_type}"))
   end
 
-  def self.element_search(kind)
-    self.public_send(kind)
+  def self.search(scope)
+    self.public_send(scope)
   end
+
+  # def self.element_search(kind)
+  #   self.public_send(kind)
+  # end
 
   ################################
 

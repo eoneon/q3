@@ -1,9 +1,10 @@
 class ProductElementsController < ApplicationController
   def index
     if params[:product_element] && params[:product_element][:search]
-      @products = Element.element_search(params[:product_element][:search])
+      @products = Element.search(params[:product_element][:search])
     else
-      @products = Element.by_kind('product')
+      #@products = Element.by_kind('product')
+      @products = Element.products
     end
 
     respond_to do |format|

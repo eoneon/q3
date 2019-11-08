@@ -189,6 +189,9 @@ module BuildSet
     end
   end
 
+  def hyph_word(word)
+    word.split(' ').join('-')
+  end
   ###################################################
 
   def update_tags(obj, tag_hsh)

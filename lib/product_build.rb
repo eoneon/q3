@@ -1,7 +1,7 @@
 module ProductBuild
   extend BuildSet
 
-  def build_product(product_set)
+  def build_product(product_set)                                                                #product_set = [[:category, category], [:sub_medium, sub_medium], [:medium, medium], [:material, material]]
     name_set = name_set(product_set)
     product = find_or_create_by(kind: 'product', name: product_name(name_set))
     update_tags(product, set_tags(product_set))
@@ -9,7 +9,7 @@ module ProductBuild
   end
 
   def set_tags(product_set)
-    product_set.map {|set| [set.first, set.last.name]}.to_h
+    product_set.map {|set| [set.first, hyph_word(set.last.name)]}.to_h
   end
 
   def product_name(name_set)
