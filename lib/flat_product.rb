@@ -23,10 +23,12 @@ module FlatProduct
   end
 
   def self.derivative_products(konstant, hsh, product_set)
-    build_product(product_set.insert(0,[:embellished, hsh[:embellished]]).insert(1, [:limited_edition, hsh[:limited_edition]])) if include_all?([:embellished, :limited_edition], konstant.instance_methods(false))
-    build_product(product_set.insert(0, [:limited_edition, hsh[:limited_edition]])) if konstant.instance_methods(false).include?(:limited_edition)
+    #build_product(product_set.insert(0,[:embellished, hsh[:embellished]]).insert(1, [:limited_edition, hsh[:limited_edition]])) if include_all?([:embellished, :limited_edition], konstant.instance_methods(false))
+    #build_product(product_set[1..-1].insert(0,[:embellished, hsh[:embellished]]).insert(1, [:limited_edition, hsh[:limited_edition]])) if include_all?([:embellished, :limited_edition], konstant.instance_methods(false))
+    # build_product(product_set.insert(0, [:limited_edition, hsh[:limited_edition]])) if konstant.instance_methods(false).include?(:limited_edition)
+    #build_product(product_set[1..-1].insert(0, [:limited_edition, hsh[:limited_edition]])) if konstant.instance_methods(false).include?(:limited_edition)
     build_product(product_set.insert(0, [:embellished, hsh[:embellished]])) if konstant.instance_methods(false).include?(:embellished)
-    build_product(product_set.insert(-2, [:embellished, hsh[:embellished]])) if konstant.instance_methods(false).include?(:single_edition) && !(konstant.to_s.split('::').include?('StandardPrint') && konstant.instance_methods(false).include?(:embellished))
+    build_product(product_set.insert(-2, [:single_edition, hsh[:single_edition]])) if konstant.instance_methods(false).include?(:single_edition) && !(konstant.to_s.split('::').include?('StandardPrint') && konstant.instance_methods(false).include?(:embellished))
   end
 
   def self.derivative_elements
@@ -64,11 +66,10 @@ module FlatProduct
     value_set = value_set.reject {|i| i == 'print medium'}
     value_set.append('media') if value_set.include?('production')
     value_set.append('prints') if value_set.include?('hand pulled')
+    value_set = word_arr(value_set) - ['standard']
     value_set.join(' ').pluralize
   end
-  # def self.scope_name(set)
-  #   set.map {|i| i.join('_').split('-').join('_').split(' ').join('_')}
-  # end
+
   #=> [["original", "painting"], ["original", "drawing"], ["original", "production"], ["one-of-a-kind", "mixed medium"], ["one-of-a-kind", "etching"], ["one-of-a-kind", "hand pulled"], ["print medium", "basic print"], ["print medium", "standard print"], ["print medium", "hand pulled"], ["print medium", "sericel"], ["print medium", "photograph"]]
 
   ##############################################################################
@@ -203,21 +204,17 @@ module FlatProduct
 
       class StandardPrint
         def sub_medium
-          ['giclee', 'serigraph', 'etching', 'lithograph', 'mixed media (print)']
+          ['giclee', 'serigraph', 'etching', 'lithograph', 'mixed media']
         end
 
         def material
           [
-            [['giclee', 'serigraph', 'mixed media (print)'], Material.standard_flat],
+            [['giclee', 'serigraph', 'mixed media'], Material.standard_flat],
             [['lithograph', 'etching'], ['paper']]
           ]
         end
 
         def embellished
-          StandardPrint.new.sub_medium
-        end
-
-        def limited_edition
           StandardPrint.new.sub_medium
         end
       end
@@ -232,10 +229,6 @@ module FlatProduct
             [['silkscreen'], ['canvas']],
             [['lithograph'], ['paper']]
           ]
-        end
-
-        def limited_edition
-          HandPulled.new.sub_medium
         end
 
         def embellished
@@ -253,10 +246,6 @@ module FlatProduct
             [['sericel'], Material.sericel_material]
           ]
         end
-
-        def limited_edition
-          Sericel.new.sub_medium
-        end
       end
 
       class Photograph
@@ -269,12 +258,36 @@ module FlatProduct
             [['photograph'], ['photography paper']]
           ]
         end
+      end
 
-        def limited_edition
-          Photograph.new.sub_medium
+    end
+  end
+
+  module LimitedEdition
+
+    module Medium
+
+      class StandardPrint < FlatProduct::PrintMedium::Medium::StandardPrint
+        def embellished
+          StandardPrint.new.sub_medium
         end
       end
 
+      class HandPulled < FlatProduct::PrintMedium::Medium::HandPulled
+        def embellished
+          HandPulled.new.sub_medium
+        end
+
+        def single_edition
+          HandPulled.new.sub_medium
+        end
+      end
+
+      class Sericel < FlatProduct::PrintMedium::Medium::Sericel
+      end
+
+      class Photograph < FlatProduct::PrintMedium::Medium::Photograph
+      end
     end
   end
 end

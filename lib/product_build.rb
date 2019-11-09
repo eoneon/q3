@@ -12,6 +12,13 @@ module ProductBuild
     product_set.map {|set| [set.first, hyph_word(set.last.name)]}.to_h
   end
 
+  # def set_tags(product_set)
+  #   if limited_set = product_set.delete([:limited_edition, 'limited edition'])
+  #     product_set.map! {|set| set.last == limited_set.last if set.first == :category}
+  #   end
+  #   product_set.map {|set| [set.first, hyph_word(set.last.name)]}.to_h
+  # end
+
   def product_name(name_set)
     name_set = reject_extraneous(name_set)
     name_set = format_hand_pulled(name_set)

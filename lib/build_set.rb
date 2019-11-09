@@ -192,6 +192,11 @@ module BuildSet
   def hyph_word(word)
     word.split(' ').join('-')
   end
+
+  def word_arr(arr)
+    arr.split(' ').join(' ').split(' ')
+  end
+
   ###################################################
 
   def update_tags(obj, tag_hsh)
