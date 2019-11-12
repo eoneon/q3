@@ -1,9 +1,9 @@
 class ElementsController < ApplicationController
   def index
     if params[:element] && params[:element][:search]
-      @elements = Element.element_search(params[:element][:search])
+      @elements = Element.option_group_set(params[:element][:search])
     else
-      @elements = Element.product_elements
+      @elements = Element.option_group_sets
     end
 
     respond_to do |format|

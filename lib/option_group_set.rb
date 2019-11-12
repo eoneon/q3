@@ -4,10 +4,20 @@ module OptionGroupSet
 
   def self.populate
     self.constants.each do |mojule|
-      opt_grp_set = find_or_create_by(kind: format_attr(self), name: format_opt_name(mojule, self))                  #Element(kind: 'option-group-set', name: 'element-option-group-set')
+      opt_grp_set = build_opt_grp(format_attr(self), format_opt_name(mojule, self), h={"option_type" => to_snake(mojule)}) #Element(kind: 'option-group-set', name: 'element-option-group-set')
       to_scoped_constant(self, mojule).build_option_group(opt_grp_set)
     end
   end
+
+  def self.build_opt_grp(kind, name, tags)                                                                                 #product_set = [[:category, category], [:sub_medium, sub_medium], [:medium, medium], [:material, material]]
+    obj = find_or_create_by(kind: kind, name: name)
+    update_tags(obj, tags)
+    obj
+  end
+
+  ##############################################################################
+
+
 
   ##############################################################################
 
@@ -20,7 +30,7 @@ module OptionGroupSet
         opt_grp = build_proof_options(build_standard_edition(opt_grp))
         assoc_unless_included(origin: opt_grp_set, target: opt_grp)
         limited_edition = find_or_create_by(kind: 'category', name: 'limited edition')
-        #assoc_unless_included(origin: limited_edition, target: opt_grp_set)
+        assoc_unless_included(origin: limited_edition, target: opt_grp_set)
       end
     end
 
@@ -88,7 +98,8 @@ module OptionGroupSet
         dimension_set.map {|dimension| assoc_unless_included(origin: option, target: dimension)}
         assoc_unless_included(origin: opt_grp, target: option)
         assoc_unless_included(origin: opt_grp_set, target: opt_grp)
-        #OptionGroupAssoc
+        ###########################################################
+        #find_or_create_by(kind: 'material', name: OptionGroupAssoc.set.assoc(opt_grp.name).last).map {|material| assoc_unless_included(origin: material, target: opt_grp)}
       end
     end
 
@@ -126,25 +137,46 @@ module OptionGroupSet
         mounting_set = Option.set.assoc(opt_grp.name).last.map {|mounting_name| find_or_create_by(kind: 'option', name: mounting_name)}
         mounting_set.map {|mounting| assoc_unless_included(origin: opt_grp, target: mounting)}
         assoc_unless_included(origin: opt_grp_set, target: opt_grp)
-        #OptionGroupAssoc
+        find_or_create_by(kind: 'material', name: MaterialAssoc.set.assoc(opt_grp.name).last).map {|material| assoc_unless_included(origin: material, target: opt_grp)}
+        #find_or_create_by(kind: 'dimension', name: DimensionAssoc.set.assoc(opt_grp.name).last).map {|dimension| assoc_unless_included(origin: opt_grp, target: dimension)}
       end
     end
 
     class OptionGroup
       def self.set
-        ['flat mounting', 'sculpture mounting', 'wrapped']
+        ['flat mounting', 'sculpture mounting', 'canvas mounting']
       end
     end
 
     class Option
       def self.set
         [
-          [OptionGroup.set[0], %w[framed bordered matted wall-mount]],
+          [OptionGroup.set[0], %w[framed bordered matted wall-mount stand]],
           [OptionGroup.set[1], %w[case base wall-mount]],
-          [OptionGroup.set[2], ['stretched', 'gallery wrapped']]
+          [OptionGroup.set[2], ['stretched', 'gallery wrapped', 'framed', 'bordered', 'matted', 'wall-mount']]
         ]
       end
     end
+
+    # class MaterialAssoc
+    #   def self.set
+    #     [
+    #       [OptionGroup.set[0], Material.flat_dimension_material.reject {|material| material == 'canvas'}],
+    #       [OptionGroup.set[1], Material.standard_sculpture],
+    #       [OptionGroup.set[2], %w[canvas]]
+    #     ]
+    #   end
+    # end
+    #
+    # class DimensionAssoc
+    #   def self.set
+    #     [
+    #       [OptionGroup.set[0], %w[width height]],
+    #       [OptionGroup.set[1], %w[width height depth]],
+    #       [OptionGroup.set[2], %w[width height]]
+    #     ]
+    #   end
+    # end
   end
 
   module Certificate
@@ -152,7 +184,7 @@ module OptionGroupSet
 
     def self.build_option_group(opt_grp_set)
       OptionGroup.set.each do |opt_grp_name|
-        opt_grp = find_or_create_by(kind: 'option-group', name: opt_grp_name)                                        #Element(kind: 'option-group', name: 'flat mounting')
+        opt_grp = find_or_create_by(kind: 'option-group', name: opt_grp_name)                                                                    #Element(kind: 'option-group', name: 'flat mounting')
         certificate_set = Option.set.assoc(opt_grp.name).last.map {|certificate_name| find_or_create_by(kind: 'option', name: certificate_name)}
         certificate_set.map {|certificate| assoc_unless_included(origin: opt_grp, target: certificate)}
         assoc_unless_included(origin: opt_grp_set, target: opt_grp)
@@ -203,6 +235,57 @@ module OptionGroupSet
     class Option
       def self.set
         ['hand signed', 'hand signed inverso', 'plate signed', 'authorized signature', 'official signature', 'estate signed']
+      end
+    end
+  end
+
+
+  module Leafing
+    extend BuildSet
+
+    def self.build_option_group(opt_grp_set)
+      OptionGroup.set.each do |opt_grp_name|
+        opt_grp = find_or_create_by(kind: 'option-group', name: opt_grp_name)
+        leafing_set = Option.set.map {|leafing_name| find_or_create_by(kind: 'option', name: leafing_name)}
+        leafing_set.map {|leafing| assoc_unless_included(origin: opt_grp, target: leafing)}
+        assoc_unless_included(origin: opt_grp_set, target: opt_grp)
+      end
+    end
+
+    class OptionGroup
+      def self.set
+        %w[leafing]
+      end
+    end
+
+    class Option
+      def self.set
+        ['gold leafing', 'hand laid gold leafing', 'silver leafing', 'hand laid silver leafing']
+      end
+    end
+  end
+
+  module Remarque
+    extend BuildSet
+
+    def self.build_option_group(opt_grp_set)
+      OptionGroup.set.each do |opt_grp_name|
+        opt_grp = find_or_create_by(kind: 'option-group', name: opt_grp_name)
+        remarque_set = Option.set.map {|remarque_name| find_or_create_by(kind: 'option', name: remarque_name)}
+        remarque_set.map {|remarque| assoc_unless_included(origin: opt_grp, target: remarque)}
+        assoc_unless_included(origin: opt_grp_set, target: opt_grp)
+      end
+    end
+
+    class OptionGroup
+      def self.set
+        %w[remarque]
+      end
+    end
+
+    class Option
+      def self.set
+        ['remarque', 'hand drawn remarque', 'hand drawn remarque inverso']
       end
     end
   end

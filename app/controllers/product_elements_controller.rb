@@ -3,7 +3,6 @@ class ProductElementsController < ApplicationController
     if params[:product_element] && params[:product_element][:search]
       @products = Element.search(params[:product_element][:search])
     else
-      #@products = Element.by_kind('product')
       @products = Element.products
     end
 

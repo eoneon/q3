@@ -5,17 +5,20 @@ module FlatProduct
   def self.populate
     derivative_hsh = derivative_elements
     self.constants.each do |mojule|                                                                                                       #Original, OneOfAKind, PrintMedium
-      category = find_or_create_by(kind: 'category', name: element_name(mojule))                                                          #Element(kind: 'category', name: 'original'),...
+      category = find_or_create_by(kind: 'category', name: format_attr(mojule,4))                                                          #Element(kind: 'category', name: 'original'),...
       konstant = to_scoped_constant(self, mojule)                                                                                         #FlatProduct::Original, FlatProduct::OneOfAKind, FlatProduct::PrintMedium
       to_scoped_constant(konstant, :medium).constants.each do |klass|                                                                     #FlatProduct::Original::Medium => [:Painting, :Drawing, :Production], FlatProduct::OneOfAKind::Medium => [:MixedMedium, :Etching, :HandPulled],...
-        medium = find_or_create_by(kind: 'medium', name: element_name(klass))                                                             #Element(kind: 'medium', name: 'painting'),...
+        medium = find_or_create_by(kind: 'medium', name: format_attr(klass,4))                                                             #Element(kind: 'medium', name: 'painting'),...
+
         to_scoped_constant(konstant, :medium, klass).new.sub_medium.each do |sub_medium_name|                                             #FlatProduct::Original::Medium.new.sub_medium => ['painting', 'oil', 'acrylic', 'mixed media', 'watercolor', 'pastel', 'guache', 'sumi ink']
-          sub_medium = find_or_create_by(kind: 'sub_medium', name: element_name(sub_medium_name))
+          sub_medium = find_or_create_by(kind: 'sub_medium', name: format_attr(sub_medium_name,4))
           material_set = to_scoped_constant(konstant, :medium, klass).new.material.detect {|set| set.first.include?(sub_medium_name)}     #Element(kind: 'sub_medium', name: 'oil'),...
           material_set.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}.each do |material|
+
             product_set = [[:category, category], [:sub_medium, sub_medium], [:medium, medium], [:material, material]]
             build_product(product_set)
             derivative_products(to_scoped_constant(konstant, :medium, klass), derivative_hsh, product_set)
+            
           end
         end
       end
@@ -23,10 +26,6 @@ module FlatProduct
   end
 
   def self.derivative_products(konstant, hsh, product_set)
-    #build_product(product_set.insert(0,[:embellished, hsh[:embellished]]).insert(1, [:limited_edition, hsh[:limited_edition]])) if include_all?([:embellished, :limited_edition], konstant.instance_methods(false))
-    #build_product(product_set[1..-1].insert(0,[:embellished, hsh[:embellished]]).insert(1, [:limited_edition, hsh[:limited_edition]])) if include_all?([:embellished, :limited_edition], konstant.instance_methods(false))
-    # build_product(product_set.insert(0, [:limited_edition, hsh[:limited_edition]])) if konstant.instance_methods(false).include?(:limited_edition)
-    #build_product(product_set[1..-1].insert(0, [:limited_edition, hsh[:limited_edition]])) if konstant.instance_methods(false).include?(:limited_edition)
     build_product(product_set.insert(0, [:embellished, hsh[:embellished]])) if konstant.instance_methods(false).include?(:embellished)
     build_product(product_set.insert(-2, [:single_edition, hsh[:single_edition]])) if konstant.instance_methods(false).include?(:single_edition) && !(konstant.to_s.split('::').include?('StandardPrint') && konstant.instance_methods(false).include?(:embellished))
   end
@@ -34,8 +33,7 @@ module FlatProduct
   def self.derivative_elements
     h={
       embellished: find_or_create_by(kind: 'embellishment', name: 'embellished'),
-      single_edition: find_or_create_by(kind: 'edition', name: 'single edition'),
-      limited_edition: find_or_create_by(kind: 'edition', name: 'limited edition')
+      single_edition: find_or_create_by(kind: 'edition', name: 'single edition')
     }
   end
 
@@ -52,7 +50,8 @@ module FlatProduct
 
   def self.search
     set =[]
-    FlatProduct.constants.each do |mojule|
+    #konstants = self.constants + SculptureProduct.constants
+    self.constants.each do |mojule|
       to_scoped_constant(self, mojule, :medium).constants.each do |konstant|
         scope_name = [to_snake(mojule), to_snake(konstant)].join('_')
         value_set = [format_attr(mojule, 3), format_attr(konstant, 4)]
@@ -66,11 +65,17 @@ module FlatProduct
     value_set = value_set.reject {|i| i == 'print medium'}
     value_set.append('media') if value_set.include?('production')
     value_set.append('prints') if value_set.include?('hand pulled')
+    value_set.prepend('glass') if value_set.include?('hand blown')
+    value_set.prepend('ceramic') if value_set.include?('hand made')
     value_set = word_arr(value_set) - ['standard']
     value_set.join(' ').pluralize
   end
 
-  #=> [["original", "painting"], ["original", "drawing"], ["original", "production"], ["one-of-a-kind", "mixed medium"], ["one-of-a-kind", "etching"], ["one-of-a-kind", "hand pulled"], ["print medium", "basic print"], ["print medium", "standard print"], ["print medium", "hand pulled"], ["print medium", "sericel"], ["print medium", "photograph"]]
+  def self.medium_elements
+    FlatProduct.constants.map {|mojule| to_scoped_constant(self, mojule, :medium).constants.map {|klass| format_attr(klass,3)}}.flatten
+  end
+
+  #=> ["painting", "drawing", "production", "mixed medium", "etching", "hand pulled", "basic print", "standard print", "hand pulled", "sericel", "photograph", "standard print", "hand pulled", "sericel", "photograph"]
 
   ##############################################################################
 

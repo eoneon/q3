@@ -9,7 +9,8 @@ class Element < ApplicationRecord
 
   scope :products, -> {where(kind: "product")}
   #scope :product_elements, -> {where.not(kind: "product")}
-  scope :option_group, -> {where(kind: "option-group")}
+  scope :option_group_sets, -> {where(kind: "option-group-set")}
+  scope :option_groups, -> {where(kind: "option-group")}
 
   FlatProduct.scopes.each do |set|
     scope :"#{set[0]}", -> {products.where("tags @> ? AND tags @> ?", ("category => #{set[1]}"), ("medium => #{set[2]}"))}
@@ -36,6 +37,10 @@ class Element < ApplicationRecord
 
   def self.by_kind(kind)
     self.where(kind: kind)
+  end
+
+  def self.option_group_set(option_type)
+    self.where(kind: 'option-group-set').where("tags @> ?", ("option_type => #{option_type}"))
   end
 
   def self.by_option_group(option_type)
