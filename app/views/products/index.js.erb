@@ -1,6 +1,6 @@
 var form = $("#search-form");
 var idx = $(form).find(".form").attr("data-search");
-$(form).html("<%= j render 'product_elements/form' %>");
+$(form).html("<%= j render 'products/form' %>");
 $(form).find(".form").attr("data-search", idx);
 $(form).find('select option').eq(idx).attr('selected', true);
-$("#tab-index").html("<%= j render 'product_elements/tabs', products: @products %>");
+$("#tab-index").html("<%= j render 'products/tabs', products: @products %>");

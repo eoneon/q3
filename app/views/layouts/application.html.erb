@@ -10,25 +10,12 @@
   <body>
     <div class="container">
       <nav class="fixed-top navbar navbar-expand" id="nav-bar">
-        <span><%#= render "layouts/nav_menu" %></span>
         <a href="<%= elements_path %>" class="nav-link text-white">
           Product Elements
         </a>
-        <a href="<%= product_elements_path %>" class="nav-link text-white">
+        <a href="<%= products_path %>" class="nav-link text-white">
           Products
         </a>
-        <!-- <a href="<%#= product_kinds_path %>" class="nav-link text-white">
-          Products-Kinds
-        </a>
-        <a href="<%#= product_parts_path %>" class="nav-link text-white">
-          Product-Parts
-        </a>
-        <a href="<%#= item_fields_path %>" class="nav-link text-white">
-          Item-Fields
-        </a>
-        <a href="<%#= item_values_path %>" class="nav-link text-white">
-          Item-Values
-        </a>-->
       </nav>
       <%= yield %>
     </div>

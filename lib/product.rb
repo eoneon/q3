@@ -14,10 +14,6 @@ module Product
           sub_medium = find_or_create_by(kind: 'sub_medium', name: format_attr(sub_medium_name,4))
           material_set = to_scoped_constant(konstant, :medium, klass).new.material.detect {|set| set.first.include?(sub_medium_name)}      #Element(kind: 'sub_medium', name: 'oil'),...
           material_set.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}.each do |material|
-
-            # product_set = [[:category, category], [:sub_medium, sub_medium], [:medium, medium], [:material, material]]
-            # build_product(product_set)
-            # derivative_products(to_scoped_constant(konstant, :medium, klass), derivative_hsh, product_set)
             if category.name == 'sculpture'
               to_scoped_constant(konstant, :medium, klass).new.sculpture_type.each do |sculpture_type_name|
                 sculpture_type = find_or_create_by(kind: 'sculpture_type', name: format_attr(sculpture_type_name,4))
@@ -89,6 +85,7 @@ module Product
   def self.sculpture_media
     Product::Sculpture::Medium.constants.map {|klass| format_attr(klass,3)}.flatten
   end
+  
   #=> ["painting", "drawing", "production", "mixed medium", "etching", "hand pulled", "basic print", "standard print", "hand pulled", "sericel", "photograph", "standard print", "hand pulled", "sericel", "photograph"]
 
   def self.sculpture_type

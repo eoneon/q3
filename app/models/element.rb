@@ -9,9 +9,10 @@ class Element < ApplicationRecord
   scope :products, -> {where(kind: "product")}
   scope :option_group_sets, -> {where(kind: "option-group-set")}
   scope :option_groups, -> {where(kind: "option-group")}
+  #scope :product_option_groups, -> {products.where(kind: "option-group-set")}
 
   Product.scopes.each do |set|
-    scope :"#{set[0]}", -> {products.where("tags @> ? AND tags @> ?", ("category => #{set[1]}"), ("medium => #{set[2]}"))}
+    scope :"#{set[0]}", -> {products.order("tags -> 'embellished'").where("tags @> ? AND tags @> ?", ("category => #{set[1]}"), ("medium => #{set[2]}"))}
   end
 
   def self.by_kind(kind)
