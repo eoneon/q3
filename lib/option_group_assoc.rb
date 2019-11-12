@@ -15,8 +15,8 @@ module OptionGroupAssoc
   class MediumDimension
     def self.set
       [
-        [FlatProduct.medium_elements, OptionGroupSet::Dimension::OptionGroup.set[0]],
-        [SculptureProduct.medium_elements, OptionGroupSet::Dimension::OptionGroup.set[1]]
+        [Product.flat_media, OptionGroupSet::Dimension::OptionGroup.set[0]],
+        [SculptureProduct.sculpture_media, OptionGroupSet::Dimension::OptionGroup.set[1]]
       ]
     end
   end

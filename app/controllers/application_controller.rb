@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   end
 
   def origin_key
-    ['product', 'product_part', 'item_field', 'item_value'].detect {|sti| params[:"#{sti}_id"].present?}
+    ['product_part', 'item_field', 'item_value'].detect {|sti| params[:"#{sti}_id"].present?}
   end
 
   # def target_key
