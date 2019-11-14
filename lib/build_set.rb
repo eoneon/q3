@@ -1,5 +1,6 @@
 module BuildSet
-
+  extend ProductBuild
+  
   def find_or_create_by(kind:, name:)
     if name.is_a? Array
       find_or_create_by_names(kind: kind, names: name)

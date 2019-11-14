@@ -1,10 +1,9 @@
 module ProductSeed
   extend BuildSet
-
+  #ProductSeed.populate
   def self.populate
-    ProductElement.populate
     Product.populate
-    OptionGroup.populate
-    ProductType.populate
+    OptionGroupSet.populate
+    OptionGroupAssoc.populate
   end
 end

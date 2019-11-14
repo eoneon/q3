@@ -3,10 +3,10 @@ module OptionGroupAssoc
 
   def self.populate
     self.constants.each do |klass|
-      klass.set.each do |opt_grp_arr|
+      to_scoped_constant(self, klass).set.each do |opt_grp_arr|
         kind = to_snake(klass).split('_').first
-        opt_grp = find_or_create_by(kind: 'option-group', name: opt_grp_arr.last)
-        assoc_set.map {|opt_name| find_or_create_by(kind: kind, name: opt_name)}.map {|option| assoc_unless_included(origin: option, target: opt_grp)}
+        opt_grp = find_or_create_by(kind: 'option-group', name: opt_grp_arr.last) #OptionGroupSet::Dimension::OptionGroup.set[0], eg: 'flat mounting'
+        opt_grp_arr.first.map {|obj_name| find_or_create_by(kind: kind, name: obj_name)}.map {|obj| assoc_unless_included(origin: obj, target: opt_grp)}
       end
     end
   end
@@ -16,7 +16,7 @@ module OptionGroupAssoc
     def self.set
       [
         [Product.flat_media, OptionGroupSet::Dimension::OptionGroup.set[0]],
-        [SculptureProduct.sculpture_media, OptionGroupSet::Dimension::OptionGroup.set[1]]
+        [Product.sculpture_media, OptionGroupSet::Dimension::OptionGroup.set[1]]
       ]
     end
   end
@@ -36,9 +36,8 @@ module OptionGroupAssoc
   class MountingDimension
     def self.set
       [
-        [OptionGroupSet::Mounting::OptionGroup.set[0]], OptionGroupSet::Dimension::OptionGroup.set[0]],
-        [OptionGroupSet::Mounting::OptionGroup.set[1]], OptionGroupSet::Dimension::OptionGroup.set[1]],
-        [OptionGroupSet::Mounting::OptionGroup.set[2]], OptionGroupSet::Dimension::OptionGroup.set[2]]
+        [[OptionGroupSet::Mounting::OptionGroup.set[0]], OptionGroupSet::Dimension::OptionGroup.set[0]],
+        [[OptionGroupSet::Mounting::OptionGroup.set[1]], OptionGroupSet::Dimension::OptionGroup.set[1]]
       ]
     end
   end
@@ -47,7 +46,7 @@ module OptionGroupAssoc
   class MediumLeafing
     def self.set
       [
-        ['basic print', 'standard print'], ['leafing-option-group-set']
+        [['basic print', 'standard print'], 'leafing-option-group-set']
       ]
     end
   end
@@ -56,7 +55,7 @@ module OptionGroupAssoc
   class MediumRemarque
     def self.set
       [
-        ['basic print', 'standard print'], ['remarque-option-group-set']
+        [['basic print', 'standard print'], 'remarque-option-group-set']
       ]
     end
   end

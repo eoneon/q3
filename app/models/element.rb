@@ -7,7 +7,8 @@ class Element < ApplicationRecord
   validates :name, presence: true
 
   scope :products, -> {where(kind: "product")}
-  scope :option_group_sets, -> {where(kind: "option-group-set")}
+  #scope :option_group_sets, -> {where(kind: "option-group-set")}
+  scope :option_group_sets, -> {where("tags @> ?", ("option_kind => option-group-set"))}
   scope :option_groups, -> {where(kind: "option-group")}
   #scope :product_option_groups, -> {products.where(kind: "option-group-set")}
 

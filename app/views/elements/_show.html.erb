@@ -10,7 +10,16 @@
           <% if element.elements.any? %>
             <% element.elements.each do |sub_element| %>
               <div class="card-header">
-                <%= sub_element.name %>
+                <%= sub_element.name %> | <%= sub_element.kind %>
+              </div>
+              <div class="card-body p-1">
+                <% if sub_element.elements.any? %>
+                  <% sub_element.elements.each do |opt| %>
+                    <div class="card-header">
+                      <%= opt.name %> | <%= opt.kind %>
+                    </div>
+                  <% end %>
+                <% end %>
               </div>
             <% end %>
           <% end %>

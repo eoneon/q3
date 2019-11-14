@@ -58,7 +58,7 @@ module ProductBuild
     name_set = name.to_s.underscore.split('_')
     name_set.count >= i ? name_set.join('-') : name_set.join(' ')
   end
-
+  #kill
   def format_opt_name(opt_grp, opt_grp_set)
     [format_attr(opt_grp), format_attr(opt_grp_set)].join('-')
   end
