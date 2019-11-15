@@ -1,6 +1,6 @@
 module BuildSet
   extend ProductBuild
-  
+
   def find_or_create_by(kind:, name:)
     if name.is_a? Array
       find_or_create_by_names(kind: kind, names: name)
@@ -103,8 +103,11 @@ module BuildSet
   end
 
   def scoped_constant(*konstant)
-    #to_constant([self.name, konstant].join('::'))
     to_constant(konstant.prepend(self.name).join('::'))
+  end
+
+  def nested_constant(klass)
+    format_attr(klass.to_s.split('::').last)
   end
 
   def to_scoped_constant(*konstants)

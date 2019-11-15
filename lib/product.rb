@@ -28,6 +28,7 @@ module Product
             end
           end
         end
+
       end
     end
   end
@@ -78,6 +79,10 @@ module Product
     value_set.join(' ').pluralize
   end
 
+  def self.all_media
+    Product.constants.map {|mojule| to_scoped_constant(self, mojule, :medium).constants.map {|klass| format_attr(klass,3)}}.flatten
+  end
+
   def self.flat_media
     Product.constants.reject {|konstant| to_snake(konstant) == 'sculpture'}.map {|mojule| to_scoped_constant(self, mojule, :medium).constants.map {|klass| format_attr(klass,3)}}.flatten
   end
@@ -85,7 +90,7 @@ module Product
   def self.sculpture_media
     Product::Sculpture::Medium.constants.map {|klass| format_attr(klass,3)}.flatten
   end
-  
+
   #=> ["painting", "drawing", "production", "mixed medium", "etching", "hand pulled", "basic print", "standard print", "hand pulled", "sericel", "photograph", "standard print", "hand pulled", "sericel", "photograph"]
 
   def self.sculpture_type
@@ -131,8 +136,8 @@ module Product
         def material
           [
             [['production drawing'], ['animation paper']],
-            [['production sericel'], ['sericel', 'sericel with background', 'sericel with lithographic background']],
-            [['hand painted production sericel'], ['sericel', 'sericel with background', 'sericel with lithographic background']]
+            [['production sericel'], ['sericel']],
+            [['hand painted production sericel'], ['sericel']]
           ]
         end
       end
@@ -263,19 +268,19 @@ module Product
 
         def material
           [
-            [['sericel'], Material.sericel_material]
+            [['sericel'], ['sericel']]
           ]
         end
       end
 
       class Photograph
         def sub_medium
-          ['photograph']
+          ['photograph', 'archival photograph', 'single exposure photograph']
         end
 
         def material
           [
-            [['photograph'], ['photography paper']]
+            [Photograph.new.sub_medium, ['photography paper']]
           ]
         end
       end

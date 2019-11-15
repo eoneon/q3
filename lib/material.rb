@@ -1,5 +1,9 @@
 module Material
 
+  def self.all_material
+    flat_dimension_material | standard_sculpture
+  end
+
   def self.flat_dimension_material
     on_material | sericel_material
   end
@@ -12,9 +16,25 @@ module Material
     %w[canvas paper board metal]
   end
 
+  # def self.canvas_options
+  #   ['canvas', 'canvas board', 'textured canvas']
+  # end
+
+  # def self.paper_options
+  #   ['paper', 'deckle edge paper', 'rice paper', 'arches paper', 'sommerset paper', 'mother of pearl paper']
+  # end
+
+  # def self.board_options
+  #   ['board', 'wood', 'wood panel', 'acrylic panel']
+  # end
+
   def self.photography_paper
     ['photography paper']
   end
+
+  # def self.photography_paper_options
+  #   ['paper', 'photography paper', 'archival grade paper']
+  # end
 
   def self.production_drawing_paper
     ['animation paper']

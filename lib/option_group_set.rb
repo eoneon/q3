@@ -12,13 +12,17 @@ module OptionGroupSet
   def self.create_opt(klass:, name:, idx:)
     option_kind = ['option-group-set', 'option-group', 'option'][idx]                                                                              #product_set = [[:category, category], [:sub_medium, sub_medium], [:medium, medium], [:material, material]]
     obj = find_or_create_by(kind: format_opt_kind(klass, option_kind), name: name)
-    update_tags(obj, h={"option_type" => to_snake(klass), "option_kind" => option_kind})
+    update_tags(obj, h={"option_type" => nested_constant(klass), "option_kind" => option_kind})
     obj
   end
 
   def self.format_opt_kind(klass, option_kind)
-    [format_attr(klass.to_s.split('::').last), option_kind].join('-')
+    [nested_constant(klass), option_kind].join('-')
   end
+
+  # def nested_constant(klass)
+  #   format_attr(klass.to_s.split('::').last)
+  # end
 
   ##############################################################################
 
@@ -31,9 +35,6 @@ module OptionGroupSet
         opt_grp = OptionGroupSet.create_opt(klass: self, name: opt_grp_name, idx: 1) # Element(kind: 'option-group', name: 'numbered x/y'),...
         opt_grp = build_proof_options(build_standard_edition(opt_grp))
         assoc_unless_included(origin: opt_grp_set, target: opt_grp)
-
-        limited_edition = find_or_create_by(kind: 'category', name: 'limited edition')
-        assoc_unless_included(origin: limited_edition, target: opt_grp_set)
       end
     end
 
@@ -256,4 +257,63 @@ module OptionGroupSet
       end
     end
   end
+
+  module Embellished
+    extend BuildSet
+
+    def self.build_option_group(opt_grp_set)
+      OptionGroup.set.each do |opt_grp_name|
+        opt_grp = OptionGroupSet.create_opt(klass: self, name: opt_grp_name, idx: 1)
+        embellished_set = Option.set.map {|embellished_name| OptionGroupSet.create_opt(klass: self, name: embellished_name, idx: 2)}
+        embellished_set.map {|embellished| assoc_unless_included(origin: opt_grp, target: embellished)}
+        assoc_unless_included(origin: opt_grp_set, target: opt_grp)
+      end
+    end
+
+    class OptionGroup
+      def self.set
+        %w[embellished]
+      end
+    end
+
+    class Option
+      def self.set
+        ['hand embellished', 'hand painted', 'hand colored', 'hand tinted', 'artist embellished']
+      end
+    end
+  end
+
+  module Material
+    extend BuildSet
+
+    def self.build_option_group(opt_grp_set)
+      OptionGroup.set.each do |opt_grp_name|
+        opt_grp = OptionGroupSet.create_opt(klass: self, name: opt_grp_name, idx: 1)
+        material_set = Option.set.assoc(opt_grp.name).last.map {|material_name| OptionGroupSet.create_opt(klass: self, name: material_name, idx: 2)}
+        material_set.map {|material| assoc_unless_included(origin: opt_grp, target: material)}
+        assoc_unless_included(origin: opt_grp_set, target: opt_grp)
+      end
+    end
+
+    class OptionGroup
+      def self.set
+        ['canvas', 'paper', 'board', 'metal', 'photography paper', 'animation paper', 'sericel']
+      end
+    end
+
+    class Option
+      def self.set
+        [
+          [OptionGroup.set[0], ['canvas', 'canvas board', 'textured canvas']],
+          [OptionGroup.set[1], ['paper', 'deckle edge paper', 'rice paper', 'arches paper', 'sommerset paper', 'mother of pearl paper']],
+          [OptionGroup.set[2], ['board', 'wood', 'wood panel', 'acrylic panel']],
+          [OptionGroup.set[3], ['metal', 'metal panel', 'aluminum', 'aluminum panel']],
+          [OptionGroup.set[4], ['paper', 'photography paper', 'archival grade paper']],
+          [OptionGroup.set[5], ['paper', 'animation paper']],
+          [OptionGroup.set[6], ['sericel', 'sericel with background', 'sericel with lithographic background']]
+        ]
+      end
+    end
+  end
+
 end

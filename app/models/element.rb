@@ -7,10 +7,16 @@ class Element < ApplicationRecord
   validates :name, presence: true
 
   scope :products, -> {where(kind: "product")}
-  #scope :option_group_sets, -> {where(kind: "option-group-set")}
   scope :option_group_sets, -> {where("tags @> ?", ("option_kind => option-group-set"))}
   scope :option_groups, -> {where(kind: "option-group")}
-  #scope :product_option_groups, -> {products.where(kind: "option-group-set")}
+
+  scope :flat_media, -> {where(kind: "medium", name: Product.flat_media)}
+  scope :sculpture_media, -> {where(kind: "medium", name: Product.sculpture_media)}
+
+  scope :all_material, -> {where(kind: "material", name: Material.all_material)}
+  scope :flat_dimension_material, -> {where(kind: "material", name: Material.flat_dimension_material.reject {|material| material == 'canvas'})}
+  scope :canvas_dimension_material, -> {where(kind: "material", name: 'canvas')}
+  scope :standard_sculpture, -> {where(kind: "material", name: Material.standard_sculpture)}
 
   Product.scopes.each do |set|
     scope :"#{set[0]}", -> {products.order("tags -> 'embellished'").where("tags @> ? AND tags @> ?", ("category => #{set[1]}"), ("medium => #{set[2]}"))}
@@ -20,19 +26,24 @@ class Element < ApplicationRecord
     self.where(kind: kind)
   end
 
-  def self.option_group_set(option_type)
-    self.where(kind: 'option-group-set').where("tags @> ?", ("option_type => #{option_type}"))
-  end
-
-  def self.by_option_group(option_type)
-    self.where(kind: 'option-group').where("tags @> ?", ("option_type => #{option_type}"))
-  end
-
   def self.search(scope)
     self.public_send(scope)
   end
 
   ################################
+
+  def product_options(kind, option_type)
+    product_option_group(kind, option_type).first.elements.where("tags @> ? AND tags @> ?", ("option_type => #{option_type}"), ("option_kind => option"))
+  end
+
+  def product_option_group(kind, option_type)
+    nested_element_kind(kind).elements.where("tags @> ? AND tags @> ?", ("option_type => #{option_type}"), ("option_kind => option-group")) if nested_element_kind(kind)
+  end
+
+  def nested_element_kind(kind)
+    set = elements.where(kind: kind)
+    set.first if set.any?
+  end
 
   def option_group_elements
     if kind == 'product'

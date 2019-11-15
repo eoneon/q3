@@ -1,6 +1,6 @@
 <div class="card border m-1 border-dark" id="<%= dom_ref(element, 'show') %>">
   <div class="card-header" id="<%= dom_ref(element, 'header') %>">
-    <%= element.name %> | <%= element.kind %>
+    <%= element.name %> | <%= element.kind %> | <%= element.tags %>
   </div>
 
   <div class="card-body p-1" id="<%= dom_ref(element, 'body') %>">
@@ -10,13 +10,13 @@
           <% if element.elements.any? %>
             <% element.elements.each do |sub_element| %>
               <div class="card-header">
-                <%= sub_element.name %> | <%= sub_element.kind %>
+                <%= sub_element.name %> | <%= sub_element.kind %> | <%= sub_element.tags %>
               </div>
               <div class="card-body p-1">
                 <% if sub_element.elements.any? %>
                   <% sub_element.elements.each do |opt| %>
                     <div class="card-header">
-                      <%= opt.name %> | <%= opt.kind %>
+                      <%= opt.name %> | <%= opt.kind %> | <%= opt.tags %>
                     </div>
                   <% end %>
                 <% end %>
