@@ -5,18 +5,23 @@ module Product
   def self.populate
     derivative_hsh = derivative_elements
     self.constants.each do |mojule|                                                                                                        #Original, OneOfAKind, PrintMedium
-      category = find_or_create_by(kind: 'category', name: format_attr(mojule,4))                                                          #Element(kind: 'category', name: 'original'),...
-      konstant = to_scoped_constant(self, mojule)                                                                                          #Product::Original, Product::OneOfAKind, Product::PrintMedium
-      to_scoped_constant(konstant, :medium).constants.each do |klass|                                                                      #Product::Original::Medium => [:Painting, :Drawing, :Production], Product::OneOfAKind::Medium => [:MixedMedium, :Etching, :HandPulled],...
+      category = find_or_create_by(kind: 'category', name: format_attr(mojule,4)) #Element(kind: 'category', name: 'original'),...
+
+      konstant = to_scoped_constant(self, mojule) #category_constant
+      #constant_hsh = {category_scope: to_scoped_constant(self, mojule), medium_scope: to_scoped_constant(self, mojule, :medium), mounting_dimension_scope: to_scoped_constant(self, mojule, :mounting_dimension)}                                                                                         #Product::Original, Product::OneOfAKind, Product::PrintMedium
+      to_scoped_constant(konstant, :medium).constants.each do |klass|
+        #constant_hsh = {klass_scope: to_scoped_constant(constant_hsh[:medium_scope], klass)}                                                                    #Product::Original::Medium => [:Painting, :Drawing, :Production], Product::OneOfAKind::Medium => [:MixedMedium, :Etching, :HandPulled],...
         medium = find_or_create_by(kind: 'medium', name: format_attr(klass,4))                                                             #Element(kind: 'medium', name: 'painting'),...
 
         to_scoped_constant(konstant, :medium, klass).new.sub_medium.each do |sub_medium_name|                                              #Product::Original::Medium.new.sub_medium => ['painting', 'oil', 'acrylic', 'mixed media', 'watercolor', 'pastel', 'guache', 'sumi ink']
           sub_medium = find_or_create_by(kind: 'sub_medium', name: format_attr(sub_medium_name,4))
           material_set = to_scoped_constant(konstant, :medium, klass).new.material.detect {|set| set.first.include?(sub_medium_name)}      #Element(kind: 'sub_medium', name: 'oil'),...
           material_set.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}.each do |material|
+
             if category.name == 'sculpture'
               to_scoped_constant(konstant, :medium, klass).new.sculpture_type.each do |sculpture_type_name|
                 sculpture_type = find_or_create_by(kind: 'sculpture_type', name: format_attr(sculpture_type_name,4))
+
                 product_set = [[:medium, medium], [:material, material], [:sculpture_type, sculpture_type], [:category, category]]
                 build_product(product_set)
                 derivative_products(to_scoped_constant(konstant, :medium, klass), derivative_hsh, product_set)
@@ -27,6 +32,7 @@ module Product
               derivative_products(to_scoped_constant(konstant, :medium, klass), derivative_hsh, product_set)
             end
           end
+
         end
 
       end
@@ -142,6 +148,12 @@ module Product
         end
       end
 
+    end
+
+    module MountingDimension
+      def self.category
+        'two-d'
+      end
     end
   end
 
