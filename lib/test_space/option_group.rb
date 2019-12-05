@@ -36,3 +36,32 @@ module OptionGroup
   end
 
 end
+
+#extraneous
+# def self.dynamic_values(scoped_constant)
+#   element_kinds.map {|kind| kind.to_sym}.keep_if {|k| scoped_constant.singleton_methods.include?(k)}
+# end
+
+  # def self.category_assoc
+  #   Category.option_group.each do |klass|
+  #     category = find_or_create_by(attr_values(to_scoped_constant(Category, klass)))
+  #     dimension = find_or_create_by(attr_values(to_scoped_constant(Category, klass).dimension))
+  #     assoc_unless_included(origin: category, target: dimension)
+  #   end
+  # end
+  #
+  # def self.material_assoc
+  #   Material.option_group.each do |klass|
+  #     material = find_or_create_by(attr_values(to_scoped_constant(Material, klass)))
+  #     mounting = find_or_create_by(attr_values(to_scoped_constant(Material, klass).mounting))
+  #     assoc_unless_included(origin: material, target: mounting)
+  #   end
+  # end
+  #
+  # def self.mounting_assoc
+  #   Mounting.option_group.each do |klass|
+  #     mounting = find_or_create_by(attr_values(to_scoped_constant(Mounting, klass)))
+  #     dimension = find_or_create_by(attr_values(to_scoped_constant(Mounting, klass).dimension))
+  #     assoc_unless_included(origin: mounting, target: dimension)
+  #   end
+  # end

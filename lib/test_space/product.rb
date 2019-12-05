@@ -1,188 +1,401 @@
 module Product
   extend BuildSet
+  extend ProductBuild
 
   def self.populate
-    product_set = existing_set
-    if product_set.any?
-      create_missing(product_set)
-    else
-      create_all
-    end
-  end
+    derivative_hsh = derivative_elements
+    self.constants.each do |mojule|                                                                                                        #Original, OneOfAKind, PrintMedium
+      category = find_or_create_by(kind: 'category', name: format_attr(mojule,4)) #Element(kind: 'category', name: 'original'),...
 
-  def self.existing_set
-    set =[]
-    Element.by_kind('product').each do |product|
-      product_elements = product.elements
-      update_tags(product, build_tags(product_elements.map(&:name)))
-      set << product_elements if product_elements.any?
-    end
-    set
-  end
+      konstant = to_scoped_constant(self, mojule) #category_constant
+      #constant_hsh = {category_scope: to_scoped_constant(self, mojule), medium_scope: to_scoped_constant(self, mojule, :medium), mounting_dimension_scope: to_scoped_constant(self, mojule, :mounting_dimension)}                                                                                         #Product::Original, Product::OneOfAKind, Product::PrintMedium
+      to_scoped_constant(konstant, :medium).constants.each do |klass|
+        #constant_hsh = {klass_scope: to_scoped_constant(constant_hsh[:medium_scope], klass)}                                                                    #Product::Original::Medium => [:Painting, :Drawing, :Production], Product::OneOfAKind::Medium => [:MixedMedium, :Etching, :HandPulled],...
+        medium = find_or_create_by(kind: 'medium', name: format_attr(klass,4))                                                             #Element(kind: 'medium', name: 'painting'),...
 
-  def self.create_missing(product_set)
-    option_group_set.each do |target_set|
-      if product_set.exclude?(target_set)
-        build_obj(target_set)
+        to_scoped_constant(konstant, :medium, klass).new.sub_medium.each do |sub_medium_name|                                              #Product::Original::Medium.new.sub_medium => ['painting', 'oil', 'acrylic', 'mixed media', 'watercolor', 'pastel', 'guache', 'sumi ink']
+          sub_medium = find_or_create_by(kind: 'sub_medium', name: format_attr(sub_medium_name,4))
+          material_set = to_scoped_constant(konstant, :medium, klass).new.material.detect {|set| set.first.include?(sub_medium_name)}      #Element(kind: 'sub_medium', name: 'oil'),...
+          material_set.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}.each do |material|
+
+            if category.name == 'sculpture'
+              to_scoped_constant(konstant, :medium, klass).new.sculpture_type.each do |sculpture_type_name|
+                sculpture_type = find_or_create_by(kind: 'sculpture_type', name: format_attr(sculpture_type_name,4))
+
+                product_set = [[:medium, medium], [:material, material], [:sculpture_type, sculpture_type], [:category, category]]
+                build_product(product_set)
+                derivative_products(to_scoped_constant(konstant, :medium, klass), derivative_hsh, product_set)
+              end
+            else
+              product_set = [[:category, category], [:sub_medium, sub_medium], [:medium, medium], [:material, material]]
+              build_product(product_set)
+              derivative_products(to_scoped_constant(konstant, :medium, klass), derivative_hsh, product_set)
+            end
+          end
+
+        end
+
       end
     end
   end
 
-  def self.create_all
-    option_group_set.each do |target_set|
-      build_obj(target_set)
+  def self.derivative_products(konstant, hsh, product_set)
+    build_product(product_set.insert(0, [:embellished, hsh[:embellished]])) if konstant.instance_methods(false).include?(:embellished)
+    build_product(product_set.insert(-2, [:single_edition, hsh[:single_edition]])) if konstant.instance_methods(false).include?(:single_edition) && !(konstant.to_s.split('::').include?('StandardPrint') && konstant.instance_methods(false).include?(:embellished))
+  end
+
+  def self.derivative_elements
+    h={
+      embellished: find_or_create_by(kind: 'embellishment', name: 'embellished'),
+      single_edition: find_or_create_by(kind: 'edition', name: 'single edition')
+    }
+  end
+
+  def self.scopes
+    set =[]
+    Product.constants.each do |mojule|
+      to_scoped_constant(self, mojule, :medium).constants.each do |konstant|
+        scope_name = [to_snake(mojule), to_snake(konstant)].join('_')
+        set << [scope_name, format_attr(mojule), format_attr(konstant)]
+      end
+    end
+    set
+  end
+
+  def self.search
+    set =[]
+    #konstants = self.constants + SculptureProduct.constants
+    self.constants.each do |mojule|
+      to_scoped_constant(self, mojule, :medium).constants.each do |konstant|
+        scope_name = [to_snake(mojule), to_snake(konstant)].join('_')
+        value_set = [format_attr(mojule, 3), format_attr(konstant, 4)]
+        set << [search_text(value_set), scope_name]
+      end
+    end
+    set.prepend(['all products', 'products'])
+  end
+
+  # def self.search
+  #   set =[]
+  #   Medium.constants.each do |medium_class|
+  #     to_scoped_constant(Medium, medium_class)
+  #     #to_scoped_constant(self, mojule, :medium).constants.each do |konstant|
+  #       scope_name = [to_snake(mojule), to_snake(konstant)].join('_')
+  #       value_set = [format_attr(mojule, 3), format_attr(konstant, 4)]
+  #       set << [search_text(value_set), scope_name]
+  #     end
+  #   end
+  #   set.prepend(['all products', 'products'])
+  # end
+
+  def self.search_text(value_set)
+    value_set = value_set.reject {|i| i == 'print medium'}
+    value_set.append('media') if value_set.include?('production')
+    value_set.append('prints') if value_set.include?('hand pulled')
+    value_set.prepend('glass') if value_set.include?('hand blown')
+    value_set.prepend('ceramic') if value_set.include?('hand made')
+    value_set = word_arr(value_set) - ['standard']
+    value_set.join(' ').pluralize
+  end
+
+  def self.all_media
+    Product.constants.map {|mojule| to_scoped_constant(self, mojule, :medium).constants.map {|klass| format_attr(klass,3)}}.flatten
+  end
+
+  def self.flat_media
+    Product.constants.reject {|konstant| to_snake(konstant) == 'sculpture'}.map {|mojule| to_scoped_constant(self, mojule, :medium).constants.map {|klass| format_attr(klass,3)}}.flatten
+  end
+
+  def self.sculpture_media
+    Product::Sculpture::Medium.constants.map {|klass| format_attr(klass,3)}.flatten
+  end
+
+  #=> ["painting", "drawing", "production", "mixed medium", "etching", "hand pulled", "basic print", "standard print", "hand pulled", "sericel", "photograph", "standard print", "hand pulled", "sericel", "photograph"]
+
+  def self.sculpture_type
+    ['sculpture', 'vase', 'flat vase', 'bowl', 'jar', 'pumpkin', 'heart']
+  end
+
+  ##############################################################################
+
+  module Original
+
+    module Medium
+
+      class Painting
+        def sub_medium
+          ['painting', 'oil', 'acrylic', 'mixed media', 'watercolor', 'pastel', 'guache', 'sumi ink']
+        end
+
+        def material
+          [
+            [['watercolor', 'pastel', 'guache', 'sumi ink'], ['paper']],
+            [['painting', 'oil', 'acrylic', 'mixed media'], Material.standard_flat]
+          ]
+        end
+      end
+
+      class Drawing
+        def sub_medium
+          ['drawing', 'pen and ink', 'pencil']
+        end
+
+        def material
+          [
+            [Drawing.new.sub_medium, ['paper']]
+          ]
+        end
+      end
+
+      class Production
+        def sub_medium
+          ['production drawing', 'production sericel', 'hand painted production sericel']
+        end
+
+        def material
+          [
+            [['production drawing'], ['animation paper']],
+            [['production sericel'], ['sericel']],
+            [['hand painted production sericel'], ['sericel']]
+          ]
+        end
+      end
+
+    end
+
+    module MountingDimension
+      def self.category
+        'two-d'
+      end
     end
   end
 
-  def self.build_obj(target_set)
-    name = format_name(target_set.map(&:name))
-    product = find_or_create_by(kind: 'product', name: name)
-    update_tags(product, build_tags(target_set.map(&:name)))
-    target_set.map {|target| assoc_unless_included(origin: product, target: target)}
-  end
+  module OneOfAKind
+    module Medium
 
-  def self.format_name(name_set)
-    if idx = name_set.index('sculpture')
-      name_set[0..-2].insert(idx, name_set[-1]).join(' ')
-    elsif name_set[-1] == 'sericel'
-      name_set[0..-2].join(' ')
-    else
-      name_set.insert(-2, 'on').join(' ')
-    end
-  end
-  #add material_tag
-  def self.build_tags(name_set)
-    tag_hsh ={}
-    boolean_tag(name_set, tag_hsh)
-    attr_tags(name_set, tag_hsh)
-    tag_hsh
-  end
+      class MixedMedium
+        def sub_medium
+          ['mixed media', 'acrylic mixed media', 'mixed media overpaint', 'monoprint']
+        end
 
-  def self.option_group_set
-    product_set =[]
-    media = Element.by_kind('medium')
-    materials = Element.by_kind('material')
-    media_options.each do |media_set|
-      media_group = media_set.map {|medium_name| media.where(name: medium_name).first}
-      material_set = material_options(media_set)
-      material_group = materials.where(name: material_set)
-      material_group.map {|material| product_set << [media_group, material].flatten}
-    end
-    product_set
-  end
+        def material
+          [
+            [MixedMedium.new.sub_medium, Material.standard_flat]
+          ]
+        end
 
-  def self.material_options(name_set)
-    #if include_any?(name_set, %w[painting mixed-media print]) && name_set.exclude?('hand-pulled')
-    if include_any?(name_set, %w[painting mixed-media standard-print])
-      %w[canvas paper board metal]
-    elsif include_all?(%w[production drawing], name_set)
-      'animation-paper'
-    elsif name_set.include?('drawing') && name_set.exclude?('production')
-      'drawing-paper'
-    #elsif name_set.include?('hand-pulled')
-  elsif name_set.include?('hand-pulled-print')
-      'canvas'
-    elsif name_set.include?('photography')
-      'photography-paper'
-    elsif name_set.include?('sericel')
-      'sericel'
-    elsif name_set.include?('hand-blown')
-      'glass'
-    elsif name_set.include?('hand-made')
-      'ceramic'
-    elsif name_set.include?('sculpture')
-      %w[glass ceramic metal synthetic]
-    end
-  end
+        def embellished
+          MixedMedium.new.sub_medium
+        end
 
-  def self.boolean_tag(name_set, tag_hsh)
-    name_set.each do |name|
-      tag_hsh.merge!(h={"#{name}" => "true"}) if boolean_tag_options.include?(name)
-    end
-    tag_hsh
-  end
+        def single_edition
+          ['mixed media', 'monoprint']
+        end
+      end
 
-  def self.boolean_tag_options
-    Medium::BooleanTag.new.primary + Medium::BooleanTag.new.category
-  end
+      class Etching
+        def sub_medium
+          ['etching']
+        end
 
-  def self.attr_tags(name_set, tag_hsh)
-    if include_any?(name_set, %w[original one-of-a-kind])
-      tag_hsh.merge!(h={'art_type' => "original", "art_category" => "original-painting"})
-    #elsif name_set.include?('limited-edition') && include_any?(name_set, %w[print sericel photography])
-    elsif name_set.include?('limited-edition') && include_any?(name_set, %w[standard-print hand-pulled-print sericel photography])
-      tag_hsh.merge!(h={'art_type' => "limited-edition", "art_category" => "limited-edition"})
-    #elsif name_set.exclude?('limited-edition') && include_any?(name_set, %w[print sericel photography])
-    elsif name_set.exclude?('limited-edition') && include_any?(name_set, %w[standard-print hand-pulled-print sericel photography])
-      tag_hsh.merge!(h={'art_type' => "print", "art_category" => "limited-edition"})
-    elsif include_any?(name_set, %w[sculpture hand-made])
-      tag_hsh.merge!(h={'art_type' => "sculpture", "art_category" => "sculpture"})
-    elsif name_set.include?('hand-blown')
-      tag_hsh.merge!(h={'art_type' => "sculpture", "art_category" => "hand-blown-glass"})
+        def material
+          [
+            [Etching.new.sub_medium, ['paper']]
+          ]
+        end
+
+        def embellished
+          Etching.new.sub_medium
+        end
+
+        def single_edition
+          Etching.new.sub_medium
+        end
+      end
+
+      class HandPulled
+        def sub_medium
+          ['silkscreen']
+        end
+
+        def material
+          [
+            [['silkscreen'], ['canvas']]
+          ]
+        end
+
+        def embellished
+          HandPulled.new.sub_medium
+        end
+
+        def single_edition
+          HandPulled.new.sub_medium
+        end
+      end
+
     end
   end
 
-  def self.media_options
-    [
-      %w[original painting],
-      %w[original drawing],
-      %w[original production drawing],
-      %w[original production sericel],
-      %w[original mixed-media],
+  module PrintMedium
+    module Medium
 
-      %w[one-of-a-kind mixed-media],
-      %w[one-of-a-kind hand-pulled-silkscreen],
+      class BasicPrint
+        def sub_medium
+          ['print', 'fine art print', 'vintage style print', 'poster', 'vintage poster']
+        end
 
-      %w[standard-print],
-      %w[hand-pulled-silkscreen],
-      %w[photography],
-      %w[sericel],
-      %w[sculpture],
-      %w[hand-blown sculpture],
-      %w[hand-made sculpture],
+        def material
+          [
+            [['print', 'fine art print', 'vintage style print'], Material.standard_flat],
+            [['poster', 'vintage poster'], ['paper']]
+          ]
+        end
+      end
 
-      %w[limited-edition standard-print],
-      %w[limited-edition hand-pulled-silkscreen],
-      %w[limited-edition photography],
-      %w[limited-edition sericel],
-      %w[limited-edition sculpture],
+      class StandardPrint
+        def sub_medium
+          ['giclee', 'serigraph', 'etching', 'lithograph', 'mixed media']
+        end
 
-      %w[one-of-a-kind mixed-media single-edition],
-      %w[one-of-a-kind hand-pulled-silkscreen single-edition],
-      %w[standard-print single-edition],
-      %w[hand-pulled-silkscreen single-edition],
+        def material
+          [
+            [['giclee', 'serigraph', 'mixed media'], Material.standard_flat],
+            [['lithograph', 'etching'], ['paper']]
+          ]
+        end
 
-      %w[embellished one-of-a-kind mixed-media],
-      %w[embellished one-of-a-kind hand-pulled-silkscreen],
-      %w[embellished standard-print],
-      %w[embellished limited-edition standard-print],
-      %w[embellished limited-edition hand-pulled-silkscreen],
-      %w[embellished sculpture],
-      %w[embellished limited-edition sculpture],
+        def embellished
+          StandardPrint.new.sub_medium
+        end
+      end
 
-      %w[embellished one-of-a-kind mixed-media single-edition],
-      %w[embellished one-of-a-kind hand-pulled-silkscreen single-edition]
-    ]
+      class HandPulled
+        def sub_medium
+          ['silkscreen', 'lithograph']
+        end
+
+        def material
+          [
+            [['silkscreen'], ['canvas']],
+            [['lithograph'], ['paper']]
+          ]
+        end
+
+        def embellished
+          HandPulled.new.sub_medium
+        end
+      end
+
+      class Sericel
+        def sub_medium
+          ['sericel']
+        end
+
+        def material
+          [
+            [['sericel'], ['sericel']]
+          ]
+        end
+      end
+
+      class Photograph
+        def sub_medium
+          ['photograph', 'archival photograph', 'single exposure photograph']
+        end
+
+        def material
+          [
+            [Photograph.new.sub_medium, ['photography paper']]
+          ]
+        end
+      end
+
+    end
   end
 
-  def self.search_dropdown
-    [
-      ['all products', 'products'],
-      ['original paintings', 'painting'],
-      ['one-of-a-kind mixed-media', 'one_of_a_kind_mixed_media'],
-      ['one-of-a-kind mixed-media numbered 1/1', 'single_edition_one_of_a_kind_mixed_media'],
-      ['production art', 'production'],
-      ['drawings', 'drawing'],
-      ['limited edition prints', 'limited_edition_prints'],
-      ['hand-pulled prints', 'hand_pulled_print'],
-      ['photography', 'photography'],
-      ['prints', 'only_prints'],
-      ['sericels', 'sericel'],
-      ['hand-blown glass', 'hand_blown'],
-      ['hand-made ceramic', 'hand_made'],
-      ['sculptures', 'standard_sculptures'],
-      ['limited edition sculptures', 'limited_edition_sculptures']
-    ]
+  module LimitedEdition
+
+    module Medium
+
+      class StandardPrint < Product::PrintMedium::Medium::StandardPrint
+        def embellished
+          StandardPrint.new.sub_medium
+        end
+      end
+
+      class HandPulled < Product::PrintMedium::Medium::HandPulled
+        def embellished
+          HandPulled.new.sub_medium
+        end
+
+        def single_edition
+          HandPulled.new.sub_medium
+        end
+      end
+
+      class Sericel < Product::PrintMedium::Medium::Sericel
+      end
+
+      class Photograph < Product::PrintMedium::Medium::Photograph
+      end
+    end
   end
 
+  module Sculpture
+
+    module Medium
+
+      class HandBlown
+        def sub_medium
+          ['hand blown']
+        end
+
+        def material
+          [
+            [HandBlown.new.sub_medium, ['glass']]
+          ]
+        end
+
+        def sculpture_type
+          Product.sculpture_type.append('luminaire')
+        end
+      end
+
+      class HandMade
+        def sub_medium
+          ['hand made']
+        end
+
+        def material
+          [
+            [HandMade.new.sub_medium, ['ceramic']]
+          ]
+        end
+
+        def sculpture_type
+          Product.sculpture_type
+        end
+      end
+
+      class Sculpture
+        def sub_medium
+          ['sculpture']
+        end
+
+        def material
+          [
+            [Sculpture.new.sub_medium, ['glass', 'ceramic', 'bronze', 'acrylic', 'pewter', 'lucite', 'mixed media']]
+          ]
+        end
+
+        def sculpture_type
+          ['sculpture']
+        end
+      end
+
+      class LimitedEdition < Sculpture
+      end
+    end
+
+  end
 end

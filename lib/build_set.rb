@@ -17,7 +17,7 @@ module BuildSet
     return objs
   end
 
-  def find_or_create_by_and_assoc(origin:, kind:, name: )
+  def find_or_create_by_and_assoc(origin:, kind:, name:)
     if name.is_a? Array
       find_or_create_by_names_and_assoc(origin: origin, kind: kind, names: name)
     else
@@ -36,7 +36,10 @@ module BuildSet
     end
     return targets
   end
-
+  #duplicate: should be in build set since only using with create?
+  def attr_values(scoped_constant)
+    [:kind, :name].map {|method| [method, scoped_constant.public_send(method)]}.to_h
+  end
   ###################################################
 
   def assoc_unless_included(origin:, target:)
@@ -95,7 +98,8 @@ module BuildSet
 
   #convert string to: snake_case, constant, class, superclass
   def str_to_snake(str)
-    str.underscore.singularize
+    #str.underscore.singularize
+    str.split('-').join(' ').split(' ').map {|word| word.downcase}.join('_')
   end
 
   def str_to_constant(str)
@@ -110,8 +114,17 @@ module BuildSet
     format_attr(klass.to_s.split('::').last)
   end
 
+  # def to_scoped_constant(*konstants)
+  #   konstants.map{|konstant| konstant.to_s.capitalize}.join('::').constantize
+  # end
+
   def to_scoped_constant(*konstants)
-    konstants.map{|konstant| konstant.to_s.classify}.join('::').constantize
+    konstants.map{|konstant| format_constant(konstant)}.join('::').constantize
+  end
+
+  def format_constant(konstant)
+    #konstant.to_s.underscore.split('_').map {|word| word.capitalize}.join('')
+    konstant.to_s.split(' ').map {|word| word.underscore.split('_').map {|split_word| split_word.capitalize}}.flatten.join('')
   end
 
   def str_to_classify(str)
@@ -174,6 +187,12 @@ module BuildSet
   end
 
   ################################################### word format methods
+
+  def format_attr(name, *n)
+    i = n.empty? ? 0 : n.first
+    name_set = name.to_s.underscore.split('_')
+    name_set.count >= i ? name_set.join('-') : name_set.join(' ')
+  end
 
   def arr_to_text(arr)
     if arr.length == 2

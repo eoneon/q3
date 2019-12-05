@@ -5,8 +5,4 @@ class ItemType < ApplicationRecord
   def set_sort
     self.sort = artist.item_types.count == 0 ? 1 : artist.item_types.count + 1
   end
-
-  # def sorted_field_groups
-  #   self.field_groups.order(:sort)
-  # end
 end

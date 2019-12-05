@@ -2,54 +2,90 @@ module ProductType
   extend BuildSet
   extend ProductBuild
   #set = ProductType.populate  set.map {|obj_set| obj_set[:product_name]}
+  #ProductType.opt_loop
+
   def self.populate
     build_set = build_hsh
-    set = []
     self.constants.each do |category_module|
       scope_hsh = {medium_module: to_scoped_constant(self, category_module, :medium)}
       scope_hsh[:medium_module].constants.each do |medium_class|
         scope_hsh[:medium_class] = to_scoped_constant(scope_hsh[:medium_module], medium_class)
 
-        product_hsh = {category: find_or_create_by(kind: 'category', name: format_attr(category_module,4)), medium: find_or_create_by(kind: 'medium', name: format_attr(medium_class,4)), mounting_dimension: find_or_create_by(kind: 'mounting-dimension', name: set_mounting_dimension(format_attr(category_module)))}
-        scope_hsh[:medium_class].instance_methods(false).select {|instance_method| [:embellished, :limited_edition, :single_edition].include?(instance_method)}
+        product_hsh = build_product_hsh(category_module, medium_class, scope_hsh)
         scope_hsh[:medium_class].new.sub_medium.each do |sub_medium_name|
           product_hsh[:sub_medium] = find_or_create_by(kind: 'sub-medium', name: format_attr(sub_medium_name,4))
-          #product_hsh[:mounting_dimension] = find_or_create_by(kind: 'mounting-dimension', name: mounting_dimension(product_hsh[:category].name)) #scope_hsh[:mounting_dimension_module].category
-          material_arr_set = scope_hsh[:medium_class].new.material.detect {|set| set.first.include?(sub_medium_name)} #.last
-          materials = material_arr_set.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}
-          build_product_params(scope_hsh, product_hsh, materials, set)
+          product_hsh[:materials] = scope_hsh[:medium_class].new.material.detect {|set| set.first.include?(sub_medium_name)}.last.map {|material_name| find_or_create_by(kind: 'material', name: material_name)}
+          build_product_params(scope_hsh, product_hsh, materials, build_set)
         end
       end
     end
-    set
+    build_set
   end
-
-  def self.build_product_params(scope_hsh, product_hsh, materials, set)
+  #12:
+  def self.build_product_hsh(category_module, medium_class, scope_hsh)
+    product_hsh = {
+      category: find_or_create_by(kind: 'category', name: format_attr(category_module,4)),
+      medium: find_or_create_by(kind: 'medium', name: format_attr(medium_class,4))
+      #mounting_dimension: find_or_create_by(kind: 'mounting-dimension', name: set_mounting_dimension(format_attr(category_module)))
+      #options: nil
+    }
+  end
+  #19:
+  def self.build_product_params(scope_hsh, product_hsh, materials, build_set)
     materials.each do |material|
       product_hsh[:material] = material
       if scope_hsh[:medium_class].instance_methods(false).include?('sculpture_type')
-        add_sculpture_type(scope_hsh, product_hsh, set)
+        add_sculpture_type(scope_hsh, product_hsh, build_set)
       else
-        set_product_params(scope_hsh, product_hsh, set)
+        pass_options(scope_hsh, product_hsh, build_set)
       end
     end
-    set
+    build_set
   end
-
-  def self.set_product_params(scope_hsh, product_hsh, set)
-    product_set = product_hsh.values
-    product_tags = product_set.map {|obj| [:"#{obj.kind}", obj.name]}.to_h
-    product_tags[:assoc_pairs] = format_assoc_pairs(product_set)
-    product_name = format_product_name(scope_hsh[:medium_class].new.element_order.map {|k| product_hsh[k]}.compact)
-    set << {product_set: product_set, product_name: product_name, product_tags: product_tags}
-  end
-
-  def self.add_sculpture_type(scope_hsh, product_hsh, set)
+  #40:
+  def self.add_sculpture_type(scope_hsh, product_hsh, build_set)
     scope_hsh[:medium_class].new.sculpture_type.each do |sculpture_type_name|
       product_hsh[:sculpture_type] = find_or_create_by(kind: 'sculpture-type', name: format_attr(sculpture_type_name,4))
-      set << set_product_params(scope_hsh, product_hsh, set)
+      pass_options(scope_hsh, product_hsh, build_set)
     end
-    set
+    build_set
+  end
+
+  def self.pass_options(scope_hsh, product_hsh, build_set)
+    #puts "product_hsh ok: #{product_hsh}"
+    option_keys = scope_hsh[:medium_class].instance_methods(false).select {|instance_method| [:embellished, :limited_edition, :single_edition].include?(instance_method)}
+
+    product_hsh = build_options(product_hsh, option_keys)
+    product_hsh[:options].keys do |option|
+      build_set[option] << set_product_params(scope_hsh, product_hsh[:options][option]) unless product_hsh[:options][option].nil? #issue: product_hsh[option_key] not a hsh; not sure how to insert values only
+    end
+    build_set
+  end
+
+  #57:
+  def self.build_options(product_hsh, option_keys)
+    #puts "70: product_hsh: #{product_hsh}"
+    #puts "71: product_hsh: #{product_hsh[:options]}"
+    product_hsh[:options] = build_hsh.keys.map {|k| [k, nil]}.to_h
+    #puts "73: product_hsh: #{product_hsh[:options]}"
+    product_hsh[:options][:standard_products] = product_hsh
+    #puts "#{product_hsh[:options][:standard_products]}"
+    product_hsh[:options][:embellished_products] = product_hsh.merge(h = {embellished: sub_categories[:embellished]}) if include_all?(option_keys, [:embellished])
+    product_hsh[:options][:limited_edition_products] = product_hsh.merge(h = {limited_edition: sub_categories[:limited_edition]}) if include_all?(option_keys, [:limited_edition])
+    product_hsh[:options][:single_edition_products] = product_hsh.merge(h = {single_edition: sub_categories[:single_edition]}) if include_all?(option_keys, [:single_edition])
+
+    product_hsh[:options][:embellished_limited_edition_products] = product_hsh.merge(h = {embellished: sub_categories[:embellished], limited_edition: sub_categories[:limited_edition]}) if include_all?(option_keys, [:embellished, :limited_edition])
+    product_hsh[:options][:embellished_single_edition_products] = product_hsh.merge(h = {embellished: sub_categories[:embellished], limited_edition: sub_categories[:single_edition]}) if include_all?(option_keys, [:embellished, :single_edition])
+    product_hsh
+  end
+  #59:
+  def self.set_product_params(scope_hsh, product_option_hsh)
+    product_set = product_option_hsh.values
+    product_tags = product_set.map {|obj| [:"#{obj.kind}", obj.name]}.to_h
+    product_tags[:assoc_pairs] = format_assoc_pairs(product_set)
+    product_name = format_product_name(scope_hsh[:medium_class].new.element_order.map {|k| product_option_hsh[k]}.compact)
+    #puts "#{product_name}"
+    h = {product_set: product_set, product_name: product_name, product_tags: product_tags}
   end
 
   def self.format_product_name(product_set)
@@ -101,7 +137,8 @@ module ProductType
   end
 
   def self.build_hsh
-    h = {standard_products: [], embellished_products: [], limited_edition_products: [], single_edition_products: [], embellished_limited_edition_products: [],  embellished_single_edition_products: [], sub_categories: sub_categories}
+    option_set = [:standard_products, :embellished_products, :limited_edition_products, :single_edition_products, :embellished_limited_edition_products, :embellished_single_edition_products]
+    option_set.map {|opt| [opt, a =[]]}.to_h
   end
 
   def self.sub_categories
@@ -121,6 +158,18 @@ module ProductType
     [even, odd].transpose.to_h
   end
 
+  def self.combine_option_sets(options)
+    combo_set = nil
+    options.each do |option|
+      if combo_set.nil?
+        combo_set = option.map {|opt| [opt]}
+      else
+        combo_set = combo_set.map {|opt_arr| option.map {|opt2| opt_arr[0..-1] << opt2}}.flatten(1)
+      end
+    end
+    combo_set
+  end
+
   ##############################################################################
 
   module Original
@@ -128,7 +177,7 @@ module ProductType
     module Medium
 
       class Painting
-        #exclude sub_medium if == 'painting'
+
         def sub_medium
           ['painting', 'oil', 'acrylic', 'mixed media', 'watercolor', 'pastel', 'guache', 'sumi ink']
         end
@@ -184,15 +233,9 @@ module ProductType
 
     module ProductName
       def self.element_order
-        [:category, :sub_medium, :medium, :material]
+        [:embellished, :category, :sub_medium, :medium, :material, :single_edition]
       end
     end
-
-    # module MountingDimension
-    #   def self.category
-    #     'two-d'
-    #   end
-    # end
   end
 
   module OneOfAKind
@@ -210,11 +253,6 @@ module ProductType
         end
 
         def embellished
-          MixedMedium.new.sub_medium
-        end
-
-        def single_edition
-          ['mixed media', 'monoprint']
         end
 
         def element_order
@@ -233,12 +271,10 @@ module ProductType
           ]
         end
 
-        def embellished
-          Etching.new.sub_medium
+        def limited_edition
         end
 
-        def single_edition
-          Etching.new.sub_medium
+        def embellished
         end
 
         def element_order
@@ -247,7 +283,6 @@ module ProductType
       end
 
       class HandPulled
-        #[:mounting_dimension, :category, :medium, :sub_medium, :material]
         def sub_medium
           ['silkscreen']
         end
@@ -258,8 +293,10 @@ module ProductType
           ]
         end
 
+        def limited_edition
+        end
+
         def embellished
-          HandPulled.new.sub_medium
         end
 
         def single_edition
@@ -267,17 +304,11 @@ module ProductType
         end
 
         def element_order
-          [:category, :medium, :sub_medium,  :material]
+          [:limited_edition, :embellished, :category, :medium, :sub_medium,  :material, :single_edition]
         end
       end
 
     end
-
-    # module MountingDimension
-    #   def self.category
-    #     'two-d'
-    #   end
-    # end
   end
 
   module PrintMedium
@@ -312,12 +343,14 @@ module ProductType
           ]
         end
 
+        def limited_edition
+        end
+
         def embellished
-          StandardPrint.new.sub_medium
         end
 
         def element_order
-          [:sub_medium,  :material]
+          [:limited_edition, :embellished, :sub_medium,  :material]
         end
       end
 
@@ -333,12 +366,14 @@ module ProductType
           ]
         end
 
+        def limited_edition
+        end
+
         def embellished
-          HandPulled.new.sub_medium
         end
 
         def element_order
-          [:medium, :sub_medium, :material]
+          [:limited_edition, :embellished, :medium, :sub_medium, :material]
         end
       end
 
@@ -353,8 +388,11 @@ module ProductType
           ]
         end
 
+        def limited_edition
+        end
+
         def element_order
-          [:sub_medium, :material]
+          [:limited_edition, :sub_medium, :material]
         end
       end
 
@@ -369,17 +407,14 @@ module ProductType
           ]
         end
 
+        def limited_edition
+        end
+
         def element_order
-          [:sub_medium, :material]
+          [:limited_edition, :sub_medium, :material]
         end
       end
     end
-
-    # module MountingDimension
-    #   def self.category
-    #     'two-d'
-    #   end
-    # end
   end
 
   module Sculpture
@@ -427,7 +462,6 @@ module ProductType
       end
 
       class Sculpture
-        #[:material, :sculpture_type, :sub_medium]
         def sub_medium
           ['sculpture']
         end
@@ -438,28 +472,17 @@ module ProductType
           ]
         end
 
+        def limited_edition
+        end
+
+        def embellished
+        end
+
         def element_order
-          [:material, :sub_medium, :sculpture_type]
+          [:embellished, :limited_edition, :material, :sub_medium, :sculpture_type]
         end
       end
-
-      # class LimitedEdition < Sculpture
-      #   [:material, :sculpture_type, :sub_medium]
-      #   def sub_medium
-      #     ['sculpture']
-      #   end
-      #
-      #   def element_order
-      #     [:limited_edition, :material, :sub_medium, :sculpture_type]
-      #   end
-      # end
     end
-
-    # module MountingDimension
-    #   def self.category
-    #     'three-d'
-    #   end
-    # end
   end
 
   # module LimitedEdition

@@ -5,26 +5,7 @@
 
   <div class="card-body p-1" id="<%= dom_ref(element, 'body') %>">
     <div id='<%= dom_ref(element, "element-index") %>'>
-      <% if element.elements.any? %>
-        <div class="card border m-1 border-dark">
-          <% if element.elements.any? %>
-            <% element.elements.each do |sub_element| %>
-              <div class="card-header">
-                <%= sub_element.name %> | <%= sub_element.kind %> | <%= sub_element.tags %>
-              </div>
-              <div class="card-body p-1">
-                <% if sub_element.elements.any? %>
-                  <% sub_element.elements.each do |opt| %>
-                    <div class="card-header">
-                      <%= opt.name %> | <%= opt.kind %> | <%= opt.tags %>
-                    </div>
-                  <% end %>
-                <% end %>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-      <% end %>
+      <%= render "elements/index", element: element %>
     </div>
   </div>
 </div>

@@ -1,7 +1,7 @@
 class ProductsController < ApplicationController
   def index
     if params[:product] && params[:product][:search]
-      @products = Element.search(params[:product][:search])
+      @products = Element.search(params[:product][:search]) 
     else
       @products = Element.products# .order("tags -> 'embellished'")
     end

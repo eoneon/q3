@@ -5,9 +5,9 @@
 
   <div class="card-body p-1" id="<%= dom_ref(product, 'body') %>">
     <div id='<%= dom_ref(product, "product-index") %>'>
-      <% build_option_group_card(product).each do |hsh| %>
-        <%= render "sub_media", options: hsh[:options], option_group: hsh[:option_group] %>
-      <% end %>
+      <%# build_option_group_card(product).each do |hsh| %>
+        <%#= render "sub_media", options: hsh[:options], option_group: hsh[:option_group] %>
+      <%# end %>
     </div>
   </div>
 </div>

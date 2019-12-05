@@ -103,6 +103,14 @@ module OptionGroupSet
       end
     end
 
+    # def two_d
+    #   'two-d'
+    # end
+    #
+    # def three_d
+    #   'three-d'
+    # end
+
     class OptionGroup
       def self.set
         ['flat dimension', 'sculpture dimension']
@@ -113,7 +121,7 @@ module OptionGroupSet
       def self.set
         [
           [OptionGroup.set[0], %w[width height]],
-          [OptionGroup.set[1], %w[width height depth]]
+          [OptionGroup.set[1], %w[width height depth weight]]
         ]
       end
     end
@@ -133,16 +141,18 @@ module OptionGroupSet
 
     class OptionGroup
       def self.set
-        ['flat mounting', 'sculpture mounting', 'canvas mounting']
+        ['flat mounting', 'canvas mounting', 'sericel mounting', 'sculpture mounting']
       end
     end
 
     class Option
       def self.set
         [
-          [OptionGroup.set[0], %w[framed bordered matted wall-mount stand]],
-          [OptionGroup.set[1], %w[case base wall-mount]],
-          [OptionGroup.set[2], ['stretched', 'gallery wrapped', 'framed', 'bordered', 'matted', 'wall-mount']]
+          [OptionGroup.set[0], %w[framed bordered matted wall-mount]],
+          [OptionGroup.set[1], ['framed', 'gallery wrapped', 'stretched', 'matted']],
+          [OptionGroup.set[0], %w[framed matted]],
+          [OptionGroup.set[2], %w[case base wall-mount stand]]
+
         ]
       end
     end
