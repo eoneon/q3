@@ -3,7 +3,7 @@ class ElementsController < ApplicationController
     if params[:element] && params[:element][:search]
       @elements = Element.option_group_set(params[:element][:search])
     else
-      #@elements = Element.option_group_sets
+      #@elements = Element.all
       @elements = Element.where(kind: ElementType.hyph_type_names)
     end
 

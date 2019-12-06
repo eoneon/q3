@@ -1,6 +1,6 @@
 <% if element.elements.any? %>
   <% element.elements.each do |sub_element| %>
-    <% if ElementType.hyph_type_names.include?(sub_element.kind) %>
+    <% unless sub_element.tags["option_kind"] == "option-value" %>
       <%= render "elements/show", element: sub_element %>
     <% else %>
       <%= render "elements/element_type", sub_element: sub_element %>

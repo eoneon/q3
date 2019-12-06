@@ -1,45 +1,120 @@
 module BuildSet
   extend ProductBuild
+  #BuildSet.attr_hsh(Edition::LimitedEdition)
 
-  def find_or_create_by(kind:, name:)
+  # def find_or_create_by(kind:, name:)
+  #   if name.is_a? Array
+  #     find_or_create_by_names(kind: kind, names: name)
+  #   else
+  #     return Element.where(kind: kind, name: name).first_or_create
+  #   end
+  # end
+
+  def find_or_create_by(kind:, name:, tags: nil)
+    #element_params = {kind: kind, name: name, tags: tags}.compact
     if name.is_a? Array
-      find_or_create_by_names(kind: kind, names: name)
+      find_or_create_by_names(kind: kind, names: name, tags: tags)
     else
-      return Element.where(kind: kind, name: name).first_or_create
+      element = Element.where(kind: kind, name: name, tags: tags).first_or_create
+      update_tags(element, tags) unless tags.nil?
+      return element
     end
   end
 
-  def find_or_create_by_names(kind:, names:)
-    objs = []
+  # def find_or_create_by_names(kind:, names:)
+  #   objs = []
+  #   names.each do |name|
+  #     objs << Element.where({kind: kind, name: name}).first_or_create
+  #   end
+  #   return objs
+  # end
+
+  def find_or_create_by_names(kind:, names:, tags: nil)
+    elements = []
     names.each do |name|
-      objs << Element.where({kind: kind, name: name}).first_or_create
+       element = Element.where({kind: kind, name: name}).first_or_create
+       update_tags(element, tags) unless tags.nil?
+       elements << element
     end
-    return objs
+    return elements
   end
 
-  def find_or_create_by_and_assoc(origin:, kind:, name:)
+  # def find_or_create_by_and_assoc(origin:, kind:, name:)
+  #   if name.is_a? Array
+  #     find_or_create_by_names_and_assoc(origin: origin, kind: kind, names: name)
+  #   else
+  #     target = Element.where(kind: kind, name: name).first_or_create
+  #     assoc_unless_included(origin: origin, target: target)
+  #     return target
+  #   end
+  # end
+
+  def find_or_create_by_and_assoc(origin:, kind:, name:, tags: nil)
     if name.is_a? Array
-      find_or_create_by_names_and_assoc(origin: origin, kind: kind, names: name)
+      find_or_create_by_names_and_assoc(origin: origin, kind: kind, names: name, tags: tags)
     else
       target = Element.where(kind: kind, name: name).first_or_create
+      update_tags(target, tags) unless tags.nil?
       assoc_unless_included(origin: origin, target: target)
       return target
     end
   end
 
-  def find_or_create_by_names_and_assoc(origin:, kind:, names:)
+  # def find_or_create_by_names_and_assoc(origin:, kind:, names:)
+  #   targets =[]
+  #   names.each do |target_name|
+  #     target = Element.where({kind: kind, name: name}).first_or_create
+  #     targets << target
+  #     assoc_unless_included(origin: origin, target: target)
+  #   end
+  #   return targets
+  # end
+
+  def find_or_create_by_names_and_assoc(origin:, kind:, names:, tags: nil)
     targets =[]
     names.each do |target_name|
       target = Element.where({kind: kind, name: name}).first_or_create
+      update_tags(target, tags) unless tags.nil?
       targets << target
       assoc_unless_included(origin: origin, target: target)
     end
     return targets
   end
-  #duplicate: should be in build set since only using with create?
+
   def attr_values(scoped_constant)
     [:kind, :name].map {|method| [method, scoped_constant.public_send(method)]}.to_h
   end
+
+  # def attr_hsh(scoped_constant)
+  #   #h = {attr_values: attr_values(scoped_constant)}
+  #   h = {attr_values: attr_values(scoped_constant), kind: scoped_constant.kind}
+  #   #['option', 'option-key', 'option-value'].map {|k| h[to_snake(k).to_sym] = [h[:attr_values][:kind], k].join('-')}
+  #   ['option', 'option-key', 'option-value'].map {|k| h[to_snake(k).to_sym] = [h[:kind], k].join('-')}
+  #   h[:options] = scoped_constant.options if scoped_constant.singleton_methods.include?(:options)
+  #   h
+  # end
+
+  def build_hsh(scoped_constant)
+    #h = {attr_values: attr_values(scoped_constant)}
+    h = {attr_values: attr_values(scoped_constant), kind: scoped_constant.kind}
+    #['option', 'option-key', 'option-value'].map {|k| h[to_snake(k).to_sym] = [h[:attr_values][:kind], k].join('-')}
+    ['option', 'option-key', 'option-value'].map {|k| h[to_snake(k).to_sym] = [h[:kind], k].join('-')}
+    h[:options] = scoped_constant.options if scoped_constant.singleton_methods.include?(:options)
+    h
+  end
+
+  ###################################################
+
+  def update_tags(obj, tag_hsh)
+    obj.tags = tag_hsh
+    obj.save
+  end
+
+  def set_tags(name_set, tags={})
+    name_set.map {|name| tags.merge!(h={name.split(' ').join(' ') => 'true'})}
+    tags
+  end
+
   ###################################################
 
   def assoc_unless_included(origin:, target:)
@@ -218,18 +293,6 @@ module BuildSet
 
   def word_arr(arr)
     arr.split(' ').join(' ').split(' ')
-  end
-
-  ###################################################
-
-  def update_tags(obj, tag_hsh)
-    obj.tags = tag_hsh
-    obj.save
-  end
-
-  def set_tags(name_set, tags={})
-    name_set.map {|name| tags.merge!(h={name.split(' ').join(' ') => 'true'})}
-    tags
   end
 
 end

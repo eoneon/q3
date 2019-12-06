@@ -17,13 +17,12 @@ module ElementType
         end
       end
     end
-    #Products.populate
     set
   end
 
   #type_modules; element_types
   def self.type_modules
-    [Category, Medium, Material, Mounting, Dimension]
+    [Category, Medium, Material, Mounting, Dimension, Edition]
   end
 
   #element_kinds;
@@ -40,4 +39,8 @@ module ElementType
   def self.option_values(scoped_constant)
     scoped_constant.options if scoped_constant.singleton_methods.include?(:options)
   end
+
+  # def self.sub_option_values(scoped_constant)
+  #   scoped_constant.options if scoped_constant.singleton_methods.include?(:sub_options)
+  # end
 end
