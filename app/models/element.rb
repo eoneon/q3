@@ -8,9 +8,9 @@ class Element < ApplicationRecord
 
   scope :products, -> {where(kind: "product")}
 
-  Product.search.each do |h|
-    scope h[:scope_name], -> {products.where("tags @> ? AND tags @> ?", ("category => #{h[:category]}"), ("medium => #{h[:medium]}"))}
-  end
+  # Product.search.each do |h|
+  #   scope h[:scope_name], -> {products.where("tags @> ? AND tags @> ?", ("category => #{h[:category]}"), ("medium => #{h[:medium]}"))}
+  # end
 
   def self.by_kind(kind)
     self.where(kind: kind)
@@ -35,19 +35,19 @@ class Element < ApplicationRecord
     set.first if set.any?
   end
 
-  def option_group_elements
-    if kind == 'product'
-      elements.where(kind: ProductType.option_group_types).map {|option_group| option_group.elements.where("tags ? :key", key: "option_type")}.flatten
-    end
-  end
+  # def option_group_elements
+  #   if kind == 'product'
+  #     elements.where(kind: ProductType.option_group_types).map {|option_group| option_group.elements.where("tags ? :key", key: "option_type")}.flatten
+  #   end
+  # end
 
-  def scoped_option_group(option_type)
-    option_group_elements.keep_if {|obj| obj.tags["option_type"] == option_type}
-  end
-
-  def option_type_collection
-    ProductType.option_group_types.map {|option_type| scoped_option_group(option_type) if scoped_option_group(option_type).any?}.compact
-  end
+  # def scoped_option_group(option_type)
+  #   option_group_elements.keep_if {|obj| obj.tags["option_type"] == option_type}
+  # end
+  #
+  # def option_type_collection
+  #   ProductType.option_group_types.map {|option_type| scoped_option_group(option_type) if scoped_option_group(option_type).any?}.compact
+  # end
 
   ################################ Element.readable_objs(set)
 

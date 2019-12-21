@@ -1,17 +1,7 @@
 module BuildSet
   extend ProductBuild
-  #BuildSet.attr_hsh(Edition::LimitedEdition)
-
-  # def find_or_create_by(kind:, name:)
-  #   if name.is_a? Array
-  #     find_or_create_by_names(kind: kind, names: name)
-  #   else
-  #     return Element.where(kind: kind, name: name).first_or_create
-  #   end
-  # end
 
   def find_or_create_by(kind:, name:, tags: nil)
-    #element_params = {kind: kind, name: name, tags: tags}.compact
     if name.is_a? Array
       find_or_create_by_names(kind: kind, names: name, tags: tags)
     else
@@ -20,14 +10,6 @@ module BuildSet
       return element
     end
   end
-
-  # def find_or_create_by_names(kind:, names:)
-  #   objs = []
-  #   names.each do |name|
-  #     objs << Element.where({kind: kind, name: name}).first_or_create
-  #   end
-  #   return objs
-  # end
 
   def find_or_create_by_names(kind:, names:, tags: nil)
     elements = []
@@ -39,16 +21,6 @@ module BuildSet
     return elements
   end
 
-  # def find_or_create_by_and_assoc(origin:, kind:, name:)
-  #   if name.is_a? Array
-  #     find_or_create_by_names_and_assoc(origin: origin, kind: kind, names: name)
-  #   else
-  #     target = Element.where(kind: kind, name: name).first_or_create
-  #     assoc_unless_included(origin: origin, target: target)
-  #     return target
-  #   end
-  # end
-
   def find_or_create_by_and_assoc(origin:, kind:, name:, tags: nil)
     if name.is_a? Array
       find_or_create_by_names_and_assoc(origin: origin, kind: kind, names: name, tags: tags)
@@ -59,16 +31,6 @@ module BuildSet
       return target
     end
   end
-
-  # def find_or_create_by_names_and_assoc(origin:, kind:, names:)
-  #   targets =[]
-  #   names.each do |target_name|
-  #     target = Element.where({kind: kind, name: name}).first_or_create
-  #     targets << target
-  #     assoc_unless_included(origin: origin, target: target)
-  #   end
-  #   return targets
-  # end
 
   def find_or_create_by_names_and_assoc(origin:, kind:, names:, tags: nil)
     targets =[]
@@ -85,19 +47,8 @@ module BuildSet
     [:kind, :name].map {|method| [method, scoped_constant.public_send(method)]}.to_h
   end
 
-  # def attr_hsh(scoped_constant)
-  #   #h = {attr_values: attr_values(scoped_constant)}
-  #   h = {attr_values: attr_values(scoped_constant), kind: scoped_constant.kind}
-  #   #['option', 'option-key', 'option-value'].map {|k| h[to_snake(k).to_sym] = [h[:attr_values][:kind], k].join('-')}
-  #   ['option', 'option-key', 'option-value'].map {|k| h[to_snake(k).to_sym] = [h[:kind], k].join('-')}
-  #   h[:options] = scoped_constant.options if scoped_constant.singleton_methods.include?(:options)
-  #   h
-  # end
-
   def build_hsh(scoped_constant)
-    #h = {attr_values: attr_values(scoped_constant)}
     h = {attr_values: attr_values(scoped_constant), kind: scoped_constant.kind}
-    #['option', 'option-key', 'option-value'].map {|k| h[to_snake(k).to_sym] = [h[:attr_values][:kind], k].join('-')}
     ['option', 'option-key', 'option-value'].map {|k| h[to_snake(k).to_sym] = [h[:kind], k].join('-')}
     h[:options] = scoped_constant.options if scoped_constant.singleton_methods.include?(:options)
     h
@@ -189,16 +140,23 @@ module BuildSet
     format_attr(klass.to_s.split('::').last)
   end
 
-  # def to_scoped_constant(*konstants)
-  #   konstants.map{|konstant| konstant.to_s.capitalize}.join('::').constantize
-  # end
-
   def to_scoped_constant(*konstants)
     konstants.map{|konstant| format_constant(konstant)}.join('::').constantize
   end
 
+  # def scope_context(*objs)
+  #   set=[]
+  #   objs.each do |obj|
+  #     if obj.to_s.index('::')
+  #       obj.to_s.split('::').map {|konstant| set << konstant}
+  #     else
+  #       set << format_constant(obj)
+  #     end
+  #   end
+  #   set.join('::').constantize
+  # end
+
   def format_constant(konstant)
-    #konstant.to_s.underscore.split('_').map {|word| word.capitalize}.join('')
     konstant.to_s.split(' ').map {|word| word.underscore.split('_').map {|split_word| split_word.capitalize}}.flatten.join('')
   end
 
@@ -210,10 +168,6 @@ module BuildSet
     str.classify.constantize.superclass.name
   end
 
-  # def scoped_konstant(*konstant)
-  #   konstant = konstant.map {|k| to_classify(k)}.join('::')
-  #   to_constant(konstant.map {|k| to_classify(k)}.join('::'))
-  # end
   #convert ar-obj to: snake_case, constant, class, superclass
   def ar_obj_to_snake(ar_obj)
     ar_obj.class.name.underscore

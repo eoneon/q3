@@ -5,6 +5,10 @@ module Category
     self.constants.map {|konstant| konstant}
   end
 
+  def option_sets
+    self.constants.map {|klass| [scope_context(self, klass).name, scope_context(self, klass).option_set.map {|set| [set.to_s, EditionType.public_send(set)]}]}
+  end
+
   def format_name
     if kind == 'material' && (Material::Sericel.options).append(Material::SculptureMaterial.options).flatten.exclude?(name)
       "on #{name}"
@@ -29,6 +33,22 @@ module Category
 
   def search_text
     [category, name].join(' ').pluralize
+  end
+
+  def scope_context(*objs)
+    set=[]
+    objs.each do |obj|
+      if obj.to_s.index('::')
+        obj.to_s.split('::').map {|konstant| set << konstant}
+      else
+        set << format_constant(obj)
+      end
+    end
+    set.join('::').constantize
+  end
+
+  def format_constant(konstant)
+    konstant.to_s.split(' ').map {|word| word.underscore.split('_').map {|split_word| split_word.capitalize}}.flatten.join('')
   end
 
   class Original

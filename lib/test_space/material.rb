@@ -8,9 +8,20 @@ module Material
   class PaintingMaterial
     extend Category
 
-    # def self.options
-    #   [Canvas, StandardPaper, Board, Metal].map {|konstant| konstant.to_s.split('::').last.underscore.split('_').join(' ')}
-    # end
+    def self.options
+      [
+        [
+          'canvas', ['standard canvas', ['canvas', 'canvas board', 'textured canvas']]
+        ],
+
+        [
+          'canvas', ['boxed canvas', ['canvas', 'textured canvas']]
+        ],
+        [
+          'paper', ['standard paper', ['paper', 'deckle edge paper', 'rice paper', 'arches paper', 'sommerset paper', 'mother of pearl paper']]
+        ]
+      ]
+    end
 
     def self.options
       [Canvas, StandardPaper, Board, Metal].map {|konstant| konstant.to_s.split('::').last.underscore.split('_').join(' ')}
@@ -28,6 +39,40 @@ module Material
       ["wood box", "metal box"]
     end
   end
+  # class PaintingMaterial
+  #   extend Category
+  #
+  #   def self.options
+  #     [
+  #       [
+  #         'canvas', ['standard canvas', ['canvas', 'canvas board', 'textured canvas']]
+  #       ],
+  #
+  #       [
+  #         'canvas', ['boxed canvas', ['canvas', 'textured canvas']]
+  #       ],
+  #       [
+  #         'paper', ['standard paper', ['paper', 'deckle edge paper', 'rice paper', 'arches paper', 'sommerset paper', 'mother of pearl paper']]
+  #       ]
+  #     ]
+  #   end
+  #
+  #   def self.options
+  #     [Canvas, StandardPaper, Board, Metal].map {|konstant| konstant.to_s.split('::').last.underscore.split('_').join(' ')}
+  #   end
+  #
+  #   def self.standard_material_names
+  #     two_d_material | three_d_material
+  #   end
+  #
+  #   def self.two_d_material
+  #     ['canvas', 'standard paper', 'board', 'wood', 'metal']
+  #   end
+  #
+  #   def self.three_d_material
+  #     ["wood box", "metal box"]
+  #   end
+  # end
 
   class SculptureMaterial
     extend Category
