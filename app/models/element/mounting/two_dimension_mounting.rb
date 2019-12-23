@@ -16,13 +16,13 @@ class TwoDimensionMounting < Mounting
 
   class TwoDimension < TwoDimensionMounting
 
-    class OptionGroup < TwoDimensionMounting
+    class OptionGroup < TwoDimension
       def self.option
         [[element_attrs, option_values]]
       end
     end
 
-    class AssocGroup < TwoDimensionMounting
+    class AssocGroup < TwoDimension
       def self.option
         [[assoc_key_attrs(:dimension), [Dimension::WidthHeight, Dimension::Diameter]]]
       end
@@ -73,5 +73,5 @@ class TwoDimensionMounting < Mounting
       end
     end
   end
-  
+
 end

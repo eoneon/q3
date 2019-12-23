@@ -1,5 +1,5 @@
 module BuildSet
-  extend ProductBuild
+  #extend ProductBuild
 
   def find_or_create_by(kind:, name:, tags: nil)
     if name.is_a? Array
@@ -144,21 +144,9 @@ module BuildSet
     konstants.map{|konstant| format_constant(konstant)}.join('::').constantize
   end
 
-  # def scope_context(*objs)
-  #   set=[]
-  #   objs.each do |obj|
-  #     if obj.to_s.index('::')
-  #       obj.to_s.split('::').map {|konstant| set << konstant}
-  #     else
-  #       set << format_constant(obj)
-  #     end
-  #   end
-  #   set.join('::').constantize
+  # def format_constant(konstant)
+  #   konstant.to_s.split(' ').map {|word| word.underscore.split('_').map {|split_word| split_word.capitalize}}.flatten.join('')
   # end
-
-  def format_constant(konstant)
-    konstant.to_s.split(' ').map {|word| word.underscore.split('_').map {|split_word| split_word.capitalize}}.flatten.join('')
-  end
 
   def str_to_classify(str)
     str.classify

@@ -4,7 +4,9 @@ class ElementsController < ApplicationController
       @elements = Element.option_group_set(params[:element][:search])
     else
       #@elements = Element.all
-      @elements = Element.where(kind: ElementType.hyph_type_names)
+      #@elements = Element.origin_class
+      #@elements = Element.option_group
+      @elements = Element.option_key
     end
 
     respond_to do |format|

@@ -20,12 +20,25 @@ class Medium < ElementBuild
         ['painting', 'oil', 'acrylic', 'mixed media']
       end
     end
+
+    class AssocValue < StandardPainting
+      def self.option
+        [PaperMaterial::Paper, CanvasMaterial::Canvas, Board::Wood, Board::Acrylic, MetalMaterial::Metal, Box::MetalBox, Box::MetalBox]
+      end
+    end
+    #[PaperMaterial::Paper, CanvasMaterial::Canvas, Board::Wood, Board::Acrylic, MetalMaterial::Metal, Box::MetalBox, Box::MetalBox]
   end
 
   class PaintingOnPaper < Medium
     class OptionValue < PaintingOnPaper
       def self.option
         ['watercolor', 'pastel', 'guache', 'sumi ink']
+      end
+    end
+
+    class AssocValue < PaintingOnPaper
+      def self.option
+        [PaperMaterial::Paper]
       end
     end
   end
@@ -136,8 +149,8 @@ class Medium < ElementBuild
 
   #sculpture medium ############################################################
 
-  class StandardSculptureMedium < Medium
-    class OptionValue < StandardSculptureMedium
+  class StandardSculpture < Medium
+    class OptionValue < StandardSculpture
       def self.option
         ['sculpture']
       end

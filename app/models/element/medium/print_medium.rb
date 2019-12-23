@@ -1,4 +1,4 @@
-class PrintMedium < ElementBuild
+class PrintMedium < Medium
 
   def self.current_file
     File.basename(__FILE__, ".rb")

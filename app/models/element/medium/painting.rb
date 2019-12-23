@@ -9,7 +9,11 @@ class Painting < Medium
   end
 
   def self.option_values
-    scope_context(current_dir, origin, 'option_value').option
+    scope_context(current_dir, origin, 'option_value')
+  end
+
+  def self.assoc_values
+    scope_context(current_dir, origin, 'assoc_value')
   end
 
   def self.assoc_origin
@@ -36,7 +40,8 @@ class Painting < Medium
 
     class AssocGroup < StandardPainting
       def self.option
-        [[assoc_key_attrs(:material), [PaperMaterial::Paper, CanvasMaterial::Canvas, Board::Wood, Board::Acrylic, MetalMaterial::Metal, Box::MetalBox, Box::MetalBox]]]
+        #[[assoc_key_attrs(:material), [PaperMaterial::Paper, CanvasMaterial::Canvas, Board::Wood, Board::Acrylic, MetalMaterial::Metal, Box::MetalBox, Box::MetalBox]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
 

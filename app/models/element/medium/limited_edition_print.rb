@@ -18,7 +18,7 @@ class LimitedEditionPrint < Medium
 
     class OptionGroup < LtdStandardPrint
       def self.option
-        [[element_attrs, Medium::StandardPrint::OptionGroup.option]]
+        [[element_attrs, Medium::StandardPrint::OptionValue.option]]
       end
     end
 
@@ -33,7 +33,7 @@ class LimitedEditionPrint < Medium
 
     class OptionGroup < LtdPrintOnPaper
       def self.option
-        [[element_attrs, Medium::StandardPrintPrintOnPaper::OptionGroup.option]]
+        [[element_attrs, Medium::StandardPrintOnPaper::OptionValue.option]]
       end
     end
 
@@ -48,7 +48,7 @@ class LimitedEditionPrint < Medium
 
     class OptionGroup < LtdSericel
       def self.option
-        [[element_attrs, Medium::Sericel::OptionGroup.option]]
+        [[element_attrs, Medium::Sericel::OptionValue.option]]
       end
     end
 
@@ -63,7 +63,7 @@ class LimitedEditionPrint < Medium
 
     class OptionGroup < LtdPhotograph
       def self.option
-        [[element_attrs, Medium::Photograph::OptionGroup.option]]
+        [[element_attrs, Medium::Photograph::OptionValue.option]]
       end
     end
 

@@ -1,5 +1,6 @@
 class Element < ApplicationRecord
   include ObjBuild
+  include ScopeBuild
 
   has_many :item_groups, as: :origin, dependent: :destroy
   has_many :elements, through: :item_groups, source: :target, source_type: "Element"
@@ -8,6 +9,10 @@ class Element < ApplicationRecord
 
   scope :products, -> {where(kind: "product")}
 
+  option_types.each do |option_type|
+    scope option_type.split('-').join('_').to_sym, -> {where("tags @> ?", ("option_type => #{option_type}"))}
+  end
+  
   # Product.search.each do |h|
   #   scope h[:scope_name], -> {products.where("tags @> ? AND tags @> ?", ("category => #{h[:category]}"), ("medium => #{h[:medium]}"))}
   # end
