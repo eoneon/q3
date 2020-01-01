@@ -1,5 +1,5 @@
 class PaperMaterial < Material
-
+  # PaperMaterial::Paper::OptionGroup.option
   def self.current_file
     File.basename(__FILE__, ".rb")
   end
@@ -8,9 +8,9 @@ class PaperMaterial < Material
     File.expand_path(File.dirname(__FILE__)).split('/').last
   end
 
-  def self.option_values
-    scope_context(current_dir, origin, 'option_value').option
-  end
+  # def self.option_values
+  #   scope_context(current_dir, origin, 'option_value').option
+  # end
 
   ##############################################################################
 
@@ -19,7 +19,8 @@ class PaperMaterial < Material
 
     class OptionGroup < Paper
       def self.option
-        #[[element_attrs, Material::Paper::OptionValue.option]]
+        #[[element_attrs, 'wtf']]
+        #[[element_attrs, Material::Paper::OptionValue]]
         [[element_attrs, option_values]]
       end
     end
@@ -35,7 +36,7 @@ class PaperMaterial < Material
 
     class OptionGroup < PhotographyPaper
       def self.option
-        #[[element_attrs, Material::PhotographyPaper::OptionValue.option]]
+        #[[element_attrs, Material::PhotographyPaper::OptionValue]]
         [[element_attrs, option_values]]
       end
     end
@@ -51,7 +52,7 @@ class PaperMaterial < Material
 
     class OptionGroup < AnimationPaper
       def self.option
-        #[[element_attrs, Material::AnimationPaper::OptionValue.option]]
+        #[[element_attrs, Material::AnimationPaper::OptionValue]]
         [[element_attrs, option_values]]
       end
     end
@@ -63,95 +64,4 @@ class PaperMaterial < Material
     end
   end
 
-  #
-  # class SculptureMaterial
-  #   extend Category
-  #
-  #   def self.options
-  #     [Glass, Ceramic, Bronze, Synthetic, Stone].map {|konstant| konstant.to_s.split('::').last.underscore.split('_').join(' ')}
-  #   end
-  #
-  #   def self.mounting
-  #     Mounting::SculptureMounting
-  #   end
-  # end
-  #
-
-  # class Metal
-  #   extend Category
-  #
-  #   def self.options
-  #     ['metal', 'metal panel', 'aluminum', 'aluminum panel']
-  #   end
-  #
-  #   def self.mounting
-  #     Mounting::FlatMounting
-  #   end
-  # end
-  #
-  # class Box
-  #   extend Category
-  #
-  #   def self.options
-  #     ['canvas box', 'wood box', 'metal box']
-  #   end
-  #
-  #   def self.mounting
-  #     Mounting::BoxMounting
-  #   end
-  # end
-  #
-
-  #
-  # class Sericel
-  #   extend Category
-  #
-  #   def self.options
-  #     ['sericel', 'sericel with background', 'sericel with lithographic background']
-  #   end
-  #
-  #   def self.mounting
-  #     Mounting::SericelMounting
-  #   end
-  # end
-  #
-  # class Glass < SculptureMaterial
-  #   extend Category
-  #
-  #   def self.options
-  #     ['glass']
-  #   end
-  # end
-  #
-  # class Ceramic < SculptureMaterial
-  #   extend Category
-  #
-  #   def self.options
-  #     ['ceramic']
-  #   end
-  # end
-  #
-  # class Bronze < SculptureMaterial
-  #   extend Category
-  #
-  #   def self.options
-  #     ['bronze']
-  #   end
-  # end
-  #
-  # class Synthetic < SculptureMaterial
-  #   extend Category
-  #
-  #   def self.options
-  #     ['acrylic', 'lucite', 'mixed media']
-  #   end
-  # end
-  #
-  # class Stone < SculptureMaterial
-  #   extend Category
-  #
-  #   def self.options
-  #     ['pewter']
-  #   end
-  # end
 end

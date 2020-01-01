@@ -1,19 +1,11 @@
 class Painting < Medium
-  #Painting::StandardPainting::OptionGroup.option
+  #Painting::StandardPainting::AssocGroup.option
   def self.current_file
     File.basename(__FILE__, ".rb")
   end
 
   def self.current_dir
     File.expand_path(File.dirname(__FILE__)).split('/').last
-  end
-
-  def self.option_values
-    scope_context(current_dir, origin, 'option_value')
-  end
-
-  def self.assoc_values
-    scope_context(current_dir, origin, 'assoc_value')
   end
 
   def self.assoc_origin
@@ -40,7 +32,6 @@ class Painting < Medium
 
     class AssocGroup < StandardPainting
       def self.option
-        #[[assoc_key_attrs(:material), [PaperMaterial::Paper, CanvasMaterial::Canvas, Board::Wood, Board::Acrylic, MetalMaterial::Metal, Box::MetalBox, Box::MetalBox]]]
         [[assoc_key_attrs(:material), assoc_values]]
       end
     end
@@ -57,7 +48,7 @@ class Painting < Medium
 
     class AssocGroup < PaintingOnPaper
       def self.option
-        [[assoc_key_attrs(:material), [PaperMaterial::Paper]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
   end

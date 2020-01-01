@@ -8,9 +8,9 @@ class StandardSculptureMedium < Medium
     File.expand_path(File.dirname(__FILE__)).split('/').last
   end
 
-  def self.option_values
-    scope_context(current_dir, origin, 'option_value').option
-  end
+  # def self.option_values
+  #   scope_context(current_dir, origin, 'option_value').option
+  # end
 
   ##############################################################################
 
@@ -24,7 +24,7 @@ class StandardSculptureMedium < Medium
 
     class AssocGroup < StandardSculpture
       def self.option
-        [[assoc_key_attrs(:material), [Material::Glass, Material::Ceramic, Material::Bronze, Material::Synthetic, Material::Stone]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
   end

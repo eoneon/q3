@@ -14,18 +14,9 @@ class LimitedEditionArt < ElementBuild
 
     class AssocGroup < LimitedEdition
       def self.option
-        [[assoc_key_attrs(:medium), LimitedEditionPrint.constants.map {|konstant| scope_context(LimitedEditionPrint, konstant)}]]
+        [[assoc_key_attrs(:medium), filtered_classes(LimitedEditionPrint, :AssocGroup)]]
       end
     end
   end
 
-  # class OneOfAKind < OriginalArt
-  #
-  #   class AssocGroup < OneOfAKind
-  #     def self.option
-  #       [[assoc_key_attrs(:medium), [MixedMedium::StandardMixedMedium, MixedMedium::PeterMaxMixedMedium, MixedMedium::Etching, MixedMedium::HandPulled]]]
-  #     end
-  #   end
-  #
-  # end
 end

@@ -8,9 +8,9 @@ class UniqueSculptureMedium < Medium
     File.expand_path(File.dirname(__FILE__)).split('/').last
   end
 
-  def self.option_values
-    scope_context(current_dir, origin, 'option_value').option
-  end
+  # def self.option_values
+  #   scope_context(current_dir, origin, 'option_value').option
+  # end
 
   ##############################################################################
 
@@ -24,7 +24,7 @@ class UniqueSculptureMedium < Medium
 
     class AssocGroup < HandBlownGlass
       def self.option
-        [[assoc_key_attrs(:material), [Material::Glass]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
   end
@@ -39,7 +39,7 @@ class UniqueSculptureMedium < Medium
 
     class AssocGroup < HandMadeCeramic
       def self.option
-        [[assoc_key_attrs(:material), [Material::Ceramic]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
   end

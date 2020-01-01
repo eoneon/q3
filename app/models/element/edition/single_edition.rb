@@ -13,7 +13,7 @@ class SingleEdition < Edition
   class NumberedOneOfOne < SingleEdition
     class OptionGroup < NumberedOneOfOne
       def self.option
-        [[edition_attrs(:proof_option), Edition::Proof::OptionValue.option]]
+        [[edition_attrs(:proof_option), Edition::Proof::OptionValue]]
       end
     end
   end

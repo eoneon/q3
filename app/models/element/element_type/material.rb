@@ -1,5 +1,5 @@
 class Material < ElementBuild
-
+  # Material::Paper::OptionValue
   def self.current_file
     File.basename(__FILE__, ".rb")
   end

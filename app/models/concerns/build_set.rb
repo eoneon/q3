@@ -112,6 +112,10 @@ module BuildSet
       to_other_type(obj, obj.class, 'snake')
     end
 
+    def to_key(obj)
+      to_snake(obj).to_sym
+    end
+
     def to_constant(obj)
       to_other_type(obj, obj.class, 'constant')
     end
@@ -129,7 +133,8 @@ module BuildSet
     #convert string to: snake_case, constant, class, superclass
     def str_to_snake(str)
       #str.underscore.singularize
-      str.split('-').join(' ').split(' ').map {|word| word.downcase}.join('_')
+      #str.split('-').join(' ').split(' ').map {|word| word.downcase}.join('_')
+      str.split('-').join(' ').split(' ').map {|word| word.underscore.downcase}.join('_')
     end
 
     def str_to_constant(str)
@@ -241,5 +246,5 @@ module BuildSet
       arr.split(' ').join(' ').split(' ')
     end
   end
-  
+
 end

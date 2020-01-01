@@ -1,5 +1,5 @@
 class OriginalArt < ElementBuild
-  #OriginalArt::Original::AssocGroup.option
+  #OriginalArt::OneOfAKind::AssocGroup.option
   def self.current_file
     File.basename(__FILE__, ".rb")
   end

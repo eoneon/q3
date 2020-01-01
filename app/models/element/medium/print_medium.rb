@@ -8,9 +8,9 @@ class PrintMedium < Medium
     File.expand_path(File.dirname(__FILE__)).split('/').last
   end
 
-  def self.option_values
-    scope_context(current_dir, origin, 'option_value').option
-  end
+  # def self.option_values
+  #   scope_context(current_dir, origin, 'option_value').option
+  # end
 
   ##############################################################################
 
@@ -24,7 +24,7 @@ class PrintMedium < Medium
 
     class AssocGroup < StandardPrint
       def self.option
-        [[assoc_key_attrs(:material), [PaperMaterial::Paper, CanvasMaterial::Canvas, Board::Wood, Board::Acrylic, MetalMaterial::Metal, Box::MetalBox, WoodBox::MetalBox]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
 
@@ -40,7 +40,7 @@ class PrintMedium < Medium
 
     class AssocGroup < StandardPrintOnPaper
       def self.option
-        [[assoc_key_attrs(:material), [PaperMaterial::Paper]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
 
@@ -56,7 +56,7 @@ class PrintMedium < Medium
 
     class AssocGroup < Sericel
       def self.option
-        [[assoc_key_attrs(:material), [SericelMaterial::Sericel]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
 
@@ -72,7 +72,7 @@ class PrintMedium < Medium
 
     class AssocGroup < Photograph
       def self.option
-        [[assoc_key_attrs(:material), [Paper::PhotographyPaper]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
 

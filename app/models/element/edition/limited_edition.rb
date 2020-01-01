@@ -13,7 +13,7 @@ class LimitedEdition < Edition
   class NumberedXy < LimitedEdition
     class OptionGroup < NumberedXy
       def self.option
-        [[edition_attrs(:proof_option), Edition::Proof::OptionValue.option], [edition_attrs(:limited_edition_option), Edition::Limited::OptionValue.option]]
+        [[edition_attrs(:proof_option), Edition::Proof::OptionValue], [edition_attrs(:limited_edition_option), Edition::Limited::OptionValue]]
       end
     end
   end
@@ -21,7 +21,7 @@ class LimitedEdition < Edition
   class RomanNumberedXy < LimitedEdition
     class OptionGroup < NumberedXy
       def self.option
-        [[edition_attrs(:proof_option), Edition::Proof::OptionValue.option], [edition_attrs(:limited_edition_option), Edition::Limited::OptionValue.option]]
+        [[edition_attrs(:proof_option), Edition::Proof::OptionValue], [edition_attrs(:limited_edition_option), Edition::Limited::OptionValue]]
       end
     end
   end
@@ -29,7 +29,7 @@ class LimitedEdition < Edition
   class NumberedQty < LimitedEdition
     class OptionGroup < NumberedXy
       def self.option
-        [[edition_attrs(:proof_option), Edition::Proof::OptionValue.option], [edition_attrs(:limited_edition_option), Edition::Limited::OptionValue.option]]
+        [[edition_attrs(:proof_option), Edition::Proof::OptionValue], [edition_attrs(:limited_edition_option), Edition::Limited::OptionValue]]
       end
     end
   end
@@ -37,7 +37,7 @@ class LimitedEdition < Edition
   class ProofEdition < LimitedEdition
     class OptionGroup < ProofEdition
       def self.option
-        [[edition_attrs(:proof_option), Edition::Proof::OptionValue.option], [edition_attrs(:limited_edition_option), Edition::Limited::OptionValue.option]]
+        [[edition_attrs(:proof_option), Edition::Proof::OptionValue], [edition_attrs(:limited_edition_option), Edition::Limited::OptionValue]]
       end
     end
   end

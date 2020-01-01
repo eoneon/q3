@@ -8,9 +8,9 @@ class MixedMedium < Medium
     File.expand_path(File.dirname(__FILE__)).split('/').last
   end
 
-  def self.option_values
-    scope_context(current_dir, origin, 'option_value').option
-  end
+  # def self.option_values
+  #   scope_context(current_dir, origin, 'option_value').option
+  # end 
 
   ##############################################################################
 
@@ -24,7 +24,7 @@ class MixedMedium < Medium
 
     class AssocGroup < StandardMixedMedium
       def self.option
-        [[assoc_key_attrs(:material), [PaperMaterial::Paper, CanvasMaterial::Canvas, Board::Wood, Board::Acrylic, MetalMaterial::Metal, Box::MetalBox, WoodBox::MetalBox]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
   end
@@ -33,7 +33,7 @@ class MixedMedium < Medium
 
     class OptionGroup < PeterMaxMixedMedium
       def self.option
-        [[element_attrs, Medium::StandardMixedMedium::OptionValue.option]]
+        [[element_attrs, Medium::StandardMixedMedium::OptionValue]]
       end
     end
 
@@ -54,7 +54,7 @@ class MixedMedium < Medium
 
     class AssocGroup < Etching
       def self.option
-        [[assoc_key_attrs(:material), [PaperMaterial::Paper]]]
+        [[assoc_key_attrs(:material), assoc_values]]
       end
     end
   end

@@ -8,9 +8,9 @@ class LimitedEditionPrint < Medium
     File.expand_path(File.dirname(__FILE__)).split('/').last
   end
 
-  def self.option_values
-    scope_context(current_dir, origin, 'option_value').option
-  end
+  # def self.option_values
+  #   scope_context(current_dir, origin, 'option_value').option
+  # end
 
   ##############################################################################
 
@@ -18,7 +18,7 @@ class LimitedEditionPrint < Medium
 
     class OptionGroup < LtdStandardPrint
       def self.option
-        [[element_attrs, Medium::StandardPrint::OptionValue.option]]
+        [[element_attrs, Medium::StandardPrint::OptionValue]]
       end
     end
 
@@ -33,7 +33,7 @@ class LimitedEditionPrint < Medium
 
     class OptionGroup < LtdPrintOnPaper
       def self.option
-        [[element_attrs, Medium::StandardPrintOnPaper::OptionValue.option]]
+        [[element_attrs, Medium::StandardPrintOnPaper::OptionValue]]
       end
     end
 
@@ -48,7 +48,7 @@ class LimitedEditionPrint < Medium
 
     class OptionGroup < LtdSericel
       def self.option
-        [[element_attrs, Medium::Sericel::OptionValue.option]]
+        [[element_attrs, Medium::Sericel::OptionValue]]
       end
     end
 
@@ -63,7 +63,7 @@ class LimitedEditionPrint < Medium
 
     class OptionGroup < LtdPhotograph
       def self.option
-        [[element_attrs, Medium::Photograph::OptionValue.option]]
+        [[element_attrs, Medium::Photograph::OptionValue]]
       end
     end
 

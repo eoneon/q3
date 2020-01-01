@@ -8,9 +8,10 @@ class SculptureMaterial < Material
     File.expand_path(File.dirname(__FILE__)).split('/').last
   end
 
-  def self.option_values
-    scope_context(current_dir, origin, 'option_value').option
-  end
+  # def self.option_values
+  #   scope_context(current_dir, origin, 'option_value').option
+  # end
+  # end  Glass::AssocGroup
 
   ##############################################################################
 

@@ -5,8 +5,8 @@ class ElementsController < ApplicationController
     else
       #@elements = Element.all
       #@elements = Element.origin_class
-      #@elements = Element.option_group
-      @elements = Element.option_key
+      @elements = Element.option_group
+      #@elements = Element.option_key
     end
 
     respond_to do |format|
