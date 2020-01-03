@@ -4,12 +4,10 @@ module ScopeBuild
   extend ActiveSupport::Concern
 
   class_methods do
-    def option_types
-      %w[origin-type origin-class option-group option-key assoc-key option-value]
-    end
+
 
     # attr methods ###############################################################
-    
+
     def element_attrs
       h = {kind: element_kind, name: element_name, tags: element_tags}
     end
@@ -67,6 +65,10 @@ module ScopeBuild
       scope_context(current_dir, origin, 'assoc_value')
     end
 
+    def option_types
+      %w[origin-type origin-class option-group option-key assoc-key option-value]
+    end
+    
     def option_type
       if origin_types.include?(current_file) && slice_class(-1).to_s != 'OptionValue' && slice_class(-1).to_s != 'AssocValue'
         option_types[0]

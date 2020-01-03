@@ -4,7 +4,7 @@ class ElementBuild
   # ElementBuild.pop_origin_types
   # ElementBuild.pop_origin_classes
   # ElementBuild.pop_option_set_classes
-  # ElementBuild.filter_consts('Painting', :OptionGroup, :AssocGroup)
+
   def self.pop_origin_types
     origin_types.map {|origin_type_name| [origin_type_name, find_or_create_by(scope_context(origin_type_name).element_attrs)]}
   end
@@ -21,20 +21,9 @@ class ElementBuild
     set
   end
 
-  #here: [[1, 3, 5], [2, 4, 6]].transpose
-  # def self.pop_option_set_classes
-  #   pop_origin_classes.each do |origin_class_set|
-  #     origin_class_name, origin_class = origin_class_set[0], origin_class_set[1]
-  #     #collect parent classes containing option group classes
-  #     pop_option_group_classes(origin_class, origin_class_name)
-  #     pop_assoc_group_classes(origin_class, origin_class_name)
-  #   end
-  # end
-
   def self.pop_option_set_classes
     pop_origin_classes.each do |origin_class_set|
       pos_zero_class_name, pos_zero_obj = origin_class_set[0], origin_class_set[1]
-      #collect parent classes containing option group classes
       [:OptionGroup, :AssocGroup].each do |filter_class|
         const_hash = filter_const_hash(pos_zero_class_name, filter_class)
         if const_hash.has_key?(to_key(filter_class))
@@ -75,50 +64,6 @@ class ElementBuild
     end
   end
 
-  # def self.pop_option_group_options(option_group_class, option_group)
-  #   scope_context(option_group_class, :OptionGroup).option.each do |option_set|
-  #     option_key = find_or_create_by(option_set.first)
-  #     assoc_unless_included(origin: option_group, target: option_key)
-  #
-  #     option_value_scope = option_set.last
-  #     option_value_scope.option.map {|option_value_name| find_or_create_by(option_value_scope.option_value_attrs(option_value_name))}.each do |option_value|
-  #       assoc_unless_included(origin: option_key, target: option_value)
-  #     end
-  #   end
-  # end
-
-  # def self.pop_assoc_group_options(assoc_group_class, assoc_group)
-  #   scope_context(assoc_group_class, :AssocGroup).option.each do |option_set|
-  #     assoc_key = find_or_create_by(option_set.first)
-  #     assoc_unless_included(origin: assoc_group, target: assoc_key)
-  #     #assoc_value_scope = option_set.last
-  #
-  #     option_set.last.option.map {|assoc_class| find_or_create_by(assoc_class.element_attrs)}.each do |assoc_value|
-  #       assoc_unless_included(origin: assoc_key, target: assoc_value)
-  #     end
-  #   end
-  # end
-
-  # def self.pop_option_group_classes(origin_class, origin_class_name)
-  #   if option_group_classes = option_set_classes(origin_class_name, :OptionGroup)
-  #     option_group_classes.each do |option_group_class|
-  #       option_group = find_or_create_by(option_group_class.element_attrs)
-  #       assoc_unless_included(origin: origin_class, target: option_group)
-  #       pop_option_group_options(option_group_class, option_group)
-  #     end
-  #   end
-  # end
-  #
-  # def self.pop_assoc_group_classes(origin_class, origin_class_name)
-  #   if assoc_group_classes = option_set_classes(origin_class_name, :AssocGroup)
-  #     assoc_group_classes.each do |assoc_group_class|
-  #       assoc_group = find_or_create_by(assoc_group_class.element_attrs)
-  #       assoc_unless_included(origin: origin_class, target: assoc_group)
-  #       pop_assoc_group_options(assoc_group_class, assoc_group)
-  #     end
-  #   end
-  # end
-
   # option class collection & validation methods ######################################
 
   # ElementBuild.filter_const_hash('painting', :OptionGroup) , vars: # pos_zero_scope, pos_zero_classes, opts, sets = scope_context(pos_zero_class_name), scope_context(pos_zero_class_name).constants, {}, {const_set: [], filter_set: []}
@@ -136,7 +81,15 @@ class ElementBuild
     opts
   end
 
-  # ElementBuild.pos_one_hsh_if_valid_option_class?(Painting::StandardPainting, :OptionGroup)
+  def self.native_option_classes
+    native_option_class(current_file, :OptionGroup, :AssocGroup)
+  end
+
+  def self.native_option_class(file_name, *filter_consts)
+    opt_set = filter_consts.map {|filter_const| filter_const_hash(file_name, filter_const)}
+    opt_set.map {|opt_hash| filter_consts.map {|filter| opt_hash[to_key(filter)][:pos_one_set] if opt_hash.has_key?(to_key(filter))}}.flatten.compact.uniq
+  end
+
   def self.pos_one_hsh_if_valid_option_class?(pos_one_scope, filter_class)
     if pos_two_scope = pos_two_scope_if_valid?(pos_one_scope, filter_class)
       [pos_one_scope, pos_two_scope] if options_exists?(pos_two_scope)
@@ -329,196 +282,6 @@ end
 
 # below this line is likely stuff to kill
 
-
-
-
-
-
-
-
-
-
-# def self.stub
-#   filtered_classes(origin_class_name, :OptionGroup, true).option.each do |option_set|
-#     option_key, option_values = option_set[0], option_set[1]
-#     option_key = find_or_create_by(option_key.element_attrs)
-#     option_values.each do |option_value|
-#       assoc_unless_included(origin: option_key, target: option_value)
-#     end
-#   end
-# end
-
-# def self.build_group(origin_class)
-#   if option_group_classes = option_group_classes(origin_class)
-#     option_group_classes.each do |option_group_class|
-#       #
-#       if option_method_exists?(option_group_class) && options_exists?(option_group_class)
-#       end
-#     end
-#   end
-# end
-#
-# def self.pop_origin_classes
-#   pop_origin_types.each do |origin_type_set|
-#     file_names(origin_type_set[0]).each do |origin_class_name|
-#       #scope_context, origin_type = scope_context(origin_class_name), origin_type_set[1]
-#       origin_class = find_or_create_by(scope_context(origin_class_name).element_attrs)
-#       assoc_unless_included(origin: origin_type_set[1], target: origin_class)
-#
-#       filtered_classes(origin_class_name, :OptionGroup).each do |option_group_class|
-#         option_group = find_or_create_by(option_group_class.element_attrs)
-#         assoc_unless_included(origin:origin_class, target: option_group)
-#
-#         filtered_classes(option_class, :OptionGroup, true).each do |option_class|
-#           option_class.option
-#         end
-#       end
-#     end
-#   end
-# end
-
-# def self.origin_zero_set
-#   #origin_types.map {|origin_zero_name| [origin_zero_name, find_or_create_by(scope_context(origin_zero_name).element_attrs)]}
-#   origin_types.map {|origin_zero_name| [origin_zero_name, scope_context(origin_zero_name).element_attrs]}
-#   #origin_types.map {|origin_zero_name| origin_zero_name}
-# end
-
-#ElementBuild.origin_one_set
-# def self.origin_one_set
-#   set =[]
-#   origin_zero_set.each do |origin_set|
-#     #origin_zero = origin_set[1]
-#     file_names(origin_set[0]).each do |origin_one_name|
-#       origin_one_name = [origin_one_name, scope_context(origin_one_name).element_attrs] #test
-#       #origin_one = find_or_create_by(scope_context(origin_one_name).element_attrs)
-#       #assoc_unless_included(origin: origin_set[1], target: origin_one)
-#       #set << [origin_one_name, origin_one]
-#       set << origin_one_name #test
-#     end
-#   end
-#   set
-# end
-
-#ElementBuild.origin_two_set -> OptionGroup
-# def self.origin_two_set
-#   set =[]
-#   origin_one_set.each do |origin_set|
-#     #
-#     scope_context(origin_set[0]).constants.each do |origin_two_name|
-#       scope_context = scope_context(origin_set[0], origin_two_name)
-#       #origin_two = find_or_create_by(scope_context.element_attrs)
-#       origin_two = scope_context.element_attrs #test
-#       #assoc_unless_included(origin: origin_set[1], target: origin_two)
-#       #set << [origin_two_name, origin_two]
-#       set << [origin_two_name] #test
-#     end
-#   end
-#   set
-# end
-
-# build methods ###############################################################
-
-# def self.option_group_set(origin_class, set =[])
-#   if option_group_classes(origin_class).any?
-#     return build_option_group_set(origin_class, set)
-#   end
-# end
-#
-# def self.build_option_group_set(origin_class, set)
-#   option_group_classes(origin_class).each do |option_group_class|
-#     if klass_has_valid_option?(option_group_class)
-#       option_group_class.option.each do |option_set|
-#         set << [option_set.first, option_set.last]
-#       end
-#     end
-#   end
-#   set
-# end
-#
-# def self.assoc_group_set(origin_class, set =[])
-#   if assoc_group_classes(origin_class).any?
-#     return build_assoc_group_set(origin_class, set)
-#   end
-# end
-#
-# def self.build_assoc_group_set(origin_class, set)
-#   assoc_group_classes(origin_class).each do |assoc_group_class|
-#     if klass_has_valid_option?(assoc_group_class)
-#       assoc_group_class.option.each do |option_set|
-#         set << [option_set.first, option_set.last]
-#       end
-#     end
-#   end
-#   set
-# end
-
-# scope_context(scope_context, 'assoc_group').option.each do |assoc_set|
-#   assoc_set.each do |set|
-#     assoc_key = find_or_create_by_by(set.first) #[origin_two.name, assoc-key].join('-') -> kind: "original-assoc-key", name: "original-medium-option"
-#     assoc_unless_included(origin: origin_two, target: assoc_key)
-#
-#     set.last.map {|assoc_class| find_or_create_by_by(scope_context(assoc_class).element_attrs)}.each do |assoc_opt|
-#       assoc_unless_included(origin: assoc_key, target: assoc_opt)
-#     end
-#   end
-# end
-
-# def self.populate
-#   set =[]
-#   #Part 1: option-group-origin
-#   #element/element_type: #=> ["category", "edition", "medium", "material"]
-#   origin_types.each do |origin_zero_name|
-#     origin_zero = find_or_create_by(scope_context(origin_zero_name).element_attrs)
-#
-#     #Part 2: option-group
-#     #element/category: #=> ["print_art", "original_art", "sculpture", "limited_edition"]
-#     #element/medium: #=> ["mixed_medium", "standard_print", "painting", "unique_sculpture", "drawing", "basic_print", "standard_sculpture", "limited_edition_print"]
-#     #element/material: #=> ["canvas", "paper"]
-#     file_names(origin_zero_name).each do |origin_one_name| #["original_art"...]
-#       origin_one = find_or_create_by(scope_context(origin_one_name).element_attrs)
-#       assoc_unless_included(origin: origin_zero, target: origin_one) #category << original_art
-#
-#       #Part 3: option
-#       #PrintArt.constants #=> []
-#       #OriginalArt.constants #=> [:Original, :OneOfAKind],...
-#       #Sculpture.constants #=> []
-#       #LimitedEdition.constants #=> []
-#       scope_context(origin_one_name).constants.each do |origin_two_name| #Original, OneOfAKind
-#         scope_context = scope_context(origin_one_name, origin_two_name)
-#         origin_two = find_or_create_by(scope_context.element_attrs)
-#         assoc_unless_included(origin: origin_one, target: origin_two) #original_art << Original
-#
-        # #Part 4: assoc-key: assoc-value
-        # #if scope_context.constant_names.include?('assoc_target')
-        # scope_context(scope_context, 'assoc_group').option.each do |assoc_set|
-        #   assoc_set.each do |set|
-        #     assoc_key = find_or_create_by_by(set.first) #[origin_two.name, assoc-key].join('-') -> kind: "original-assoc-key", name: "original-medium-option"
-        #     assoc_unless_included(origin: origin_two, target: assoc_key)
-        #
-        #     set.last.map {|assoc_class| find_or_create_by_by(scope_context(assoc_class).element_attrs)}.each do |assoc_opt|
-        #       assoc_unless_included(origin: assoc_key, target: assoc_opt)
-        #     end
-        #   end
-        # end
-#
-#         #Part 5: option-key: option-value
-#         #if scope_context.constant_names.include?('option_value')
-#         scope_context(scope_context, 'option_group').option.each do |option_set|
-#           option_set.each do |set|
-#             option_key = find_or_create_by_by(set.first) #[origin_two.name, assoc-key].join('-') -> kind: "original-assoc-key", name: "original-medium-option"
-#             assoc_unless_included(origin: origin_two, target: option_key)
-#
-#             set.last.map {|option_name| find_or_create_by_by(scope_context(scope_context, 'option_group').element_attrs)}.each do |option_value|
-#               assoc_unless_included(origin: option_key, target: option_value)
-#             end
-#           end
-#         end
-#       end
-#     end
-#   end
-#   set
-# end
-
 ############################################################################## search methods
 
 # def self.search_text
@@ -527,21 +290,4 @@ end
 #
 # def self.search_value
 #   slice_class(-1).to_s.underscore.to_sym
-# end
-
-# def self.decamelize(camel_word, *n)
-#   word_count = n.empty? ? 0 : n.first
-#   name_set = camel_word.to_s.underscore.split('_')
-#   name_set.count >= word_count ? name_set.join('-') : name_set.join(' ')
-# end
-
-# def option_sets
-#   option_group.map {|klass| [scope_context(self, klass).name, scope_context(self, klass).option_set.map {|set| [set.to_s, EditionType.public_send(set)]}]}
-# end
-
-# def self.get_folder #(folder_name)
-#   #__folder_name__#folder_name.glob("#{Rails.root}/app/models/element/#{folder_name}/*.rb")
-#   #File.basename(folder_name.pwd)
-#   #File.basename()
-#   #File.basename(__FILE__, ".rb") #=> "element_build"
 # end

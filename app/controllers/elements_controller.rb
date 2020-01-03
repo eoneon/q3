@@ -3,10 +3,12 @@ class ElementsController < ApplicationController
     if params[:element] && params[:element][:search]
       @elements = Element.option_group_set(params[:element][:search])
     else
-      @elements = Element.all
+      #@elements = Element.all
+      #@elements = Element.origin_type
       #@elements = Element.origin_class
       #@elements = Element.option_group
       #@elements = Element.option_key
+      @elements = Element.option_value
     end
 
     respond_to do |format|

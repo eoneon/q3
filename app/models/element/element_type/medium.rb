@@ -7,7 +7,7 @@ class Medium < ElementBuild
   def self.current_dir
     File.expand_path(File.dirname(__FILE__)).split('/').last
   end
-  
+
   def self.standard_flat_material
     [PaperMaterial::Paper, CanvasMaterial::Canvas, Board::Wood, Board::Acrylic, MetalMaterial::Metal, Box::MetalBox, Box::MetalBox]
   end
@@ -44,7 +44,7 @@ class Medium < ElementBuild
   # end
 
   #Painting ##############################################################################
-
+  # Painting::StandardPainting::OptionGroup.option
   class StandardPainting < Medium
     class OptionValue < StandardPainting
       def self.option
