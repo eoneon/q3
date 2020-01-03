@@ -14,7 +14,7 @@ class LimitedEditionArt < ElementBuild
 
     class AssocGroup < LimitedEdition
       def self.option
-        [[assoc_key_attrs(:medium), filtered_classes(LimitedEditionPrint, :AssocGroup)]]
+        [[assoc_key_attrs(:medium), [LimitedEditionPrint::LtdStandardPrint, LimitedEditionPrint::LtdPrintOnPaper, LimitedEditionPrint::LtdSericel, LimitedEditionPrint::LtdPhotograph]]]
       end
     end
   end

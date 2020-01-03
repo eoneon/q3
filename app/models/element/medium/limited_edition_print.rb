@@ -69,7 +69,7 @@ class LimitedEditionPrint < Medium
 
     class AssocGroup < LtdPhotograph
       def self.option
-        [[assoc_key_attrs(:material), [PaperMaterial::Photograph]]]
+        [[assoc_key_attrs(:material), [PaperMaterial::PhotographyPaper]]]
       end
     end
   end

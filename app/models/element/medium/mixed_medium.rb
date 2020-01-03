@@ -11,7 +11,6 @@ class MixedMedium < Medium
   # def self.option_values
   #   scope_context(current_dir, origin, 'option_value').option
   # end 
-
   ##############################################################################
 
   class StandardMixedMedium < MixedMedium

@@ -1,5 +1,6 @@
 class PrintArt < ElementBuild
   #PrintArt::OpenPrint::AssocGroup.option
+  # ElementBuild.filter_const_hash(Medium::LimitedEditionPrint, :AssocGroup)[:assoc_group][:pos_one_set]
   def self.current_file
     File.basename(__FILE__, ".rb")
   end
@@ -8,9 +9,9 @@ class PrintArt < ElementBuild
     File.expand_path(File.dirname(__FILE__)).split('/').last
   end
 
-  def self.open_print_classes
-    [PrintMedium, BasicPrint].map {|origin_class| filtered_classes(origin_class, :AssocGroup)}.flatten
-  end
+  # def self.open_print_classes
+  #   [PrintMedium, BasicPrint].map {|origin_class| filter_const_hash(origin_class, :AssocGroup)[:assoc_group][:pos_two_set]}
+  # end
 
   ##############################################################################
 
@@ -18,7 +19,7 @@ class PrintArt < ElementBuild
 
     class AssocGroup < LimitedPrint
       def self.option
-        [[assoc_key_attrs(:medium), filtered_classes(LimitedEditionPrint, :AssocGroup)]]
+        [[assoc_key_attrs(:medium), [LimitedEditionPrint::LtdStandardPrint, LimitedEditionPrint::LtdPrintOnPaper, LimitedEditionPrint::LtdSericel, LimitedEditionPrint::LtdPhotograph]]]
       end
     end
   end
@@ -27,7 +28,7 @@ class PrintArt < ElementBuild
 
     class AssocGroup < SinglePrint
       def self.option
-        [[assoc_key_attrs(:medium), [SingleEdition::NumberedOneOfOne]]]
+        [[assoc_key_attrs(:medium), [MixedMedium::StandardMixedMedium, MixedMedium::Etching, MixedMedium::HandPulled]]]
       end
     end
   end
@@ -36,7 +37,7 @@ class PrintArt < ElementBuild
 
     class AssocGroup < OpenPrint
       def self.option
-        [[assoc_key_attrs(:medium), open_print_classes]]
+        [[assoc_key_attrs(:medium), [PrintMedium::StandardPrint, PrintMedium::StandardPrintOnPaper, PrintMedium::Sericel, PrintMedium::Photograph, BasicPrint::StandardBasicPrint, BasicPrint::BasicPrintOnPaper]]]
       end
     end
   end
